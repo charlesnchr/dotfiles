@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
 
 
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -27,7 +28,7 @@ Plugin 'rafi/awesome-vim-colorschemes'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 Plugin 'ervandew/supertab'
-Plugin 'ycm-core/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,7 +53,7 @@ set foldlevel=99
 nnoremap <space> za
 
 " open files with ctrl-p
-nnoremap <c-p> :Files<cr>
+nnoremap <c-o> :Files<cr>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -119,7 +120,6 @@ set nu rnu " relative line numbering
 set clipboard=unnamed " public copy/paste register
 
 set mouse=a
-
 
 " nerdtree
 nnoremap <leader>n :NERDTreeFocus<CR>
