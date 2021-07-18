@@ -29,13 +29,27 @@ Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim'
+Plugin 'aserebryakov/vim-todo-lists'
+Plugin 'freitass/todo.txt-vim'
+" markdown syntax
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+" writing
+Plugin 'reedes/vim-pencil'
+Plugin 'xuhdev/vim-latex-live-preview'
+Plugin 'lervag/vimtex'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'xolox/vim-misc'
+Plugin 'joshdick/onedark.vim'
+Plugin 'drewtempelmeyer/palenight.vim'
+
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'junegunn/goyo.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-let mapleader = "-"
-let maplocalleader = "\\"
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -50,16 +64,15 @@ set splitright
 set foldmethod=indent
 set foldlevel=99
 "Enable folding with the spacebar
-nnoremap <space> za
+"nnoremap <space> za
 
 " open files with ctrl-p
-nnoremap <c-o> :Files<cr>
+nnoremap <leader>f :Files<cr>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=120 |
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix |
@@ -69,8 +82,7 @@ set encoding=utf-8
 syntax on
 
 " air-line
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'onedark'
 let g:airline#extensions#tabline#enabled = 1
 
 if !exists('g:airline_symbols')
@@ -100,29 +112,61 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-highlight Comment cterm=italic gui=italic
 
 set laststatus=2
-" set showtabline=2
+set showtabline=2
 
 " true colours
 set background=dark
-set t_Co=256
 
 if (has("nvim"))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
+if (has("termguicolors"))
+  set termguicolors
+endif
 
-colorscheme gruvbox
+colorscheme palenight
+
+let mapleader = " "
+let maplocalleader = "\\"
 
 set nu rnu " relative line numbering
 set clipboard=unnamed " public copy/paste register
 
+set ignorecase
+set smartcase
+
 set mouse=a
 
 " nerdtree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>nn :NERDTreeFocus<CR>
+nnoremap <leader>nc :NERDTree<CR> 
+nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
+
+
+" Latex
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'open -a Preview'
+
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
+nnoremap <C-n> :tabprevious<CR>
+nnoremap <C-m> :tabnext<CR>
+
+nnoremap <ScrollWheelUp> <C-Y>
+nnoremap <ScrollWheelDown> <C-E>
+
+map <C-s> <Plug>(easymotion-s)
+
+
+let g:vimtex_view_method = 'skim'
+
+
+let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
+let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
+let g:pencil#autoformat = 1      " 0=disable, 1=enable (def)
+
