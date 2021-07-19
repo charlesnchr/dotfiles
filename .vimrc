@@ -46,10 +46,20 @@ Plugin 'drewtempelmeyer/palenight.vim'
 
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'junegunn/goyo.vim'
+Plugin 'enricobacis/vim-airline-clock'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'jupyter-vim/jupyter-vim'
+Plugin 'sillybun/vim-repl'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+
+let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -154,8 +164,15 @@ let g:livepreview_previewer = 'open -a Preview'
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
-nnoremap <C-n> :tabprevious<CR>
-nnoremap <C-m> :tabnext<CR>
+nnoremap <C-S-q> :tabprevious<CR>
+nnoremap <C-q> :tabnext<CR>
+
+
+if !exists('g:lasttab')
+  let g:lasttab = 1
+endif
+nmap <leader><Tab> :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
 
 nnoremap <ScrollWheelUp> <C-Y>
 nnoremap <ScrollWheelDown> <C-E>
@@ -170,3 +187,17 @@ let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide a
 let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
 let g:pencil#autoformat = 1      " 0=disable, 1=enable (def)
 
+
+
+let g:goyo_height = 100
+let g:goyo_linenr = 1
+
+
+
+
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:ycm_autoclose_preview_window_after_completion=0
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
