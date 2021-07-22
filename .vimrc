@@ -41,6 +41,8 @@ Plugin 'lervag/vimtex'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+
 Plugin 'joshdick/onedark.vim'
 Plugin 'drewtempelmeyer/palenight.vim'
 
@@ -52,23 +54,29 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jupyter-vim/jupyter-vim'
 Plugin 'sillybun/vim-repl'
-
+Plugin 'vimwiki/vimwiki'
+Plugin 'unblevable/quick-scope'
+Plugin 'kana/vim-textobj-user'
+Plugin 'rbonvall/vim-textobj-latex'
+Plugin 'tools-life/taskwiki'
+Plugin 'mhinz/vim-startify'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'junegunn/gv.vim'
+Plugin 'thaerkh/vim-workspace'
+Plugin 'voldikss/vim-floaterm'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+let mapleader = "\\"
+let maplocalleader = " " " used to be \\
 
 let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 set splitbelow
 set splitright
+set startofline " only relevant for nvim as otherwise default
 
 " Enable folding
 set foldmethod=indent
@@ -78,6 +86,8 @@ set foldlevel=99
 
 " open files with ctrl-p
 nnoremap <leader>f :Files<cr>
+nnoremap <leader>b :Buffer<cr>
+nnoremap <leader>h :History<cr>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -87,9 +97,16 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set autoindent |
     \ set fileformat=unix |
 
+" Reopen the last edited position in files
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
 set encoding=utf-8
 
 syntax on
+
+" for vimwiki
+filetype plugin on
+
 
 " air-line
 let g:airline_theme = 'onedark'
@@ -139,9 +156,6 @@ endif
 
 colorscheme palenight
 
-let mapleader = " "
-let maplocalleader = "\\"
-
 set nu rnu " relative line numbering
 set clipboard=unnamed " public copy/paste register
 
@@ -177,11 +191,17 @@ au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <ScrollWheelUp> <C-Y>
 nnoremap <ScrollWheelDown> <C-E>
 
-map <C-s> <Plug>(easymotion-s)
-
+map <localleader>s <Plug>(easymotion-s)
 
 let g:vimtex_view_method = 'skim'
 
+let g:vimtex_compiler_latexmk = { 
+        \ 'executable' : 'latexmk',
+        \ 'options' : [ 
+        \   '-xelatex',
+        \   '-interaction=nonstopmode',
+        \ ],
+        \}
 
 let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
 let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
@@ -194,10 +214,103 @@ let g:goyo_linenr = 1
 
 
 
-
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+
 let g:ycm_autoclose_preview_window_after_completion=0
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+nnoremap <localleader>r :REPLToggle<Cr>
+nnoremap <localleader>e :REPLSendSession<Cr>
+
+
+
+let g:vimwiki_list = [{
+  \ 'path': '$HOME/0main/wiki',
+  \ 'template_path': '$HOME/0main/wiki/templates',
+  \ 'template_default': 'default',
+  \ 'template_ext': '.html'}]
+
+if !exists('g:ycm_semantic_triggers')
+
+let g:ycm_semantic_triggers = {}
+endif
+au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+
+
+" quick save 
+nnoremap <A-s> :w<cr>
+inoremap <A-s> <Esc>:w<cr>
+
+" quick edit
+nnoremap <localleader>ve :e ~/.vimrc<cr>
+nnoremap <localleader>vs :source ~/.vimrc<cr>
+nnoremap <localleader>w :w<cr>
+nnoremap <localleader>q :close<cr>
+nnoremap <localleader>0 :Startify<cr>
+
+
+" Ctrl-]/[ inserts line below/above
+nnoremap <A-h> :<CR>mzO<Esc>`z:<CR>
+nnoremap <A-l> :<CR>mzo<Esc>`z:<CR>
+
+" Move lines
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" buffer cycle
+:nnoremap <A-q> :bnext<CR>
+:nnoremap <A-S-q> :bprevious<CR>
+
+
+
+function! WC()
+    let filename = expand("%")
+    let cmd = "./texcount.pl " . filename
+    let result = system(cmd)
+    echo result 
+endfunction
+
+command WC call WC()
+
+nnoremap <leader>ws :ToggleWorkspace<CR>
+
+
+let g:startify_bookmarks = [
+            \ { 'p': '~/0main/0phd' },
+            \ { 'c': '~/0main/0phd/ccRestore' },
+            \ { 'g': '~/GitHub' },
+            \ '~/0main',
+            \ ]
+
+
+
+nnoremap <silent> <F7> :FloatermNew<CR>
+tnoremap <silent> <F7> <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <F8> :FloatermPrev<CR>
+tnoremap <silent> <F8> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F9> :FloatermNext<CR>
+tnoremap <silent> <F9> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <F12> :FloatermToggle<CR>
+tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
+
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+
