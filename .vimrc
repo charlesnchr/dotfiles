@@ -13,8 +13,6 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
-
-
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'sheerun/vim-polyglot'
@@ -42,10 +40,10 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-notes'
-
+" styling
 Plugin 'joshdick/onedark.vim'
 Plugin 'drewtempelmeyer/palenight.vim'
-
+" misc 
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'junegunn/goyo.vim'
 Plugin 'enricobacis/vim-airline-clock'
@@ -62,14 +60,15 @@ Plugin 'tools-life/taskwiki'
 Plugin 'mhinz/vim-startify'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'junegunn/gv.vim'
-Plugin 'thaerkh/vim-workspace'
 Plugin 'voldikss/vim-floaterm'
+Plugin 'mg979/vim-visual-multi'
+Plugin 'mattn/calendar-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-let mapleader = "\\"
+let mapleader = ","
 let maplocalleader = " " " used to be \\
 
 let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
@@ -106,6 +105,11 @@ syntax on
 
 " for vimwiki
 filetype plugin on
+let g:vimwiki_list = [{
+  \ 'path': '$HOME/0main/wiki',
+  \ 'template_path': '$HOME/0main/wiki/templates',
+  \ 'template_default': 'default',
+  \ 'template_ext': '.html'}]
 
 
 " air-line
@@ -171,13 +175,6 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 
-" Latex
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'open -a Preview'
-
-nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
-nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-
 nnoremap <C-S-q> :tabprevious<CR>
 nnoremap <C-q> :tabnext<CR>
 
@@ -193,8 +190,8 @@ nnoremap <ScrollWheelDown> <C-E>
 
 map <localleader>s <Plug>(easymotion-s)
 
+" latex
 let g:vimtex_view_method = 'skim'
-
 let g:vimtex_compiler_latexmk = { 
         \ 'executable' : 'latexmk',
         \ 'options' : [ 
@@ -203,55 +200,53 @@ let g:vimtex_compiler_latexmk = {
         \ ],
         \}
 
+function! WC()
+    let filename = expand("%")
+    let cmd = "./texcount.pl " . filename
+    let result = system(cmd)
+    echo result 
+endfunction
+
+command WC call WC()
+
+
+" writing
 let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
 let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
 let g:pencil#autoformat = 1      " 0=disable, 1=enable (def)
-
-
-
 let g:goyo_height = 100
 let g:goyo_linenr = 1
 
 
-
+" autocomplete
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-
 let g:ycm_autoclose_preview_window_after_completion=0
 map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-nnoremap <localleader>r :REPLToggle<Cr>
-nnoremap <localleader>e :REPLSendSession<Cr>
-
-
-
-let g:vimwiki_list = [{
-  \ 'path': '$HOME/0main/wiki',
-  \ 'template_path': '$HOME/0main/wiki/templates',
-  \ 'template_default': 'default',
-  \ 'template_ext': '.html'}]
-
+" for latex
 if !exists('g:ycm_semantic_triggers')
-
-let g:ycm_semantic_triggers = {}
+    let g:ycm_semantic_triggers = {}
 endif
 au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 
-" quick save 
-nnoremap <A-s> :w<cr>
-inoremap <A-s> <Esc>:w<cr>
 
-" quick edit
-nnoremap <localleader>ve :e ~/.vimrc<cr>
-nnoremap <localleader>vs :source ~/.vimrc<cr>
-nnoremap <localleader>w :w<cr>
-nnoremap <localleader>q :close<cr>
-nnoremap <localleader>0 :Startify<cr>
+" programming
+nnoremap <localleader>r :REPLToggle<Cr>
+nnoremap <localleader>e :REPLSendSession<Cr>
+nnoremap <silent> <F9> :FloatermNew<CR>
+tnoremap <silent> <F9> <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <F10> :FloatermPrev<CR>
+tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F11> :FloatermNext<CR>
+tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <F12> :FloatermToggle<CR>
+tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
 
-
+" -------------------
+" NAVIGATION
+" -------------------
 " Ctrl-]/[ inserts line below/above
 nnoremap <A-h> :<CR>mzO<Esc>`z:<CR>
 nnoremap <A-l> :<CR>mzo<Esc>`z:<CR>
@@ -268,18 +263,20 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 :nnoremap <A-q> :bnext<CR>
 :nnoremap <A-S-q> :bprevious<CR>
 
+" -------------------
+" CONVENIENCE
+" -------------------
+" quick save 
+nnoremap <A-s> :w<cr>
+inoremap <A-s> <Esc>:w<cr>
 
-
-function! WC()
-    let filename = expand("%")
-    let cmd = "./texcount.pl " . filename
-    let result = system(cmd)
-    echo result 
-endfunction
-
-command WC call WC()
-
-nnoremap <leader>ws :ToggleWorkspace<CR>
+" quick edit
+nnoremap <localleader>ve :e ~/.vimrc<cr>
+nnoremap <localleader>vs :source ~/.vimrc<cr>
+nnoremap <localleader>vp :PluginInstall<cr>
+nnoremap <localleader>w :w<cr>
+nnoremap <localleader>q :close<cr>
+nnoremap <localleader>0 :Startify<cr>
 
 
 let g:startify_bookmarks = [
@@ -290,27 +287,6 @@ let g:startify_bookmarks = [
             \ ]
 
 
-
-nnoremap <silent> <F7> :FloatermNew<CR>
-tnoremap <silent> <F7> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <F8> :FloatermPrev<CR>
-tnoremap <silent> <F8> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <F9> :FloatermNext<CR>
-tnoremap <silent> <F9> <C-\><C-n>:FloatermNext<CR>
-nnoremap <silent> <F12> :FloatermToggle<CR>
-tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
-
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
-
+hi VimwikiHeader1 guifg=#00FF03
+hi VimwikiHeader2 guifg=#83ebd3
+hi VimwikiHeader3 guifg=#83c8eb
