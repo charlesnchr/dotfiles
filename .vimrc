@@ -63,6 +63,7 @@ Plugin 'junegunn/gv.vim'
 Plugin 'voldikss/vim-floaterm'
 Plugin 'mg979/vim-visual-multi'
 Plugin 'mattn/calendar-vim'
+Plugin 'python-mode/python-mode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -213,7 +214,7 @@ command WC call WC()
 " writing
 let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
 let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
-let g:pencil#autoformat = 1      " 0=disable, 1=enable (def)
+let g:pencil#autoformat = 0      " 0=disable, 1=enable (def)
 let g:goyo_height = 100
 let g:goyo_linenr = 1
 
@@ -290,3 +291,9 @@ let g:startify_bookmarks = [
 hi VimwikiHeader1 guifg=#00FF03
 hi VimwikiHeader2 guifg=#83ebd3
 hi VimwikiHeader3 guifg=#83c8eb
+
+" Insert timestamp
+nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+"imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
+imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
+
