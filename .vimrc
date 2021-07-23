@@ -33,7 +33,7 @@ Plugin 'freitass/todo.txt-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 " writing
-Plugin 'reedes/vim-pencil'
+"Plugin 'reedes/vim-pencil'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'lervag/vimtex'
 Plugin 'easymotion/vim-easymotion'
@@ -240,8 +240,8 @@ nnoremap <silent> <F9> :FloatermNew<CR>
 tnoremap <silent> <F9> <C-\><C-n>:FloatermNew<CR>
 nnoremap <silent> <F10> :FloatermPrev<CR>
 tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <F11> :FloatermNext<CR>
-tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <F7> :FloatermNext<CR>
+tnoremap <silent> <F7> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
 
@@ -296,4 +296,6 @@ hi VimwikiHeader3 guifg=#83c8eb
 nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
 imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
-
+"let g:floaterm_wintype = 'split'
+let g:floaterm_width = 0.8 
+let g:floaterm_height = 0.8 
