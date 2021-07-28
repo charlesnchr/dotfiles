@@ -1,7 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
+nmap <Leader>wn <Plug>VimwikiNextLink
+
+"set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -33,7 +35,7 @@ Plugin 'freitass/todo.txt-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 " writing
-"Plugin 'reedes/vim-pencil'
+Plugin 'reedes/vim-pencil'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'lervag/vimtex'
 Plugin 'easymotion/vim-easymotion'
@@ -64,6 +66,8 @@ Plugin 'voldikss/vim-floaterm'
 Plugin 'mg979/vim-visual-multi'
 Plugin 'mattn/calendar-vim'
 Plugin 'python-mode/python-mode'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'alok/notational-fzf-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,9 +97,14 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
+    \ set textwidth=120 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix |
+    \ set fileformat=unix 
+
+
+au BufNewFile,BufRead *.wiki 
+      \ set textwidth=80  
 
 " Reopen the last edited position in files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -111,6 +120,7 @@ let g:vimwiki_list = [{
   \ 'template_path': '$HOME/0main/wiki/templates',
   \ 'template_default': 'default',
   \ 'template_ext': '.html'}]
+let g:nv_search_paths = ['~/0main/wiki']
 
 
 " air-line
@@ -212,11 +222,11 @@ command WC call WC()
 
 
 " writing
-let g:pencil#conceallevel = 0     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
+let g:pencil#conceallevel = 3     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
 let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
 let g:pencil#autoformat = 0      " 0=disable, 1=enable (def)
 let g:goyo_height = 100
-let g:goyo_linenr = 1
+"let g:goyo_linenr = 1
 
 
 " autocomplete
@@ -261,8 +271,8 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " buffer cycle
-:nnoremap <A-q> :bnext<CR>
-:nnoremap <A-S-q> :bprevious<CR>
+:nnoremap <localleader><tab> :bnext<CR>
+:nnoremap <localleader><S-tab> :bprevious<CR>
 
 " -------------------
 " CONVENIENCE
@@ -287,10 +297,10 @@ let g:startify_bookmarks = [
             \ '~/0main',
             \ ]
 
-
 hi VimwikiHeader1 guifg=#00FF03
 hi VimwikiHeader2 guifg=#83ebd3
 hi VimwikiHeader3 guifg=#83c8eb
+let g:vimwiki_global_ext = 0
 
 " Insert timestamp
 nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
@@ -299,3 +309,9 @@ imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
 "let g:floaterm_wintype = 'split'
 let g:floaterm_width = 0.8 
 let g:floaterm_height = 0.8 
+
+
+let g:taskwiki_sort_orders={"T": "project+,due-"}
+nmap <localleader>i <Plug>VimwikiNextLink
+
+let g:airline_section_x = '%{PencilMode()}'
