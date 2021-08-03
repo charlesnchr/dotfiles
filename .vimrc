@@ -53,9 +53,8 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jupyter-vim/jupyter-vim'
-Plugin 'sillybun/vim-repl'
 Plugin 'vimwiki/vimwiki'
-Plugin 'unblevable/quick-scope'
+"Plugin 'unblevable/quick-scope'
 Plugin 'kana/vim-textobj-user'
 Plugin 'rbonvall/vim-textobj-latex'
 Plugin 'tools-life/taskwiki'
@@ -68,10 +67,17 @@ Plugin 'mattn/calendar-vim'
 Plugin 'python-mode/python-mode'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'alok/notational-fzf-vim'
+Plugin 'kassio/neoterm'
+Plugin 'preservim/tagbar'
+Plugin 'francoiscabrol/ranger.vim'
+Plugin 'rupa/v'
+Plugin 'trotter/autojump.vim'
+Plugin 'ojroques/vim-oscyank'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -89,9 +95,9 @@ set foldlevel=99
 "nnoremap <space> za
 
 " open files with ctrl-p
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>b :Buffer<cr>
-nnoremap <leader>h :History<cr>
+nnoremap <localleader>f :Files<cr>
+nnoremap <localleader>b :Buffer<cr>
+nnoremap <localleader>h :History<cr>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -100,11 +106,14 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set textwidth=120 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix 
+    \ set fileformat=unix
 
 
-au BufNewFile,BufRead *.wiki 
+au BufNewFile,BufRead *.tex 
       \ set textwidth=80  
+
+au BufNewFile,BufRead */wiki/*
+      \ SoftPencil
 
 " Reopen the last edited position in files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -244,31 +253,20 @@ au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 
 " programming
-nnoremap <localleader>r :REPLToggle<Cr>
-nnoremap <localleader>e :REPLSendSession<Cr>
 nnoremap <silent> <F9> :FloatermNew<CR>
 tnoremap <silent> <F9> <C-\><C-n>:FloatermNew<CR>
 nnoremap <silent> <F10> :FloatermPrev<CR>
 tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <F7> :FloatermNext<CR>
-tnoremap <silent> <F7> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <F11> :FloatermNext<CR>
+tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
+nnoremap <silent> <F7> :Ttoggle<CR>
+tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
 
 " -------------------
 " NAVIGATION
 " -------------------
-" Ctrl-]/[ inserts line below/above
-nnoremap <A-h> :<CR>mzO<Esc>`z:<CR>
-nnoremap <A-l> :<CR>mzo<Esc>`z:<CR>
-
-" Move lines
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " buffer cycle
 :nnoremap <localleader><tab> :bnext<CR>
@@ -283,12 +281,14 @@ inoremap <A-s> <Esc>:w<cr>
 
 " quick edit
 nnoremap <localleader>ve :e ~/.vimrc<cr>
+nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :PluginInstall<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :close<cr>
 nnoremap <localleader>0 :Startify<cr>
-
+nnoremap <localleader>go :Goyo<cr>
+nnoremap <localleader>cd :cd %:h<cr>
 
 let g:startify_bookmarks = [
             \ { 'p': '~/0main/0phd' },
@@ -303,15 +303,21 @@ hi VimwikiHeader3 guifg=#83c8eb
 let g:vimwiki_global_ext = 0
 
 " Insert timestamp
-nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
+nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
+nmap <F4> :! save_screenshot.sh ~/0main/wiki/images<CR>
+imap <F4> <C-R>=strftime("%Y-%m-%d")<CR>
+
 "let g:floaterm_wintype = 'split'
 let g:floaterm_width = 0.8 
 let g:floaterm_height = 0.8 
 
 
 let g:taskwiki_sort_orders={"T": "project+,due-"}
-nmap <localleader>i <Plug>VimwikiNextLink
+nmap <C-S-o> <Plug>VimwikiPrevLink
+nmap <C-S-i> <Plug>VimwikiNextLink
 
 let g:airline_section_x = '%{PencilMode()}'
+
+vnoremap <leader>c :OSCYank<CR>
