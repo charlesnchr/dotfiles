@@ -49,7 +49,7 @@ Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'junegunn/goyo.vim'
 Plugin 'enricobacis/vim-airline-clock'
-Plugin 'ycm-core/YouCompleteMe'
+"Plugin 'ycm-core/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jupyter-vim/jupyter-vim'
@@ -89,8 +89,8 @@ set splitright
 set startofline " only relevant for nvim as otherwise default
 
 " Enable folding
-set foldmethod=indent
-set foldlevel=99
+"set foldmethod=indent
+"set foldlevel=99
 "Enable folding with the spacebar
 "nnoremap <space> za
 
@@ -168,17 +168,8 @@ set laststatus=2
 set showtabline=2
 
 " true colours
-set background=dark
-
-if (has("nvim"))
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 colorscheme palenight
+set termguicolors
 
 set nu rnu " relative line numbering
 set clipboard=unnamed " public copy/paste register
@@ -314,9 +305,9 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8 
 
 
-let g:taskwiki_sort_orders={"T": "project+,due-"}
-nmap <C-S-o> <Plug>VimwikiPrevLink
-nmap <C-S-i> <Plug>VimwikiNextLink
+let g:taskwiki_sort_orders={"T": "end-"}
+nmap <C-S-k> <Plug>VimwikiPrevLink
+nmap <C-S-j> <Plug>VimwikiNextLink
 
 let g:airline_section_x = '%{PencilMode()}'
 
