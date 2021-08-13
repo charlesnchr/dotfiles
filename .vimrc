@@ -85,8 +85,6 @@ filetype plugin indent on    " required
 let mapleader = ","
 let maplocalleader = " " " used to be \\
 
-let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
-
 set splitbelow
 set splitright
 set startofline " only relevant for nvim as otherwise default
@@ -126,7 +124,10 @@ set encoding=utf-8
 syntax on
 filetype plugin on
 
+" platform dependent
 if has('mac')
+  let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
+
   " for vimwiki
   let g:vimwiki_list = [{
     \ 'path': '$HOME/0main/wiki',
@@ -141,6 +142,7 @@ if has('mac')
     \ '~/0main',
     \ ]
 elseif has('unix')
+  let g:ycm_path_to_python_interpreter='/home/cc/miniconda3/bin/python'
   let g:startify_bookmarks = [
     \ { 'g': '~/GitHub' }
     \ ]
