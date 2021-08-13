@@ -49,7 +49,7 @@ Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'junegunn/goyo.vim'
 Plugin 'enricobacis/vim-airline-clock'
-"Plugin 'ycm-core/YouCompleteMe'
+Plugin 'ycm-core/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'jupyter-vim/jupyter-vim'
@@ -84,6 +84,8 @@ filetype plugin indent on    " required
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
+
+let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
 set splitbelow
 set splitright
