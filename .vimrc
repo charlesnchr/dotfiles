@@ -70,8 +70,6 @@ Plugin 'alok/notational-fzf-vim'
 Plugin 'kassio/neoterm'
 Plugin 'preservim/tagbar'
 Plugin 'francoiscabrol/ranger.vim'
-Plugin 'rupa/v'
-Plugin 'trotter/autojump.vim'
 Plugin 'ojroques/vim-oscyank'
 
 " All of your Plugins must be added before the following line
@@ -259,7 +257,7 @@ tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
 " NAVIGATION
 " -------------------
 
-" buffer cycle
+" bufmer cycle
 :nnoremap <localleader><tab> :bnext<CR>
 :nnoremap <localleader><S-tab> :bprevious<CR>
 
@@ -267,8 +265,8 @@ tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
 " CONVENIENCE
 " -------------------
 " quick save 
-nnoremap <A-s> :w<cr>
-inoremap <A-s> <Esc>:w<cr>
+nnoremap <C-S-s> :w<cr>
+inoremap <C-S-s> <Esc>:w<cr>
 
 " quick edit
 nnoremap <localleader>ve :e ~/.vimrc<cr>
@@ -276,7 +274,8 @@ nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :PluginInstall<cr>
 nnoremap <localleader>w :w<cr>
-nnoremap <localleader>q :close<cr>
+nnoremap <localleader>q :quit<cr>
+nnoremap <localleader>x :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
 nnoremap <localleader>cd :cd %:h<cr>
@@ -306,8 +305,8 @@ let g:floaterm_height = 0.8
 
 
 let g:taskwiki_sort_orders={"T": "end-"}
-nmap <C-S-k> <Plug>VimwikiPrevLink
-nmap <C-S-j> <Plug>VimwikiNextLink
+nmap <C-k> <Plug>VimwikiPrevLink
+nmap <C-j> <Plug>VimwikiNextLink
 
 let g:airline_section_x = '%{PencilMode()}'
 
