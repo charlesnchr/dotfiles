@@ -136,5 +136,4 @@ v() {
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-source ~/dotfiles/.zshrc_local
-
+source $HOME/dotfiles/.zshrc_local

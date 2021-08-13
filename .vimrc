@@ -66,7 +66,12 @@ Plugin 'mg979/vim-visual-multi'
 Plugin 'mattn/calendar-vim'
 Plugin 'python-mode/python-mode'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'alok/notational-fzf-vim'
+
+if has('mac')
+  Plugin 'alok/notational-fzf-vim'
+"elseif has('unix')
+endif
+
 Plugin 'kassio/neoterm'
 Plugin 'preservim/tagbar'
 Plugin 'francoiscabrol/ranger.vim'
@@ -79,8 +84,6 @@ filetype plugin indent on    " required
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
-
-let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
 set splitbelow
 set splitright
@@ -119,15 +122,27 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set encoding=utf-8
 
 syntax on
-
-" for vimwiki
 filetype plugin on
-let g:vimwiki_list = [{
-  \ 'path': '$HOME/0main/wiki',
-  \ 'template_path': '$HOME/0main/wiki/templates',
-  \ 'template_default': 'default',
-  \ 'template_ext': '.html'}]
-let g:nv_search_paths = ['~/0main/wiki']
+
+if has('mac')
+  " for vimwiki
+  let g:vimwiki_list = [{
+    \ 'path': '$HOME/0main/wiki',
+    \ 'template_path': '$HOME/0main/wiki/templates',
+    \ 'template_default': 'default',
+    \ 'template_ext': '.html'}]
+  let g:nv_search_paths = ['~/0main/wiki']
+  let g:startify_bookmarks = [
+    \ { 'p': '~/0main/0phd' },
+    \ { 'c': '~/0main/0phd/ccRestore' },
+    \ { 'g': '~/GitHub' },
+    \ '~/0main',
+    \ ]
+elseif has('unix')
+  let g:startify_bookmarks = [
+    \ { 'g': '~/GitHub' }
+    \ ]
+endif
 
 
 " air-line
@@ -280,12 +295,6 @@ nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
 nnoremap <localleader>cd :cd %:h<cr>
 
-let g:startify_bookmarks = [
-            \ { 'p': '~/0main/0phd' },
-            \ { 'c': '~/0main/0phd/ccRestore' },
-            \ { 'g': '~/GitHub' },
-            \ '~/0main',
-            \ ]
 
 hi VimwikiHeader1 guifg=#00FF03
 hi VimwikiHeader2 guifg=#83ebd3
