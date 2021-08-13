@@ -108,6 +108,7 @@ fi
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
+export PATH="$HOME/bin:$PATH"
 
 source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 autoload -Uz add-zsh-hook

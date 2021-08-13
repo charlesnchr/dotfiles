@@ -13,7 +13,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/Users/cc/bin:$PATH"
 
 [ -f $(brew --prefix)/etc/profile.d/autojump.sh ] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
