@@ -78,7 +78,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools timewarrior)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,32 +115,14 @@ autoload -Uz add-zsh-hook
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/cc/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/cc/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/cc/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/cc/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 # for ranger
 export VISUAL=vim;
 export EDITOR=vim;
 
-export PATH="/Users/cc/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f $(brew --prefix)/etc/profile.d/autojump.sh ] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 v() {
   local files
@@ -149,3 +131,9 @@ v() {
             [ -f "${line/\~/$HOME}" ] && echo "$line"
           done | fzf-tmux -d -m -q "$*" -1) && vim ${files//\~/$HOME}
 }
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+source ~/dotfiles/.zshrc_local
+
