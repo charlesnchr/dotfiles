@@ -66,6 +66,10 @@ Plugin 'mg979/vim-visual-multi'
 Plugin 'mattn/calendar-vim'
 Plugin 'python-mode/python-mode'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'sillybun/vim-repl'
+Plugin 'jpalardy/vim-slime'
+Plugin 'hanschen/vim-ipython-cell'
+
 
 if has('mac')
   Plugin 'alok/notational-fzf-vim'
@@ -75,7 +79,10 @@ endif
 Plugin 'kassio/neoterm'
 Plugin 'preservim/tagbar'
 Plugin 'francoiscabrol/ranger.vim'
+Plugin 'rupa/v'
+Plugin 'trotter/autojump.vim'
 Plugin 'ojroques/vim-oscyank'
+Plugin 'junegunn/vim-peekaboo'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,6 +101,7 @@ set startofline " only relevant for nvim as otherwise default
 "set foldlevel=99
 "Enable folding with the spacebar
 "nnoremap <space> za
+
 
 " open files with ctrl-p
 nnoremap <localleader>f :Files<cr>
@@ -261,16 +269,16 @@ au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 
 " programming
-nnoremap <silent> <F9> :FloatermNew<CR>
-tnoremap <silent> <F9> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <F10> :FloatermPrev<CR>
-tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <F11> :FloatermNext<CR>
-tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <localleader><F12> :FloatermNew<CR>
+tnoremap <silent> <localleader><F12> <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <S-F11> :FloatermPrev<CR>
+tnoremap <silent> <S-F11> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <S-F12> :FloatermNext<CR>
+tnoremap <silent> <S-F12> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <F7> :Ttoggle<CR>
-tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
+nnoremap <silent> <S-F7> :Ttoggle<CR>
+tnoremap <silent> <S-F7> <C-\><C-n>:Ttoggle<CR>
 
 " -------------------
 " NAVIGATION
@@ -324,3 +332,80 @@ nmap <C-j> <Plug>VimwikiNextLink
 let g:airline_section_x = '%{PencilMode()}'
 
 vnoremap <leader>c :OSCYank<CR>
+
+"------------------------------------------------------------------------------
+" IPython  configuration
+"------------------------------------------------------------------------------
+" For Ipython plugin - Matlab bindings
+" map <F5> to save and run script
+nnoremap <F5> :w<CR>:IPythonCellRun<CR>
+inoremap <F5> <C-o>:w<CR><C-o>:IPythonCellRun<CR>
+
+" map <F6> to evaluate current cell without saving
+nnoremap <F6> :IPythonCellExecuteCellVerbose<CR>
+inoremap <F6> <C-o>:IPythonCellExecuteCellVerbose<CR>
+"nnoremap <F6> :REPLSendSession<CR>
+"inoremap <F6> <C-o>:REPLSendSession<CR>
+let g:repl_program = {
+			\	'python': ['ipython'],
+			\	'default': ['bash']
+			\	}
+
+
+" map <F7> to evaluate current cell and jump to next cell without saving
+nnoremap <F7> :IPythonCellExecuteCellVerboseJump<CR>
+inoremap <F7> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
+
+augroup ipython_cell_highlight
+    autocmd!
+    autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
+augroup END
+
+" map [c and ]c to jump to the previous and next cell header
+nnoremap [c :IPythonCellPrevCell<CR>
+nnoremap ]c :IPythonCellNextCell<CR>
+
+" map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
+nmap <F9> :IPythonCellInsertAbove<CR>a
+nmap <F10> :IPythonCellInsertBelow<CR>a
+
+" also make <F9> and <F10> work in insert mode
+imap <F9> <C-o>:IPythonCellInsertAbove<CR>
+imap <F10> <C-o>:IPythonCellInsertBelow<CR>
+
+
+"------------------------------------------------------------------------------
+" slime configuration
+"------------------------------------------------------------------------------
+" always use tmux
+let g:slime_target = 'tmux'
+
+" fix paste issues in ipython
+let g:slime_python_ipython = 1
+
+let g:slime_cell_delimiter = "# %%"
+nmap <leader>s <Plug>SlimeSendCell
+
+" always send text to the top-right pane in the current tmux tab without asking
+let g:slime_default_config = {
+            \ 'socket_name': get(split($TMUX, ','), 0),
+            \ 'target_pane': '{right-of}' }
+let g:slime_dont_ask_default = 1
+
+
+"------------------------------------------------------------------------------
+" tab navigation
+"------------------------------------------------------------------------------
+" tab navigation: Alt or Ctrl+Shift may not work in terminal:
+" http://vim.wikia.com/wiki/Alternative_tab_navigation
+" Tab navigation like Firefox: only 'open new tab' works in terminal
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-t>     <Esc>:tabnew<CR>
+" move to the previous/next tabpage.
+nnoremap <C-j> gT
+nnoremap <C-k> gt
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+
