@@ -563,7 +563,7 @@ This function is called at the very end of Spacemacs initialization."
  '(ispell-dictionary "en_GB")
  '(ispell-program-name "aspell")
  '(mac-command-modifier 'alt)
- '(mac-option-modifier 'meta)
+ '(mac-option-modifier nil)
  '(org-format-latex-options
    '(:foreground default :background default :scale 5.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))

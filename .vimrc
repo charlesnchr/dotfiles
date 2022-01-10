@@ -1,92 +1,115 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-nmap <Leader>wn <Plug>VimwikiNextLink
+"lua require('lua-init')
+
+"nmap <Leader>wn <Plug>VimwikiNextLink
 
 "set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin()
 
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'junegunn/fzf.vim'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'tpope/vim-surround'
-Plugin 'Raimondi/delimitMate'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'rafi/awesome-vim-colorschemes'
-Plugin 'preservim/nerdcommenter'
-Plugin 'preservim/nerdtree'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim'
-Plugin 'aserebryakov/vim-todo-lists'
-Plugin 'freitass/todo.txt-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-surround'
+" Plug 'Raimondi/delimitMate'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
+"Plug 'ervandew/supertab'
+Plug 'kien/ctrlp.vim'
+"Plug 'aserebryakov/vim-todo-lists'
+"Plug 'freitass/todo.txt-vim'
 " markdown syntax
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'Konfekt/FastFold'
 " writing
-Plugin 'reedes/vim-pencil'
-Plugin 'xuhdev/vim-latex-live-preview'
-Plugin 'lervag/vimtex'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'xolox/vim-colorscheme-switcher'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
+"Plug 'reedes/vim-pencil'
+Plug 'xuhdev/vim-latex-live-preview'
+Plug 'lervag/vimtex'
+Plug 'easymotion/vim-easymotion'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-notes'
 " styling
-Plugin 'joshdick/onedark.vim'
-Plugin 'drewtempelmeyer/palenight.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 " misc 
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'junegunn/goyo.vim'
-Plugin 'enricobacis/vim-airline-clock'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'jupyter-vim/jupyter-vim'
-Plugin 'vimwiki/vimwiki'
-"Plugin 'unblevable/quick-scope'
-Plugin 'kana/vim-textobj-user'
-Plugin 'rbonvall/vim-textobj-latex'
-Plugin 'tools-life/taskwiki'
-Plugin 'mhinz/vim-startify'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'junegunn/gv.vim'
-Plugin 'voldikss/vim-floaterm'
-Plugin 'mg979/vim-visual-multi'
-Plugin 'mattn/calendar-vim'
-Plugin 'python-mode/python-mode'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'sillybun/vim-repl'
-Plugin 'jpalardy/vim-slime'
-Plugin 'hanschen/vim-ipython-cell'
-
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'junegunn/goyo.vim'
+Plug 'enricobacis/vim-airline-clock'
+" Plug 'ycm-core/YouCompleteMe'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'vimwiki/vimwiki'
+"Plug 'unblevable/quick-scope'
+Plug 'kana/vim-textobj-user'
+Plug 'rbonvall/vim-textobj-latex'
+Plug 'tools-life/taskwiki'
+Plug 'mhinz/vim-startify'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'junegunn/gv.vim'
+Plug 'voldikss/vim-floaterm'
+Plug 'mg979/vim-visual-multi'
+Plug 'mattn/calendar-vim'
+Plug 'python-mode/python-mode'
+Plug 'tpope/vim-unimpaired'
+Plug 'sillybun/vim-repl'
+Plug 'jpalardy/vim-slime'
+Plug 'hanschen/vim-ipython-cell'
+Plug 'jupyter-vim/jupyter-vim'
+Plug 'mikelue/vim-maven-plugin'
+Plug 'kevinhwang91/nvim-hlslens'
 
 if has('mac')
-  Plugin 'alok/notational-fzf-vim'
+  Plug 'alok/notational-fzf-vim'
 "elseif has('unix')
 endif
 
-Plugin 'kassio/neoterm'
-Plugin 'preservim/tagbar'
-Plugin 'francoiscabrol/ranger.vim'
-Plugin 'rupa/v'
-Plugin 'trotter/autojump.vim'
-Plugin 'ojroques/vim-oscyank'
-Plugin 'junegunn/vim-peekaboo'
+Plug 'kassio/neoterm'
+Plug 'preservim/tagbar'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
+
+Plug 'rupa/v'
+Plug 'ojroques/vim-oscyank'
+Plug 'junegunn/vim-peekaboo'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'kevinhwang91/nvim-bqf'
+
+Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Have not added any parsers yet
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'sbdchd/neoformat'
+Plug 'simnalamburt/vim-mundo'
+Plug 'liuchengxu/vista.vim' 
+Plug 'tpope/vim-commentary'
+Plug 'folke/which-key.nvim'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'williamboman/nvim-lsp-installer'
+
+
+call plug#end()
 
 
 let mapleader = ","
@@ -94,19 +117,25 @@ let maplocalleader = " " " used to be \\
 
 set splitbelow
 set splitright
-set startofline " only relevant for nvim as otherwise default
 
 " Enable folding
-"set foldmethod=indent
-"set foldlevel=99
+set foldmethod=indent
+set foldlevel=99
 "Enable folding with the spacebar
-"nnoremap <space> za
+nnoremap <tab> za
+"let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_folding_style_pythonic = 1
 
 
 " open files with ctrl-p
 nnoremap <localleader>f :Files<cr>
-nnoremap <localleader>b :Buffer<cr>
+nnoremap <localleader>vv :Buffer<cr>
 nnoremap <localleader>h :History<cr>
+nnoremap <localleader>aa :CtrlPBufTag<cr>
+nnoremap <localleader>as :CtrlPBuffer<cr>
+nnoremap <localleader>ad :CtrlPMRUFiles<cr>
+nnoremap <localleader>af :CtrlPLine<cr>
+
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -121,8 +150,9 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
 au BufNewFile,BufRead *.tex 
       \ set textwidth=80  
 
-au BufNewFile,BufRead */wiki/*
-      \ SoftPencil
+"au BufNewFile,BufRead */wiki/*
+      "\ SoftPencil
+
 
 " Reopen the last edited position in files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -134,7 +164,7 @@ filetype plugin on
 
 " platform dependent
 if has('mac')
-  let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
+  let g:ycm_path_to_python_interpreter='/Users/cc/anaconda3/bin/python'
 
   " for vimwiki
   let g:vimwiki_list = [{
@@ -152,9 +182,7 @@ if has('mac')
 elseif has('unix')
   let g:ycm_path_to_python_interpreter='/home/cc/miniconda3/bin/python'
   let g:startify_bookmarks = [
-    \ { 'g': '~/GitHub' }
-    \ ]
-endif
+    \ { 'g': '~/GitHub' }]
 
 
 " air-line
@@ -188,7 +216,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-
 set laststatus=2
 set showtabline=2
 
@@ -209,6 +236,10 @@ nnoremap <leader>nn :NERDTreeFocus<CR>
 nnoremap <leader>nc :NERDTree<CR> 
 nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
+
+nmap <F2> :TagbarOpenAutoClose<CR>
+nmap <leader>tt :TagbarToggle<CR>
+nmap <leader>to :TagbarOpenAutoClose<CR>
 
 
 nnoremap <C-S-q> :tabprevious<CR>
@@ -247,38 +278,43 @@ command WC call WC()
 
 
 " writing
-let g:pencil#conceallevel = 3     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
-let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
-let g:pencil#autoformat = 0      " 0=disable, 1=enable (def)
-let g:goyo_height = 100
+"let g:pencil#conceallevel = 3     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
+"let g:pencil#concealcursor = 'c'  " n=normal, v=visual, i=insert, c=command (def)
+"let g:pencil#autoformat = 0      " 0=disable, 1=enable (def)
+let g:goyo_width = 85
 "let g:goyo_linenr = 1
 
 
 " autocomplete
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:ycm_autoclose_preview_window_after_completion=0
-map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:ycm_autoclose_preview_window_after_completion=0
+" map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " for latex
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+"'mac')
+  "let g:ycm_path_to_python_interpreter='/Users/cc/anaconda3/bin/python'
+
+  " for vimwikif !exists('g:ycm_semantic_triggers')
+    "let g:ycm_semantic_triggers = {}
+"endif
+" au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+
+" let g:ycm_filetype_blacklist={'markdown':1,'notes': 1, 'unite': 1, 'tagbar': 1, 'pandoc':1, 'qf': 1 ,'text': 1, 'infolog': 1, 'mail': 1}
 
 
 
 " programming
-nnoremap <silent> <localleader><F12> :FloatermNew<CR>
-tnoremap <silent> <localleader><F12> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <S-F11> :FloatermPrev<CR>
-tnoremap <silent> <S-F11> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <S-F12> :FloatermNext<CR>
-tnoremap <silent> <S-F12> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <leader><leader><F12> :FloatermNew<CR>
+tnoremap <silent> <leader><leader><F12> <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <F10> :FloatermPrev<CR>
+tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F11> :FloatermNext<CR>
+tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <S-F7> :Ttoggle<CR>
-tnoremap <silent> <S-F7> <C-\><C-n>:Ttoggle<CR>
+nnoremap <silent> <leader><F7> :Ttoggle<CR>
+tnoremap <silent> <leader><F7> <C-\><C-n>:Ttoggle<CR>
 
 " -------------------
 " NAVIGATION
@@ -299,7 +335,7 @@ inoremap <C-S-s> <Esc>:w<cr>
 nnoremap <localleader>ve :e ~/.vimrc<cr>
 nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
-nnoremap <localleader>vp :PluginInstall<cr>
+nnoremap <localleader>vp :PlugInstall<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
 nnoremap <localleader>x :close<cr>
@@ -325,11 +361,11 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8 
 
 
-let g:taskwiki_sort_orders={"T": "end-"}
-nmap <C-k> <Plug>VimwikiPrevLink
-nmap <C-j> <Plug>VimwikiNextLink
+"let g:taskwiki_sort_orders={"T": "end-"}
+"nmap <C-k> <Plug>VimwikiPrevLink
+"nmap <C-j> <Plug>VimwikiNextLink
 
-let g:airline_section_x = '%{PencilMode()}'
+"let g:airline_section_x = '%{PencilMode()}'
 
 vnoremap <leader>c :OSCYank<CR>
 
@@ -378,7 +414,7 @@ imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 " slime configuration
 "------------------------------------------------------------------------------
 " always use tmux
-let g:slime_target = 'tmux'
+let g:slime_target = 'vimterminal'
 
 " fix paste issues in ipython
 let g:slime_python_ipython = 1
@@ -391,7 +427,6 @@ let g:slime_default_config = {
             \ 'socket_name': get(split($TMUX, ','), 0),
             \ 'target_pane': '{right-of}' }
 let g:slime_dont_ask_default = 1
-
 
 "------------------------------------------------------------------------------
 " tab navigation
@@ -409,3 +444,46 @@ au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 
+
+"let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/plugged/vim-snippets/UltiSnips']
+
+let g:markdown_folding = 1
+let g:tex_fold_enabled = 1
+let g:vimsyn_folding = 'af'
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:sh_fold_enabled= 7
+let g:ruby_fold = 1
+let g:perl_fold = 1
+let g:perl_fold_blocks = 1
+let g:r_syntax_folding = 1
+let g:rust_fold = 1
+let g:php_folding = 1
+
+
+nnoremap gb :ls<cr>:b<space>
+set hidden
+let g:vimtex_quickfix_mode = 0  
+
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+
+call wilder#setup({'modes': [':', '/', '?']})
+
+set undofile
+set undodir=~/.vim/undo
+
+noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap <silent> N <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap * *<Cmd>lua require('hlslens').start()<CR>
+noremap # #<Cmd>lua require('hlslens').start()<CR>
+noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+noremap g# g#<Cmd>lua require('hlslens').start()<CR>
+" use : instead of <Cmd>
+nnoremap <silent> <leader>l :noh<CR>
