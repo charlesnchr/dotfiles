@@ -1,4 +1,9 @@
 
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -78,7 +83,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools fasd)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -125,15 +130,18 @@ export EDITOR=vim;
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-v() {
-  local files
-  files=$(grep '^>' ~/.viminfo | cut -c3- |
-          while read line; do
-            [ -f "${line/\~/$HOME}" ] && echo "$line"
-          done | fzf-tmux -d -m -q "$*" -1) && vim ${files//\~/$HOME}
-}
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
 source $HOME/dotfiles/.zshrc_local
+
+# avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
+bindkey "^[^[OA" up-line-or-beginning-search
+bindkey "^[^[OB" down-line-or-beginning-search
+bindkey "^[^[OC" forward-char
+bindkey "^[^[OD" backward-char
+
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
