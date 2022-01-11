@@ -1,6 +1,5 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-set updatetime=1000
 "nmap <Leader>wn <Plug>VimwikiNextLink
 
 call plug#begin()
@@ -120,6 +119,8 @@ call plug#end()
 
 lua require('lua-init')
 
+set updatetime=500
+
 
 
 
@@ -200,7 +201,17 @@ endif
 
 " air-line
 let g:airline_theme = 'onedark'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1           " enable airline tabline                                                           
+let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline                                            
+let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
+let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)      
+let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab                                                    
+let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right                                                           
+let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline                                                 
+let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline                                  
+let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline               
+let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers                                                              
+let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -227,10 +238,12 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:airline_symbols.linenr = '㏑'
 
 set laststatus=2
-"set showtabline=2
+set showtabline=0
+set signcolumn=yes
+
 
 " true colours
 colorscheme palenight
@@ -253,10 +266,6 @@ nnoremap <leader>nf :NERDTreeFind<CR>
 nmap <F2> :TagbarOpenAutoClose<CR>
 nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>to :TagbarOpenAutoClose<CR>
-
-
-nnoremap <C-S-q> :tabprevious<CR>
-nnoremap <C-q> :tabnext<CR>
 
 
 if !exists('g:lasttab')
@@ -302,15 +311,15 @@ let g:goyo_width = 85
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:ycm_autoclose_preview_window_after_completion=0
-map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_autoclose_preview_window_after_completion=0
+" map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " for latex
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+" if !exists('g:ycm_semantic_triggers')
+    " let g:ycm_semantic_triggers = {}
+" endif
+" au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
-let g:ycm_filetype_blacklist={'markdown':1,'notes': 1, 'unite': 1, 'tagbar': 1, 'pandoc':1, 'qf': 1 ,'text': 1, 'infolog': 1, 'mail': 1}
+" let g:ycm_filetype_blacklist={'markdown':1,'notes': 1, 'unite': 1, 'tagbar': 1, 'pandoc':1, 'qf': 1 ,'text': 1, 'infolog': 1, 'mail': 1}
 
 
 
@@ -507,5 +516,4 @@ nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 let g:pymode_lint_on_write = 0
-
 
