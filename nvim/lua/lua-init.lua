@@ -24,7 +24,7 @@ cmp.setup({
         fallback()
       end
     end,
-    ['<Esc>'] = cmp.mapping.close(),
+    ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
