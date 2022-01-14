@@ -1,4 +1,7 @@
-source ~/anaconda3/etc/profile.d/conda.sh
+# >>> conda initialize >>>
+__conda_setup="$('~/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+eval "$__conda_setup"
+
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
