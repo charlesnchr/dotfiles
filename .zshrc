@@ -1,27 +1,28 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
+# Auto-start Tmux (works better than omz plugin)
+# if [ "$TMUX" = "" ]; then tmux; fi
 
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# ---  commented out in favour of antigen
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# ---  commented out in favour of antigen
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 #ZSH_THEME="agnoster"
+
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -55,12 +56,16 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
 # See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 COMPLETION_WAITING_DOTS="true"
+
+# ZSH_TMUX_AUTOSTART="true"
+# ZSH_TMUX_AUTOSTART_ONCE="false"
+# ZSH_TMUX_ITERM2="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -73,7 +78,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -83,9 +88,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools fasd)
+# ---  commented out in favour of antigen
+# plugins=(git zsh-autosuggestions zsh-syntax-highlighting k zsh-navigation-tools fasd ranger-autojump tmux)
 
-source $ZSH/oh-my-zsh.sh
+# ---  commented out in favour of antigen
+# source $ZSH/oh-my-zsh.sh
+
+source $HOME/tools/antigen/antigen.zsh
+antigen init $HOME/dotfiles/.antigenrc
 
 # User configuration
 
@@ -94,15 +104,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='vim'
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -110,24 +111,37 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+alias vim="nvim"
+alias vi="nvim"
+alias vimdiff='nvim -d'
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
-export PATH="$HOME/bin:$PATH"
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
-source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-autoload -Uz add-zsh-hook
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+
+# ---  commented out in favour of antigen
+# source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
+# autoload -Uz add-zsh-hook
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # for ranger
-export VISUAL=vim;
-export EDITOR=vim;
+export VISUAL=nvim;
+export EDITOR=nvim;
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
 
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -141,7 +155,26 @@ bindkey "^[^[OC" forward-char
 bindkey "^[^[OD" backward-char
 
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+# antigen bundle MikeDacre/tmux-zsh-vim-titles
+# antigen apply
+
+# Functions
+# alias for ssh to make panel naming for tmux
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+        tmux rename-window "$(echo $* | cut -d . -f 1)"
+        command ssh "$@"
+        tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+        command ssh "$@"
+    fi
+}
+
+jcd () {
+	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"
+}
+
+# for correct tmux rendering over ssh from Windows
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+

@@ -1,19 +1,6 @@
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/cc/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/cc/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/cc/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/cc/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+source ~/anaconda3/etc/profile.d/conda.sh
 
-[[ -s /Users/cc/.autojump/etc/profile.d/autojump.sh ]] && source /Users/cc/.autojump/etc/profile.d/autojump.sh
+[[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
 
 # eval "$(zoxide init zsh)"
