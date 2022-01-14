@@ -183,5 +183,90 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 })
 
 
+
+
+
+-- Combine base config for each server and merge user-defined settings.
+local function make_config(server_name)
+	-- Setup base config for each server.
+	local c = {}
+	c.on_attach = on_attach
+	c.capabilities = vim.lsp.protocol.make_client_capabilities()
+	c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
+	c.flags = {
+		debounce_text_changes = 150,
+	}
+
+	-- cmp_nvim_lsp enables following options:
+	--   completionItem = {
+	--     commitCharactersSupport = true,
+	--     deprecatedSupport = true,
+	--     documentationFormat = { "markdown", "plaintext" },
+
+	--     insertReplaceSupport = true,
+	--     labelDetailsSupport = true,
+	--     preselectSupport = true,
+	--     resolveSupport = {
+	--       properties = { "documentation", "detail", "additionalTextEdits" }
+	--     },
+	--     snippetSupport = true,
+	--     tagSupport = {
+	--       valueSet = { 1 }
+	--     }
+	--   }
+
+	-- Merge user-defined lsp settings.
+	-- These can be overridden locally by lua/lsp-local/<server_name>.lua
+	local exists, module = pcall(require, 'lsp-local.'..server_name)
+	if not exists then
+		exists, module = pcall(require, 'lsp.'..server_name)
+
+	end
+	if exists then
+		local user_config = module.config(c)
+		for k, v in pairs(user_config) do c[k] = v end
+	end
+
+	return c
+end
+
+
+
+
+
+if vim.fn.has('vim_starting') then
+	-- Setup language servers using nvim-lsp-installer
+	-- See https://github.com/williamboman/nvim-lsp-installer
+	local lsp_installer = require('nvim-lsp-installer')
+
+	lsp_installer.on_server_ready(function(server)
+		local opts = make_config(server.name)
+		server:setup(opts)
+		vim.cmd [[ do User LspAttachBuffers ]]
+	end)
+
+	-- global custom location-list diagnostics window toggle.
+	local args = { noremap = true, silent = true }
+	vim.api.nvim_set_keymap(
+		'n',
+		'<Leader>a',
+		'<cmd>lua require("user").diagnostic.publish_loclist(true)<CR>',
+		args
+	)
+
+	vim.api.nvim_exec([[
+		augroup user_lspconfig
+
+			autocmd!
+			" See https://github.com/kosayoda/nvim-lightbulb
+
+			autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+			" Automatic diagnostic hover
+			" autocmd CursorHold * lua require("user").diagnostic.show_line_diagnostics({ focusable=false })
+		augroup END
+	]], false)
+
+end
+
 return M
 
