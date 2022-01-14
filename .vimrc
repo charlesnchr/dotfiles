@@ -9,7 +9,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'sheerun/vim-polyglot'
+Plug 'pbogut/fzf-mru.vim'
+" Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Plug 'Raimondi/delimitMate'
 Plug 'vim-airline/vim-airline'
@@ -29,7 +30,7 @@ Plug 'godlygeek/tabular'
 Plug 'Konfekt/FastFold'
 " writing
 "Plug 'reedes/vim-pencil'
-Plug 'xuhdev/vim-latex-live-preview'
+" Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'easymotion/vim-easymotion'
 Plug 'xolox/vim-colorscheme-switcher'
@@ -38,7 +39,7 @@ Plug 'xolox/vim-misc'
 " styling
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
-" misc 
+" misc
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
@@ -49,19 +50,19 @@ Plug 'vimwiki/vimwiki'
 "Plug 'unblevable/quick-scope'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
-Plug 'tools-life/taskwiki'
 Plug 'mhinz/vim-startify'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'mg979/vim-visual-multi'
 Plug 'mattn/calendar-vim'
-Plug 'python-mode/python-mode'
+Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
 Plug 'jpalardy/vim-slime'
-Plug 'hanschen/vim-ipython-cell'
-Plug 'jupyter-vim/jupyter-vim'
+" slows down start-up
+" Plug 'hanschen/vim-ipython-cell'
+" Plug 'jupyter-vim/jupyter-vim'
 
 Plug 'kevinhwang91/nvim-hlslens'
 
@@ -92,7 +93,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
  Plug 'sbdchd/neoformat'
  Plug 'simnalamburt/vim-mundo'
- Plug 'liuchengxu/vista.vim' 
+ Plug 'liuchengxu/vista.vim'
  Plug 'tpope/vim-commentary'
  Plug 'folke/which-key.nvim'
 
@@ -114,7 +115,12 @@ Plug 'folke/trouble.nvim'
 " Plug 'itchyny/lightline.vim'
 
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'trotter/autojump.vim'
+Plug 'trotter/autojump.vim', { 'on':  'J' }
+Plug 'arcticicestudio/nord-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'jdhao/whitespace.nvim'
+Plug 'kosayoda/nvim-lightbulb'
 
 call plug#end()
 
@@ -122,7 +128,10 @@ lua require('lua-init')
 
 set updatetime=500
 
-
+" for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
+if has('mac')
+  let g:python3_host_prog = expand('~/anaconda3/bin/python')
+endif
 
 
 let mapleader = ","
@@ -141,14 +150,32 @@ set foldlevel=99
 
 
 " open files with ctrl-p
-nnoremap <localleader>f :Files<cr>
-nnoremap <localleader>vv :Buffer<cr>
-nnoremap <localleader>h :History<cr>
+nnoremap <localleader>zf :Files<cr>
+nnoremap <localleader>zv :Buffer<cr>
+nnoremap <localleader>b :Buffer<cr>
+nnoremap <localleader>zh :History<cr>
+nnoremap <localleader>zw :Windows<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>af :CtrlPLine<cr>
 
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+let g:Lf_ShortcutF = "<localleader>ff"
+noremap <localleader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <localleader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <localleader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <localleader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -160,8 +187,8 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set fileformat=unix
 
 
-au BufNewFile,BufRead *.tex 
-      \ set textwidth=80  
+au BufNewFile,BufRead *.tex
+      \ set textwidth=80
 
 "au BufNewFile,BufRead */wiki/*
       "\ SoftPencil
@@ -201,18 +228,12 @@ endif
 
 
 " air-line
-let g:airline_theme = 'onedark'
-let g:airline#extensions#tabline#enabled = 1           " enable airline tabline                                                           
-let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline                                            
-let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
-let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)      
-let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab                                                    
-let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right                                                           
-let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline                                                 
-let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline                                  
-let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline               
-let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers                                                              
-let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
+" alternative statusline with clock and cwd
+" set statusline=%F
+" set statusline+=%=
+" set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
+let g:airline_theme = 'tomorrow'
+let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -260,7 +281,7 @@ set mouse=a
 
 " nerdtree
 nnoremap <leader>nn :NERDTreeFocus<CR>
-nnoremap <leader>nc :NERDTree<CR> 
+nnoremap <leader>nc :NERDTree<CR>
 nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
@@ -282,9 +303,9 @@ map <localleader>s <Plug>(easymotion-s)
 
 " latex
 let g:vimtex_view_method = 'skim'
-let g:vimtex_compiler_latexmk = { 
+let g:vimtex_compiler_latexmk = {
         \ 'executable' : 'latexmk',
-        \ 'options' : [ 
+        \ 'options' : [
         \   '-xelatex',
         \   '-interaction=nonstopmode',
         \ ],
@@ -294,7 +315,7 @@ function! WC()
     let filename = expand("%")
     let cmd = "./texcount.pl " . filename
     let result = system(cmd)
-    echo result 
+    echo result
 endfunction
 
 command WC call WC()
@@ -347,7 +368,7 @@ tnoremap <silent> <S-F7> <C-\><C-n>:Ttoggle<CR>
 " -------------------
 " CONVENIENCE
 " -------------------
-" quick save 
+" quick save
 nnoremap <C-S-s> :w<cr>
 inoremap <C-S-s> <Esc>:w<cr>
 
@@ -362,7 +383,7 @@ nnoremap <localleader>x :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
 nnoremap <localleader>cd :cd %:h<cr>
-" nnoremap <leader>q :copen<cr>
+nnoremap <leader>qf :copen<cr>
 
 
 hi VimwikiHeader1 guifg=#00FF03
@@ -378,13 +399,14 @@ nmap <F4> :! save_screenshot.sh ~/0main/wiki/images<CR>
 imap <F4> <C-R>=strftime("%Y-%m-%d")<CR>
 
 "let g:floaterm_wintype = 'split'
-let g:floaterm_width = 0.8 
-let g:floaterm_height = 0.8 
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
 
 
 "let g:taskwiki_sort_orders={"T": "end-"}
 "nmap <C-k> <Plug>VimwikiPrevLink
 "nmap <C-j> <Plug>VimwikiNextLink
+nnoremap <leader>tt <cmd>VimwikiToggleListItem<cr>
 
 "let g:airline_section_x = '%{PencilMode()}'
 
@@ -404,9 +426,9 @@ inoremap <F6> <C-o>:IPythonCellExecuteCellVerbose<CR>
 "nnoremap <F6> :REPLSendSession<CR>
 "inoremap <F6> <C-o>:REPLSendSession<CR>
 let g:repl_program = {
-			\	'python': ['ipython'],
-			\	'default': ['bash']
-			\	}
+    \'python': ['ipython'],
+    \'default': ['bash']
+\}
 
 
 " map <F7> to evaluate current cell and jump to next cell without saving
@@ -419,8 +441,8 @@ augroup ipython_cell_highlight
 augroup END
 
 " map [c and ]c to jump to the previous and next cell header
-nnoremap [c :IPythonCellPrevCell<CR>
-nnoremap ]c :IPythonCellNextCell<CR>
+" nnoremap [c :IPythonCellPrevCell<CR>
+" nnoremap ]c :IPythonCellNextCell<CR>
 
 " map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
 nmap <F9> :IPythonCellInsertAbove<CR>a
@@ -435,7 +457,7 @@ imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 " slime configuration
 "------------------------------------------------------------------------------
 " always use tmux
-let g:slime_target = 'vimterminal'
+let g:slime_target = 'tmux'
 
 " fix paste issues in ipython
 let g:slime_python_ipython = 1
@@ -484,12 +506,18 @@ let g:php_folding = 1
 
 nnoremap gb :ls<cr>:b<space>
 set hidden
-let g:vimtex_quickfix_mode = 0  
+let g:vimtex_quickfix_mode = 0
 
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>tf :lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tg :lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tb :lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>th :lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tk :lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tr :lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 
 
 "call wilder#setup({'modes': [':', '/', '?']})
@@ -516,5 +544,33 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
+
 let g:pymode_lint_on_write = 0
 
+" Set the title of the Terminal to the currently open file
+function! SetTerminalTitle()
+    let titleString = expand('%:t')
+    if len(titleString) > 0
+        let &titlestring = expand('%:t')
+        " this is the format iTerm2 expects when setting the window title
+        let args = "\033];".&titlestring."\007"
+        let cmd = 'silent !echo -e "'.args.'"'
+        execute cmd
+        redraw!
+    endif
+endfunction
+autocmd BufEnter * call SetTerminalTitle()
+set title
+
+" Quicker way to open command window
+nnoremap ; :
+xnoremap ; :
+nnoremap q; q:
+
+autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%:t"))
+
+" Write all buffers before navigating from Vim to tmux pane
+" let g:tmux_navigator_save_on_switch = 2
+
+map <localleader>p :FZFMru<cr>
+nnoremap <silent> <leader><Space> :<C-U>StripTrailingWhitespace<CR>
