@@ -44,7 +44,6 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 " Plug 'ycm-core/YouCompleteMe'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
 "Plug 'unblevable/quick-scope'
@@ -103,9 +102,10 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
+Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
@@ -118,9 +118,8 @@ Plug 'folke/trouble.nvim'
 Plug 'trotter/autojump.vim', { 'on':  'J' }
 Plug 'arcticicestudio/nord-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'jdhao/whitespace.nvim'
-Plug 'kosayoda/nvim-lightbulb'
+" Plug 'kosayoda/nvim-lightbulb'
 
 call plug#end()
 
@@ -129,9 +128,7 @@ lua require('lua-init')
 set updatetime=500
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
-if has('mac')
-  let g:python3_host_prog = expand('~/anaconda3/bin/python')
-endif
+let g:python3_host_prog = expand('~/anaconda3/bin/python')
 
 
 let mapleader = ","
@@ -487,8 +484,7 @@ au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 
-
-let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/plugged/vim-snippets/UltiSnips']
+" let g:UltiSnipsSnippetDirectories = ['~/.local/share/nvim/plugged/ultisnips']
 
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
