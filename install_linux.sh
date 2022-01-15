@@ -6,7 +6,7 @@ source ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
 conda install -y -c conda-forge zsh universal-ctags rclone tmux
-pip install ranger scikit-image numpy matplotlib
+pip install ranger scikit-image numpy matplotlib opencv-python
 
 # Node
 # Ref: https://johnpapa.net/node-and-npm-without-sudo/
