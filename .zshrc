@@ -94,8 +94,6 @@ HIST_STAMPS="mm/dd/yyyy"
 # ---  commented out in favour of antigen
 # source $ZSH/oh-my-zsh.sh
 
-source $HOME/tools/antigen/antigen.zsh
-antigen init $HOME/dotfiles/.antigenrc
 
 # User configuration
 
@@ -179,3 +177,5 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
 
+source $HOME/tools/antigen/antigen.zsh
+antigen init $HOME/dotfiles/.antigenrc
