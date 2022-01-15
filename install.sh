@@ -7,16 +7,15 @@
 
 # git clone git@github.com:charlesnchr/dotfiles
 
+source ~/anaconda3/etc/profile.d/conda.sh
+conda activate base
+
 # symbolic links
 ln -sfn ~/dotfiles/.zshrc ~/.zshrc
 ln -sfn ~/dotfiles/nvim ~/.config/nvim
 ln -sfn ~/dotfiles/.vimrc ~/.vimrc
 ln -sfn ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -sfn ~/dotfiles/.spacemacs ~/.spacemacs
-
-# source
-zsh
-source ~/.zshrc
 
 # autojump
 git clone git://github.com/wting/autojump.git ~/autojump
