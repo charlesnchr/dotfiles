@@ -11,6 +11,7 @@ source ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
 # symbolic links
+mkdir -p $HOME/.config
 ln -sfn ~/dotfiles/.zshrc ~/.zshrc
 ln -sfn ~/dotfiles/nvim ~/.config/nvim
 ln -sfn ~/dotfiles/.vimrc ~/.vimrc

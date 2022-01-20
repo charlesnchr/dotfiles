@@ -131,7 +131,6 @@ fi
 # autoload -Uz add-zsh-hook
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # for ranger
 export VISUAL=nvim;
@@ -152,6 +151,7 @@ bindkey "^[^[OB" down-line-or-beginning-search
 bindkey "^[^[OC" forward-char
 bindkey "^[^[OD" backward-char
 
+bindkey '^Q' beginning-of-line
 
 # antigen bundle MikeDacre/tmux-zsh-vim-titles
 # antigen apply
@@ -179,3 +179,6 @@ export LC_CTYPE=en_US.UTF-8
 
 source $HOME/tools/antigen/antigen.zsh
 antigen init $HOME/dotfiles/.antigenrc
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
