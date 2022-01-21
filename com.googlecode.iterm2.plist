@@ -395,6 +395,14 @@
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>ILMediaBrowserImageSplitViewPosition</key>
+	<integer>199</integer>
+	<key>ILMediaBrowserMediaType</key>
+	<integer>1</integer>
+	<key>ILMediaBrowserSelectedGroup1</key>
+	<string>com.apple.Photos.Photos</string>
+	<key>ILMediaBrowserSelectedGroupIndex1</key>
+	<integer>0</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>LeftCommand</key>
@@ -642,7 +650,9 @@
 				<real>0.054901961237192154</real>
 			</dict>
 			<key>Background Image Location</key>
-			<string></string>
+			<string>/Users/cc/dotfiles/mikael-gustafsson-amongtrees-2-8.jpg</string>
+			<key>Background Image Mode</key>
+			<integer>2</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -656,6 +666,8 @@
 				<key>Red Component</key>
 				<real>0.13522206246852875</real>
 			</dict>
+			<key>Blend</key>
+			<real>0.16172641933900522</real>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
@@ -759,6 +771,8 @@
 			<integer>0</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Use Transparency</key>
+			<true/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1548,9 +1562,15 @@
 	<true/>
 	<key>UseBorder</key>
 	<false/>
+	<key>UseMetal</key>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
+	<key>metalMaximizeThroughput</key>
+	<false/>
+	<key>preferIntegratedGPU</key>
+	<false/>
 </dict>
 </plist>
