@@ -82,6 +82,7 @@ Plug 'junegunn/vim-peekaboo'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'kevinhwang91/nvim-bqf'
 
 Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -117,9 +118,15 @@ Plug 'folke/trouble.nvim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'trotter/autojump.vim', { 'on':  'J' }
 Plug 'arcticicestudio/nord-vim'
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 Plug 'jdhao/whitespace.nvim'
-" Plug 'kosayoda/nvim-lightbulb'
+" not completely sure why the below module is needed, but I get an error by
+" Ctrl+G in .zsh files if not, possibly from nvim-treesitter
+Plug 'kosayoda/nvim-lightbulb'
+Plug 'danro/rename.vim'
+" Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'puremourning/vimspector'
+Plug 'ThePrimeagen/harpoon'
 
 call plug#end()
 
@@ -129,7 +136,6 @@ set updatetime=500
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
 let g:python3_host_prog = expand('~/anaconda3/bin/python')
-
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -190,6 +196,12 @@ au BufNewFile,BufRead *.tex
 "au BufNewFile,BufRead */wiki/*
       "\ SoftPencil
 
+" trialing these options for all types
+set tabstop=4
+set expandtab
+set autoindent
+set softtabstop=4
+set shiftwidth=4
 
 " Reopen the last edited position in files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -260,12 +272,17 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '㏑'
 
 set laststatus=2
-set showtabline=0
+" set showtabline=0
 set signcolumn=yes
 
 
 " true colours
-colorscheme palenight
+" colorscheme palenight
+colorscheme space-vim-dark
+" colorscheme solarized8_high
+nnoremap <leader><F8> :PrevColorScheme<CR>
+" nnoremap <leader>nn :NextColorScheme<CR>
+" colorscheme challenger_deep
 set termguicolors
 
 set nu rnu " relative line numbering
@@ -327,9 +344,9 @@ let g:goyo_width = 85
 
 
 " autocomplete
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " let g:ycm_autoclose_preview_window_after_completion=0
 " map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " for latex
@@ -343,16 +360,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 
 " programming
-nnoremap <silent> <localleader><F12> :FloatermNew<CR>
-tnoremap <silent> <localleader><F12> <C-\><C-n>:FloatermNew<CR>
-nnoremap <silent> <S-F11> :FloatermPrev<CR>
-tnoremap <silent> <S-F11> <C-\><C-n>:FloatermPrev<CR>
-nnoremap <silent> <S-F12> :FloatermNext<CR>
-tnoremap <silent> <S-F12> <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <leader><F12> :FloatermNew<CR>
+tnoremap <silent> <leader><F12> <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <F10> :FloatermPrev<CR>
+tnoremap <silent> <F10> <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F11> :FloatermNext<CR>
+tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <S-F7> :Ttoggle<CR>
-tnoremap <silent> <S-F7> <C-\><C-n>:Ttoggle<CR>
+nnoremap <silent> <F7> :Ttoggle<CR>
+tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
+tnoremap <Esc> <C-\><C-n>
+let g:neoterm_autoscroll = 1
 
 " -------------------
 " NAVIGATION
@@ -395,7 +414,7 @@ imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
 nmap <F4> :! save_screenshot.sh ~/0main/wiki/images<CR>
 imap <F4> <C-R>=strftime("%Y-%m-%d")<CR>
 
-"let g:floaterm_wintype = 'split'
+" let g:floaterm_wintype = 'split'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 
@@ -414,8 +433,8 @@ vnoremap <leader>c :OSCYank<CR>
 "------------------------------------------------------------------------------
 " For Ipython plugin - Matlab bindings
 " map <F5> to save and run script
-nnoremap <F5> :w<CR>:IPythonCellRun<CR>
-inoremap <F5> <C-o>:w<CR><C-o>:IPythonCellRun<CR>
+" nnoremap <F5> :w<CR>:IPythonCellRun<CR>
+" inoremap <F5> <C-o>:w<CR><C-o>:IPythonCellRun<CR>
 
 " map <F6> to evaluate current cell without saving
 nnoremap <F6> :IPythonCellExecuteCellVerbose<CR>
@@ -429,8 +448,8 @@ let g:repl_program = {
 
 
 " map <F7> to evaluate current cell and jump to next cell without saving
-nnoremap <F7> :IPythonCellExecuteCellVerboseJump<CR>
-inoremap <F7> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
+" nnoremap <F7> :IPythonCellExecuteCellVerboseJump<CR>
+" inoremap <F7> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
 
 augroup ipython_cell_highlight
     autocmd!
@@ -476,13 +495,15 @@ let g:slime_dont_ask_default = 1
 " Tab navigation like Firefox: only 'open new tab' works in terminal
 nnoremap <C-t>     :tabnew<CR>
 inoremap <C-t>     <Esc>:tabnew<CR>
+
+" N.B.: below bindings conflict with tmux window bindings
 " move to the previous/next tabpage.
-nnoremap <C-j> gT
-nnoremap <C-k> gt
+" nnoremap <C-j> gT
+" nnoremap <C-k> gt
 " Go to last active tab
-au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+" au TabLeave * let g:lasttab = tabpagenr()
+" nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+" vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 
 " let g:UltiSnipsSnippetDirectories = ['~/.local/share/nvim/plugged/ultisnips']
 
@@ -531,6 +552,8 @@ noremap g* g*<Cmd>lua require('hlslens').start()<CR>
 noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 " use : instead of <Cmd>
 nnoremap <silent> <leader>l :noh<CR>
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
 
 
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
@@ -546,13 +569,15 @@ let g:pymode_lint_on_write = 0
 " Set the title of the Terminal to the currently open file
 function! SetTerminalTitle()
     let titleString = expand('%:t')
-    if len(titleString) > 0
-        let &titlestring = expand('%:t')
-        " this is the format iTerm2 expects when setting the window title
-        let args = "\033];".&titlestring."\007"
-        let cmd = 'silent !echo -e "'.args.'"'
-        execute cmd
-        redraw!
+    if stridx(titleString, "neoterm") == -1
+        if len(titleString) > 0
+            let &titlestring = expand('%:t')
+            " this is the format iTerm2 expects when setting the window title
+            let args = "\033];".&titlestring."\007"
+            let cmd = 'silent !echo -e "'.args.'"'
+            execute cmd
+            redraw!
+        endif
     endif
 endfunction
 autocmd BufEnter * call SetTerminalTitle()
@@ -570,3 +595,20 @@ autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " 
 
 map <localleader>p :FZFMru<cr>
 nnoremap <silent> <leader><Space> :<C-U>StripTrailingWhitespace<CR>
+
+let g:vimspector_enable_mappings = 'HUMAN'
+autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<CR>
+
+
+nnoremap <localleader>= <cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>
+nnoremap <localleader>- <cmd>lua require("harpoon.mark").add_file()<cr>
+nnoremap <localleader>1 <cmd>lua require("harpoon.ui").nav_file(1)<cr>
+nnoremap <localleader>2 <cmd>lua require("harpoon.ui").nav_file(2)<cr>
+nnoremap <localleader>3 <cmd>lua require("harpoon.ui").nav_file(3)<cr>
+nnoremap <localleader>4 <cmd>lua require("harpoon.ui").nav_file(4)<cr>
+nnoremap <localleader>5 <cmd>lua require("harpoon.ui").nav_file(5)<cr>
+nnoremap <localleader>6 <cmd>lua require("harpoon.ui").nav_file(6)<cr>
+nnoremap <localleader>7 <cmd>lua require("harpoon.ui").nav_file(7)<cr>
+nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
+nnoremap <localleader>t1 <cmd>lua require("harpoon.term").gotoTerminal(1)<cr>
+

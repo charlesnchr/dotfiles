@@ -60,10 +60,6 @@ cmp.setup({
   },
 })
 
-vim.cmd("hi link CmpItemMenu Comment")
-
-
-
 
 --require("trouble").setup {
     -- your configuration comes here
@@ -72,14 +68,4 @@ vim.cmd("hi link CmpItemMenu Comment")
 --}
 
 require'config.lsp'
-
-
-
-
-
-
-
-
-
-
 

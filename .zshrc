@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Auto-start Tmux (works better than omz plugin)
 # if [ "$TMUX" = "" ]; then tmux; fi
 
@@ -114,6 +121,8 @@ alias vi="nvim"
 alias vimdiff='nvim -d'
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+alias ttd="tt -n 10 -notheme -showwpm -csv >> ~/wpm.csv"
+alias mux=tmuxinator
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -129,7 +138,6 @@ fi
 # ---  commented out in favour of antigen
 # source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 # autoload -Uz add-zsh-hook
-
 
 
 # for ranger
@@ -153,6 +161,11 @@ bindkey "^[^[OD" backward-char
 
 bindkey '^Q' beginning-of-line
 
+# standard bash mapping (overrules delete whole line on macos)
+bindkey \^U backward-kill-line
+# bindkey \^M kill-line
+
+
 # antigen bundle MikeDacre/tmux-zsh-vim-titles
 # antigen apply
 
@@ -168,17 +181,30 @@ ssh() {
     fi
 }
 
-jcd () {
+jcd() {
 	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"
 }
+
+jvim() {
+	file="$(AUTOJUMP_DATA_DIR=~/.autojump.vim/global autojump $@)"; if [ -n "$file" ]; then vim "$file"; fi
+}
+
+t() {
+    [[ ! $(tmux a) ]] && tmuxinator Home
+}
+
+# function pywal {
+#     # generate color scheme from current wallpaper
+#     current_wallpaper="$(osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)')"
+#     wal -i $current_wallpaper -n
+# }
+
 
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-
 source $HOME/tools/antigen/antigen.zsh
 antigen init $HOME/dotfiles/.antigenrc
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
