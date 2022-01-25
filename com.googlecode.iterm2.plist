@@ -395,14 +395,19 @@
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>ILMediaBrowserExpandedGroups1</key>
+	<array>
+		<string>com.apple.Photos.Photos</string>
+		<string>com.apple.Photos.TopLevelAlbums</string>
+	</array>
 	<key>ILMediaBrowserImageSplitViewPosition</key>
 	<integer>199</integer>
 	<key>ILMediaBrowserMediaType</key>
 	<integer>1</integer>
 	<key>ILMediaBrowserSelectedGroup1</key>
-	<string>com.apple.Photos.Photos</string>
+	<string>com.apple.Photos.com.apple.Photos.SharedGroup</string>
 	<key>ILMediaBrowserSelectedGroupIndex1</key>
-	<integer>0</integer>
+	<integer>2</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>LeftCommand</key>
@@ -650,7 +655,7 @@
 				<real>0.054901961237192154</real>
 			</dict>
 			<key>Background Image Location</key>
-			<string>/Users/cc/dotfiles/mikael-gustafsson-amongtrees-2-8.jpg</string>
+			<string>/Users/cc/Downloads/VFAdB1esp6F_2qfH3ftUJiHKErdR-NmqDCm442OlFX8.webp</string>
 			<key>Background Image Mode</key>
 			<integer>2</integer>
 			<key>Badge Color</key>
@@ -667,7 +672,7 @@
 				<real>0.13522206246852875</real>
 			</dict>
 			<key>Blend</key>
-			<real>0.16172641933900522</real>
+			<real>0.050000000000000003</real>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
@@ -772,7 +777,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Use Transparency</key>
-			<true/>
+			<false/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1250,7 +1255,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>5000</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1285,6 +1290,8 @@
 			<false/>
 			<key>Silence Bell</key>
 			<true/>
+			<key>Space</key>
+			<integer>0</integer>
 			<key>Status Bar Layout</key>
 			<dict>
 				<key>advanced configuration</key>
@@ -1520,6 +1527,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PreventEscapeSequenceFromClearingHistory</key>
+	<false/>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
