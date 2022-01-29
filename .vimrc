@@ -271,6 +271,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '㏑'
 
+
 set laststatus=2
 " set showtabline=0
 set signcolumn=yes
@@ -316,7 +317,8 @@ nnoremap <ScrollWheelDown> <C-E>
 map <localleader>s <Plug>(easymotion-s)
 
 " latex
-let g:vimtex_view_method = 'skim'
+" let g:vimtex_view_method = 'skim'
+let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_latexmk = {
         \ 'executable' : 'latexmk',
         \ 'options' : [
@@ -529,12 +531,12 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 " nnoremap <leader>fb <cmd>Telescope buffers<cr>
 " nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>tf :lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tg :lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tb :lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>th :lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tk :lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tr :lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tf <cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 
 
 "call wilder#setup({'modes': [':', '/', '?']})

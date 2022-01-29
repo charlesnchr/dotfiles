@@ -8,7 +8,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 1
+default_border pixel 3
 default_floating_border normal
 
 # Hide borders
@@ -16,7 +16,7 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 3
 # bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -255,7 +255,8 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    # bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id betterlockscreen -l --off 10, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -307,7 +308,7 @@ exec --no-startup-id clipit
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 600 -locker blurlock
+exec --no-startup-id xautolock -time 20 -locker "betterlockscreen -l --off 300"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id ~/.screenlayout/arandr.sh
@@ -317,6 +318,10 @@ exec_always --no-startup-id alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" 
 exec_always --no-startup-id libinput-gestures-setup start
 # exec_always --no-startup-id xmodmap ~/dotfiles/xmodmap
 exec_always --no-startup-id ~/.xprofile
+
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
+exec --no-startup-id redshift-gtk
+
 
 # master-stack keybinding (moves stack window to master and current master back to stack window)\""
 # bindsym $mod+m exec "i3-msg \\"move left; focus up; move right; focus left\\""
@@ -347,7 +352,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 
 bindsym $mod+Ctrl+e exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv
-bindsym $mod+Tab exec --no-startup-id rofi -show run
+bindsym $mod+Tab exec --no-startup-id rofi -show drun
 bindsym Mod1+Ctrl+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh
 
 bindsym $mod+Shift+x exec --no-startup-id source /home/cc/.xprofile
@@ -389,10 +394,10 @@ bar {
 	i3bar_command i3bar
 	# status_command i3status
     status_command py3status -c ~/.i3status.conf
-	position bottom
+	position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
+	tray_output primary
 #	tray_output eDP1
 
 	bindsym button4 nop
