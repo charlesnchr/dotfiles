@@ -253,10 +253,11 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (l)ock, screen (o)ff (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym l exec --no-startup-id betterlockscreen -l --off 60
+    bindsym o exec --no-startup-id sleep 1 && xset dpms force off
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -268,6 +269,20 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+
+bindsym Mod1+space mode "$Apps"
+set $Apps (t) terminal, (f) firefox
+mode "$Apps" {
+    # bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym t exec --no-startup-id alacritty, mode "default"
+    bindsym f exec --no-startup-id firefox, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -308,7 +323,8 @@ exec --no-startup-id clipit
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 20 -locker "betterlockscreen -l --off 300"
+# exec --no-startup-id xautolock -time 20 -locker "betterlockscreen -l --off 300"
+exec --no-startup-id xautolock -time 15 -locker "xset dpms force off"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id ~/.screenlayout/arandr.sh
@@ -355,6 +371,10 @@ bindsym $mod+Tab exec --no-startup-id rofi -show drun
 bindsym Mod1+Ctrl+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh
 
 bindsym $mod+Shift+x exec --no-startup-id source /home/cc/.xprofile
+
+# to toggle screen off on
+bindsym $mod+F11 exec --no-startup-id sleep 1 && xset dpms force off
+bindsym $mod+F12 exec --no-startup-id xset dpms force on
 
 
 # Color palette used for the terminal ( ~/.Xresources file )

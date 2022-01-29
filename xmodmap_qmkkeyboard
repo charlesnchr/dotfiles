@@ -1,0 +1,23 @@
+! make escape be caps_lock
+! clear Lock
+! keycode 9 = Caps_Lock
+! add Lock = Caps_Lock
+
+! make caps_lock an additional control
+
+keycode 66 = Mode_switch
+keysym j = j J Down
+keysym l = l L Right
+keysym h = h H Left
+keysym k = k K Up
+keysym u = u U Home
+keysym o = o O End
+keysym e = e E F13
+
+keycode 47 = semicolon colon ae
+keycode 48 = apostrophe quotedbl oslash
+keycode 34 = bracketleft braceleft aring
+keycode 20 = minus underscore emdash
+
+keysym BackSpace = BackSpace BackSpace Delete
+
