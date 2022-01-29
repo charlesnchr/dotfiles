@@ -1,6 +1,6 @@
 xset r rate 200 25
 xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Accel Speed" 0.35
 xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Natural Scrolling Enabled" 1
-xmodmap ~/dotfiles/xmodmap_qmkkeyboard
+xmodmap ~/.xmodmap
 xcape -e 'Control_L=Escape'
 
