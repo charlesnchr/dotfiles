@@ -419,15 +419,9 @@ bar {
 	tray_output primary
 #	tray_output eDP1
 
-<<<<<<< HEAD
 	# bindsym button4 nop
 	# bindsym button5 nop
-      font xft:URWGothic-Book 11
-=======
-	bindsym button4 nop
-	bindsym button5 nop
     font xft:Noto-Sans 11
->>>>>>> 57d103bd163a5ba623e38263e7dba513c39b0edc
 	strip_workspace_numbers yes
 
     colors {
