@@ -27,7 +27,7 @@ chosen="$(echo -e "$options" | $rofi_command -p 'App : maim' -dmenu -selected-ro
 case $chosen in
     $screen)
 		if [[ -f /usr/bin/maim ]]; then
-			sleep 1; maim | xclip -selection clipboard -t image/png
+			maim -u | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
@@ -41,7 +41,7 @@ case $chosen in
         ;;
     $window)
 		if [[ -f /usr/bin/maim ]]; then
-			sleep 1; maim -u | xclip -selection clipboard -t image/png
+			maim  -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
