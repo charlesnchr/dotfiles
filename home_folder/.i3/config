@@ -8,7 +8,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 3
+default_border pixel 2
 default_floating_border normal
 
 # Hide borders
@@ -16,8 +16,8 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 3
-# bindsym $mod+n border normal
+bindsym Shift+$mod+u border pixel 2
+bindsym Ctrl+$mod+u border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -30,17 +30,13 @@ floating_modifier $mod
 bindsym $mod+Return exec alacritty
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
-# start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency
 
 bindsym $mod+m exec --no-startup-id ~/.config/rofi/bin/menu_apps
 bindsym $mod+n exec --no-startup-id ~/.config/rofi/bin/menu_network
 bindsym $mod+p exec --no-startup-id ~/.config/rofi/applets/applets/powermenu.sh
 
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -55,23 +51,8 @@ bindsym $mod+Ctrl+m exec pavucontrol
 ################################################################################################
 
 
-# Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym Ctrl+F2 exec firefox
-bindsym Ctrl+F3 exec dolphin
-bindsym Ctrl+F4 exec spotify
-bindsym Ctrl+F5 exec notion
-bindsym Ctrl+F1 exec ranger
-bindsym $mod+Shift+F3 exec pcmanfm_pkexec
+# bindsym Ctrl+F2 exec firefox
 # bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+p --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+semicolon exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
 
@@ -104,30 +85,14 @@ workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
-# split orientation
-bindsym $mod+semicolon split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
-bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+x focus mode_toggle
 
-# toggle sticky
-bindsym $mod+Shift+s sticky toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
 
 # move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -188,6 +153,8 @@ bindsym $mod+Shift+2 move container to workspace $ws7
 bindsym $mod+Shift+3 move container to workspace $ws8
 bindsym $mod+Shift+4 move container to workspace $ws9
 
+# bindsym Shift+Ctrl+grave exec i3-input -F 'workspace %s' -P 'go to workspace: '
+
 # Move to workspace with focused container
 bindsym Ctrl+Mod1+1 move container to workspace $ws1; workspace $ws1
 bindsym Ctrl+Mod1+2 move container to workspace $ws2; workspace $ws2
@@ -204,13 +171,13 @@ bindsym $mod+Mod1+4 move container to workspace $ws8; workspace $ws9
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
-assign [class="firefox"] $ws2
+# assign [class="firefox"] $ws2
 assign [class="spotify"] $ws6
-assign [class="Alacritty"] $ws1
+# assign [class="Alacritty"] $ws1
 assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
-assign [class="dolphin"] $ws8
+# assign [class="dolphin"] $ws8
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -242,24 +209,49 @@ for_window [class="Xfburn"] floating enable
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym XF86Tools mode "$Global"
+set $Global (0) system, (space) utility, (d,a,s) workspaces, (w) win, (m) misc, (f) rofi, (tab) tasks, (`) clipboard, (c) calc, (g) dmenu
+mode "$Global" {
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+    bindsym 0 mode "$mode_system"
+    bindsym space mode "$Utility"
+    bindsym d mode "$Workspace"
+    bindsym a mode "$Workspace_a"
+    bindsym s mode "$Workspace_s"
+    bindsym m mode "$Misc"
+    bindsym w mode "$Window"
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+    bindsym 1 workspace $ws1, mode "default"
+    bindsym 2 workspace $ws2, mode "default"
+    bindsym 3 workspace $ws3, mode "default"
+    bindsym 4 workspace $ws4, mode "default"
+    bindsym 5 workspace $ws5, mode "default"
+    bindsym 6 workspace $ws6, mode "default"
+    bindsym 7 workspace $ws7, mode "default"
+    bindsym 8 workspace $ws8, mode "default"
+    bindsym 9 workspace $ws9, mode "default"
+
+    bindsym f exec --no-startup-id rofi -show drun -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
+    bindsym grave exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}', mode "default"
+    bindsym Tab exec --no-startup-id rofi -show window -show-icons, mode "default"
+    bindsym c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort -calc-command \\"echo '{result}' | xclip -selection clipboard\\" -terse", mode "default"
+    bindsym g exec --no-startup-id dmenu_recency
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, screen (o)ff (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (l)ock, screen (o)ff (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (q) quit i3
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym l exec --no-startup-id betterlockscreen -l --off 60
     bindsym o exec --no-startup-id sleep 1 && xset dpms force off
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym u exec --no-startupqq-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
@@ -271,18 +263,238 @@ mode "$mode_system" {
 }
 
 
-bindsym Mod1+space mode "$Apps"
-set $Apps (t) terminal, (f) firefox
+bindsym $mod+Tab mode "$Apps"
+set $Apps (t) terminal, (f) firefox, (d) dolphin, (r) ranger, (s) spotify, (n) notion
 mode "$Apps" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym t exec --no-startup-id alacritty, mode "default"
     bindsym f exec --no-startup-id firefox, mode "default"
+    bindsym r exec --no-startup-id alacritty -e ranger, mode "default"
+    bindsym d exec --no-startup-id dolphin, mode "default"
+    bindsym s exec --no-startup-id spotify, mode "default"
+    bindsym n exec --no-startup-id notion, mode "default"
+    bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+bindsym $mod+w mode "$Window"
+set $Window (h) horz. , (v) vert. , (q) toggle , (s) stacking, (w) tabbed, (e) toggle split, (space) floating, (p) sticky, (a) parent, (z) child
+mode "$Window" {
+    # split orientation
+    bindsym h split h;exec notify-send 'tile horizontally', mode "default"
+    bindsym v split v;exec notify-send 'tile vertically', mode "default"
+    bindsym q split toggle, mode "default"
+    # change container layout (stacked, tabbed, toggle split)
+    bindsym s layout stacking, mode "default"
+    bindsym w layout tabbed, mode "default"
+    bindsym e layout toggle split, mode "default"
+    # toggle tiling / floating
+    bindsym space floating toggle, mode "default"
+    # toggle sticky
+    bindsym p sticky toggle, mode "default"
+    # focus the parent container
+    bindsym a focus parent
+    bindsym z focus child
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+a mode "$Misc"
+set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help
+mode "$Misc" {
+    bindsym k exec --no-startup-id pkill picom, mode "default"
+    bindsym p exec --no-startup-id picom -b, mode "default"
+    bindsym d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'", mode "default"
+    bindsym x --release exec --no-startup-id xkill, mode "default"
+    bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+space mode "$Utility"
+set $Utility (t) terminal, (p) spt, (x) xprofile, (z) morc_menu, (b) bmenu, (s) scn sel., (w) scn win., (a) scn all, (e) emoji, (m) pulse, (c) i3-conf, (r) i3-restart, (d) display
+mode "$Utility" {
+    bindsym t exec alacritty -e $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Command: "), mode "default"
+    bindsym p exec --no-startup-id alacritty -e spt, mode "default"
+
+    # launch categorized menu
+    bindsym z exec --no-startup-id morc_menu, mode "default"
+
+    # Start Applications
+    bindsym b exec --no-startup-id terminal -e 'bmenu', mode "default"
+
+    # audio
+    bindsym m exec --no-startup-id pavucontrol, mode "default"
+
+    # screen shots
+    bindsym a exec --no-startup-id maim -u | xclip -selection clipboard -t image/png, mode "default"
+    bindsym w exec --no-startup-id maim  -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png, mode "default"
+    bindsym s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png, mode "default"
+    # shouldn't need this anymore
+    bindsym Shift+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh, mode "default"
+
+    # emoji
+    bindsym e exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv, mode "default"
+
+    # reload the configuration file
+    bindsym c reload, mode "default"
+
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+    bindsym r restart, mode "default"
+
+    bindsym x exec --no-startup-id source /home/cc/.xprofile, mode "default"
+
+    # to toggle screen off on
+    bindsym d exec --no-startup-id sleep 1 && xset dpms force off, mode "default"
+    bindsym Shift+d exec --no-startup-id xset dpms force on, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
+
+bindsym $mod+d mode "$Workspace"
+set $Workspace Workspaces 1-9
+mode "$Workspace" {
+    bindsym 1 workspace $ws1, mode "default"
+    bindsym 2 workspace $ws2, mode "default"
+    bindsym 3 workspace $ws3, mode "default"
+    bindsym 4 workspace $ws4, mode "default"
+    bindsym 5 workspace $ws5, mode "default"
+    bindsym 6 workspace $ws6, mode "default"
+    bindsym 7 workspace $ws7, mode "default"
+    bindsym 8 workspace $ws8, mode "default"
+    bindsym 9 workspace $ws9, mode "default"
+
+    bindsym space mode "$Workspace2"
+    bindsym a mode "$Workspace_a"
+    bindsym s mode "$Workspace_s"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $Workspace_a Bring to 1-9
+mode "$Workspace_a" {
+    bindsym 1 move container to workspace $ws1; workspace $ws1, mode "default"
+    bindsym 2 move container to workspace $ws2; workspace $ws2, mode "default"
+    bindsym 3 move container to workspace $ws3; workspace $ws3, mode "default"
+    bindsym 4 move container to workspace $ws4; workspace $ws4, mode "default"
+    bindsym 5 move container to workspace $ws5; workspace $ws5, mode "default"
+    bindsym 6 move container to workspace $ws6; workspace $ws6, mode "default"
+    bindsym 7 move container to workspace $ws7; workspace $ws7, mode "default"
+    bindsym 8 move container to workspace $ws8; workspace $ws8, mode "default"
+    bindsym 9 move container to workspace $ws9; workspace $ws9, mode "default"
+
+    bindsym space mode "$Workspace2_a"
+    bindsym a mode "$Workspace"
+    bindsym d mode "$Workspace"
+    bindsym s mode "$Workspace_s"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $Workspace_s Move to 1-9
+mode "$Workspace_s" {
+    bindsym 1 move container to workspace $ws1, mode "default"
+    bindsym 2 move container to workspace $ws2, mode "default"
+    bindsym 3 move container to workspace $ws3, mode "default"
+    bindsym 4 move container to workspace $ws4, mode "default"
+    bindsym 5 move container to workspace $ws5, mode "default"
+    bindsym 6 move container to workspace $ws6, mode "default"
+    bindsym 7 move container to workspace $ws7, mode "default"
+    bindsym 8 move container to workspace $ws8, mode "default"
+    bindsym 9 move container to workspace $ws9, mode "default"
+
+    bindsym space mode "$Workspace2_s"
+    bindsym a mode "$Workspace_a"
+    bindsym s mode "$Workspace"
+    bindsym d mode "$Workspace"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $Workspace2 Workspaces 10-18
+mode "$Workspace2" {
+    bindsym 1 workspace 10, mode "default"
+    bindsym 2 workspace 11, mode "default"
+    bindsym 3 workspace 12, mode "default"
+    bindsym 4 workspace 13, mode "default"
+    bindsym 5 workspace 14, mode "default"
+    bindsym 6 workspace 15, mode "default"
+    bindsym 7 workspace 16, mode "default"
+    bindsym 8 workspace 17, mode "default"
+    bindsym 9 workspace 18, mode "default"
+
+    bindsym space mode "$Workspace"
+    bindsym a mode "$Workspace2_a"
+    bindsym s mode "$Workspace2_s"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $Workspace2_a Bring to 10-18
+mode "$Workspace2_a" {
+    bindsym 1 move container to workspace 10; workspace 10, mode "default"
+    bindsym 2 move container to workspace 11; workspace 11, mode "default"
+    bindsym 3 move container to workspace 12; workspace 12, mode "default"
+    bindsym 4 move container to workspace 13; workspace 13, mode "default"
+    bindsym 5 move container to workspace 14; workspace 14, mode "default"
+    bindsym 6 move container to workspace 15; workspace 15, mode "default"
+    bindsym 7 move container to workspace 16; workspace 16, mode "default"
+    bindsym 8 move container to workspace 17; workspace 17, mode "default"
+    bindsym 9 move container to workspace 18; workspace 18, mode "default"
+
+    bindsym space mode "$Workspace_a"
+    bindsym a mode "$Workspace2"
+    bindsym d mode "$Workspace2"
+    bindsym s mode "$Workspace2_s"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $Workspace2_s Move to 10-18
+mode "$Workspace2_s" {
+    bindsym 1 move container to workspace 10, mode "default"
+    bindsym 2 move container to workspace 11, mode "default"
+    bindsym 3 move container to workspace 12, mode "default"
+    bindsym 4 move container to workspace 13, mode "default"
+    bindsym 5 move container to workspace 14, mode "default"
+    bindsym 6 move container to workspace 15, mode "default"
+    bindsym 7 move container to workspace 16, mode "default"
+    bindsym 8 move container to workspace 17, mode "default"
+    bindsym 9 move container to workspace 18, mode "default"
+
+    bindsym space mode "$Workspace_s"
+    bindsym a mode "$Workspace2_a"
+    bindsym s mode "$Workspace2"
+    bindsym d mode "$Workspace2"
+
+    bindsym r exec i3-msg workspace $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Workspace: "), mode "default"
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -328,12 +540,11 @@ exec --no-startup-id xautolock -time 15 -locker "xset dpms force off"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id ~/.screenlayout/arandr.sh
-# exec_always --no-startup-id xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Accel Speed" 0.35
-# exec_always --no-startup-id xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Natural Scrolling Enabled" 1
-exec_always --no-startup-id alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" -t 128x150 -i 127x64
+# exec_always --no-startup-id alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" -t 128x150 -i 127x64 -d 1
 exec_always --no-startup-id libinput-gestures-setup start
 # exec_always --no-startup-id xmodmap ~/dotfiles/xmodmap
 exec_always --no-startup-id ~/.xprofile
+exec_always --no-startup-id greenclip daemon
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
@@ -342,9 +553,7 @@ exec --no-startup-id redshift-gtk
 # bindsym $mod+m exec "i3-msg \\"move left; focus up; move right; focus left\\""
 
 
-bindsym $mod+slash exec "answer=$(zenity --title=\\"i3-msg title_format\\" --text \\"Change %TITLE for parent container\\" --entry); if [ -n \\"$answer\\" ]; then i3-msg focus parent, title_format \\"<span foreground='pink'><b> $answer</b></span>\\", focus child; else i3-msg focus parent, title_format \\"<span foreground='pink'><b> %title</b></span>\\", focus child; fi"
 
-bindsym $mod+o exec "APP=\\"Alacritty\\"; if pgrep -x \\"$APP\\" > /dev/null 2>&1; then i3-msg \\"[class=\\"$APP\\"] scratchpad show\\"; else \\"$APP\\"; fi"
 
 # Pulse Audio controls
 # bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +2% #increase sound volume
@@ -364,17 +573,6 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-
-
-bindsym $mod+Ctrl+e exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv
-bindsym $mod+Tab exec --no-startup-id rofi -show drun
-bindsym Mod1+Ctrl+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh
-
-bindsym $mod+Shift+x exec --no-startup-id source /home/cc/.xprofile
-
-# to toggle screen off on
-bindsym $mod+F11 exec --no-startup-id sleep 1 && xset dpms force off
-bindsym $mod+F12 exec --no-startup-id xset dpms force on
 
 
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -432,6 +630,7 @@ bar {
             active_workspace                #073642 #696f89
             inactive_workspace      #112233 #112233 #CED5D0
             urgent_workspace        #E59847 #E59847 #00252E
+            binding_mode       #2f343a #3a568a #ffffff
     }
 }
 
@@ -441,6 +640,7 @@ bar {
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
   client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused          #111111 #555555 #ffffff #2e9ef4  #FFA500
   client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
