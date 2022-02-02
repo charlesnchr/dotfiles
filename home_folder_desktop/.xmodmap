@@ -21,3 +21,17 @@ keycode 20 = minus underscore emdash
 
 keysym BackSpace = BackSpace BackSpace Delete
 
+keycode 10 = 1 exclam adiaeresis
+keycode 11 = 2 at odiaeresis
+keycode 12 = 3 numbersign udiaeresis
+keycode 13 = 4 dollar ssharp
+keycode 14 = 5 percent mu
+keycode 15 = 6 ampersand Insert
+
+
+! keycode 14 = percent 5 5 percent degree dead_abovering degree
+! keycode 15 = ampersand 6 6 ampersand dead_ogonek ogonek dead_ogonek
+! keycode 16 = slash 7 7 slash grave dead_grave grave
+! keycode 17 = parenleft 8 8 parenleft dead_abovedot abovedot dead_abovedot
+! keycode 18 = parenright 9 9 parenright dead_acute apostrophe dead_acute
+! keycode 19 = equal 0 0 equal dead_doubleacute doubleacute dead_doubleacute

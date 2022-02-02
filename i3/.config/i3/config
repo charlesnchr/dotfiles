@@ -210,7 +210,7 @@ for_window [class="Xfburn"] floating enable
 for_window [urgent=latest] focus
 
 bindsym XF86Tools mode "$Global"
-set $Global (0) system, (space) utility, (d,a,s) workspaces, (w) win, (m) misc, (f) rofi, (tab) tasks, (`) clipboard, (c) calc, (g) dmenu
+set $Global (0) system, (space) utility, (d,a,s) workspaces, (w) win, (m) misc, (f) rofi, (tab) tasks, (`) clipboard, (c) calc, (g) dmenu, (j) shortcuts
 mode "$Global" {
 
     bindsym 0 mode "$mode_system"
@@ -220,6 +220,7 @@ mode "$Global" {
     bindsym s mode "$Workspace_s"
     bindsym m mode "$Misc"
     bindsym w mode "$Window"
+    bindsym j mode "$Apps"
 
     bindsym 1 workspace $ws1, mode "default"
     bindsym 2 workspace $ws2, mode "default"
@@ -556,8 +557,8 @@ exec --no-startup-id redshift-gtk
 
 
 # Pulse Audio controls
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +2% #increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -2% #decrease sound volume
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% #increase sound volume
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% #decrease sound volume
 # bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Screen brightness controls
@@ -607,30 +608,52 @@ set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
+#bar {
+#	i3bar_command i3bar
+#	# status_command i3status
+#    status_command py3status -c ~/.config/i3status/config
+#	position top
+
+### please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+#	tray_output primary
+##	tray_output eDP1
+
+#	# bindsym button4 nop
+#	# bindsym button5 nop
+#    font xft:Noto-Sans 11
+#	strip_workspace_numbers yes
+
+#    colors {
+#            background      #112233
+#            statusline      #CED5D0
+
+#            focused_workspace       #112233 #6797A1
+#            active_workspace                #073642 #696f89
+#            inactive_workspace      #112233 #112233 #CED5D0
+#            urgent_workspace        #E59847 #E59847 #00252E
+#            binding_mode       #2f343a #3a568a #ffffff
+#    }
+#}
+
 bar {
-	i3bar_command i3bar
-	# status_command i3status
-    status_command py3status -c ~/.i3status.conf
-	position top
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+    font pango:DejaVu Sans Mono, Font Awesome 5 Free 11
+    position top
+    status_command i3status-rs ~/.config/i3status-rust/config.toml
 	tray_output primary
-#	tray_output eDP1
-
 	# bindsym button4 nop
 	# bindsym button5 nop
-    font xft:Noto-Sans 11
+    # font xft:Noto-Sans 11
 	strip_workspace_numbers yes
 
     colors {
-            background      #112233
-            statusline      #CED5D0
-
-            focused_workspace       #112233 #6797A1
-            active_workspace                #073642 #696f89
-            inactive_workspace      #112233 #112233 #CED5D0
-            urgent_workspace        #E59847 #E59847 #00252E
-            binding_mode       #2f343a #3a568a #ffffff
+        separator #666666
+        background #222222
+        statusline #dddddd
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+       binding_mode       #2f343a #3a568a #ffffff
     }
 }
 
