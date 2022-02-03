@@ -10,14 +10,6 @@
 source ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
-# symbolic links
-mkdir -p $HOME/.config
-ln -sfn ~/dotfiles/.zshrc ~/.zshrc
-ln -sfn ~/dotfiles/nvim ~/.config/nvim
-ln -sfn ~/dotfiles/.vimrc ~/.vimrc
-ln -sfn ~/dotfiles/.tmux.conf ~/.tmux.conf
-ln -sfn ~/dotfiles/.spacemacs ~/.spacemacs
-
 # autojump
 git clone git://github.com/wting/autojump.git ~/autojump
 cd ~/autojump
@@ -39,3 +31,6 @@ antigen update
 
 
 
+
+git config --global user.name "Charles Christensen"
+git config --global user.email "charles.n.chr@gmail.com"

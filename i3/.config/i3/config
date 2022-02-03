@@ -172,12 +172,14 @@ bindsym $mod+Mod1+4 move container to workspace $ws8; workspace $ws9
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
 # assign [class="firefox"] $ws2
-assign [class="spotify"] $ws6
+# assign [class="spotify"] $ws6 # does not work for spotify
 # assign [class="Alacritty"] $ws1
 assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
 # assign [class="dolphin"] $ws8
+
+# for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -209,6 +211,7 @@ for_window [class="Xfburn"] floating enable
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
+bindsym $mod+a mode "$Global"
 bindsym XF86Tools mode "$Global"
 set $Global (0) system, (space) utility, (d,a,s) workspaces, (w) win, (m) misc, (f) rofi, (tab) tasks, (`) clipboard, (c) calc, (g) dmenu, (j) shortcuts
 mode "$Global" {
@@ -246,7 +249,7 @@ mode "$Global" {
 
 # Set shut down, restart and locking features
 bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, screen (o)ff (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (q) quit i3
+set $mode_system (l)ock, screen (o)ff, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym l exec --no-startup-id betterlockscreen -l --off 60
@@ -273,7 +276,7 @@ mode "$Apps" {
     bindsym r exec --no-startup-id alacritty -e ranger, mode "default"
     bindsym d exec --no-startup-id dolphin, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
-    bindsym n exec --no-startup-id notion, mode "default"
+    bindsym n exec --no-startup-id notion-app, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -304,7 +307,6 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+a mode "$Misc"
 set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
@@ -532,6 +534,14 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
+exec --no-startup-id greenclip daemon
+exec --no-startup-id synology-drive
+exec --no-startup-id spotify
+# exec --no-startup-id solaar
+
+
+
+
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
@@ -545,7 +555,6 @@ exec_always --no-startup-id ~/.screenlayout/arandr.sh
 exec_always --no-startup-id libinput-gestures-setup start
 # exec_always --no-startup-id xmodmap ~/dotfiles/xmodmap
 exec_always --no-startup-id ~/.xprofile
-exec_always --no-startup-id greenclip daemon
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
