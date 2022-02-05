@@ -27,7 +27,6 @@ notifier = "notifysend"
 
 [[block]]
 block = "net"
-device = "wlp4s0"
 format = "{ssid} {speed_down;M*b} {speed_up;M*b}"
 interval = 5
 
