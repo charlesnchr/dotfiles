@@ -179,7 +179,11 @@ assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
 # assign [class="dolphin"] $ws8
 
-# for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
+for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
+for_window [urgent="latest"] focus
+for_window [urgent=latest] focus
+# for_window [urgent="latest" class="XTerm"] focus
+bindsym $mod+i [urgent=latest] focus
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -240,6 +244,8 @@ mode "$Global" {
     bindsym Tab exec --no-startup-id rofi -show window -show-icons, mode "default"
     bindsym c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort -calc-command \\"echo '{result}' | xclip -selection clipboard\\" -terse", mode "default"
     bindsym g exec --no-startup-id dmenu_recency
+
+    bindsym r exec --no-startup-id "alacritty -e zsh -lc \\"zsh -c 'source .zshrc; $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"

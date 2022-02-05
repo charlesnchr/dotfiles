@@ -116,7 +116,7 @@ Plug 'folke/trouble.nvim'
 " Plug 'itchyny/lightline.vim'
 
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'trotter/autojump.vim', { 'on':  'J' }
+Plug 'trotter/autojump.vim'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'christoomey/vim-tmux-navigator'
 Plug 'jdhao/whitespace.nvim'
