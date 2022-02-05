@@ -11,11 +11,11 @@ smart_trim = true
 
 [[block]]
 block = "pomodoro"
-length = 25
+length = 30
 break_length = 5
 message = "Take a break!"
 break_message = "Back to work!"
-notifier = "swaynag"
+notifier = "notifysend"
 
 # [[block]]
 # block = "toggle"
