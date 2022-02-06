@@ -212,28 +212,21 @@ syntax on
 filetype plugin on
 
 " platform dependent
-if has('mac')
   "let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
-  " for vimwiki
-  let g:vimwiki_list = [{
-    \ 'path': '$HOME/0main/wiki',
-    \ 'template_path': '$HOME/0main/wiki/templates',
-    \ 'template_default': 'default',
-    \ 'template_ext': '.html'}]
-  let g:nv_search_paths = ['~/0main/wiki']
-  let g:startify_bookmarks = [
-    \ { 'p': '~/0main/0phd' },
-    \ { 'c': '~/0main/0phd/ccRestore' },
-    \ { 'g': '~/GitHub' },
-    \ '~/0main',
-    \ ]
-elseif has('unix')
-  "let g:ycm_path_to_python_interpreter='/home/cc/miniconda3/bin/python'
-  let g:startify_bookmarks = [
-    \ { 'g': '~/GitHub' }
-    \ ]
-endif
+" for vimwiki
+let g:vimwiki_list = [{
+\ 'path': '$HOME/0main/wiki',
+\ 'template_path': '$HOME/0main/wiki/templates',
+\ 'template_default': 'default',
+\ 'template_ext': '.html'}]
+let g:nv_search_paths = ['~/0main/wiki']
+let g:startify_bookmarks = [
+\ { 'p': '~/0main/0phd' },
+\ { 'c': '~/0main/0phd/ccRestore' },
+\ { 'g': '~/GitHub' },
+\ '~/0main',
+\ ]
 
 
 " air-line
@@ -284,15 +277,15 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
-" colorscheme space-vim-dark
-" colorscheme solarized8_high
 nnoremap <leader><F8> :PrevColorScheme<CR>
 " nnoremap <leader>nn :NextColorScheme<CR>
 " colorscheme challenger_deep
 
 set termguicolors
 set background=dark
-colorscheme palenight
+" colorscheme palenight
+colorscheme space-vim-dark
+" colorscheme solarized8_high
 
 
 set nu rnu " relative line numbering

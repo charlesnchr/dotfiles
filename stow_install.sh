@@ -7,3 +7,5 @@ stow home_folder_desktop
 stow nvim
 stow dunst
 
+stow i3
+

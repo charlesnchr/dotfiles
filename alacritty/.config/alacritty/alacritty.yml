@@ -37,7 +37,7 @@ window:
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: full
 # Feel free to use different font configuration family & face for each sections
-
+  opacity: 0.96
 
 font:
   # Normal font face - Also used to draw glyphs on tmux & VIM
@@ -225,7 +225,6 @@ key_bindings:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.96
 
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
