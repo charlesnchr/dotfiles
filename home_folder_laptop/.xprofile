@@ -4,3 +4,6 @@ xinput set-prop "SYNA2393:00 06CB:7A13 Touchpad" "libinput Natural Scrolling Ena
 xmodmap ~/.xmodmap
 xcape -e 'Control_L=Escape'
 
+xcape -e 'Alt_L=XF86_Tools'
+xcape -e 'Alt_R=XF86_Tools'
+xcape -e 'Shift_R=XF86_Tools'
