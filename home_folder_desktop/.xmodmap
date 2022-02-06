@@ -29,7 +29,7 @@ keycode 13 = 4 dollar ssharp
 keycode 14 = 5 percent mu
 keycode 15 = 6 ampersand Insert
 
-keysym grave = XF86Tools grave asciitilde
+! keysym grave = XF86Tools grave asciitilde
 
 
 ! keycode 14 = percent 5 5 percent degree dead_abovering degree

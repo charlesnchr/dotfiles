@@ -121,10 +121,16 @@ HIST_STAMPS="mm/dd/yyyy"
 alias vim="nvim"
 alias vi="nvim"
 alias vimdiff='nvim -d'
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+alias ezsh="vi ~/.zshrc"
+alias ei3="vi ~/.zshrc"
+alias tdy="vi . -c VimwikiMakeDiaryNote"
+alias ydy="vi . -c VimwikiMakeYesterdayDiaryNote"
+alias tmrw="vi . -c VimwikiMakeTomorrowDiaryNote"
+alias vw="vi . -c VimwikiIndex"
 alias ttd="tt -n 10 -notheme -showwpm -csv >> ~/wpm.csv"
 alias mux=tmuxinator
+alias off="xset dpms force off"
+alias xclip="xclip -selection clipboard"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -184,10 +190,10 @@ ssh() {
 }
 
 jcd() {
-	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"
+	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
 }
 
-jvim() {
+jv() {
 	file="$(AUTOJUMP_DATA_DIR=~/.autojump.vim/global autojump $@)"; if [ -n "$file" ]; then vim "$file"; fi
 }
 

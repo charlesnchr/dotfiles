@@ -1,5 +1,8 @@
-sudo pacman -Syu yay
+sudo pacman --needed -Syu yay
 
-yay --needed --noconfirm -S firefox neovim zsh tmux inkscape libinput-gestures maim teams discord zoom nerd-fonts-source-code-pro wmctrl xdotool rofi rofimoji alttab-git tmuxinator spotify google-chrome code texlive-core dolphin dolphin-plugins ark cheese betterlockscreen py3status playerctl yarn redshift kcolorchooser darktable konsole kolourpaint pacdep discover flatpak packagekit-qt5 ttf-font-awesome dust mpd rofi-calc imagej rclone synology-drive firefox-pwa stow handlr-bin tig i3status-rust noto-fonts-emoji ktorrent solaar rofi-greenclip zathura zathura-pdf-mupdf zathura-djvu zathura-cb nomacs okular cmatrix bat exa neofetch xev krename btop kdownload litrus obs-studio the_silver_search
+yay --noconfirm --needed --answerclean None -S firefox neovim zsh tmux inkscape i3status-rust libinput-gestures maim teams discord nerd-fonts-source-code-pro wmctrl xdotool rofi rofimoji alttab-git tmuxinator code texlive-core dolphin dolphin-plugins ark cheese playerctl yarn redshift kcolorchooser darktable konsole kolourpaint pacdep discover flatpak packagekit-qt5 ttf-font-awesome dust mpd rofi-calc rclone synology-drive stow handlr-bin tig noto-fonts-emoji ktorrent solaar rofi-greenclip zathura zathura-pdf-mupdf zathura-djvu zathura-cb nomacs okular cmatrix bat exa neofetch xorg-xev krename btop kget lutris obs-studio the_silver_searcher steam-manjaro wine nodejs npm alacritty notion-app
 
-sudo pacman -S texlive-most
+echo 'AUR packages'
+yay --needed --answerclean None -S google-chrome spotify firefox-pwa imagej zoom betterlockscreen
+
+sudo pacman --needed -S texlive-most
