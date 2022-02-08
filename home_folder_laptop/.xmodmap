@@ -25,3 +25,9 @@ keycode 20 = minus underscore emdash
 
 keysym BackSpace = BackSpace BackSpace Delete
 
+keycode 10 = 1 exclam adiaeresis
+keycode 11 = 2 at odiaeresis
+keycode 12 = 3 numbersign udiaeresis
+keycode 13 = 4 dollar ssharp
+keycode 14 = 5 percent mu
+keycode 15 = 6 ampersand Insert
