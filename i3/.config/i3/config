@@ -54,7 +54,8 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym Ctrl+F2 exec firefox
 # bindsym $mod+F5 exec terminal -e 'mocp'
 
-# focus_follows_mouse no
+focus_follows_mouse no
+mouse_warping none
 
 # change focus
 bindsym $mod+h focus left
@@ -211,6 +212,10 @@ for_window [class="Simple-scan"] floating enable border normal for_window [class
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="kolourpaint"] floating enable
+for_window [class="copyq"] floating enable
+
+
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -240,7 +245,7 @@ mode "$Global" {
     bindsym 9 workspace $ws9, mode "default"
 
     bindsym f exec --no-startup-id rofi -show drun -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
-    bindsym grave exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}', mode "default"
+    # bindsym grave exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}', mode "default"
     bindsym Tab exec --no-startup-id rofi -show window -show-icons, mode "default"
     bindsym c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort -calc-command \\"echo '{result}' | xclip -selection clipboard\\" -terse", mode "default"
     bindsym g exec --no-startup-id dmenu_recency
@@ -541,7 +546,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-exec --no-startup-id greenclip daemon
+# exec --no-startup-id greenclip daemon
 exec --no-startup-id synology-drive
 exec --no-startup-id spotify
 exec --no-startup-id /usr/share/applications/solaar.desktop
