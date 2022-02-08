@@ -29,9 +29,3 @@ git clone https://github.com/zsh-users/antigen.git $HOME/tools/antigen
 zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/tools/antigen/bin/antigen.zsh && antigen update"
 
 
-
-
-git config --global user.name "Charles Christensen"
-git config --global user.email "charles.n.chr@gmail.com"
-sudo gpasswd -a $USER input
-

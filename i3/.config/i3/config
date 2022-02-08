@@ -45,11 +45,13 @@ bindsym $mod+p exec --no-startup-id ~/.config/rofi/applets/applets/powermenu.sh
 ##exec --no-startup-id volumeicon
 ##bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 exec --no-startup-id start-pulseaudio-x11
-exec --no-startup-id pa-applet
+# exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
 
+exec --no-startup-id kmix --keepvisibility
+exec --no-startup-id copyq
 
 # bindsym Ctrl+F2 exec firefox
 # bindsym $mod+F5 exec terminal -e 'mocp'
@@ -103,8 +105,11 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 #navigate workspaces next / previous
-bindsym $mod+Ctrl+l workspace next
-bindsym $mod+Ctrl+h workspace prev
+bindsym $mod+Ctrl+h focus output left
+bindsym $mod+Ctrl+l focus output right
+
+bindsym $mod+Mod1+l workspace next
+bindsym $mod+Mod1+h workspace prev
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -122,15 +127,25 @@ set $ws7 7
 set $ws8 8
 set $ws9 9
 
-workspace 1 output DisplayPort-3
-workspace 2 output DisplayPort-3
-workspace 3 output DisplayPort-3
-workspace 4 output DisplayPort-3
-workspace 5 output DisplayPort-3
-workspace 6 output DisplayPort-0
-workspace 7 output DisplayPort-0
-workspace 8 output DisplayPort-2
-workspace 9 output DisplayPort-2
+# workspace 1 output DisplayPort-3
+# workspace 2 output DisplayPort-3
+# workspace 3 output DisplayPort-3
+# workspace 4 output DisplayPort-3
+# workspace 5 output DisplayPort-3
+# workspace 6 output DisplayPort-0
+# workspace 7 output DisplayPort-0
+# workspace 8 output DisplayPort-2
+# workspace 9 output DisplayPort-2
+
+workspace 1 output DP-4.8
+workspace 2 output DP-4.8
+workspace 3 output DP-4.8
+workspace 4 output DP-4.8
+workspace 5 output DP-4.8
+workspace 6 output DP-0
+workspace 7 output DP-0
+workspace 8 output DP-2
+workspace 9 output DP-2
 
 # switch to workspace
 bindsym Ctrl+1 workspace $ws1
@@ -179,6 +194,7 @@ assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
 # assign [class="dolphin"] $ws8
+assign [class="copyq"] output primary
 
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
 for_window [urgent="latest"] focus
@@ -208,12 +224,14 @@ for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal for_window [class="(?i)System-config-printer.py"] floating enable border normal for_window [class="Skype"] floating enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="kolourpaint"] floating enable
-for_window [class="copyq"] floating enable
+for_window [class="copyq"] floating enable sticky enable border normal
 
 
 
@@ -544,12 +562,13 @@ exec --no-startup-id nitrogen --restore; sleep 1; picom -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+# exec --no-startup-id pamac-tray
 # exec --no-startup-id greenclip daemon
 exec --no-startup-id synology-drive
 exec --no-startup-id spotify
 exec --no-startup-id /usr/share/applications/solaar.desktop
+exec --no-startup-id sleep 10 && tmuxinator Tunnels
+exec --no-startup-id sleep 10 && tmuxinator Mining
 
 
 

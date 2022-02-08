@@ -1,0 +1,8 @@
+@theme "/usr/share/rofi/themes/purple.rasi"
+
+configuration {
+  show-icons:         true;
+  icon-theme:         "Papirus";
+  combi-modi: "window,drun,ssh";
+  modi: "window,drun,ssh,combi,calc,keys";
+}

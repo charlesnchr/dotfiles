@@ -106,6 +106,8 @@ HIST_STAMPS="mm/dd/yyyy"
 
 # User configuration
 
+setopt menu_complete
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -215,4 +217,3 @@ export LC_CTYPE=en_US.UTF-8
 source $HOME/tools/antigen/antigen.zsh
 antigen init $HOME/dotfiles/.antigenrc
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
