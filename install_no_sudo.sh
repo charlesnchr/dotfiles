@@ -17,4 +17,5 @@ chmod u+x nvim.appimage
 mkdir -p ~/bin
 mv ./nvim.appimage ~/bin/nvim
 
-
+# zsh and tmux
+conda install -y -c conda-forge zsh tmux

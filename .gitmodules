@@ -1,0 +1,3 @@
+[submodule "dotfiles_private"]
+	path = dotfiles_private
+	url = git@github.com:charlesnchr/dotfiles_private
