@@ -1,1 +1,1 @@
-betterlockscreen -u triple_monitor_background.jpg --span
+betterlockscreen -u ./wallpapers/triple_monitor_background.jpg --blur 0.2
