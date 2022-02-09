@@ -18,3 +18,8 @@ sudo ln -s /var/lib/snapd/snap /snap
 echo 'setting up Github cli'
 gh config set -h github.com git_protocol ssh
 
+echo 'setting up power settings'
+
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/logind-handle-lid-switch -s false
+
+xfconf-query -c xfce4-session -p /general/LockCommand -s betterlockscreen -l -n -t string

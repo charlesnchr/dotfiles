@@ -18,6 +18,9 @@ keysym u = u U Home
 keysym o = o O End
 keysym e = e E F13
 
+keycode 108 = Control_R
+keycode 105 = Alt_R
+
 keycode 47 = semicolon colon ae
 keycode 48 = apostrophe quotedbl oslash
 keycode 34 = bracketleft braceleft aring

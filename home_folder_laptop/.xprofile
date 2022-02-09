@@ -5,5 +5,7 @@ xmodmap ~/.xmodmap
 xcape -e 'Control_L=Escape'
 
 xcape -e 'Alt_L=XF86_Tools'
-xcape -e 'Alt_R=XF86_Tools'
+xcape -e 'Super_L=XF86_Tools'
+xcape -e 'Shift_L=XF86_Tools'
+xcape -e 'Control_R=XF86_Tools'
 xcape -e 'Shift_R=XF86_Tools'
