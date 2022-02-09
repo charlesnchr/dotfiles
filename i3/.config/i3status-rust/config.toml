@@ -56,15 +56,14 @@ interval = 1
 # interval = 1
 # format = "{1m}"
 
-
-[[block]]
-block = "nvidia_gpu"
-label = "RTX3090"
-show_memory = true
-show_clocks = true
-show_fan_speed = true
-show_power_draw = true
-interval = 1
+# [[block]]
+# block = "nvidia_gpu"
+# label = "RTX3090"
+# show_memory = true
+# show_clocks = true
+# show_fan_speed = true
+# show_power_draw = true
+# interval = 1
 
 [[block]]
 allow_missing = true
@@ -79,14 +78,14 @@ block = "time"
 interval = 5
 format = "%a %d/%m %R"
 
-[[block]]
-block = "custom"
-command = "echo '{\"icon\":\"weather_thunder\",\"state\":\"Critical\", \"text\": \"Danger!\"}'"
-json = true
+# [[block]]
+# block = "custom"
+# command = "echo '{\"icon\":\"weather_thunder\",\"state\":\"Critical\", \"text\": \"Danger!\"}'"
+# json = true
 
-[[block]]
-block = "custom"
-command = ''' echo 'hej' '''
+# [[block]]
+# block = "custom"
+# command = ''' echo 'hej' '''
 
 [[block]]
 block = "sound"

@@ -22,4 +22,4 @@ echo 'setting up power settings'
 
 xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/logind-handle-lid-switch -s false
 
-xfconf-query -c xfce4-session -p /general/LockCommand -s betterlockscreen -l -n -t string
+xfconf-query -c xfce4-session -p /general/LockCommand -s "betterlockscreen -l" -n -t string
