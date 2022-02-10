@@ -90,3 +90,7 @@ command = ''' echo 'hej' '''
 
 [[block]]
 block = "sound"
+
+[[block]]
+block = "sound"
+device_kind = "source"
