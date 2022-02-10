@@ -15,7 +15,7 @@ case "$1" in
         dm-tool switch-to-greeter
         ;;
     suspend)
-        blurlock && $logind suspend
+        betterlockscreen -l && $logind suspend
         ;;
     hibernate)
         blurlock && $logind hibernate

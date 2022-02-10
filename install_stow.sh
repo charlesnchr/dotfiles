@@ -17,6 +17,8 @@ select yn in "Yes" "No"; do
         mv ~/.config/rofi conf_bk
         mv ~/.config/alacritty conf_bk
         mv ~/bin/i3exit conf_bk
+        mv ~/.screenlayout conf_bk
+        mv ~/.config/picom.conf conf_bk
         break
         ;;
     No ) break;; #exit;;

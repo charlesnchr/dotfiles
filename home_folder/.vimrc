@@ -292,6 +292,7 @@ set nu rnu " relative line numbering
 set clipboard=unnamed " public copy/paste register
 
 set ignorecase
+set wildignorecase " affects :e
 set smartcase
 
 set mouse=a
@@ -331,13 +332,14 @@ let g:vimtex_compiler_latexmk = {
 
 function! WC()
     let filename = expand("%")
-    let cmd = "./texcount.pl " . filename
+    let cmd = "./texcount.pl -inc " . filename
     let result = system(cmd)
     echo result
 endfunction
 
 command WC call WC()
-
+nnoremap <localleader>l1 <cmd>VimtexCountWords<cr>
+nnoremap <localleader>l2 <cmd>call WC()<cr>
 
 " writing
 "let g:pencil#conceallevel = 3     " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
@@ -363,7 +365,7 @@ let g:goyo_width = 85
 
 
 
-" programming
+" programming, terminal
 nnoremap <silent> <leader><F12> :FloatermNew<CR>
 tnoremap <silent> <leader><F12> <C-\><C-n>:FloatermNew<CR>
 nnoremap <silent> <F10> :FloatermPrev<CR>
@@ -374,7 +376,9 @@ nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
 nnoremap <silent> <F7> :Ttoggle<CR>
 tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
-tnoremap <Esc> <C-\><C-n>
+
+" annoying when it is esc, messes with popup windows
+tnoremap <C-b> <C-\><C-n>
 let g:neoterm_autoscroll = 1
 
 " -------------------
@@ -430,7 +434,7 @@ nnoremap <leader>tt <cmd>VimwikiToggleListItem<cr>
 
 "let g:airline_section_x = '%{PencilMode()}'
 
-vnoremap <leader>c :OSCYank<CR>
+vnoremap <leader>y :OSCYank<CR>
 
 "------------------------------------------------------------------------------
 " IPython  configuration
@@ -556,8 +560,8 @@ noremap g* g*<Cmd>lua require('hlslens').start()<CR>
 noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 " use : instead of <Cmd>
 nnoremap <silent> <leader>l :noh<CR>
-nnoremap <esc> :noh<return><esc>
-nnoremap <esc>^[ <esc>^[
+" nnoremap <esc> :noh<return><esc>
+" nnoremap <esc>^[ <esc>^[
 
 
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
