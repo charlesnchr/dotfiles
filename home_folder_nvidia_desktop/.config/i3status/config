@@ -1,0 +1,138 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+        color_good = "#2AA198"
+        color_bad = "#586E75"
+        color_degraded = "#DC322F"
+}
+
+# order += "spotify"
+# order += "whatismyip"
+# order += "wireless _first_"
+# order += "ethernet _first_"
+# order += "net_rate"
+order += "cpu_usage"
+order += "memory"
+order += "disk /"
+#order += "diskdata"
+# order += "timer"
+# order += "battery all"
+order += "battery_level"
+# order += "volume master"
+order += "tztime local"
+
+spotify {
+    format = "( {artist} : {title})"
+    format_down = ""
+    format_stopped = ""
+}
+
+volume master {
+   format = " %volume"
+   format_muted = " %volume"
+   device = "default"
+   mixer = "Master"
+   mixer_idx = 0
+}
+
+timer {
+    format = ":{timer}"
+    time = 1800
+}
+
+cpu_usage {
+        format = " cpu  %usage "
+}
+
+disk "/" {
+    prefix_type = decimal
+    # format = " ⛁ %percentage_used (U:%used, F:%free) "
+    format = " ⛁ %used "
+}
+
+diskdata {
+    disk = sda2
+    prefix_type = decimal
+    #format_space = "[\?min_length=5 {value:.2f}]"
+    format = " ⛁ {used_percent}% (U:{used} GB, F:{free} GB) "
+}
+
+external_script {
+    format = "{output}"
+    script_path = "cat /sys/class/tty/tty0/active"
+}
+
+whatismyip {
+    format = " 🖧 {city} ({ip}) "
+    icon_on = "🖧"
+    hide_when_offline = True
+    url_geo = "http://ip-api.com/json"
+}
+
+wireless _first_ {
+    # if you use %speed, i3status requires root privileges
+        format_up = "  %essid (%ip) "
+        format_down = ""
+}
+
+ethernet _first_ {
+    # if you use %speed, i3status requires root privileges
+        format_up = "  eth (%ip) "
+        format_down = ""
+}
+
+net_rate {
+    format_value = "[\?min_length=10 {value:.1f} {unit}]"
+    si_units = "True"
+    format = "{down}⇣ {up}⇡"
+        interfaces_blacklist = "lo"
+}
+
+battery all {
+        format = " %status %percentage (%remaining) %consumption "
+        format_down = "No battery"
+        last_full_capacity = true
+        integer_battery_capacity = true
+        status_chr = "⚡"
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
+        low_threshold = 15
+        threshold_type = time
+}
+
+battery_level {
+    cache_timeout = 5
+    measurement_mode = "acpi"
+    hide_when_full = "True"
+    hide_seconds = "True"
+    blocks = ""
+    color_charging = "#00ff00"
+    format = " {icon} {percent}% ({time_remaining}) "
+}
+
+tztime local {
+        format = " %Y-%m-%d %H:%M "
+        #format = " %d/%m %H:%M:%S"
+}
+
+path_exists VPN {
+        format = "%title:tun0"
+        format_down = ""
+        color_good = "#00ff00"
+        path = "/sys/class/net/tun0/dev_id"
+}
+
+memory {
+        format = "%used / %available"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
