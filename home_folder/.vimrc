@@ -401,6 +401,9 @@ nnoremap <localleader>ve :e ~/.vimrc<cr>
 nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :PlugInstall<cr>
+nnoremap <localleader>vg :G<cr>
+nnoremap <localleader>vl :G pull<cr>
+nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
 nnoremap <localleader>x :close<cr>
