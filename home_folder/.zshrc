@@ -125,6 +125,7 @@ alias vi="nvim"
 alias vimdiff='nvim -d'
 alias ezsh="vi ~/.zshrc"
 alias ei3="vi ~/.config/i3/config"
+alias ei3s="vi ~/.config/i3status-rust/config.toml"
 alias tdy="vi . -c VimwikiMakeDiaryNote"
 alias ydy="vi . -c VimwikiMakeYesterdayDiaryNote"
 alias tmrw="vi . -c VimwikiMakeTomorrowDiaryNote"
