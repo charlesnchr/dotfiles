@@ -116,6 +116,10 @@ bindsym $mod+Ctrl+l focus output right
 bindsym $mod+Mod1+l workspace next
 bindsym $mod+Mod1+h workspace prev
 
+bindsym $mod+Ctrl+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
+bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
+
+
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
@@ -275,7 +279,10 @@ mode "$Global" {
     bindsym c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort -calc-command \\"echo '{result}' | xclip -selection clipboard\\" -terse", mode "default"
     bindsym g exec --no-startup-id dmenu_recency, mode "default"
 
+    bindsym o exec --no-startup-id xset dpms force off; exec --no-startup-id sleep 0.2 && xset dpms force on, mode "default"
+
     bindsym p exec --no-startup-id pkill picom; exec --no-startup-id sleep 0.2 && picom -b, mode "default"
+
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     bindsym t exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )' && zsh\\"", mode "default"
@@ -577,7 +584,8 @@ exec --no-startup-id xfce4-power-manager
 # exec --no-startup-id greenclip daemon
 exec --no-startup-id synology-drive
 exec --no-startup-id spotify
-exec --no-startup-id /usr/share/applications/solaar.desktop
+# exec --no-startup-id /usr/share/applications/solaar.desktop
+exec --no-startup-id logid ~/logid.cfg
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
 exec --no-startup-id kmix --keepvisibility
