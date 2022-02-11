@@ -1,0 +1,12 @@
+#!/bin/bash
+
+OUTPUT=$(xprop -id $(xdotool getwindowfocus) | grep WM_CLASS)
+
+SUB='spotify'
+if [[ "$OUTPUT" == *"$SUB"* ]]; then
+    # echo 'spotify' > hello
+    xdotool key alt+Right
+else
+    # echo 'not spotify' > hello
+    xdotool key control+bracketright
+fi
