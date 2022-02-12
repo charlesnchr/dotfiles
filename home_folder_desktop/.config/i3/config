@@ -91,7 +91,9 @@ bindsym $mod+Shift+Right move right
 # workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
+bindsym Mod1+Tab workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+bindsym Mod1+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
 
 
 # toggle fullscreen mode for the focused container
@@ -115,6 +117,10 @@ bindsym $mod+Ctrl+l focus output right
 
 bindsym $mod+Mod1+l workspace next
 bindsym $mod+Mod1+h workspace prev
+
+bindsym $mod+Ctrl+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
+bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
+
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -245,7 +251,7 @@ for_window [urgent=latest] focus
 
 bindsym $mod+a mode "$Global"
 bindsym XF86Tools mode "$Global"
-set $Global (0) sys, (space) util, (d,a,s) ws, (w) win, (m) misc, (f) rofi, (tab) tasks, (`) cp, (c) calc, (g) dmenu, (j) quick
+set $Global (0,SPC,m,TAB,qrwasd,1-9) 💫 (`,c) 📌 📐 (f,g,j) 🚀 (o,p,l) ⬛ 🪟 ⏩ (e,t) 🛸 (z,x) 📱
 mode "$Global" {
 
     bindsym 0 mode "$mode_system"
@@ -257,6 +263,7 @@ mode "$Global" {
     bindsym w mode "$Window"
     bindsym j mode "$Apps"
     bindsym r mode "resize"
+    bindsym q mode "$Snippets"
 
     bindsym 1 workspace $ws1, mode "default"
     bindsym 2 workspace $ws2, mode "default"
@@ -270,15 +277,25 @@ mode "$Global" {
 
     bindsym f exec --no-startup-id rofi -show drun -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
     # bindsym grave exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}', mode "default"
-    bindsym grave exec --no-startup-id , mode "default"
+    bindsym grave exec --no-startup-id copyq toggle, mode "default"
     bindsym Tab exec --no-startup-id rofi -show window -show-icons, mode "default"
     bindsym c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort -calc-command \\"echo '{result}' | xclip -selection clipboard\\" -terse", mode "default"
     bindsym g exec --no-startup-id dmenu_recency, mode "default"
 
+    bindsym o exec --no-startup-id xset dpms force off; exec --no-startup-id sleep 0.2 && xset dpms force on, mode "default"
+
     bindsym p exec --no-startup-id pkill picom; exec --no-startup-id sleep 0.2 && picom -b, mode "default"
+
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     bindsym t exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )' && zsh\\"", mode "default"
+
+
+    # screenshot
+    bindsym x exec --no-startup-id maim -s | xclip -selection clipboard -t image/png, mode "default"
+
+    # emoji
+    bindsym z exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -307,7 +324,7 @@ mode "$mode_system" {
 }
 
 
-bindsym $mod+Tab mode "$Apps"
+# bindsym $mod+Tab mode "$Apps"
 set $Apps (t) terminal, (f) firefox, (d) dolphin, (r) ranger, (s) spotify, (n) notion
 mode "$Apps" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
@@ -323,8 +340,34 @@ mode "$Apps" {
     bindsym Escape mode "default"
 }
 
+# bindsym $mod+Tab mode "$Snippets"
+set $Snippets (g) @gmail (o) @outlook (w) @wizion (n) CNC (s) sign (p) Python
+mode "$Snippets" {
+    # bindsym l exec --no-startup-id i3exit lock, mode "default"
+    # bindsym g exec --no-startup-id sleep 0.5 && xdotool type charles.n.chr@gmail.com, mode "default"
+    # bindsym o exec --no-startup-id sleep 0.5 && xdotool type charles.n.chr@outlook.com, mode "default"
+    # bindsym w exec --no-startup-id sleep 0.5 && xdotool type charles@wizion.ai, mode "default"
+    # bindsym n exec --no-startup-id sleep 0.5 && xdotool type "Charles Nicklas Christensen", mode "default"
 
-bindsym $mod+w mode "$Window"
+
+    bindsym g exec --no-startup-id "printf \\"charles.n.chr@gmail.com\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+    bindsym o exec --no-startup-id "printf \\"charles.n.chr@outlook.com\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+    bindsym w exec --no-startup-id "printf \\"charles@wizion.ai\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+    bindsym n exec --no-startup-id "printf \\"Charles Nicklas Christensen\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+
+    # bindsym s exec --no-startup-id sleep 0.5 &&  xdotool type "$(printf 'Cheers\n Charles')", mode "default"
+    bindsym s exec --no-startup-id "printf \\"Cheers,\nCharles\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+    # bindsym o exec --no-startup-id sleep 0.1 && xdotool type , mode "default"
+
+    bindsym p exec --no-startup-id "printf \\"import numpy as np\nimport matplotlib.pyplot as plt\nfrom skimage import io,exposure,transform\nimport cv2\nimport os\nimport glob\nimport pandas as pd\\" | xclip -selection clipboard && sleep 0.5 && xdotool key Ctrl+shift+v", mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+# bindsym $mod+w mode "$Window"
 set $Window (h) horz. , (v) vert. , (q) toggle , (s) stacking, (w) tabbed, (e) toggle split, (space) floating, (p) sticky, (a) parent, (z) child
 mode "$Window" {
     # split orientation
@@ -347,7 +390,7 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help
+set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
     bindsym p exec --no-startup-id picom -b, mode "default"
@@ -355,12 +398,14 @@ mode "$Misc" {
     bindsym x --release exec --no-startup-id xkill, mode "default"
     bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
 
+    bindsym a exec --no-startup-id killall xcape, mode "default"
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
 bindsym $mod+space mode "$Utility"
-set $Utility (t) terminal, (p) spt, (x) xprofile, (z) morc_menu, (b) bmenu, (s) scn sel., (w) scn win., (a) scn all, (e) emoji, (m) pulse, (c) i3-conf, (r) i3-restart, (d) display
+set $Utility (t) terminal, (p) spt, (x) xprofile, (z) morc_menu, (b) bmenu, (s) scn sel., (w) scn win., (a) scn all, (m) pulse, (c) i3-conf, (r) i3-restart, (d) display
 mode "$Utility" {
     bindsym t exec alacritty -e $(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p "Command: "), mode "default"
     bindsym p exec --no-startup-id alacritty -e spt, mode "default"
@@ -379,7 +424,7 @@ mode "$Utility" {
     bindsym w exec --no-startup-id maim  -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png, mode "default"
     bindsym s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png, mode "default"
     # shouldn't need this anymore
-    bindsym Shift+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh, mode "default"
+    # bindsym Shift+s exec --no-startup-id /home/cc/dotfiles/screenshot.sh, mode "default"
 
     # emoji
     bindsym e exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv, mode "default"
@@ -577,7 +622,8 @@ exec --no-startup-id xfce4-power-manager
 # exec --no-startup-id greenclip daemon
 exec --no-startup-id synology-drive
 exec --no-startup-id spotify
-exec --no-startup-id /usr/share/applications/solaar.desktop
+# exec --no-startup-id /usr/share/applications/solaar.desktop
+exec --no-startup-id logid ~/logid.cfg
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
 exec --no-startup-id kmix --keepvisibility
@@ -627,7 +673,9 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 
-bindsym $mod1+d exec --no-startup-id copyq menu
+bindsym $mod+d exec --no-startup-id copyq menu
+bindsym $mod+v exec --no-startup-id copyq toggle
+
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
