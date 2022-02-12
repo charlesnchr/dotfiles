@@ -1,0 +1,17 @@
+#!/bin/bash
+
+WS=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].num')
+
+declare ws1=1:🤖
+declare ws2=2:🌎
+declare ws3=3:🐺
+declare ws4=4:🐋
+declare ws5=5:📭
+declare ws6=6:🎵
+declare ws7=7:🏰
+declare ws8=8:🐧
+declare ws9=9:📓
+
+suffix=$(expr $WS + 1)
+varname=ws$suffix
+i3-msg workspace number ${!varname}
