@@ -276,6 +276,7 @@ mode "$Global" {
     bindsym g exec --no-startup-id dmenu_recency, mode "default"
 
     bindsym p exec --no-startup-id pkill picom; exec --no-startup-id sleep 0.2 && picom -b, mode "default"
+    bindsym l exec --no-startup-id ~/.screenlayout/arandr_60.sh; exec --no-startup-id sleep 0.2 && ~/.screenlayout/arandr.sh, mode "default"
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     bindsym t exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )' && zsh\\"", mode "default"
