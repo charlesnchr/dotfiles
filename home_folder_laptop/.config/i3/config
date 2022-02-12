@@ -399,7 +399,7 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape
+set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape, (l) restart libinput-gestures
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
     bindsym p exec --no-startup-id picom -b, mode "default"
@@ -408,6 +408,7 @@ mode "$Misc" {
     bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
 
     bindsym a exec --no-startup-id killall xcape, mode "default"
+    bindsym l exec --no-startup-id libinput-gestures-setup restart, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
