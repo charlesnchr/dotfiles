@@ -251,7 +251,7 @@ for_window [urgent=latest] focus
 
 bindsym $mod+a mode "$Global"
 bindsym XF86Tools mode "$Global"
-set $Global (0,SPC,m,TAB,qrwasd,1-9) 💫 (`,c) 📌 📐 (f,g,j) 🚀 (o,p,l) ⬛ 🪟 ⏩ (e,t) 🛸 (z,x) 📱
+set $Global (0,SPC,m,TAB,qrwasd) 💫 (`,c,q) 📌 📐 📄 (f,g,j) 🚀 (o,p,l) ⬛ 🪟 ⏩ (e,t) 🛸 (z,x) 📱
 mode "$Global" {
 
     bindsym 0 mode "$mode_system"
@@ -297,8 +297,14 @@ mode "$Global" {
     # emoji
     bindsym z exec --no-startup-id rofimoji -f ~/dotfiles/emojis.csv, mode "default"
 
+    # program shortcuts
+    bindsym Return exec --no-startup-id alacritty, mode "default"
+    bindsym bracketright exec --no-startup-id firefox, mode "default"
+    bindsym bracketleft exec --no-startup-id dolphin, mode "default"
+    bindsym BackSpace exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
+
     # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
+    # bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym XF86Tools mode "default"
 }
@@ -390,7 +396,7 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape
+set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape, (l) restart libinput-gestures
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
     bindsym p exec --no-startup-id picom -b, mode "default"
@@ -399,6 +405,7 @@ mode "$Misc" {
     bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
 
     bindsym a exec --no-startup-id killall xcape, mode "default"
+    bindsym l exec --no-startup-id libinput-gestures-setup restart, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
