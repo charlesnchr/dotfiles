@@ -3,22 +3,24 @@
 # alternative, less clean, syntax:
 # stow -R .config -t ~/.config
 
-echo "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named conf_bk?"
+dirname=conf_bk_$(date '+%d%m%Y%H%M%S');
+
+echo "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named $dirname?"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
-        mkdir -p conf_bk
-        mv ~/.profile conf_bk
-        mv ~/.zshrc conf_bk
-        mv ~/.config/dunst conf_bk
-        mv ~/.config/mimeapps.list conf_bk
-        mv ~/.config/libinput-gestures.conf conf_bk
-        mv ~/.config/nvim conf_bk
-        mv ~/.config/rofi conf_bk
-        mv ~/.config/alacritty conf_bk
-        mv ~/bin/i3exit conf_bk
-        mv ~/.screenlayout conf_bk
-        mv ~/.config/picom.conf conf_bk
+        mkdir -p $dirname
+        mv ~/.profile $dirname
+        mv ~/.zshrc $dirname
+        mv ~/.config/dunst $dirname
+        mv ~/.config/mimeapps.list $dirname
+        mv ~/.config/libinput-gestures.conf $dirname
+        mv ~/.config/nvim $dirname
+        mv ~/.config/rofi $dirname
+        mv ~/.config/alacritty $dirname
+        mv ~/bin/i3exit $dirname
+        [ -f ~/.screenlayout ] && mv ~/.screenlayout $dirname
+        mv ~/.config/picom.conf $dirname
         break
         ;;
     No ) break;; #exit;;
@@ -53,6 +55,5 @@ done
 
 
 stow ricing
-stow i3
 stow alacritty
 stow mime-settings
