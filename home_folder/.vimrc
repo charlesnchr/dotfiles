@@ -623,3 +623,4 @@ nnoremap <localleader>7 <cmd>lua require("harpoon.ui").nav_file(7)<cr>
 nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
 nnoremap <localleader>t1 <cmd>lua require("harpoon.term").gotoTerminal(1)<cr>
 
+let g:peekaboo_prefix = '<localleader>'
