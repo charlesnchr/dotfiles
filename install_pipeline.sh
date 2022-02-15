@@ -16,5 +16,5 @@ echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh
 
 echo "[redshift]
 allowed=true
-systemjkhjkjjk=false
+system=false
 users=" | sudo tee -a /etc/geoclue/geoclue.conf
