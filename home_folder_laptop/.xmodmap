@@ -40,4 +40,5 @@ keycode 11 = 2 at odiaeresis
 keycode 12 = 3 numbersign udiaeresis
 keycode 13 = 4 dollar ssharp
 keycode 14 = 5 percent mu
-keycode 15 = 6 ampersand Insert
+keycode 15 = 6 asciicircum dead_acute
+keysym v = v V Insert

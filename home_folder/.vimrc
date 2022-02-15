@@ -66,8 +66,8 @@ Plug 'jpalardy/vim-slime'
 Plug 'kevinhwang91/nvim-hlslens'
 
 if has('mac')
-  Plug 'alok/notational-fzf-vim'
-"elseif has('unix')
+    Plug 'alok/notational-fzf-vim'
+    "elseif has('unix')
 endif
 
 Plug 'kassio/neoterm'
@@ -90,12 +90,12 @@ Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 " " Have not added any parsers yet
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
- Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
- Plug 'sbdchd/neoformat'
- Plug 'simnalamburt/vim-mundo'
- Plug 'liuchengxu/vista.vim'
- Plug 'tpope/vim-commentary'
- Plug 'folke/which-key.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'sbdchd/neoformat'
+Plug 'simnalamburt/vim-mundo'
+Plug 'liuchengxu/vista.vim'
+Plug 'tpope/vim-commentary'
+Plug 'folke/which-key.nvim'
 
 Plug 'hrsh7th/cmp-omni'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -181,20 +181,20 @@ noremap <localleader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <localleader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=120 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
+            \ set tabstop=4 |
+            \ set softtabstop=4 |
+            \ set shiftwidth=4 |
+            \ set textwidth=120 |
+            \ set expandtab |
+            \ set autoindent |
+            \ set fileformat=unix
 
 
 au BufNewFile,BufRead *.tex
-      \ set textwidth=80
+            \ set textwidth=80
 
 "au BufNewFile,BufRead */wiki/*
-      "\ SoftPencil
+            "\ SoftPencil
 
 " trialing these options for all types
 set tabstop=4
@@ -212,21 +212,27 @@ syntax on
 filetype plugin on
 
 " platform dependent
-  "let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
+"let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 
 " for vimwiki
 let g:vimwiki_list = [{
-\ 'path': '$HOME/0main/wiki',
-\ 'template_path': '$HOME/0main/wiki/templates',
-\ 'template_default': 'default',
-\ 'template_ext': '.html'}]
+            \ 'path': '$HOME/0main/wiki',
+            \ 'template_path': '$HOME/0main/wiki/templates',
+            \ 'template_default': 'default',
+            \ 'template_ext': '.html'}]
+let g:vimwiki_ext2syntax = {
+            \'.wiki': 'markdown'
+            \}
+" let g:vimwiki_ext2syntax = {  " if I don't like markdown
+"             \}
+let g:vimwiki_global_ext = 1
 let g:nv_search_paths = ['~/0main/wiki']
 let g:startify_bookmarks = [
-\ { 'p': '~/0main/0phd' },
-\ { 'c': '~/0main/0phd/ccRestore' },
-\ { 'g': '~/GitHub' },
-\ '~/0main',
-\ ]
+            \ { 'p': '~/0main/0phd' },
+            \ { 'c': '~/0main/0phd/ccRestore' },
+            \ { 'g': '~/GitHub' },
+            \ '~/0main',
+            \ ]
 
 
 " air-line
@@ -274,8 +280,8 @@ set signcolumn=yes
 " You might have to force true color when using regular vim inside tmux as the
 " colorscheme can appear to be grayscale with "termguicolors" option enabled.
 if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 nnoremap <leader><F8> :PrevColorScheme<CR>
 " nnoremap <leader>nn :NextColorScheme<CR>
@@ -309,7 +315,7 @@ nmap <leader>to :TagbarOpenAutoClose<CR>
 
 
 if !exists('g:lasttab')
-  let g:lasttab = 1
+    let g:lasttab = 1
 endif
 nmap <leader><Tab> :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
@@ -323,12 +329,12 @@ map <localleader>s <Plug>(easymotion-s)
 " let g:vimtex_view_method = 'skim'
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_latexmk = {
-        \ 'executable' : 'latexmk',
-        \ 'options' : [
-        \   '-xelatex',
-        \   '-interaction=nonstopmode',
-        \ ],
-        \}
+            \ 'executable' : 'latexmk',
+            \ 'options' : [
+                \   '-xelatex',
+                \   '-interaction=nonstopmode',
+                \ ],
+                \}
 
 function! WC()
     let filename = expand("%")
@@ -357,7 +363,7 @@ let g:goyo_width = 85
 " map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " for latex
 " if !exists('g:ycm_semantic_triggers')
-    " let g:ycm_semantic_triggers = {}
+" let g:ycm_semantic_triggers = {}
 " endif
 " au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
@@ -416,7 +422,6 @@ nnoremap <leader>qf :copen<cr>
 hi VimwikiHeader1 guifg=#00FF03
 hi VimwikiHeader2 guifg=#83ebd3
 hi VimwikiHeader3 guifg=#83c8eb
-let g:vimwiki_global_ext = 0
 
 " Insert timestamp
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
@@ -453,9 +458,9 @@ inoremap <F6> <C-o>:IPythonCellExecuteCellVerbose<CR>
 "nnoremap <F6> :REPLSendSession<CR>
 "inoremap <F6> <C-o>:REPLSendSession<CR>
 let g:repl_program = {
-    \'python': ['ipython'],
-    \'default': ['bash']
-\}
+            \'python': ['ipython'],
+            \'default': ['bash']
+            \}
 
 
 " map <F7> to evaluate current cell and jump to next cell without saving
