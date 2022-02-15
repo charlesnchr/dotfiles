@@ -621,7 +621,7 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Lock scree
+# Lock screen
 # bindsym $mod+BackSpace exec --no-startup-id blurlock
 
 # Autostart applications
@@ -635,7 +635,7 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id synology-drive
 exec --no-startup-id spotify
 # exec --no-startup-id /usr/share/applications/solaar.desktop
-# exec --no-startup-id sleep 30 && logid ~/logid.cfg
+# exec --no-startup-id logid ~/logid.cfg
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
 exec --no-startup-id kmix --keepvisibility
