@@ -44,6 +44,7 @@ bindsym $mod+q kill
 bindsym $mod+n exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ +2% #increase sound volume false
 bindsym $mod+Shift+n exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ true
 bindsym $mod+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ false
+bindsym $mod+Mod1+m exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ 25%
 bindsym $mod+Shift+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
 
 # xmodmap
