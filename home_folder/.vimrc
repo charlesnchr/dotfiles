@@ -216,8 +216,8 @@ filetype plugin on
 
 " for vimwiki
 let g:vimwiki_list = [{
-            \ 'path': '$HOME/0main/wiki',
-            \ 'template_path': '$HOME/0main/wiki/templates',
+            \ 'path': '$HOME/Github/wiki',
+            \ 'template_path': '$HOME/Github/wiki/templates',
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
@@ -226,7 +226,7 @@ let g:vimwiki_ext2syntax = {
 " let g:vimwiki_ext2syntax = {  " if I don't like markdown
 "             \}
 let g:vimwiki_global_ext = 1
-let g:nv_search_paths = ['~/0main/wiki']
+let g:nv_search_paths = ['~/Github/wiki']
 let g:startify_bookmarks = [
             \ { 'p': '~/0main/0phd' },
             \ { 'c': '~/0main/0phd/ccRestore' },
