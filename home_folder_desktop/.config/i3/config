@@ -294,6 +294,7 @@ mode "$Global" {
 
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
+    bindsym shift+e exec --no-startup-id "alacritty -o 'window.opacity=0.8' -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     bindsym t exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )' && zsh\\"", mode "default"
 
 
@@ -402,7 +403,7 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape, (l) restart libinput-gestures
+set $Misc (k) k picom, (p) s picom, (d) r dunst, (x) xkill, (h) help, (a) k xcape, (l) r gestures, (1-2) opa.
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
     bindsym p exec --no-startup-id picom -b, mode "default"
@@ -412,6 +413,8 @@ mode "$Misc" {
 
     bindsym a exec --no-startup-id killall xcape, mode "default"
     bindsym l exec --no-startup-id libinput-gestures-setup restart, mode "default"
+
+    bindsym 1 exec --no-startup-id ~/bin/toggle_alacritty_opacity, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -750,7 +753,7 @@ set_from_resource $term_color15    color15
 #}
 
 bar {
-    font pango:DejaVu Sans Mono, Font Awesome 5 Free 11
+    font pango:DejaVu Sans Mono, Font Awesome 6 Free 11
     position top
     status_command i3status-rs ~/.config/i3status-rust/config.toml
 	tray_output primary
@@ -793,6 +796,11 @@ bar {
 # Set inner/outer gaps
 # gaps inner 14
 # gaps outer -2
+
+# gaps inner 5
+# gaps outer 0
+
+# for smart_gaps inverse
 gaps inner 5
 gaps outer 20
 
