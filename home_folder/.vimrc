@@ -408,6 +408,7 @@ nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :PlugInstall<cr>
 nnoremap <localleader>vg :G<cr>
+nnoremap <localleader>vc :G commit -m "Small update"<cr>
 nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
@@ -415,7 +416,11 @@ nnoremap <localleader>q :quit<cr>
 nnoremap <localleader>x :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
-nnoremap <localleader>cd :cd %:h<cr>
+" nicer to have pwd
+" nnoremap <localleader>cd :cd %:h<cr>
+" pointless symlink follow
+" nnoremap <localleader>cs :cd %:p:h<CR>:cd `dirname $(readlink %)`<CR>:pwd<CR>
+nnoremap <localleader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>qf :copen<cr>
 
 
@@ -582,22 +587,22 @@ nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 let g:pymode_lint_on_write = 0
 
-" Set the title of the Terminal to the currently open file
-function! SetTerminalTitle()
-    let titleString = expand('%:t')
-    if stridx(titleString, "neoterm") == -1
-        if len(titleString) > 0
-            let &titlestring = expand('%:t')
-            " this is the format iTerm2 expects when setting the window title
-            let args = "\033];".&titlestring."\007"
-            let cmd = 'silent !echo -e "'.args.'"'
-            execute cmd
-            redraw!
-        endif
-    endif
-endfunction
-autocmd BufEnter * call SetTerminalTitle()
-set title
+" " Set the title of the Terminal to the currently open file
+" function! SetTerminalTitle()
+"     let titleString = expand('%:t')
+"     if stridx(titleString, "neoterm") == -1
+"         if len(titleString) > 0
+"             let &titlestring = expand('%:t')
+"             " this is the format iTerm2 expects when setting the window title
+"             let args = "\033];".&titlestring."\007"
+"             let cmd = 'silent !echo -e "'.args.'"'
+"             execute cmd
+"             redraw!
+"         endif
+"     endif
+" endfunction
+" autocmd BufEnter * call SetTerminalTitle()
+" set title
 
 " Quicker way to open command window
 nnoremap ; :
