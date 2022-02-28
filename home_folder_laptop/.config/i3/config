@@ -41,7 +41,7 @@ bindsym $mod+q kill
 # Microphone
 # bindsym $mod+m exec --no-startup-id pactl set-source-volume 0 100%
 # bindsym $mod+Shift+m exec --no-startup-id pactl set-source-volume 0 0%
-bindsym $mod+n exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ +2% #increase sound volume false
+bindsym $mod+n exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ false
 bindsym $mod+Shift+n exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ true
 bindsym $mod+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ false
 bindsym $mod+Mod1+m exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ 25%
@@ -116,11 +116,11 @@ bindsym $mod+Shift+s move scratchpad
 bindsym $mod+s scratchpad show
 
 #navigate workspaces next / previous
-bindsym $mod+Ctrl+h focus output left
-bindsym $mod+Ctrl+l focus output right
+bindsym $mod+Mod1+h focus output left
+bindsym $mod+Mod1+l focus output right
 
-bindsym $mod+Mod1+l workspace next
-bindsym $mod+Mod1+h workspace prev
+bindsym $mod+Ctrl+l workspace next
+bindsym $mod+Ctrl+h workspace prev
 
 bindsym $mod+Ctrl+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
 bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
@@ -294,6 +294,7 @@ mode "$Global" {
 
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
+    bindsym shift+e exec --no-startup-id "alacritty -o 'window.opacity=0.8' -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     bindsym t exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )' && zsh\\"", mode "default"
 
 
@@ -402,7 +403,7 @@ mode "$Window" {
     bindsym Escape mode "default"
 }
 
-set $Misc (k) kill picom, (p) start picom, (d) restart dunst, (x) xkill, (h) help, (a) kill xcape, (l) restart libinput-gestures
+set $Misc (k) k picom, (p) s picom, (d) r dunst, (x) xkill, (h) help, (a) k xcape, (l) r gestures, (1-2) opa.
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
     bindsym p exec --no-startup-id picom -b, mode "default"
@@ -412,6 +413,8 @@ mode "$Misc" {
 
     bindsym a exec --no-startup-id killall xcape, mode "default"
     bindsym l exec --no-startup-id libinput-gestures-setup restart, mode "default"
+
+    bindsym 1 exec --no-startup-id ~/bin/toggle_alacritty_opacity, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -750,7 +753,7 @@ set_from_resource $term_color15    color15
 #}
 
 bar {
-    font pango:DejaVu Sans Mono, Font Awesome 5 Free 11
+    font pango:DejaVu Sans Mono, Font Awesome 6 Free 11
     position top
     status_command i3status-rs ~/.config/i3status-rust/config.toml
 	tray_output primary
@@ -778,7 +781,7 @@ bar {
 # class                   border  backgr. text    indic.   child_border
   client.focused          #556064 #556064 #80FFF9 #FDF6E3
   client.focused          #111111 #555555 #ffffff #2e9ef4  #FFA500
-  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  client.focused_inactive #111111 #555555 #ffffff #2e9ef4
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
   client.placeholder      #000000 #0c0c0c #ffffff #000000
@@ -791,10 +794,12 @@ bar {
 #############################
 
 # Set inner/outer gaps
-# gaps inner 14
-# gaps outer -2
 gaps inner 5
-gaps outer 20
+gaps outer 0
+
+# for inverse outer
+# gaps inner 5
+# gaps outer 20
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
@@ -804,8 +809,8 @@ gaps outer 20
 
 
 # Smart gaps (gaps used if only more than one container on the workspace)
-# smart_gaps on
-smart_gaps inverse_outer
+smart_gaps on
+# smart_gaps inverse_outer
 
 # Smart borders (draw borders around container only if it is not the only container on this workspace)
 # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
