@@ -175,7 +175,7 @@ bindkey "^[^[OD" backward-char
 bindkey '^Q' beginning-of-line
 
 # standard bash mapping (overrules delete whole line on macos)
-bindkey \^U backward-kill-line
+# bindkey \^U backward-kill-line
 # bindkey \^M kill-line
 
 
