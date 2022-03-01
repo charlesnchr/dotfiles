@@ -4,12 +4,12 @@
 ! add Lock = Caps_Lock
 
 ! make caps_lock an additional control
-clear Lock
-keycode 66 = Control_L
-add Control = Control_L
-add Lock = Caps_Lock
+! clear Lock
+! keycode 66 = Control_L
+! add Control = Control_L
+! add Lock = Caps_Lock
 
-keycode 37 = Mode_switch
+keycode 66 = Mode_switch
 keysym j = j J Down
 keysym l = l L Right
 keysym h = h H Left
