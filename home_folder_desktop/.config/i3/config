@@ -142,15 +142,15 @@ set $ws7 7:🏰
 set $ws8 8:🐧
 set $ws9 9:📓
 
-workspace $ws1 output DisplayPort-3
-workspace $ws2 output DisplayPort-3
-workspace $ws3 output DisplayPort-3
-workspace $ws4 output DisplayPort-3
-workspace $ws5 output DisplayPort-3
-workspace $ws6 output DisplayPort-1
-workspace $ws7 output DisplayPort-1
-workspace $ws8 output DisplayPort-0
-workspace $ws9 output DisplayPort-0
+workspace $ws1 output DP-2.8
+workspace $ws2 output DP-2.8
+workspace $ws3 output DP-2.8
+workspace $ws4 output DP-2.8
+workspace $ws5 output DP-2.8
+workspace $ws6 output DP-0
+workspace $ws7 output DP-0
+workspace $ws8 output DP-4
+workspace $ws9 output DP-4
 
 # workspace 1 output DP-4.8
 # workspace 2 output DP-4.8
