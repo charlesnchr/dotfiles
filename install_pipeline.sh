@@ -6,8 +6,8 @@ sh install_linux.sh
 sh install_stow.sh
 sh install_cli.sh
 sh install_nvim.sh
-sh install_theme.sh
-sh arch/install_pulse.sh
+sh install_themes.sh
+
 
 # extra
 

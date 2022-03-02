@@ -7,7 +7,7 @@ dirname=conf_bk_$(date '+%d%m%Y%H%M%S');
 
 function move_if() {
     echo "moving $1"
-    [ -f $1 ] && mv $1 $dirname
+    mv $1 $dirname
 }
 
 echo "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named $dirname?"
