@@ -57,7 +57,7 @@ bindsym $mod+Shift+slash exec --no-startup-id "setxkbmap -option"
 ##exec --no-startup-id volumeicon
 ##bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 exec --no-startup-id start-pulseaudio-x11
-exec --no-startup-id pa-applet
+# exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
@@ -406,7 +406,7 @@ mode "$Window" {
 set $Misc (k) k picom, (p) s picom, (d) r dunst, (x) xkill, (h) help, (a) k xcape, (l) r gestures, (1-2) opa.
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
-    bindsym p exec --no-startup-id picom -b --experimental-backends, mode "default"
+    bindsym p exec --no-startup-id picom -b, mode "default"
     bindsym d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'", mode "default"
     bindsym x --release exec --no-startup-id xkill, mode "default"
     bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
