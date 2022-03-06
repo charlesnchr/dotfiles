@@ -2,11 +2,12 @@
 
 OUTPUT=$(xprop -id $(xdotool getwindowfocus) | grep WM_CLASS)
 
-SUB='spotify'
+# SUB='spotify'
+SUB='notion-app'
 if [[ "$OUTPUT" == *"$SUB"* ]]; then
-    # echo 'spotify' > hello
-    xdotool key alt+Left
-else
     # echo 'not spotify' > hello
     xdotool key control+bracketleft
+else
+    # echo 'spotify' > hello
+    xdotool key alt+Left
 fi

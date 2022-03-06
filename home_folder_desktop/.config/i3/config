@@ -57,7 +57,7 @@ bindsym $mod+Shift+slash exec --no-startup-id "setxkbmap -option"
 ##exec --no-startup-id volumeicon
 ##bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 exec --no-startup-id start-pulseaudio-x11
-# exec --no-startup-id pa-applet
+exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
@@ -65,7 +65,7 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym Ctrl+F2 exec firefox
 # bindsym $mod+F5 exec terminal -e 'mocp'
 
-focus_follows_mouse yes
+focus_follows_mouse no
 mouse_warping none
 
 # change focus
@@ -208,7 +208,7 @@ bindsym $mod+Mod1+4 move container to workspace $ws8; workspace $ws9
 assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
-# assign [class="dolphin"] $ws8
+# assign [class="nemo"] $ws8
 assign [class="copyq"] output primary
 
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
@@ -266,6 +266,7 @@ mode "$Global" {
     bindsym m mode "$Misc"
     bindsym w mode "$Window"
     bindsym j mode "$Apps"
+    bindsym slash mode "$Apps"
     bindsym r mode "resize"
     bindsym q mode "$Snippets"
 
@@ -306,7 +307,7 @@ mode "$Global" {
     # program shortcuts
     bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym bracketright exec --no-startup-id firefox, mode "default"
-    bindsym bracketleft exec --no-startup-id dolphin, mode "default"
+    bindsym bracketleft exec --no-startup-id nemo, mode "default"
     bindsym BackSpace exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
 
     # exit system mode: "Enter" or "Escape"
@@ -337,18 +338,18 @@ mode "$mode_system" {
 
 
 # bindsym $mod+Tab mode "$Apps"
-set $Apps (t) terminal, (f) firefox, (d) dolphin, (r) ranger, (s) spotify, (n) notion
+set $Apps (t) terminal, (f) firefox, (d) nemo, (r) ranger, (s) spotify, (n) notion
 mode "$Apps" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym t exec --no-startup-id alacritty, mode "default"
+    bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym f exec --no-startup-id firefox, mode "default"
-    bindsym r exec --no-startup-id alacritty -e ranger, mode "default"
-    bindsym d exec --no-startup-id dolphin, mode "default"
+    bindsym r exec --no-startup-id --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
+    bindsym d exec --no-startup-id nemo, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
     # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
@@ -405,7 +406,7 @@ mode "$Window" {
 set $Misc (k) k picom, (p) s picom, (d) r dunst, (x) xkill, (h) help, (a) k xcape, (l) r gestures, (1-2) opa.
 mode "$Misc" {
     bindsym k exec --no-startup-id pkill picom, mode "default"
-    bindsym p exec --no-startup-id picom -b, mode "default"
+    bindsym p exec --no-startup-id picom -b --experimental-backends, mode "default"
     bindsym d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'", mode "default"
     bindsym x --release exec --no-startup-id xkill, mode "default"
     bindsym h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf, mode "default"
@@ -669,8 +670,8 @@ exec --no-startup-id redshift-gtk
 
 
 # Pulse Audio controls
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% #increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% #decrease sound volume
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && play /home/cc/dotfiles/volume-feedback.mp3 #increase sound volume
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && play /home/cc/dotfiles/volume-feedback.mp3 #decrease sound volume
 # bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Screen brightness controls
