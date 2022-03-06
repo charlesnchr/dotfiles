@@ -22,12 +22,15 @@ keycode 20 = minus underscore emdash
 
 keysym BackSpace = BackSpace BackSpace Delete
 
-keycode 10 = 1 exclam adiaeresis
-keycode 11 = 2 at odiaeresis
-keycode 12 = 3 numbersign udiaeresis
+keycode 10 = 1 exclam exclam
+keycode 11 = 2 at EuroSign
+keycode 12 = 3 numbersign sterling
 keycode 13 = 4 dollar ssharp
 keycode 14 = 5 percent mu
 keycode 15 = 6 asciicircum dead_acute
+keycode 16 = 7 ampersand adiaeresis
+keycode 17 = 8 asterisk odiaeresis
+keycode 18 = 9 parenleft udiaeresis
 keysym v = v V Insert
 
 
