@@ -65,7 +65,7 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym Ctrl+F2 exec firefox
 # bindsym $mod+F5 exec terminal -e 'mocp'
 
-focus_follows_mouse yes
+focus_follows_mouse no
 mouse_warping none
 
 # change focus
@@ -142,15 +142,6 @@ set $ws7 7:🏰
 set $ws8 8:🐧
 set $ws9 9:📓
 
-workspace $ws1 output DisplayPort-3
-workspace $ws2 output DisplayPort-3
-workspace $ws3 output DisplayPort-3
-workspace $ws4 output DisplayPort-3
-workspace $ws5 output DisplayPort-3
-workspace $ws6 output DisplayPort-1
-workspace $ws7 output DisplayPort-1
-workspace $ws8 output DisplayPort-0
-workspace $ws9 output DisplayPort-0
 
 # workspace 1 output DP-4.8
 # workspace 2 output DP-4.8
@@ -208,14 +199,11 @@ bindsym $mod+Mod1+4 move container to workspace $ws8; workspace $ws9
 assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
-# assign [class="dolphin"] $ws8
+# assign [class="nemo"] $ws8
 assign [class="copyq"] output primary
 
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
-for_window [urgent="latest"] focus
-for_window [urgent=latest] focus
 # for_window [urgent="latest" class="XTerm"] focus
-bindsym $mod+i [urgent=latest] focus
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -252,7 +240,9 @@ for_window [class="qalculate-qt"] floating enable sticky enable border normal
 
 
 # switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
+for_window [urgent=latest class="firefox"] focus
+bindsym $mod+i [urgent=latest] focus
+focus_on_window_activation focus
 
 bindsym $mod+a mode "$Global"
 bindsym XF86Tools mode "$Global"
@@ -267,6 +257,7 @@ mode "$Global" {
     bindsym m mode "$Misc"
     bindsym w mode "$Window"
     bindsym j mode "$Apps"
+    bindsym slash mode "$Apps"
     bindsym r mode "resize"
     bindsym q mode "$Snippets"
 
@@ -307,7 +298,7 @@ mode "$Global" {
     # program shortcuts
     bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym bracketright exec --no-startup-id firefox, mode "default"
-    bindsym bracketleft exec --no-startup-id dolphin, mode "default"
+    bindsym bracketleft exec --no-startup-id nemo, mode "default"
     bindsym BackSpace exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
 
     # exit system mode: "Enter" or "Escape"
@@ -338,18 +329,18 @@ mode "$mode_system" {
 
 
 # bindsym $mod+Tab mode "$Apps"
-set $Apps (t) terminal, (f) firefox, (d) dolphin, (r) ranger, (s) spotify, (n) notion
+set $Apps (t) terminal, (f) firefox, (d) nemo, (r) ranger, (s) spotify, (n) notion
 mode "$Apps" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym t exec --no-startup-id alacritty, mode "default"
+    bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym f exec --no-startup-id firefox, mode "default"
-    bindsym r exec --no-startup-id alacritty -e ranger, mode "default"
-    bindsym d exec --no-startup-id dolphin, mode "default"
+    bindsym r exec --no-startup-id --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
+    bindsym d exec --no-startup-id nemo, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
     # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
