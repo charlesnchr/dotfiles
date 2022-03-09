@@ -119,8 +119,8 @@ bindsym $mod+s scratchpad show
 bindsym $mod+Mod1+h focus output left
 bindsym $mod+Mod1+l focus output right
 
-bindsym $mod+Ctrl+l workspace next
-bindsym $mod+Ctrl+h workspace prev
+bindsym $mod+Ctrl+l workspace next_on_output
+bindsym $mod+Ctrl+h workspace prev_on_output
 
 bindsym $mod+Ctrl+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
 bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
@@ -142,15 +142,15 @@ set $ws7 7:🏰
 set $ws8 8:🐧
 set $ws9 9:📓
 
-workspace $ws1 output DP-2.8
-workspace $ws2 output DP-2.8
-workspace $ws3 output DP-2.8
-workspace $ws4 output DP-2.8
-workspace $ws5 output DP-2.8
-workspace $ws6 output DP-0
-workspace $ws7 output DP-0
-workspace $ws8 output DP-4
-workspace $ws9 output DP-4
+workspace $ws1 output DisplayPort-3
+workspace $ws2 output DisplayPort-3
+workspace $ws3 output DisplayPort-3
+workspace $ws4 output DisplayPort-3
+workspace $ws5 output DisplayPort-3
+workspace $ws6 output DisplayPort-1
+workspace $ws7 output DisplayPort-1
+workspace $ws8 output DisplayPort-0
+workspace $ws9 output DisplayPort-0
 
 # workspace 1 output DP-4.8
 # workspace 2 output DP-4.8
@@ -243,6 +243,7 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="kolourpaint"] floating enable
+for_window [class="fiji-Main"] floating enable
 for_window [class="copyq"] floating enable sticky enable border normal
 for_window [class="qalculate-qt"] floating enable sticky enable border normal
 
@@ -326,7 +327,7 @@ set $mode_system (l)ock, screen (o)ff, (e)xit, switch_(u)ser, (s)uspend, (h)iber
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym l exec --no-startup-id betterlockscreen -l --off 60
-    bindsym o exec --no-startup-id sleep 1 && xset dpms force off
+    bindsym o exec --no-startup-id sleep 1 && xset dpms force off, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startupqq-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -645,7 +646,7 @@ exec --no-startup-id spotify
 # exec --no-startup-id logid ~/logid.cfg
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
-# exec --no-startup-id kmix --keepvisibility
+exec --no-startup-id kmix --keepvisibility
 exec --no-startup-id copyq
 
 

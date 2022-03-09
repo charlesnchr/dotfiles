@@ -327,14 +327,15 @@ map <localleader>s <Plug>(easymotion-s)
 
 " latex
 " let g:vimtex_view_method = 'skim'
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_latexmk = {
-            \ 'executable' : 'latexmk',
-            \ 'options' : [
-                \   '-xelatex',
-                \   '-interaction=nonstopmode',
-                \ ],
-                \}
+let g:latex_view_general_viewer = 'zathura'
+let g:vimtex_view_method = "zathura"
+" let g:vimtex_compiler_latexmk = {
+"             \ 'executable' : 'latexmk',
+"             \ 'options' : [
+"                 \   '-xelatex',
+"                 \   '-interaction=nonstopmode',
+"                 \ ],
+"                 \}
 
 function! WC()
     let filename = expand("%")
