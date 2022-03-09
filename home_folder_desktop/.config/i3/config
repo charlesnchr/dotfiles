@@ -208,7 +208,7 @@ bindsym $mod+Mod1+4 move container to workspace $ws8; workspace $ws9
 assign [class="notion-app"] $ws9
 assign [class="ms-office-online"] $ws5
 assign [class="whatsapp-nativefier-d40211"] $ws5
-# assign [class="nemo"] $ws8
+# assign [class="dolphin"] $ws8
 assign [class="copyq"] output primary
 
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws6
@@ -291,6 +291,9 @@ mode "$Global" {
     bindsym o exec --no-startup-id xset dpms force off; exec --no-startup-id sleep 0.2 && xset dpms force on, mode "default"
 
     bindsym p exec --no-startup-id pkill picom; exec --no-startup-id sleep 0.2 && picom -b, mode "default"
+    bindsym l exec --no-startup-id ~/.screenlayout/arandr_tv_60.sh; exec --no-startup-id sleep 0.2 && ~/.screenlayout/arandr_tv.sh, mode "default"
+    bindsym F1 exec --no-startup-id ~/.screenlayout/arandr.sh, mode "default"
+    bindsym F2 exec --no-startup-id ~/.screenlayout/arandr_tv.sh, mode "default"
 
 
     bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
@@ -307,7 +310,7 @@ mode "$Global" {
     # program shortcuts
     bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym bracketright exec --no-startup-id firefox, mode "default"
-    bindsym bracketleft exec --no-startup-id nemo, mode "default"
+    bindsym bracketleft exec --no-startup-id dolphin, mode "default"
     bindsym BackSpace exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
 
     # exit system mode: "Enter" or "Escape"
@@ -338,14 +341,14 @@ mode "$mode_system" {
 
 
 # bindsym $mod+Tab mode "$Apps"
-set $Apps (t) terminal, (f) firefox, (d) nemo, (r) ranger, (s) spotify, (n) notion
+set $Apps (t) terminal, (f) firefox, (d) dolphin, (r) ranger, (s) spotify, (n) notion
 mode "$Apps" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym t exec --no-startup-id alacritty, mode "default"
     bindsym Return exec --no-startup-id alacritty, mode "default"
     bindsym f exec --no-startup-id firefox, mode "default"
     bindsym r exec --no-startup-id --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\"", mode "default"
-    bindsym d exec --no-startup-id nemo, mode "default"
+    bindsym d exec --no-startup-id dolphin, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
@@ -642,7 +645,7 @@ exec --no-startup-id spotify
 # exec --no-startup-id logid ~/logid.cfg
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
-exec --no-startup-id kmix --keepvisibility
+# exec --no-startup-id kmix --keepvisibility
 exec --no-startup-id copyq
 
 
@@ -670,9 +673,9 @@ exec --no-startup-id redshift-gtk
 
 
 # Pulse Audio controls
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && play /home/cc/dotfiles/volume-feedback.mp3 #increase sound volume
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && play /home/cc/dotfiles/volume-feedback.mp3 #decrease sound volume
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && play /home/cc/dotfiles/volume-feedback.mp3 #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && play /home/cc/dotfiles/volume-feedback.mp3 #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10; notify-send 'brightness up'"

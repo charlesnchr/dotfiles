@@ -8,14 +8,27 @@ buttons = ["play", "next"]
 marquee = false
 smart_trim = true
 
+[[block]]
+block = "uptime"
 
 [[block]]
-block = "pomodoro"
-length = 25
-break_length = 5
-message = "Take a break!"
-break_message = "Back to work!"
-notifier = "notifysend"
+block = "pacman"
+interval = 600
+format = "{pacman} +{aur}"
+format_singular = "{both}"
+format_up_to_date = "system up to date"
+critical_updates_regex = "(linux|linux-lts|linux-zen)"
+# aur_command should output available updates to stdout (ie behave as echo -ne "update\n")
+aur_command = "yay -Qua"
+on_click = "yay -Qu | rofi -dmenu"
+
+# [[block]]
+# block = "pomodoro"
+# length = 25
+# break_length = 5
+# message = "Take a break!"
+# break_message = "Back to work!"
+# notifier = "notifysend"
 
 # [[block]]
 # block = "toggle"
@@ -25,21 +38,21 @@ notifier = "notifysend"
 # command_off = "~/.screenlayout/builtin.sh"
 # interval = 5
 
-[[block]]
-block = "net"
-format = "{ssid} {speed_down;M*b} {speed_up;M*b}"
-interval = 5
+# [[block]]
+# block = "net"
+# format = "{ssid} {speed_down;M*b} {speed_up;M*b}"
+# interval = 5
 
-[[block]]
-block = "disk_space"
-path = "/"
-alias = "/"
-info_type = "used"
-format = "{icon} {percentage}"
-unit = "GB"
-interval = 20
-warning = 80.0
-alert = 90.0
+# [[block]]
+# block = "disk_space"
+# path = "/"
+# alias = "/"
+# info_type = "used"
+# format = "{icon} {percentage}"
+# unit = "GB"
+# interval = 20
+# warning = 80.0
+# alert = 90.0
 
 [[block]]
 block = "memory"
