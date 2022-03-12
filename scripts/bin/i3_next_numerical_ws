@@ -2,16 +2,14 @@
 
 WS=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].num')
 
-declare ws1=1:🤖
-declare ws2=2:🌎
-declare ws3=3:🐺
-declare ws4=4:🐋
-declare ws5=5:📭
-declare ws6=6:🎵
-declare ws7=7:🏰
-declare ws8=8:🐧
-declare ws9=9:📓
-
-suffix=$(expr $WS + 1)
-varname=ws$suffix
-i3-msg workspace number ${!varname}
+WS_arr=($(cat $(dirname "$0")/ws))
+IDX=$(expr $WS + 0)
+if [ $IDX -eq -1 ]; then
+    echo "not well-defined"
+elif [ $IDX -lt ${#WS_arr[@]} ]; then
+    echo $IDX
+    i3-msg workspace number ${WS_arr[$IDX]}
+else
+    echo $IDX
+    i3-msg workspace number $(expr $IDX + 1)
+fi

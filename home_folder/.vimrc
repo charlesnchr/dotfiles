@@ -127,6 +127,7 @@ Plug 'danro/rename.vim'
 " Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
+Plug 'vim-scripts/repeatable-motions.vim'
 
 call plug#end()
 
@@ -608,6 +609,7 @@ let g:pymode_lint_on_write = 0
 " Quicker way to open command window
 nnoremap ; :
 xnoremap ; :
+" nnoremap <C-/> ;
 nnoremap q; q:
 
 autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%:t"))
@@ -635,3 +637,9 @@ nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
 nnoremap <localleader>t1 <cmd>lua require("harpoon.term").gotoTerminal(1)<cr>
 
 let g:peekaboo_prefix = '<localleader>'
+
+" nnoremap f <C-d>
+" nnoremap t <C-u>
+" nnoremap <C-d> f
+" nnoremap <C-u> t
+

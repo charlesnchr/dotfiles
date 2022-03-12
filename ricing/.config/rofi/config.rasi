@@ -1,8 +1,12 @@
-@theme "/usr/share/rofi/themes/purple.rasi"
+//@theme "/usr/share/rofi/themes/purple.rasi"
 
 configuration {
   show-icons:         true;
   icon-theme:         "Papirus";
   combi-modi: "window,drun,ssh";
+  monitor: "-1";
   modi: "window,drun,ssh,combi,calc,keys";
 }
+//@theme "/usr/share/rofi/themes/dmenu.rasi"
+@theme "/usr/share/rofi/themes/purple.rasi"
+/* @theme "./dmenu_cc.rasi" */
