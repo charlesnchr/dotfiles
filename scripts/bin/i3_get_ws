@@ -1,0 +1,4 @@
+#!/bin/bash
+
+WS=$(cat $(dirname "$0")/ws)
+i3-msg -t get_workspaces | jq -r '.[].name' | cat <(echo "$WS") - | awk '!seen[$0]++'

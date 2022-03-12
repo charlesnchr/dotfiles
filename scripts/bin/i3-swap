@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# outputs = i3.get_outputs()
+# workspaces = i3.get_workspaces()
+
+# # figure out what is on, and what is currently on your screen.
+# workspace = list(filter(lambda s: s['focused']==True, workspaces))
+# output = list(filter(lambda s: s['active']==True, outputs))
+
+# # figure out the other workspace name
+# other_workspace = list(filter(lambda s: s['name']!=workspace[0]['output'], output))
+
+# # send current to the no-active one
+# workspace_to_swap_with = other_workspace[0]['current_workspace']
+# # i3.command('move', 'workspace to output '+other_workspace[0]['name'])
+# command = 'move workspace to output "%s"' % (workspace_to_swap_with,workspace[0]['output'])
+# print(command)
+# i3.command('move', command, title=workspace_to_swap_with)
+
+# # print(output,"\n",workspace,"\n",other_workspace)
+# print(outputs)
+
+TARGET_WS=$1
+TARGET_WS_OUTPUT=$(i3-msg -t get_workspaces | jq -r "map(select(.name == \"$TARGET_WS\"))[0].output")
+CUR_OUTPUT=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].output')
+WS=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].name')
+
+# echo $TARGET_WS
+# echo $TARGET_WS_OUTPUT
+# echo $CUR_OUTPUT
+# echo $WS
+
+if [ "$CUR_OUTPUT" = "$TARGET_WS_OUTPUT" ]; then
+    i3-msg workspace "$TARGET_WS"
+else
+    i3-msg "[workspace=\"$WS\"]" move workspace to output "$TARGET_WS_OUTPUT"
+    i3-msg "[workspace=\"$TARGET_WS\"]" move workspace to output "$CUR_OUTPUT"
+    i3-msg workspace "$TARGET_WS"
+fi
+
