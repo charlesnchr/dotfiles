@@ -9,12 +9,12 @@ CMD=$(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lin
 # alacritty -o 'window.opacity=0.8' -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme dmenu -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"
 
 # alacritty -e btop
-if [ ! -z $CMD ]; then
+if [ ! -z "$CMD" ]; then
     if [ $# -eq 1 ]; then
-        alacritty -o "window.opacity=$1" -e zsh -c \\"zsh -ic "$CMD" \\" &
+        alacritty -o "window.opacity=$1" -e zsh -c \\"zsh -ic \"$CMD\" \\" &
         # $CMD
     else
-        alacritty -e zsh -c \\"zsh -ic "$CMD" \\" &
+        alacritty -e zsh -c \\"zsh -ic \"$CMD\" \\" &
         # $CMD
     fi
 fi
