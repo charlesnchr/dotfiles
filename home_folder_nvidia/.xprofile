@@ -1,0 +1,13 @@
+#!/bin/bash
+xset r rate 200 25
+xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Accel Speed" 0.35
+xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Natural Scrolling Enabled" 1
+xmodmap ~/.xmodmap
+
+killall xcape
+# xcape -e 'Control_L=Escape'
+# xcape -e 'Alt_L=XF86_Tools'
+# xcape -e 'Super_L=XF86_Tools'
+# xcape -e 'Control_R=XF86_Tools'
+# xcape -e 'Shift_R=XF86_Tools'
+xcape -e 'Mode_switch=XF86_Tools'
