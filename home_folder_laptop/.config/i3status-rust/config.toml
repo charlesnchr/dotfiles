@@ -9,13 +9,13 @@ marquee = false
 smart_trim = true
 
 
-[[block]]
-block = "pomodoro"
-length = 25
-break_length = 5
-message = "Take a break!"
-break_message = "Back to work!"
-notifier = "notifysend"
+# [[block]]
+# block = "pomodoro"
+# length = 25
+# break_length = 5
+# message = "Take a break!"
+# break_message = "Back to work!"
+# notifier = "notifysend"
 
 # [[block]]
 # block = "toggle"
@@ -25,21 +25,21 @@ notifier = "notifysend"
 # command_off = "~/.screenlayout/builtin.sh"
 # interval = 5
 
-[[block]]
-block = "net"
-format = "{ssid} {speed_down;M*b} {speed_up;M*b}"
-interval = 5
+# [[block]]
+# block = "net"
+# format = "{ssid} {speed_down;M*b} {speed_up;M*b}"
+# interval = 5
 
-[[block]]
-block = "disk_space"
-path = "/"
-alias = "/"
-info_type = "used"
-format = "{icon} {percentage}"
-unit = "GB"
-interval = 20
-warning = 80.0
-alert = 90.0
+# [[block]]
+# block = "disk_space"
+# path = "/"
+# alias = "/"
+# info_type = "used"
+# format = "{icon} {percentage}"
+# unit = "GB"
+# interval = 20
+# warning = 80.0
+# alert = 90.0
 
 [[block]]
 block = "memory"
