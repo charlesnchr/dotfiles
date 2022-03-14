@@ -54,8 +54,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 Plug 'mhinz/vim-startify'
-Plug 'akinsho/bufferline.nvim'
-" Plug 'romgrk/barbar.nvim'
+" Plug 'akinsho/bufferline.nvim'
+Plug 'romgrk/barbar.nvim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -172,11 +172,15 @@ nnoremap <localleader>fv :Buffers<cr>
 nnoremap <localleader>fc :Commands<cr>
 nnoremap <localleader>fb :Buffers<cr>
 nnoremap <localleader>bp :BufferPick<cr>
-nnoremap <localleader>bc :bd<cr>
-nnoremap <localleader>bs :BufferLineSortByDirectory<cr>
-nnoremap <localleader>bg :BufferLineGoToBuffer<space>
-nnoremap <localleader>bl :BufferLineMoveNext<CR>
-nnoremap <localleader>bh :BufferLineMovePrev<CR>
+" use over :bd
+nnoremap <localleader>bd :BufferDelete<cr>
+nnoremap <localleader>bs :BufferOrderByDirectory<cr>
+nnoremap <localleader>bg :BufferGoto<space>
+nnoremap <localleader>bl :BufferMoveNext<CR>
+nnoremap <localleader>bh :BufferMovePrev<CR>
+nnoremap <localleader>bn :BufferPin<CR>
+nnoremap [b :BufferPrev<CR>
+nnoremap ]b :BufferNext<CR>
 nnoremap <localleader>fh :History<cr>
 nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
@@ -414,8 +418,9 @@ let g:neoterm_autoscroll = 1
 " -------------------
 
 " bufmer cycle
-:nnoremap <localleader><tab> :bnext<CR>
-:nnoremap <localleader><S-tab> :bprevious<CR>
+" :nnoremap <localleader><tab> :b#<CR>
+:nnoremap <localleader><tab> :CtrlPBuffer<cr>
+" :nnoremap <localleader><S-tab> :bprevious<CR>
 
 " -------------------
 " CONVENIENCE
@@ -565,7 +570,7 @@ let g:rust_fold = 1
 let g:php_folding = 1
 
 
-nnoremap gb :ls<cr>:b<space>
+nnoremap gl :ls<cr>:b<space>
 set hidden
 let g:vimtex_quickfix_mode = 0
 
@@ -667,3 +672,10 @@ let g:peekaboo_prefix = '<localleader>'
 " nnoremap <C-u> t
 
 let g:startify_files_number = 20
+
+
+" wrapper for barbar goto
+nnoremap <silent>gb :<C-u>call BufferGoto()<CR>
+function! BufferGoto()
+    exec ':BufferGoto' v:count1
+endfunction

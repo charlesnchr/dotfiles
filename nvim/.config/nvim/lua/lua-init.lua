@@ -124,4 +124,4 @@ cmp.setup({
 
 require'config.lsp'
 
-require("bufferline").setup{}
+-- require("bufferline").setup{}
