@@ -9,6 +9,9 @@ cmp.setup({
       vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
   mapping = {
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
@@ -24,40 +27,92 @@ cmp.setup({
         fallback()
       end
     end,
-    ['<C-e>'] = cmp.mapping.close(),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
   },
   sources = {
-    { name = 'nvim_lsp' }, -- For nvim-lp
-    { name = 'ultisnips' }, -- For ultisnips user.
-    { name = 'nvim_lua' }, -- for nvim lua function
-    { name = 'path' }, -- for path completion
-    { name = 'buffer', keyword_length = 4 }, -- for buffer word completion
-    { name = 'emoji', insert = true, }, -- emoji completion
-    { name = 'omni' }
-  },
+      { name = "nvim_lsp" },
+      { name = "path" },
+      { name = "luasnip" },
+      { name = 'ultisnips' }, -- For ultisnips user.
+      { name = "cmp_tabnine" },
+      { name = "nvim_lua" },
+      { name = "buffer" },
+      { name = "calc" },
+      { name = "emoji" },
+      { name = "treesitter" },
+      { name = "crates" },
+    },
   completion = {
     keyword_length = 1,
     completeopt = "menu,noselect"
   },
-  experimental = {
-    ghost_text = false
-  },
-  formatting = {
-    format = lspkind.cmp_format({
-      with_text = false,
-      menu = {
-        nvim_lsp = "[LSP]",
-        ultisnips = "[US]",
-        nvim_lua = "[Lua]",
-        path = "[Path]",
-        buffer = "[Buffer]",
-        emoji = "[Emoji]",
+    experimental = {
+      ghost_text = true,
+      native_menu = false,
+    },
+    formatting = {
+      fields = { "kind", "abbr", "menu" },
+      source_names = {
+        nvim_lsp = "(LSP)",
+        emoji = "(Emoji)",
+        path = "(Path)",
+        calc = "(Calc)",
+        cmp_tabnine = "(Tabnine)",
+        ultisnips = "(Snippet)",
+        buffer = "(Buffer)",
       },
-    }),
-  },
+      duplicates = {
+        buffer = 1,
+        path = 1,
+        nvim_lsp = 0,
+        luasnip = 1,
+      },
+      duplicates_default = 0,
+      format = function(entry, vim_item)
+        kind_icons = {
+        Class = " ",
+        Color = " ",
+        Constant = "ﲀ ",
+        Constructor = " ",
+        Enum = "練",
+        EnumMember = " ",
+        Event = " ",
+        Field = " ",
+        File = "",
+        Folder = " ",
+        Function = " ",
+        Interface = "ﰮ ",
+        Keyword = " ",
+        Method = " ",
+        Module = " ",
+        Operator = "",
+        Property = " ",
+        Reference = " ",
+        Snippet = " ",
+        Struct = " ",
+        Text = " ",
+        TypeParameter = " ",
+        Unit = "塞",
+        Value = " ",
+        Variable = " ",
+      };
+      duplicates = {
+        buffer = 1,
+        path = 1,
+        nvim_lsp = 0,
+        luasnip = 1,
+        ultisnips = 1,
+      };
+         vim_item.kind = kind_icons[vim_item.kind]
+        -- vim_item.menu = source_names[entry.source.name]
+        vim_item.dup = duplicates[entry.source.name]
+          -- or cmp.formatting.duplicates_default
+        return vim_item
+      end,
+    }
 })
 
 
@@ -69,3 +124,4 @@ cmp.setup({
 
 require'config.lsp'
 
+require("bufferline").setup{}
