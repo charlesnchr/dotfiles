@@ -21,6 +21,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
 "Plug 'aserebryakov/vim-todo-lists'
@@ -43,6 +45,8 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
+
+Plug 'SirVer/ultisnips'
 " Plug 'ycm-core/YouCompleteMe'
 Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
@@ -50,6 +54,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 Plug 'mhinz/vim-startify'
+Plug 'akinsho/bufferline.nvim'
+" Plug 'romgrk/barbar.nvim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -102,13 +108,16 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
-" Plug 'SirVer/ultisnips'
-" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" Plug 'L3MON4D3/LuaSnip'
+" Plug 'saadparwaiz2/cmp_luasnip'
+" Plug 'rafamadriz/friendly-snippets'
 
-Plug 'kyazdani42/nvim-web-devicons'
+
 Plug 'folke/trouble.nvim'
 
 "Plug 'liuchengxu/vim-which-key'
@@ -128,6 +137,9 @@ Plug 'danro/rename.vim'
 " Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 Plug 'vim-scripts/repeatable-motions.vim'
+
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'rcarriga/nvim-notify'
 
 call plug#end()
 
@@ -154,32 +166,41 @@ set foldlevel=99
 
 
 " open files with ctrl-p
-nnoremap <localleader>zf :Files<cr>
-nnoremap <localleader>zv :Buffer<cr>
-nnoremap <localleader>b :Buffer<cr>
-nnoremap <localleader>zh :History<cr>
-nnoremap <localleader>zw :Windows<cr>
+nnoremap <localleader>ff :Files<cr>
+nnoremap <localleader>ft :Tags<cr>
+nnoremap <localleader>fv :Buffers<cr>
+nnoremap <localleader>fc :Commands<cr>
+nnoremap <localleader>fb :Buffers<cr>
+nnoremap <localleader>bp :BufferPick<cr>
+nnoremap <localleader>bc :bd<cr>
+nnoremap <localleader>bs :BufferLineSortByDirectory<cr>
+nnoremap <localleader>bg :BufferLineGoToBuffer<space>
+nnoremap <localleader>bl :BufferLineMoveNext<CR>
+nnoremap <localleader>bh :BufferLineMovePrev<CR>
+nnoremap <localleader>fh :History<cr>
+nnoremap <localleader>fw :Windows<cr>
+nnoremap <localleader>aj :CtrlPTag<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>af :CtrlPLine<cr>
 
-" don't show the help in normal mode
-let g:Lf_HideHelp = 1
-let g:Lf_UseCache = 0
-let g:Lf_UseVersionControlTool = 0
-let g:Lf_IgnoreCurrentBufferName = 1
-" popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
-let g:Lf_ShortcutF = "<localleader>ff"
-noremap <localleader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <localleader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <localleader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
-noremap <localleader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+" " don't show the help in normal mode
+" let g:Lf_HideHelp = 1
+" let g:Lf_UseCache = 0
+" let g:Lf_UseVersionControlTool = 0
+" let g:Lf_IgnoreCurrentBufferName = 1
+" " popup mode
+" let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PreviewInPopup = 1
+" let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+" let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+" let g:Lf_ShortcutF = "<localleader>ff"
+" noremap <localleader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+" noremap <localleader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+" noremap <localleader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+" noremap <localleader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set tabstop=4 |
@@ -189,7 +210,6 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set expandtab |
             \ set autoindent |
             \ set fileformat=unix
-
 
 au BufNewFile,BufRead *.tex
             \ set textwidth=80
@@ -242,7 +262,7 @@ let g:startify_bookmarks = [
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 let g:airline_theme = 'tomorrow'
-let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
+" let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -290,8 +310,8 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 
 set termguicolors
 set background=dark
-" colorscheme palenight
-colorscheme space-vim-dark
+colorscheme palenight
+" colorscheme space-vim-dark
 " colorscheme solarized8_high
 
 
@@ -358,9 +378,9 @@ let g:goyo_width = 85
 
 
 " autocomplete
-" let g:UltiSnipsExpandTrigger="<c-j>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " let g:ycm_autoclose_preview_window_after_completion=0
 " map <localleader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " for latex
@@ -415,7 +435,8 @@ nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
-nnoremap <localleader>x :close<cr>
+nnoremap <localleader>x :BufferDelete<cr>
+nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
 " nicer to have pwd
@@ -528,7 +549,7 @@ inoremap <C-t>     <Esc>:tabnew<CR>
 " nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 " vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 
-" let g:UltiSnipsSnippetDirectories = ['~/.local/share/nvim/plugged/ultisnips']
+let g:UltiSnipsSnippetDirectories = ['~/.local/share/nvim/plugged/ultisnips']
 
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
@@ -558,6 +579,7 @@ nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers(require('telesco
 nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
 
 "call wilder#setup({'modes': [':', '/', '?']})
@@ -585,6 +607,7 @@ nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
 
 
 let g:pymode_lint_on_write = 0
@@ -643,3 +666,4 @@ let g:peekaboo_prefix = '<localleader>'
 " nnoremap <C-d> f
 " nnoremap <C-u> t
 
+let g:startify_files_number = 20

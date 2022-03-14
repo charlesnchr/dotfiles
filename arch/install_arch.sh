@@ -1,10 +1,10 @@
 #!/bin/bash
 sudo pacman --needed -Syu yay
 
-yay --noconfirm --needed --answerclean None -S firefox neovim zsh tmux manjaro-pulse pavucontrol inkscape i3status-rust libinput-gestures maim teams discord nerd-fonts-source-code-pro wmctrl xdotool rofi rofimoji alttab-git tmuxinator texlive-core dolphin dolphin-plugins ark cheese playerctl yarn redshift kcolorchooser darktable konsole kolourpaint pacdep discover flatpak packagekit-qt5 ttf-font-awesome dust mpd rofi-calc qalculate-qt rclone stow handlr-bin tig noto-fonts-emoji ktorrent solaar rofi-greenclip zathura zathura-pdf-mupdf zathura-djvu zathura-cb nomacs okular cmatrix bat exa neofetch xorg-xev krename btop kget lutris obs-studio the_silver_searcher steam-manjaro wine nodejs npm alacritty ripgrep github-cli kmix copyq sshpass xcape audacity jq signal-desktop-beta-bin
+yay --noconfirm --needed --answerclean None -S firefox neovim zsh tmux manjaro-pulse pavucontrol inkscape i3status-rust libinput-gestures maim teams discord nerd-fonts-source-code-pro wmctrl xdotool rofi rofimoji alttab-git tmuxinator texlive-core dolphin dolphin-plugins ark cheese playerctl yarn redshift kcolorchooser darktable konsole kolourpaint pacdep discover flatpak packagekit-qt5 ttf-font-awesome dust mpd rofi-calc qalculate-qt rclone stow handlr-bin tig noto-fonts-emoji ktorrent solaar rofi-greenclip zathura zathura-pdf-mupdf zathura-djvu zathura-cb nomacs okular cmatrix bat exa neofetch xorg-xev krename btop kget lutris obs-studio the_silver_searcher steam-manjaro wine nodejs npm alacritty ripgrep github-cli kmix copyq sshpass xcape audacity jq unclutter
 
 echo 'AUR packages'
-yay --needed --answerclean None -S google-chrome spotify firefox-pwa imagej zoom betterlockscreen logiops-git notion-app synology-drive
+yay --needed --answerclean None -S google-chrome spotify firefox-pwa imagej zoom betterlockscreen logiops-git notion-app synology-drive signal-desktop-beta-bin
 
 sudo pacman --needed -S texlive-most
 

@@ -91,7 +91,7 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym $mod+F5 exec terminal -e 'mocp'
 
 focus_follows_mouse no
-mouse_warping none
+# mouse_warping yes
 
 # change focus
 bindsym $mod+h focus left
@@ -538,6 +538,7 @@ mode "$Workspace" {
     bindsym Escape mode "default"
 }
 
+bindsym $mod+Shift+f mode "$Workspace_select"
 set $Workspace_select Workspace select
 mode "$Workspace_select" {
     bindsym a workspace $ws1, mode "default"
@@ -670,6 +671,7 @@ exec --no-startup-id spotify
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
 exec --no-startup-id kmix --keepvisibility
+exec --no-startup-id unclutter
 exec --no-startup-id copyq
 
 
