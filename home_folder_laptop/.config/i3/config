@@ -30,6 +30,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+e exec --no-startup-id alacritty
+bindsym $mod+Shift+Return exec --no-startup-id firefox
 bindsym $mod+r exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\""
 
 # kill focused window
@@ -263,6 +264,7 @@ bindsym $mod+n [urgent=latest] focus
 focus_on_window_activation focus
 
 bindsym $mod+a mode "$Global"
+bindsym $mod+Shift+a mode "$Global"
 bindsym XF86Tools mode "$Global"
 set $Global (0,SPC,m,TAB,qrwasd) 💫 (`,c,q) 📌 📐 📄 (f,g,j) 🚀 (o,p,l) ⬛ 🪟 ⏩ (e,t) 🛸 (z,x) 📱
 mode "$Global" {
@@ -472,7 +474,7 @@ mode "$Utility" {
     bindsym r restart, mode "default"
 
     bindsym x exec --no-startup-id source /home/cc/.xprofile, mode "default"
-    bindsym k exec --no-startup-id "killall kmonad; sleep 0.5 && kmonad ~/kmonad/keymap/user/joshskidmore/dell-xps-9360.kbd", mode "default"
+    bindsym k exec --no-startup-id "killall kmonad; sleep 0.5 && kmonad ~/.config/dell-xps.kbd", mode "default"
     bindsym Shift+x exec --no-startup-id killall xcape, mode "default"
 
     # to toggle screen off on
@@ -520,7 +522,7 @@ mode "$Workspace" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+f mode "$Workspace_select"
+bindsym $mod+Shift+Tab mode "$Workspace_select"
 set $Workspace_select Workspace select
 mode "$Workspace_select" {
     bindsym a workspace $ws1, mode "default"
@@ -669,7 +671,7 @@ exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id libinput-gestures-setup start
 # exec_always --no-startup-id xmodmap ~/dotfiles/xmodmap
 exec_always --no-startup-id ~/.xprofile
-exec_always --no-startup-id kmonad ~/kmonad/keymap/user/joshskidmore/dell-xps-9360.kbd
+exec_always --no-startup-id kmonad ~/.config/dell-xps.kbd
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
@@ -868,5 +870,6 @@ mode "$mode_gaps_outer" {
 
         bindsym Return mode "default"
         bindsym Escape mode "default" }
+
 
 

@@ -1,0 +1,112 @@
+(defcfg
+  input   (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  output  (uinput-sink
+            "KMonad: Dell XPS 9360"
+            "/usr/bin/sleep 1 && xset r rate 200 25 && /usr/bin/setxkbmap -layout us -option compose:ralt -option caps:none && xmodmap -e 'keycode 94 = Shift_L'")
+  fallthrough true
+)
+
+
+(defalias
+  caps    (tap-hold-next-release 200 esc lctl)
+  rsft    (tap-hold-next 200 M-a rsft)
+  lalt    (tap-hold-next 200 M-a lalt)
+  rctl    (tap-hold-next 200 M-a rctl)
+  cl      C-lft
+  cr      C-rght
+  cw      C-w
+  mr      M-r
+  mret      M-ret
+  ct      C-t
+  cu      C-u
+  cd      C-d
+  c6      C-6
+  cdel    C-del
+  cbspc    C-bspc
+  mq      M-q
+  c1      C-1
+  c2      C-2
+  c3      C-3
+  c4      C-4
+  alft      A-lft
+  arght      A-rght
+  cpgup      C-pgup
+  cpgdn      C-pgdn
+  c5      C-5
+  ws      M-S-tab
+  wslft      M-C-h
+  wsrght      M-C-l
+  oe      (tap-macro RA-o /)
+  oes      (tap-macro RA-S-o /)
+  ae      (tap-macro RA-a e )
+  aes      (tap-macro RA-S-a S-e )
+  aa      (tap-macro RA-a a )
+  aas      (tap-macro RA-S-a S-a )
+  pnd      (tap-macro RA-l - )
+  eur      (tap-macro RA-= e )
+  i3      (tap-macro M-a (layer-next default))
+  i3ws      (tap-macro M-S-tab (layer-next default))
+)
+
+
+(defalias spc2 (tap-hold-next-release 200 spc (layer-toggle spc_fn)))
+(defalias spc_fn2 (tap-hold-next-release 200 spc (layer-toggle spc_fn2)))
+(defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
+
+(defsrc
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  caps    a       s       d       f       g       h       j       k       l       ;       '       ret
+  lsft    z       x       c       v       b       n       m       ,       .       /       rsft
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer default
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   a       s       d       f       g       h       j       k       l       ;       '       ret
+  lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
+  @ctl2            lmet    @lalt    @spc2                             @rctl    ralt           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer spc_fn
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
+  home       @mq       @cw       end       @mr       @ct       @mret       @cu       @cd       @c6       pgup       pgdn       @cdel       del
+  lctl    @c1   @c2     @c3       @i3     @i3ws       lft   down    up    rght       @wslft       @wsrght       M-ret
+  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-S-ret
+  @spc_fn2            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer spc_fn2
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       @oe       2       @pnd       @eur       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       home       i       end       p       @aas       ]       \
+  caps    @c1   @c2     @c3       @c4     @c5       lft   down    up    rght       @aes       @oes       ret
+  lsft    z       x       c       v       b       @cl       @cr       vold       volu       /       _
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer ctrl_fn
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       @aa       ]       \
+  caps    a       s       d       _       g       lft   down    up    rght       @ae       @oe       KeyPlayPause
+  @spc_fn2    z       x       c       v       b       n       m       KeyVolumeDown       KeyVolumeUp      KeyPreviousSong       KeyNextSong
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+
+;; vim: ft=elisp
