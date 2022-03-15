@@ -2,7 +2,7 @@
   input   (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
   output  (uinput-sink
             "KMonad: Dell XPS 9360"
-            "/usr/bin/sleep 1 && xset r rate 200 25 && /usr/bin/setxkbmap -layout us -option compose:ralt -option caps:none && xmodmap -e 'keycode 94 = Shift_L'")
+            "/usr/bin/sleep 1 && xset r rate 200 25 && /usr/bin/setxkbmap -layout us -option compose:ralt -option caps:none && xmodmap -e 'keycode 94 = Shift_L' -e 'keysym XF86MenuKB = Menu'")
   fallthrough true
 )
 
@@ -44,6 +44,8 @@
   aas      (tap-macro RA-S-a S-a )
   pnd      (tap-macro RA-l - )
   eur      (tap-macro RA-= e )
+  endash      (tap-macro RA-- - . )
+  emdash      (tap-macro RA-- - - )
   i3      (tap-macro M-a (layer-next default))
   i3ws      (tap-macro M-S-tab (layer-next default))
 )
@@ -70,7 +72,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       f       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
-  @ctl2            lmet    @lalt    @spc2                             @rctl    ralt           left    up      down    rght
+  @ctl2            lmet    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
 )
@@ -102,7 +104,7 @@
   `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       bspc
   tab     q       w       e       r       t       y       u       i       o       p       @aa       ]       \
   caps    a       s       d       _       g       lft   down    up    rght       @ae       @oe       KeyPlayPause
-  @spc_fn2    z       x       c       v       b       n       m       KeyVolumeDown       KeyVolumeUp      KeyPreviousSong       KeyNextSong
+  @spc_fn2    ins       menu       ralt       v       b       @endash       @emdash       KeyVolumeDown       KeyVolumeUp      KeyPreviousSong       KeyNextSong
   lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
