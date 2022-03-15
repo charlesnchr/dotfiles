@@ -554,6 +554,9 @@ mode "$Workspace_select" {
     bindsym j workspace $ws7, mode "default"
     bindsym k workspace $ws8, mode "default"
     bindsym l workspace $ws9, mode "default"
+    bindsym n workspace next_on_output, mode "default"
+    bindsym p workspace prev_on_output, mode "default"
+
 
     bindsym Shift+a workspace 10, mode "default"
     bindsym Shift+s workspace 11, mode "default"
