@@ -29,6 +29,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Shift+Return exec --no-startup-id firefox
 bindsym $mod+e exec --no-startup-id alacritty
 bindsym $mod+r exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\""
 
@@ -283,6 +284,7 @@ bindsym $mod+n [urgent=latest] focus
 focus_on_window_activation focus
 
 bindsym $mod+a mode "$Global"
+bindsym $mod+Shift+a mode "$Global"
 bindsym XF86Tools mode "$Global"
 set $Global (0,SPC,m,TAB,qrwasd) 💫 (`,c,q) 📌 📐 📄 (f,g,j) 🚀 (o,p,l) ⬛ 🪟 ⏩ (e,t) 🛸 (z,x) 📱
 mode "$Global" {
@@ -348,6 +350,7 @@ mode "$Global" {
     # bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym XF86Tools mode "default"
+    bindsym $mod+a mode "default"
 }
 
 
@@ -491,6 +494,7 @@ mode "$Utility" {
     bindsym r restart, mode "default"
 
     bindsym x exec --no-startup-id source /home/cc/.xprofile, mode "default"
+    bindsym k exec --no-startup-id "killall kmonad; sleep 0.5 && kmonad ~/.config/dell-xps.kbd", mode "default"
     bindsym Shift+x exec --no-startup-id killall xcape, mode "default"
 
     # to toggle screen off on
@@ -532,13 +536,13 @@ mode "$Workspace" {
     bindsym Tab mode "$Workspace_select"
 
     bindsym f exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
-    bindsym space exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
+    bindsym semicolon exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+f mode "$Workspace_select"
+bindsym $mod+Shift+Tab mode "$Workspace_select"
 set $Workspace_select Workspace select
 mode "$Workspace_select" {
     bindsym a workspace $ws1, mode "default"
@@ -563,7 +567,7 @@ mode "$Workspace_select" {
 
     bindsym Tab mode "$Workspace"
 
-    bindsym space exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
+    bindsym semicolon exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -593,7 +597,7 @@ mode "$Workspace_a" {
 
     bindsym Tab mode "$Workspace"
 
-    bindsym space exec "i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Bring to workspace') && i3-msg workspace back_and_forth", mode "default"
+    bindsym semicolon exec "i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Bring to workspace') && i3-msg workspace back_and_forth", mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -623,7 +627,7 @@ mode "$Workspace_s" {
 
     bindsym Tab mode "$Workspace"
 
-    bindsym space exec i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Move to workspace"), mode "default"
+    bindsym semicolon exec i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Move to workspace"), mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"

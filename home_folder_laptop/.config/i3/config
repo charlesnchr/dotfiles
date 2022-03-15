@@ -655,6 +655,7 @@ exec --no-startup-id spotify
 # exec --no-startup-id sleep 10 && tmuxinator Tunnels
 # exec --no-startup-id sleep 10 && tmuxinator Mining
 exec --no-startup-id kmix --keepvisibility
+exec --no-startup-id unclutter
 exec --no-startup-id copyq
 
 
