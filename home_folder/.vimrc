@@ -31,7 +31,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'godlygeek/tabular'
 Plug 'Konfekt/FastFold'
 " writing
-"Plug 'reedes/vim-pencil'
+Plug 'reedes/vim-pencil'
 " Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'easymotion/vim-easymotion'
@@ -218,8 +218,8 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
 au BufNewFile,BufRead *.tex
             \ set textwidth=80
 
-"au BufNewFile,BufRead */wiki/*
-            "\ SoftPencil
+au BufNewFile,BufRead */wiki/*
+            \ SoftPencil
 
 " trialing these options for all types
 set tabstop=4
