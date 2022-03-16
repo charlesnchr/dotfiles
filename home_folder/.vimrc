@@ -335,8 +335,8 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 nmap <F2> :TagbarOpenAutoClose<CR>
-nmap <leader>tt :TagbarToggle<CR>
-nmap <leader>to :TagbarOpenAutoClose<CR>
+nmap <leader>ga :TagbarToggle<CR>
+nmap <leader>a :TagbarOpenAutoClose<CR>
 
 
 if !exists('g:lasttab')
@@ -352,6 +352,7 @@ map <localleader>s <Plug>(easymotion-s)
 
 " latex
 " let g:vimtex_view_method = 'skim'
+let g:vimtex_syntax_conceal_disable = 1
 let g:latex_view_general_viewer = 'zathura'
 let g:vimtex_view_method = "zathura"
 " let g:vimtex_compiler_latexmk = {
@@ -471,7 +472,7 @@ let g:floaterm_height = 0.8
 "let g:taskwiki_sort_orders={"T": "end-"}
 "nmap <C-k> <Plug>VimwikiPrevLink
 "nmap <C-j> <Plug>VimwikiNextLink
-nnoremap <leader>tt <cmd>VimwikiToggleListItem<cr>
+nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
 
 "let g:airline_section_x = '%{PencilMode()}'
 
@@ -610,6 +611,7 @@ nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
 nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xq <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
@@ -679,3 +681,6 @@ nnoremap <silent>gb :<C-u>call BufferGoto()<CR>
 function! BufferGoto()
     exec ':BufferGoto' v:count1
 endfunction
+
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
