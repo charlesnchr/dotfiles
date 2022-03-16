@@ -17,6 +17,9 @@ select yn in "Yes" "No"; do
         mkdir -p $dirname
         move_if ~/.profile
         move_if ~/.zshrc
+        move_if ~/.spacemacs
+        move_if ~/.tmux.conf
+        move_if ~/.vimrc
         move_if ~/.config/dunst
         move_if ~/.config/mimeapps.list
         move_if ~/.config/libinput-gestures.conf
