@@ -16,6 +16,7 @@
   cr      C-rght
   cw      C-w
   mr      M-r
+  my      M-y
   mret      M-ret
   ct      C-t
   cu      C-u
@@ -48,6 +49,8 @@
   emdash      (tap-macro RA-- - - )
   i3      (tap-macro M-a (layer-next default))
   i3ws      (tap-macro M-S-tab (layer-next default))
+  i3apps      (tap-macro M-y (layer-next default))
+  i3nav      (tap-macro M-r (layer-next default))
 )
 
 
@@ -72,7 +75,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       f       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
-  @ctl2            lmet    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
 )
@@ -80,10 +83,10 @@
 (deflayer spc_fn
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
   `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
-  home       @mq       @cw       end       @mr       @ct       @mret       @cu       @cd       @c6       pgup       pgdn       @cdel       del
+  home       @mq       @cw       end       @i3nav       @ct       @i3apps       @cu       @cd       @c6       pgup       pgdn       @cdel       del
   lctl    @c1   @c2     @c3       @i3     @i3ws       lft   down    up    rght       @wslft       @wsrght       M-ret
   lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-S-ret
-  @spc_fn2            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+  lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
 )
