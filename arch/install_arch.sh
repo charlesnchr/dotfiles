@@ -16,7 +16,6 @@ PACKAGES=$(cat <<-END
     i3status-rust
     libinput-gestures
     maim
-    teams
     discord
     nerd-fonts-source-code-pro
     wmctrl
@@ -165,3 +164,6 @@ fi
 if ask "Activate betterlockscreen" Y; then
     xfconf-query -c xfce4-session -p /general/LockCommand -s "betterlockscreen -l" -n -t string
 fi
+
+
+echo "Install e.g. Teams via Flathub/Discover"
