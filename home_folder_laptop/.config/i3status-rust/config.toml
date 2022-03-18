@@ -8,6 +8,19 @@ buttons = ["play", "next"]
 marquee = false
 smart_trim = true
 
+[[block]]
+block = "uptime"
+
+[[block]]
+block = "pacman"
+interval = 600
+format = "{pacman} +{aur}"
+format_singular = "{both}"
+format_up_to_date = "system up to date"
+critical_updates_regex = "(linux|linux-lts|linux-zen)"
+# aur_command should output available updates to stdout (ie behave as echo -ne "update\n")
+aur_command = "yay -Qua"
+on_click = "yay -Qu | rofi -dmenu"
 
 # [[block]]
 # block = "pomodoro"

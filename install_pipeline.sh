@@ -18,3 +18,7 @@ echo "[redshift]
 allowed=true
 system=false
 users=" | sudo tee -a /etc/geoclue/geoclue.conf
+
+
+# for laptop
+echo "for laptop: fix the idle vs deep sleep kernel parameter, see arch wiki"
