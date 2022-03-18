@@ -71,12 +71,9 @@ Plug 'jpalardy/vim-slime'
 
 Plug 'kevinhwang91/nvim-hlslens'
 
-if has('mac')
-    Plug 'alok/notational-fzf-vim'
-    "elseif has('unix')
-endif
+Plug 'alok/notational-fzf-vim'
 
-Plug 'kassio/neoterm'
+" Plug 'kassio/neoterm'
 Plug 'preservim/tagbar'
 
 Plug 'francoiscabrol/ranger.vim'
@@ -179,8 +176,8 @@ nnoremap <localleader>bg :BufferGoto<space>
 nnoremap <localleader>bl :BufferMoveNext<CR>
 nnoremap <localleader>bh :BufferMovePrev<CR>
 nnoremap <localleader>bn :BufferPin<CR>
-nnoremap [b :BufferPrev<CR>
-nnoremap ]b :BufferNext<CR>
+nnoremap <silent> [b :BufferPrev<CR>
+nnoremap <silent> ]b :BufferNext<CR>
 nnoremap <localleader>fh :History<cr>
 nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
@@ -246,12 +243,15 @@ let g:vimwiki_list = [{
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
-            \'.wiki': 'markdown'
+            \'.wiki': 'markdown',
+            \'.md': 'markdown'
             \}
-" let g:vimwiki_ext2syntax = {  " if I don't like markdown
+" if I don't like markdown
+" let g:vimwiki_ext2syntax = {
 "             \}
 let g:vimwiki_global_ext = 1
-let g:nv_search_paths = ['~/Github/wiki']
+let g:nv_search_paths = ['~/Github/wiki', '~/Github/phd-thesis']
+let g:nv_ignore_pattern = ['*.bib', 'node_modules/*']
 let g:startify_bookmarks = [
             \ { 'p': '~/0main/0phd' },
             \ { 'c': '~/0main/0phd/ccRestore' },
@@ -584,6 +584,7 @@ nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('teles
 nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>p <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
@@ -611,7 +612,7 @@ nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
 nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xq <cmd>TroubleRefresh<cr>
+nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
@@ -684,3 +685,32 @@ endfunction
 
 let g:NERDTreeHijackNetrw = 0
 let g:ranger_replace_netrw = 1
+
+command! -bang -nargs=* RgWiki
+            \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/wiki'}), <bang>0)
+nnoremap <localleader>fa :RgWiki<Cr>
+
+command! -bang -nargs=* RgThesis
+            \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/phd-thesis'}), <bang>0)
+nnoremap <localleader>fs :RgThesis<Cr>
+
+
+" create file if does not exist
+noremap <leader>gf :e <cfile><cr>
+
+
+augroup AutoHeader
+    autocmd!
+    autocmd bufnewfile *.c so ~/dotfiles/headers/c_header.txt
+    autocmd bufnewfile *.cpp so ~/dotfiles/headers/c_header.txt
+    autocmd bufnewfile *.h so ~/dotfiles/headers/c_header.txt
+    autocmd bufnewfile *.py so ~/dotfiles/headers/py_header.txt
+    autocmd bufnewfile *.sh so ~/dotfiles/headers/bash_header.txt
+    autocmd bufnewfile *.md so ~/dotfiles/headers/md_header.txt
+    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Author :.*/s//\* Author : Charles N. Christensen"
+    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Github :.*/s//\* Github : github.com\\/charlesnchr"
+    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Creation Date :.*/s//\* Creation Time : " .strftime("%c")
+    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh execute "normal ma"
+    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Last Modified :.*/s/\* Last Modified :.*/\* Last Modified : " .strftime("%c")
+    autocmd bufwritepost,filewritepost *.c,*.cpp,*.h,*.py,*.md,*.sh execute "normal `a"
+augroup END
