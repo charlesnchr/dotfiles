@@ -5,7 +5,7 @@ configuration {
   icon-theme:         "Papirus";
   combi-modi: "window,drun,ssh";
   monitor: "-1";
-  modi: "window,drun,ssh,combi,calc,keys";
+  modi: "window,drun,ssh,combi,calc,keys,filebrowser";
 }
 //@theme "/usr/share/rofi/themes/dmenu.rasi"
 @theme "/usr/share/rofi/themes/purple.rasi"
