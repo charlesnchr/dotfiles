@@ -32,7 +32,6 @@ bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Shift+Return exec --no-startup-id firefox
 bindsym $mod+e exec --no-startup-id alacritty
 # bindsym $mod+r exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\""
-bindsym $mod+r mode "navigate"
 bindsym $mod+y mode "$Apps"
 
 # kill focused window
@@ -120,12 +119,25 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# resize
+bindsym $mod+Mod1+Ctrl+n resize shrink width 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+m resize grow height 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+comma resize shrink height 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+period resize grow width 20 px or 20 ppt
+bindsym $mod+Shift+Mod1+Ctrl+n resize shrink width 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+m resize grow height 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+comma resize shrink height 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+period resize grow width 5 px or 5 ppt
+bindsym $mod+Mod1+Ctrl+b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
+
+
 # workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym Mod1+Tab workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth
 bindsym Mod1+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
+
 
 
 # toggle fullscreen mode for the focused container
@@ -367,7 +379,6 @@ mode "$Apps" {
     bindsym d exec --no-startup-id dolphin, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
-    bindsym b exec --no-startup-id alacritty -e btop, mode "default"
     bindsym b exec --no-startup-id alacritty -e btop, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
     # exit system mode: "Enter" or "Escape"
@@ -649,33 +660,6 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Navigate window (you can also use the mouse for that)
-# bindsym $mod+r mode "resize"
-mode "navigate" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-
-        bindsym h focus left, mode "default"
-        bindsym j focus down, mode "default"
-        bindsym k focus up, mode "default"
-        bindsym l focus right, mode "default"
-        bindsym y move left, mode "default"
-        bindsym u move down, mode "default"
-        bindsym i move up, mode "default"
-        bindsym o move right, mode "default"
-        bindsym n resize shrink width 5 px or 5 ppt
-        bindsym m resize grow height 5 px or 5 ppt
-        bindsym comma resize shrink height 5 px or 5 ppt
-        bindsym period resize grow width 5 px or 5 ppt
-        bindsym b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace, mode "default"
-
-        # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
 
 # Lock screen
 # bindsym $mod+BackSpace exec --no-startup-id blurlock

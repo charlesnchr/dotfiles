@@ -265,7 +265,8 @@ let g:startify_bookmarks = [
 " set statusline=%F
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
-let g:airline_theme = 'tomorrow'
+" let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'palenight'
 " let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
 
 if !exists('g:airline_symbols')

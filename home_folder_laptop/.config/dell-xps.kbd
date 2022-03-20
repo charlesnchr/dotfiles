@@ -57,6 +57,8 @@
 (defalias spc2 (tap-hold-next-release 200 spc (layer-toggle spc_fn)))
 (defalias spc_fn2 (tap-hold-next-release 200 spc (layer-toggle spc_fn2)))
 (defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
+(defalias i3layer (tap-hold-next-release 200 (layer-next i3layer) (layer-toggle i3layer)))
+(defalias i3layer_shift (tap-hold-next-release 200 (layer-next i3layer_shift) (layer-toggle i3layer_shift)))
 
 (defsrc
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
@@ -75,7 +77,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       f       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
-  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+  @ctl2       lmet         @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
 )
@@ -84,7 +86,7 @@
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
   `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
   home       @mq       @cw       end       @i3nav       @ct       @i3apps       @cu       @cd       @c6       pgup       pgdn       @cdel       del
-  lctl    @c1   @c2     @c3       @i3     @i3ws       lft   down    up    rght       @wslft       @wsrght       M-ret
+  lctl    @c1   @c2     @c3       @i3layer     @i3ws       lft   down    up    rght       @wslft       @wsrght       M-ret
   lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-S-ret
   lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
@@ -113,5 +115,26 @@
   home    pgup    pgdn    end
 )
 
+(deflayer i3layer
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-h       M-j      M-k       M-l       ;       '       ret
+  lsft    z       x       c       v       b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       @rsft
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer i3layer_shift
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-S-h       M-S-j      M-S-k       M-S-l       ;       '       ret
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
 
 ;; vim: ft=elisp
