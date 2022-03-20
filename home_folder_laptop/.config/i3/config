@@ -587,7 +587,7 @@ mode "$Workspace_a" {
     bindsym Shift+a move container to workspace 10; workspace 10, mode "default"
     bindsym Shift+s move container to workspace 11; workspace 11, mode "default"
     bindsym Shift+d move container to workspace 12; workspace 12, mode "default"
-    bindsym Shift+f movr container to workspace 13; workspace 13, mode "default"
+    bindsym Shift+f move container to workspace 13; workspace 13, mode "default"
     bindsym Shift+g move container to workspace 14; workspace 14, mode "default"
     bindsym Shift+h move container to workspace 15; workspace 15, mode "default"
     bindsym Shift+j move container to workspace 16; workspace 16, mode "default"

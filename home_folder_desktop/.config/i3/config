@@ -125,7 +125,7 @@ workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym Mod1+Tab workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth
-bindsym Mod1+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
+bindsym $mod+Mod1+b move container to workspace back_and_forth; workspace back_and_forth
 
 # resize
 bindsym $mod+Mod1+Ctrl+n resize shrink width 20 px or 20 ppt
@@ -136,7 +136,7 @@ bindsym $mod+Shift+Mod1+Ctrl+n resize shrink width 5 px or 5 ppt
 bindsym $mod+Shift+Mod1+Ctrl+m resize grow height 5 px or 5 ppt
 bindsym $mod+Shift+Mod1+Ctrl+comma resize shrink height 5 px or 5 ppt
 bindsym $mod+Shift+Mod1+Ctrl+period resize grow width 5 px or 5 ppt
-bindsym $mod+Mod1+Ctrl+b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
+bindsym $mod+Mod1+Ctrl+r exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
 
 
 # toggle fullscreen mode for the focused container
@@ -319,7 +319,7 @@ mode "$Global" {
     bindsym m exec --no-startup-id i3-input -F 'mark %s' -l 1 -P 'Mark: ', mode "default"
     bindsym apostrophe exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Go to: ', mode "default"
 
-    bindsym d exec --no-startup-id rofi -show drun -theme ~/.config/rofi/purple.rasi -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
+    bindsym e exec --no-startup-id rofi -show drun -theme ~/.config/rofi/purple.rasi -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
     # bindsym grave exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}', mode "default"
     bindsym grave exec --no-startup-id copyq toggle, mode "default"
     bindsym Tab exec --no-startup-id rofi -show window -show-icons, mode "default"
@@ -337,12 +337,11 @@ mode "$Global" {
 
     # bindsym e exec --no-startup-id "alacritty -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
     # bindsym shift+e exec --no-startup-id "alacritty -o 'window.opacity=0.8' -e zsh -c \\"zsh -ic '$(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lines -p 'Command: ' )'\\"", mode "default"
-    bindsym e exec --no-startup-id ~/bin/rofi-run-cmd, mode "default"
-    bindsym Shift+e exec --no-startup-id ~/bin/rofi-run-cmd 0.8, mode "default"
+    bindsym t exec --no-startup-id ~/bin/rofi-run-cmd, mode "default"
+    bindsym Shift+t exec --no-startup-id ~/bin/rofi-run-cmd 0.8, mode "default"
     # bindsym u exec --no-startup-id alacritty -e zsh -c "zsh -ic $(dmenu -p 'Command:' <&-)", mode "default"
     # bindsym u exec --no-startup-id ~/bin/rofi-run-cmd, mode "default"
     # bindsym u exec --no-startup-id i3-input -F 'exec --no-startup-id alacritty -e %s' -P 'Go to: ', mode "default"
-    bindsym t exec --no-startup-id "~/bin/rofi-run-cmd && zsh", mode "default"
 
 
     # screenshot
@@ -361,7 +360,7 @@ mode "$Global" {
     # bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym XF86Tools mode "default"
-    bindsym $mod+a mode "default"
+    bindsym $mod+r mode "default"
 }
 
 
@@ -584,7 +583,7 @@ mode "$Workspace_select" {
     bindsym Shift+k workspace 17, mode "default"
     bindsym Shift+l workspace 18, mode "default"
 
-    bindsym Tab mode "$Workspace"
+    bindsym Tab workspace back_and_forth, mode "default"
 
     bindsym semicolon exec i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace"), mode "default"
     # exit system mode: "Enter" or "Escape"
@@ -592,7 +591,7 @@ mode "$Workspace_select" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Ctrl+Mod1+r mode "$Workspace_a"
+bindsym $mod+Ctrl+Mod1+e mode "$Workspace_a"
 set $Workspace_a Bring to
 mode "$Workspace_a" {
     bindsym a move container to workspace $ws1; workspace $ws1, mode "default"
@@ -603,7 +602,7 @@ mode "$Workspace_a" {
     bindsym h move container to workspace $ws6; workspace $ws6, mode "default"
     bindsym j move container to workspace $ws7; workspace $ws7, mode "default"
     bindsym k move container to workspace $ws8; workspace $ws8, mode "default"
-    bindsym l move container to workspace $ws9; workspace $ws9, mode "default"
+    bindsym l move contkiner to workspace $ws9; workspace $ws9, mode "default"
 
     bindsym Shift+a move container to workspace 10; workspace 10, mode "default"
     bindsym Shift+s move container to workspace 11; workspace 11, mode "default"
@@ -614,6 +613,8 @@ mode "$Workspace_a" {
     bindsym Shift+j move container to workspace 16; workspace 16, mode "default"
     bindsym Shift+k move container to workspace 17; workspace 17, mode "default"
     bindsym Shift+l move container to workspace 18; workspace 18, mode "default"
+
+    bindsym Tab move container to workspace back_and_forth; workspace back_and_forth, mode "default"
 
     bindsym Tab mode "$Workspace"
 
@@ -646,7 +647,7 @@ mode "$Workspace_s" {
     bindsym Shift+k move container to workspace 17, mode "default"
     bindsym Shift+l move container to workspace 18, mode "default"
 
-    bindsym Tab mode "$Workspace"
+    bindsym Tab move workspace back_and_forth, mode "default"
 
     bindsym semicolon exec i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Move to workspace"), mode "default"
     # exit system mode: "Enter" or "Escape"
