@@ -9,9 +9,9 @@
 
 (defalias
   caps    (tap-hold-next-release 200 esc lctl)
-  rsft    (tap-hold-next 200 M-a rsft)
-  lalt    (tap-hold-next 200 M-a lalt)
-  rctl    (tap-hold-next 200 M-a rctl)
+  rsft    (tap-hold-next 200 M-r rsft)
+  lalt    (tap-hold-next 200 M-r lalt)
+  rctl    (tap-hold-next 200 M-r rctl)
   cl      C-lft
   cr      C-rght
   cw      C-w
@@ -25,10 +25,6 @@
   cdel    C-del
   cbspc    C-bspc
   mq      M-q
-  c1      C-1
-  c2      C-2
-  c3      C-3
-  c4      C-4
   alft      A-lft
   arght      A-rght
   cpgup      C-pgup
@@ -47,10 +43,12 @@
   eur      (tap-macro RA-= e )
   endash      (tap-macro RA-- - . )
   emdash      (tap-macro RA-- - - )
-  i3      (tap-macro M-a (layer-next default))
+  i3      (tap-macro M-r (layer-next default))
   i3ws      (tap-macro M-S-tab (layer-next default))
   i3apps      (tap-macro M-y (layer-next default))
   i3nav      (tap-macro M-r (layer-next default))
+  i3bringto      (tap-macro M-A-C-r (layer-next default))
+  i3moveto      (tap-macro M-A-C-o (layer-next default))
 )
 
 
@@ -59,6 +57,9 @@
 (defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
 (defalias i3layer (tap-hold-next-release 200 (layer-next i3layer) (layer-toggle i3layer)))
 (defalias i3layer_shift (tap-hold-next-release 200 (layer-next i3layer_shift) (layer-toggle i3layer_shift)))
+(defalias i3layer_move (tap-hold-next-release 200 (layer-next i3layer_move) (layer-toggle i3layer_move)))
+(defalias i3layer_bring (tap-hold-next-release 200 (layer-next i3layer_bring) (layer-toggle i3layer_bring)))
+(defalias i3layer_ws (tap-hold-next-release 200 (layer-next i3layer_ws) (layer-toggle i3layer_bring)))
 
 (defsrc
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
@@ -85,9 +86,9 @@
 (deflayer spc_fn
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
   `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
-  home       @mq       @cw       end       @i3nav       @ct       @i3apps       @cu       @cd       @c6       pgup       pgdn       @cdel       del
-  lctl    @c1   @c2     @c3       @i3layer     @i3ws       lft   down    up    rght       @wslft       @wsrght       M-ret
-  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-S-ret
+  M-b       @mq       @cw       end       @i3       @ct       @i3apps       @cu       @cd       @c6       home       S-[       S-]       del
+  lctl    M-1   M-2     M-3       @i3layer     @i3layer_ws       lft   down    up    rght       @wslft       @wsrght       M-ret
+  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-A-ret
   lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
@@ -97,7 +98,7 @@
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
   `       @oe       2       @pnd       @eur       5       6       7       8       9       0       -       =       bspc
   tab     q       w       e       r       t       y       home       i       end       p       @aas       ]       \
-  caps    @c1   @c2     @c3       @c4     @c5       lft   down    up    rght       @aes       @oes       ret
+  caps    a   s     d       f     g       lft   down    up    rght       @aes       @oes       ret
   lsft    z       x       c       v       b       @cl       @cr       vold       volu       /       _
   lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
@@ -118,8 +119,8 @@
 (deflayer i3layer
   esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
   `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
-  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
-  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-h       M-j      M-k       M-l       ;       '       ret
+  tab     q       w       @i3layer_bring       M-A-C-r       t       y       pgup       pgdn       @i3layer_move       p       [       ]       \
+  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-h       M-j      M-k       M-l       ;       '       M-f
   lsft    z       x       c       v       b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       @rsft
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
@@ -137,4 +138,35 @@
   home    pgup    pgdn    end
 )
 
-;; vim: ft=elisp
+(deflayer i3layer_ws
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   M-1       M-2       M-3       M-4       M-5       M-6       M-7       M-8       M-9       0       '       ret
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer i3layer_move
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  M-S-b     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   M-S-1       M-S-2       M-S-3       M-S-4       M-S-5       M-S-6       M-S-7       M-S-8       M-S-9       0       '       ret
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer i3layer_bring
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  M-A-b     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       0       '       ret
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
