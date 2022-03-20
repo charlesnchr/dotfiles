@@ -128,15 +128,15 @@ bindsym $mod+Shift+b move container to workspace back_and_forth
 bindsym Mod1+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
 
 # resize
-bindsym $mod+Mod1+Ctrl+n resize shrink width 20 px or 20 ppt, mode "default"
-bindsym $mod+Mod1+Ctrl+m resize grow height 20 px or 20 ppt, mode "default"
-bindsym $mod+Mod1+Ctrl+comma resize shrink height 20 px or 20 ppt, mode "default"
-bindsym $mod+Mod1+Ctrl+period resize grow width 20 px or 20 ppt, mode "default"
-bindsym $mod+Mod1+Shift+Ctrl+n resize shrink width 5 px or 5 ppt, mode "default"
-bindsym $mod+Mod1+Shift+Ctrl+m resize grow height 5 px or 5 ppt, mode "default"
-bindsym $mod+Mod1+Shift+Ctrl+comma resize shrink height 5 px or 5 ppt, mode "default"
-bindsym $mod+Mod1+Shift+Ctrl+period resize grow width 5 px or 5 ppt, mode "default"
-bindsym $mod+Mod1+Ctrl+b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace, mode "default"
+bindsym $mod+Mod1+Ctrl+n resize shrink width 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+m resize grow height 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+comma resize shrink height 20 px or 20 ppt
+bindsym $mod+Mod1+Ctrl+period resize grow width 20 px or 20 ppt
+bindsym $mod+Shift+Mod1+Ctrl+n resize shrink width 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+m resize grow height 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+comma resize shrink height 5 px or 5 ppt
+bindsym $mod+Shift+Mod1+Ctrl+period resize grow width 5 px or 5 ppt
+bindsym $mod+Mod1+Ctrl+b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
 
 
 # toggle fullscreen mode for the focused container
@@ -172,7 +172,6 @@ bindsym $mod+Mod1+Shift+l move workspace to output right
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-
 
 set $ws1 1:🤖
 set $ws2 2:🌎
@@ -397,7 +396,6 @@ mode "$Apps" {
     bindsym d exec --no-startup-id dolphin, mode "default"
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
-    bindsym b exec --no-startup-id alacritty -e btop, mode "default"
     bindsym b exec --no-startup-id alacritty -e btop, mode "default"
     bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
     # exit system mode: "Enter" or "Escape"
@@ -681,7 +679,6 @@ mode "resize" {
         bindsym Right resize grow width 5 px or 5 ppt
 
         bindsym b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace, mode "default"
-
         # exit resize mode: Enter or Escape
         bindsym r mode "default"
         bindsym Return mode "default"
