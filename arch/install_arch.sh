@@ -22,7 +22,6 @@ PACKAGES=$(cat <<-END
     xdotool
     rofi
     rofimoji
-    alttab-git
     tmuxinator
     texlive-core
     dolphin
@@ -102,6 +101,7 @@ AUR_packages=$(cat <<-END
     zoom
     betterlockscreen
     logiops-git
+    alttab-git
     notion-app
     synology-drive
     signal-desktop-beta-bin
