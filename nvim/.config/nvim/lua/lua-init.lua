@@ -124,4 +124,8 @@ cmp.setup({
 
 require'config.lsp'
 
--- require("bufferline").setup{}
+require("bufferline").setup{
+    options = {
+        middle_mouse_command = "vertical sbuffer %d"
+    }
+}

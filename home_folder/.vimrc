@@ -54,8 +54,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 Plug 'mhinz/vim-startify'
-" Plug 'akinsho/bufferline.nvim'
-Plug 'romgrk/barbar.nvim'
+Plug 'akinsho/bufferline.nvim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -168,16 +167,31 @@ nnoremap <localleader>ft :Tags<cr>
 nnoremap <localleader>fv :Buffers<cr>
 nnoremap <localleader>fc :Commands<cr>
 nnoremap <localleader>fb :Buffers<cr>
-nnoremap <localleader>bp :BufferPick<cr>
-" use over :bd
-nnoremap <localleader>bd :BufferDelete<cr>
-nnoremap <localleader>bs :BufferOrderByDirectory<cr>
-nnoremap <localleader>bg :BufferGoto<space>
-nnoremap <localleader>bl :BufferMoveNext<CR>
-nnoremap <localleader>bh :BufferMovePrev<CR>
-nnoremap <localleader>bn :BufferPin<CR>
-nnoremap <silent> [b :BufferPrev<CR>
-nnoremap <silent> ]b :BufferNext<CR>
+
+" Bufferline bar
+nnoremap <silent><localleader>bp :BufferLinePick<cr>
+nnoremap <silent><localleader>bc :BufferLinePickClose<cr>
+nnoremap <silent><localleader>bd :bd<cr>
+nnoremap <silent><localleader>bg :BufferLineGoToBuffer<space>
+nnoremap <silent><localleader>bl :BufferLineMoveNext<CR>
+nnoremap <silent><localleader>bh :BufferLineMovePrev<CR>
+nnoremap <silent> [b :BufferLineCyclePrev<CR>
+nnoremap <silent> ]b :BufferLineCycleNext<CR>
+nnoremap <silent>    <A-,> :BufferLineCyclePrev<CR>
+nnoremap <silent>    <A-.> :BufferLineCycleNext<CR>
+nnoremap <silent>    <A-<> :BufferLineMovePrev<CR>
+nnoremap <silent>    <A->> :BufferLineMoveNext<CR>
+nnoremap <silent>    <A-1> :BufferLineGoToBuffer 1<CR>
+nnoremap <silent>    <A-2> :BufferLineGoToBuffer 2<CR>
+nnoremap <silent>    <A-3> :BufferLineGoToBuffer 3<CR>
+nnoremap <silent>    <A-4> :BufferLineGoToBuffer 4<CR>
+nnoremap <silent>    <A-5> :BufferLineGoToBuffer 5<CR>
+nnoremap <silent>    <A-6> :BufferLineGoToBuffer 6<CR>
+nnoremap <silent>    <A-7> :BufferLineGoToBuffer 7<CR>
+nnoremap <silent>    <A-8> :BufferLineGoToBuffer 8<CR>
+
+
+
 nnoremap <localleader>fh :History<cr>
 nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
@@ -185,7 +199,6 @@ nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>af :CtrlPLine<cr>
-
 
 " " don't show the help in normal mode
 " let g:Lf_HideHelp = 1
@@ -215,7 +228,7 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
 au BufNewFile,BufRead *.tex
             \ set textwidth=80
 
-au BufNewFile,BufRead */wiki/*
+au BufNewFile,BufRead *.wiki
             \ SoftPencil
 
 " trialing these options for all types
@@ -442,7 +455,7 @@ nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
-nnoremap <localleader>x :BufferDelete<cr>
+nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>go :Goyo<cr>
@@ -595,14 +608,14 @@ nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(requ
 set undofile
 set undodir=~/.vim/undo
 
-noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
-            \<Cmd>lua require('hlslens').start()<CR>
-noremap <silent> N <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
-            \<Cmd>lua require('hlslens').start()<CR>
-noremap * *<Cmd>lua require('hlslens').start()<CR>
-noremap # #<Cmd>lua require('hlslens').start()<CR>
-noremap g* g*<Cmd>lua require('hlslens').start()<CR>
-noremap g# g#<Cmd>lua require('hlslens').start()<CR>
+" noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
+"             \<Cmd>lua require('hlslens').start()<CR>
+" noremap <silent> N <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
+"             \<Cmd>lua require('hlslens').start()<CR>
+" noremap * *<Cmd>lua require('hlslens').start()<CR>
+" noremap # #<Cmd>lua require('hlslens').start()<CR>
+" noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+" noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 " use : instead of <Cmd>
 nnoremap <silent> <leader>l :noh<CR>
 " nnoremap <esc> :noh<return><esc>
@@ -678,14 +691,14 @@ let g:peekaboo_prefix = '<localleader>'
 let g:startify_files_number = 20
 
 
-" wrapper for barbar goto
+" wrapper for bufferline goto
 nnoremap <silent>gb :<C-u>call BufferGoto()<CR>
 function! BufferGoto()
-    exec ':BufferGoto' v:count1
+    exec ':BufferLineGoToBuffer' v:count1
 endfunction
 
-let g:NERDTreeHijackNetrw = 0
-let g:ranger_replace_netrw = 1
+" let g:NERDTreeHijackNetrw = 0
+" let g:ranger_replace_netrw = 1
 
 command! -bang -nargs=* RgWiki
             \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/wiki'}), <bang>0)
@@ -715,3 +728,15 @@ augroup AutoHeader
     autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Last Modified :.*/s/\* Last Modified :.*/\* Last Modified : " .strftime("%c")
     autocmd bufwritepost,filewritepost *.c,*.cpp,*.h,*.py,*.md,*.sh execute "normal `a"
 augroup END
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
