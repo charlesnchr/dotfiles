@@ -1,6 +1,6 @@
 ''' ----------------------------------------
 * Creation Time : Fri 18 Mar 2022 11:02:51 GMT
-* Last Modified : Fri 18 Mar 2022 11:23:05 GMT
+* Last Modified : Tue 22 Mar 2022 21:46:34 GMT
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'''
@@ -36,10 +36,18 @@ for device in iter(monitor.poll, None):
         continue
 
     print('is init')
+    print(device.device_path)
 
     # my keyboard, from the output of `lsusb`
-    if not "3434:0111" in device.device_path:
+    found_keyboard = True
+    for device_id in ["3434:0111","4b50:1121"]:
+        if device_id in device.device_path:
+            found_keyboard = True
+            break
+
+    if not found_keyboard:
         continue
+
 
     print('q2 keyboard')
 
