@@ -119,7 +119,7 @@
 (deflayer i3layer
   esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
   `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
-  tab     q       w       @i3layer_bring       M-A-C-r       t       y       pgup       pgdn       @i3layer_move       p       [       ]       \
+  tab     q       w       @i3layer_bring       M-A-C-r       t       y       pgup       pgdn       @i3layer_move     M-A-C-1       [       ]       \
   @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-h       M-j      M-k       M-l       ;       '       M-f
   lsft    z       x       c       v       b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       @rsft
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
@@ -130,9 +130,9 @@
 (deflayer i3layer_shift
   esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
   `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
-  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
-  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-S-h       M-S-j      M-S-k       M-S-l       ;       '       ret
-  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  tab     q       w       e       r       t       y       u       i       o       M-A-C-4       [       ]       \
+  @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-S-h       M-S-j      M-S-k       M-S-l    M-A-C-h       M-A-C-l       ret
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /     M-A-C-4
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
@@ -152,9 +152,9 @@
 (deflayer i3layer_move
   esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
   `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
-  M-S-b     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  M-S-b     q       w       e       r       t       y       u       i       o       M-A-C-3       [       ]       \
   @caps   M-S-1       M-S-2       M-S-3       M-S-4       M-S-5       M-S-6       M-S-7       M-S-8       M-S-9       0       '       ret
-  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /     M-A-C-3
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
@@ -163,9 +163,9 @@
 (deflayer i3layer_bring
   esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     ins     prnt    del
   `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
-  M-A-b     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  M-A-b     q       w       e       r       t       y       u       i       o       M-A-C-2       [       ]       \
   @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       0       '       ret
-  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /       @rsft
+  lsft    z       x       c       v       b       M-A-S-C-n       M-A-S-C-m       M-A-S-C-,       M-A-S-C-.       /     M-A-C-2
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
 
   home    pgup    pgdn    end
