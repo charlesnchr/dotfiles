@@ -1,0 +1,4 @@
+#!/bin/bash
+
+i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/config_ws.rasi)
+
