@@ -181,14 +181,14 @@ nnoremap <silent>    <A-,> :BufferLineCyclePrev<CR>
 nnoremap <silent>    <A-.> :BufferLineCycleNext<CR>
 nnoremap <silent>    <A-<> :BufferLineMovePrev<CR>
 nnoremap <silent>    <A->> :BufferLineMoveNext<CR>
-nnoremap <silent>    <A-1> :BufferLineGoToBuffer 1<CR>
-nnoremap <silent>    <A-2> :BufferLineGoToBuffer 2<CR>
-nnoremap <silent>    <A-3> :BufferLineGoToBuffer 3<CR>
-nnoremap <silent>    <A-4> :BufferLineGoToBuffer 4<CR>
-nnoremap <silent>    <A-5> :BufferLineGoToBuffer 5<CR>
-nnoremap <silent>    <A-6> :BufferLineGoToBuffer 6<CR>
-nnoremap <silent>    <A-7> :BufferLineGoToBuffer 7<CR>
-nnoremap <silent>    <A-8> :BufferLineGoToBuffer 8<CR>
+nnoremap <silent>    <A-S-1> :BufferLineGoToBuffer 1<CR>
+nnoremap <silent>    <A-S-2> :BufferLineGoToBuffer 2<CR>
+nnoremap <silent>    <A-S-3> :BufferLineGoToBuffer 3<CR>
+nnoremap <silent>    <A-S-4> :BufferLineGoToBuffer 4<CR>
+nnoremap <silent>    <A-S-5> :BufferLineGoToBuffer 5<CR>
+nnoremap <silent>    <A-S-6> :BufferLineGoToBuffer 6<CR>
+nnoremap <silent>    <A-S-7> :BufferLineGoToBuffer 7<CR>
+nnoremap <silent>    <A-S-8> :BufferLineGoToBuffer 8<CR>
 
 
 
@@ -676,6 +676,11 @@ nnoremap <localleader>2 <cmd>lua require("harpoon.ui").nav_file(2)<cr>
 nnoremap <localleader>3 <cmd>lua require("harpoon.ui").nav_file(3)<cr>
 nnoremap <localleader>4 <cmd>lua require("harpoon.ui").nav_file(4)<cr>
 nnoremap <localleader>5 <cmd>lua require("harpoon.ui").nav_file(5)<cr>
+nnoremap <A-1> <cmd>lua require("harpoon.ui").nav_file(1)<cr>
+nnoremap <A-2> <cmd>lua require("harpoon.ui").nav_file(2)<cr>
+nnoremap <A-3> <cmd>lua require("harpoon.ui").nav_file(3)<cr>
+nnoremap <A-4> <cmd>lua require("harpoon.ui").nav_file(4)<cr>
+nnoremap <A-5> <cmd>lua require("harpoon.ui").nav_file(5)<cr>
 nnoremap <localleader>6 <cmd>lua require("harpoon.ui").nav_file(6)<cr>
 nnoremap <localleader>7 <cmd>lua require("harpoon.ui").nav_file(7)<cr>
 nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
