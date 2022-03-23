@@ -86,7 +86,6 @@ block = "custom"
 command = "sh ~/bin/i3status-inactivity-suspend.sh get"
 on_click = "sh ~/bin/i3status-inactivity-suspend.sh set"
 interval = 2
-signal = 0
 
 [[block]]
 block = "custom"
