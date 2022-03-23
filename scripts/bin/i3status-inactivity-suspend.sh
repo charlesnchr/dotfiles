@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Wed 23 Mar 2022 10:55:35 GMT
-* Last Modified : Wed 23 Mar 2022 11:32:22 GMT
+* Last Modified : Wed 23 Mar 2022 16:31:54 GMT
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -11,9 +11,9 @@ CURSETTING=$(xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/inacti
 
 if [ "$CMD" = "set" ]; then
     if [ "$CURSETTING" = 14 ]; then
-        xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/inactivity-on-ac" -s 20
+        xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/inactivity-on-ac" -t int -s 1
     else
-        xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/inactivity-on-ac" -s 14
+        xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/inactivity-on-ac" -t int -s 14
     fi
 else # get
     if [ "$CURSETTING" = 14 ]; then
