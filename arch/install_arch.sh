@@ -86,6 +86,8 @@ PACKAGES=$(cat <<-END
     unclutter
     ueberzug
     autorandr
+    xfce4-settings
+    xfce4-settings-gtk3
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -106,6 +108,7 @@ AUR_packages=$(cat <<-END
     notion-app
     synology-drive
     signal-desktop-beta-bin
+    orage
 END
 )
 echo -e "AUR packages: $AUR_packages"
