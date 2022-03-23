@@ -138,6 +138,8 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'panozzaj/vim-autocorrect'
+Plug 'sedm0784/vim-you-autocorrect'
 
 call plug#end()
 
@@ -747,3 +749,6 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+
+
+highlight AutocorrectGood ctermfg=Green guifg=Green gui=undercurl
