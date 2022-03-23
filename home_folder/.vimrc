@@ -137,6 +137,8 @@ Plug 'vim-scripts/repeatable-motions.vim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+
 call plug#end()
 
 lua require('lua-init')
