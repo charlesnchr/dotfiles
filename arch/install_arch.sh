@@ -49,6 +49,7 @@ PACKAGES=$(cat <<-END
     handlr-bin
     tig
     noto-fonts-emoji
+    font-manager
     ktorrent
     solaar
     rofi-greenclip
