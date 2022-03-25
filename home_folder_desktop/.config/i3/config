@@ -437,6 +437,7 @@ mode "$Snippets" {
     bindsym Escape mode "default"
 }
 
+
 # bindsym $mod+w mode "$Window"
 set $Window (c) horz. , (v) vert. , (q) toggle , (s) stacking, (w) tabbed, (e) toggle split, (space) floating, (p) sticky, (a) parent, (z) child
 mode "$Window" {

@@ -144,6 +144,11 @@ bindsym $mod+Mod1+Ctrl+2 exec --no-startup-id "i3-msg move container to workspac
 bindsym $mod+Mod1+Ctrl+3 exec --no-startup-id i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Move to workspace")
 bindsym $mod+Mod1+Ctrl+4 exec --no-startup-id "~/bin/i3-swap $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Swap')"
 
+# window cycle behavior
+bindsym $mod+n exec ~/bin/i3-alt-tab.py next current
+bindsym $mod+p exec ~/bin/i3-alt-tab.py prev current
+exec --no-startup-id alttab -mk Control_R
+
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
@@ -275,10 +280,9 @@ for_window [class="qalculate-qt"] floating enable sticky enable border normal
 for_window [class=.*] border pixel 2
 
 
-
 # switch to workspace with urgent window automatically
 for_window [urgent=latest class="firefox"] focus
-bindsym $mod+n [urgent=latest] focus
+bindsym $mod+c [urgent=latest] focus
 focus_on_window_activation focus
 
 bindsym $mod+r mode "$Global"
@@ -701,6 +705,7 @@ exec --no-startup-id copyq
 # exec --no-startup-id start_conky_green
 # exec --no-startup-id xautolock -time 20 -locker "betterlockscreen -l --off 300"
 # exec --no-startup-id xautolock -time 15 -locker "xset dpms force off"
+exec_always --no-startup-id "killall xidlehook; xidlehook --not-when-fullscreen --timer 240 '~/bin/i3_conditional_lock.sh' ''"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 # exec_always --no-startup-id ~/.screenlayout/arandr.sh
