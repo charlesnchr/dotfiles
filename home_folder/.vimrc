@@ -28,7 +28,7 @@ Plug 'kien/ctrlp.vim'
 "Plug 'freitass/todo.txt-vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
-Plug 'Konfekt/FastFold'
+" Plug 'Konfekt/FastFold'
 " writing
 Plug 'reedes/vim-pencil'
 " Plug 'xuhdev/vim-latex-live-preview'
@@ -140,12 +140,12 @@ Plug 'rcarriga/nvim-notify'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
-"
+
 " tested both for latex and they work with chktex, null-ls is buggy, both are
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -390,6 +390,8 @@ let g:vimtex_view_method = "zathura"
 "                 \   '-interaction=nonstopmode',
 "                 \ ],
 "                 \}
+let g:vimtex_fold_enabled = 1
+
 
 function! WC()
     let filename = expand("%")
@@ -597,6 +599,7 @@ let g:perl_fold_blocks = 1
 let g:r_syntax_folding = 1
 let g:rust_fold = 1
 let g:php_folding = 1
+
 
 
 nnoremap gl :ls<cr>:b<space>
