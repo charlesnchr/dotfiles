@@ -222,3 +222,10 @@ setopt menu_complete
 # standard bash mapping (overrules delete whole line on macos)
 bindkey "^U" backward-kill-line
 bindkey '^Q' beginning-of-line
+
+# this was added by CPAN, not sure I wanna keep it
+PATH="/home/cc/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/cc/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/cc/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/cc/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/cc/perl5"; export PERL_MM_OPT;

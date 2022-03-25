@@ -9,20 +9,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Plug 'Raimondi/delimitMate'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-syntastic/syntastic'
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'preservim/nerdcommenter'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
+
 Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
 "Plug 'aserebryakov/vim-todo-lists'
@@ -129,9 +128,10 @@ Plug 'jdhao/whitespace.nvim'
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
 Plug 'kosayoda/nvim-lightbulb'
 Plug 'danro/rename.vim'
-" Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
+
+" for C-h, C-l to repeat after t,f,T,F
 Plug 'vim-scripts/repeatable-motions.vim'
 
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -140,6 +140,12 @@ Plug 'rcarriga/nvim-notify'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+"
+" tested both for latex and they work with chktex, null-ls is buggy, both are
+" not ideal
+" Plug 'mfussenegger/nvim-lint'
+" Plug 'jose-elias-alvarez/null-ls.nvim'
 
 call plug#end()
 
@@ -167,10 +173,12 @@ set foldlevel=99
 
 " open files with ctrl-p
 nnoremap <localleader>ff :Files<cr>
+nnoremap <localleader>fg :GitFiles<cr>
 nnoremap <localleader>ft :Tags<cr>
 nnoremap <localleader>fv :Buffers<cr>
 nnoremap <localleader>fc :Commands<cr>
 nnoremap <localleader>fb :Buffers<cr>
+nnoremap <localleader>fm :Marks<cr>
 
 " Bufferline bar
 nnoremap <silent><localleader>bp :BufferLinePick<cr>
@@ -181,18 +189,18 @@ nnoremap <silent><localleader>bl :BufferLineMoveNext<CR>
 nnoremap <silent><localleader>bh :BufferLineMovePrev<CR>
 nnoremap <silent> [b :BufferLineCyclePrev<CR>
 nnoremap <silent> ]b :BufferLineCycleNext<CR>
-nnoremap <silent>    <A-,> :BufferLineCyclePrev<CR>
-nnoremap <silent>    <A-.> :BufferLineCycleNext<CR>
-nnoremap <silent>    <A-<> :BufferLineMovePrev<CR>
-nnoremap <silent>    <A->> :BufferLineMoveNext<CR>
-nnoremap <silent>    <A-S-1> :BufferLineGoToBuffer 1<CR>
-nnoremap <silent>    <A-S-2> :BufferLineGoToBuffer 2<CR>
-nnoremap <silent>    <A-S-3> :BufferLineGoToBuffer 3<CR>
-nnoremap <silent>    <A-S-4> :BufferLineGoToBuffer 4<CR>
-nnoremap <silent>    <A-S-5> :BufferLineGoToBuffer 5<CR>
-nnoremap <silent>    <A-S-6> :BufferLineGoToBuffer 6<CR>
-nnoremap <silent>    <A-S-7> :BufferLineGoToBuffer 7<CR>
-nnoremap <silent>    <A-S-8> :BufferLineGoToBuffer 8<CR>
+nnoremap <silent>    <A-x> :BufferLineCyclePrev<CR>
+nnoremap <silent>    <A-c> :BufferLineCycleNext<CR>
+nnoremap <silent>    <A-X> :BufferLineMovePrev<CR>
+nnoremap <silent>    <A-C> :BufferLineMoveNext<CR>
+nnoremap <silent>    <A-1> :BufferLineGoToBuffer 1<CR>
+nnoremap <silent>    <A-2> :BufferLineGoToBuffer 2<CR>
+nnoremap <silent>    <A-3> :BufferLineGoToBuffer 3<CR>
+nnoremap <silent>    <A-4> :BufferLineGoToBuffer 4<CR>
+nnoremap <silent>    <A-5> :BufferLineGoToBuffer 5<CR>
+nnoremap <silent>    <A-6> :BufferLineGoToBuffer 6<CR>
+nnoremap <silent>    <A-7> :BufferLineGoToBuffer 7<CR>
+nnoremap <silent>    <A-8> :BufferLineGoToBuffer 8<CR>
 
 
 
@@ -347,10 +355,12 @@ set smartcase
 set mouse=a
 
 " nerdtree
-nnoremap <leader>nn :NERDTreeFocus<CR>
-nnoremap <leader>nc :NERDTree<CR>
-nnoremap <leader>nt :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
+" nnoremap <leader>nn :NERDTreeFocus<CR>
+" nnoremap <leader>nc :NERDTree<CR>
+" nnoremap <leader>nt :NERDTreeToggle<CR>
+" nnoremap <leader>nf :NERDTreeFind<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+
 
 nmap <F2> :TagbarOpenAutoClose<CR>
 nmap <leader>ga :TagbarToggle<CR>
@@ -597,12 +607,12 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 " nnoremap <leader>fb <cmd>Telescope buffers<cr>
 " nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tf <cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>p <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
@@ -666,7 +676,6 @@ autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " 
 " Write all buffers before navigating from Vim to tmux pane
 " let g:tmux_navigator_save_on_switch = 2
 
-map <localleader>p :FZFMru<cr>
 nnoremap <silent> <leader><Space> :<C-U>StripTrailingWhitespace<CR>
 
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -675,16 +684,15 @@ autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<C
 
 nnoremap <localleader>= <cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>
 nnoremap <localleader>- <cmd>lua require("harpoon.mark").add_file()<cr>
+nnoremap <C-h> <cmd>lua require("harpoon.ui").nav_file(1)<cr>
+nnoremap <C-j> <cmd>lua require("harpoon.ui").nav_file(2)<cr>
+nnoremap <C-k> <cmd>lua require("harpoon.ui").nav_file(3)<cr>
+nnoremap <C-l> <cmd>lua require("harpoon.ui").nav_file(4)<cr>
 nnoremap <localleader>1 <cmd>lua require("harpoon.ui").nav_file(1)<cr>
 nnoremap <localleader>2 <cmd>lua require("harpoon.ui").nav_file(2)<cr>
 nnoremap <localleader>3 <cmd>lua require("harpoon.ui").nav_file(3)<cr>
 nnoremap <localleader>4 <cmd>lua require("harpoon.ui").nav_file(4)<cr>
 nnoremap <localleader>5 <cmd>lua require("harpoon.ui").nav_file(5)<cr>
-nnoremap <A-1> <cmd>lua require("harpoon.ui").nav_file(1)<cr>
-nnoremap <A-2> <cmd>lua require("harpoon.ui").nav_file(2)<cr>
-nnoremap <A-3> <cmd>lua require("harpoon.ui").nav_file(3)<cr>
-nnoremap <A-4> <cmd>lua require("harpoon.ui").nav_file(4)<cr>
-nnoremap <A-5> <cmd>lua require("harpoon.ui").nav_file(5)<cr>
 nnoremap <localleader>6 <cmd>lua require("harpoon.ui").nav_file(6)<cr>
 nnoremap <localleader>7 <cmd>lua require("harpoon.ui").nav_file(7)<cr>
 nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
@@ -752,4 +760,89 @@ vnoremap <silent> # :<C-U>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
 
+" for autocorrect
 highlight AutocorrectGood ctermfg=Green guifg=Green gui=undercurl
+
+
+" testing better resizing keys
+noremap <silent> <A-.> :vertical resize +10<CR>
+noremap <silent> <A-n> :vertical resize -10<CR>
+noremap <silent> <A-m> :resize +10<CR>
+noremap <silent> <A-,> :resize -10<CR>
+
+
+" repeatable motions
+map <A-h> <Plug>RepeatMotionLeft
+map <A-k> <Plug>RepeatMotionUp
+map <A-j> <Plug>RepeatMotionDown
+map <A-l> <Plug>RepeatMotionRight
+
+map <localleader>rh <Plug>RepeatMotionLeft
+map <localleader>rk <Plug>RepeatMotionUp
+map <localleader>rj <Plug>RepeatMotionDown
+map <localleader>rl <Plug>RepeatMotionRight
+
+let g:nvim_tree_show_icons = {
+            \   'git': 1,
+            \   'folders': 1,
+            \   'files': 1,
+            \   'folder_arrows': 1,
+            \ }
+
+let g:nvim_tree_icons = {
+            \  'default': "",
+            \  'symlink': "",
+            \  'git': {
+            \    'unstaged': "",
+            \    'staged': "S",
+            \    'unmerged': "",
+            \    'renamed': "➜",
+            \    'deleted': "",
+            \    'untracked': "U",
+            \    'ignored': "◌",
+            \  },
+            \  'folder': {
+            \    'default': "",
+            \    'open': "",
+            \    'empty': "",
+            \    'empty_open': "",
+            \    'symlink': "",
+            \  },
+            \}
+
+ca tn tabnew
+ca th tabp
+ca tl tabn
+ca dn !dolphin --select
+
+
+""""""""""""""""""""""""""""
+" Ranger style marks command
+"
+""""""""""""""""""""""""""""
+function! Marks()
+    marks
+    echo('Mark: ')
+
+    " getchar() - prompts user for a single character and returns the chars
+    " ascii representation
+    " nr2char() - converts ASCII `NUMBER TO CHAR'
+
+    let s:mark = nr2char(getchar())
+    " remove the `press any key prompt'
+    redraw
+
+    " build a string which uses the `normal' command plus the var holding the
+    " mark - then eval it.
+    execute "normal! '" . s:mark
+endfunction
+
+nnoremap <localleader>' :call Marks()<CR>
+
+
+" let g:ale_virtualtext_cursor = 1
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\   'tex': ['prettier'],
+\}
