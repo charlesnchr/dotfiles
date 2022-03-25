@@ -29,7 +29,7 @@ Plug 'kien/ctrlp.vim'
 "Plug 'freitass/todo.txt-vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
-Plug 'Konfekt/FastFold'
+" Plug 'Konfekt/FastFold'
 " writing
 Plug 'reedes/vim-pencil'
 " Plug 'xuhdev/vim-latex-live-preview'
@@ -140,6 +140,7 @@ Plug 'rcarriga/nvim-notify'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -380,6 +381,9 @@ let g:vimtex_view_method = "zathura"
 "                 \   '-interaction=nonstopmode',
 "                 \ ],
 "                 \}
+let g:vimtex_fold_enabled = 1
+" set fillchars=fold:\ 
+
 
 function! WC()
     let filename = expand("%")
@@ -587,6 +591,11 @@ let g:perl_fold_blocks = 1
 let g:r_syntax_folding = 1
 let g:rust_fold = 1
 let g:php_folding = 1
+
+" nmap zuz <Plug>(FastFoldUpdate)
+" let g:fastfold_savehook = 1
+" let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+" let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
 
 nnoremap gl :ls<cr>:b<space>
