@@ -213,6 +213,8 @@ nnoremap <localleader>aj :CtrlPTag<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
+nnoremap <localleader>e :CtrlPMRUFiles<cr>
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
 nnoremap <localleader>af :CtrlPLine<cr>
 
 " " don't show the help in normal mode
@@ -477,7 +479,6 @@ nnoremap <localleader>q :quit<cr>
 nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
-nnoremap <localleader>go :Goyo<cr>
 " nicer to have pwd
 " nnoremap <localleader>cd :cd %:h<cr>
 " pointless symlink follow
@@ -614,12 +615,13 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>fb <cmd>Telescope buffers<cr>
 " nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <localleader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tf <cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers({sort_lastused = true})<cr>
 nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
 nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles(require('telescope.themes').get_ivy({}))<cr>
+nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
 nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
 
