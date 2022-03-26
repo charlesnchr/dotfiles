@@ -147,6 +147,8 @@ Plug 'sedm0784/vim-you-autocorrect'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'github/copilot.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'rhysd/vim-grammarous'
+Plug 'kana/vim-operator-user'
 
 call plug#end()
 
@@ -853,3 +855,15 @@ let g:ale_fixers = {
 
 let g:sneak#label = 1
 let g:sneak#s_next = 1
+
+
+
+
+nmap <localleader>gi <Plug>(grammarous-open-info-window)
+nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
+nmap <localleader>gf <Plug>(grammarous-fixit)
+nmap <localleader>gp <Plug>(grammarous-move-to-previous-error)
+nmap <localleader>gw <Plug>(grammarous-close-info-window)
+map <localleader>gc :GrammarousCheck<cr>
+nmap <localleader>gg <Plug>(operator-grammarous)
+
