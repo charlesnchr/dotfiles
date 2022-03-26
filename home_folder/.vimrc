@@ -146,6 +146,7 @@ Plug 'sedm0784/vim-you-autocorrect'
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'github/copilot.vim'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
@@ -849,3 +850,6 @@ let g:ale_fixers = {
 \   'css': ['prettier'],
 \   'tex': ['prettier'],
 \}
+
+let g:sneak#label = 1
+let g:sneak#s_next = 1
