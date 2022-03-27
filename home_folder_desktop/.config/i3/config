@@ -725,7 +725,11 @@ exec --no-startup-id copyq
 # exec --no-startup-id start_conky_green
 # exec --no-startup-id xautolock -time 20 -locker "betterlockscreen -l --off 300"
 # exec --no-startup-id xautolock -time 15 -locker "xset dpms force off"
-exec_always --no-startup-id "killall xidlehook; xidlehook --not-when-fullscreen --timer 240 '~/bin/i3_conditional_lock.sh' ''"
+
+exec_always --no-startup-id xautolock -time 4 -locker "~/bin/i3_conditional_lock.sh"
+
+# good option
+# exec_always --no-startup-id "killall xidlehook; xidlehook --not-when-fullscreen --timer 240 '~/bin/i3_conditional_lock.sh' ''"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 # exec_always --no-startup-id ~/.screenlayout/arandr.sh

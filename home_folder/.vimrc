@@ -67,7 +67,7 @@ Plug 'jpalardy/vim-slime'
 " Plug 'hanschen/vim-ipython-cell'
 " Plug 'jupyter-vim/jupyter-vim'
 
-Plug 'kevinhwang91/nvim-hlslens'
+" Plug 'kevinhwang91/nvim-hlslens'
 
 Plug 'alok/notational-fzf-vim'
 
@@ -149,6 +149,9 @@ Plug 'github/copilot.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
+
+Plug 'romainl/vim-cool'
+
 
 call plug#end()
 
