@@ -1,6 +1,5 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-"nmap <Leader>wn <Plug>VimwikiNextLink
 
 call plug#begin()
 
@@ -24,19 +23,17 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
-"Plug 'aserebryakov/vim-todo-lists'
+Plug 'aserebryakov/vim-todo-lists'
 "Plug 'freitass/todo.txt-vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
 " Plug 'Konfekt/FastFold'
 " writing
 Plug 'reedes/vim-pencil'
-" Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'easymotion/vim-easymotion'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-notes'
 " styling
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
@@ -49,7 +46,13 @@ Plug 'SirVer/ultisnips'
 " Plug 'ycm-core/YouCompleteMe'
 Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
-"Plug 'unblevable/quick-scope'
+
+" not very good imo
+" Plug 'preservim/vim-markdown'
+
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
 Plug 'mhinz/vim-startify'
@@ -68,8 +71,6 @@ Plug 'jpalardy/vim-slime'
 " Plug 'jupyter-vim/jupyter-vim'
 
 " Plug 'kevinhwang91/nvim-hlslens'
-
-Plug 'alok/notational-fzf-vim'
 
 " Plug 'kassio/neoterm'
 Plug 'preservim/tagbar'
@@ -172,7 +173,7 @@ set splitright
 set foldmethod=indent
 set foldlevel=99
 "Enable folding with the spacebar
-" nnoremap <tab> za
+nnoremap <tab> za
 "let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_folding_style_pythonic = 1
 
@@ -282,9 +283,7 @@ let g:vimwiki_ext2syntax = {
 " if I don't like markdown
 " let g:vimwiki_ext2syntax = {
 "             \}
-let g:vimwiki_global_ext = 1
-let g:nv_search_paths = ['~/Github/wiki', '~/Github/phd-thesis']
-let g:nv_ignore_pattern = ['*.bib', 'node_modules/*']
+let g:vimwiki_global_ext = 0
 let g:startify_bookmarks = [
             \ { 'p': '~/0main/0phd' },
             \ { 'c': '~/0main/0phd/ccRestore' },
