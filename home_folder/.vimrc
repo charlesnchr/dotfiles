@@ -23,8 +23,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
-Plug 'aserebryakov/vim-todo-lists'
-"Plug 'freitass/todo.txt-vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
 " Plug 'Konfekt/FastFold'
@@ -85,7 +83,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'kevinhwang91/nvim-bqf'
+" Plug 'kevinhwang91/nvim-bqf'
 
 Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -173,7 +171,6 @@ set splitright
 set foldmethod=indent
 set foldlevel=99
 "Enable folding with the spacebar
-nnoremap <tab> za
 "let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_folding_style_pythonic = 1
 
@@ -769,6 +766,14 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
+
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
+" not sure I need to set this
+set viewoptions=folds,cursor
 
 " for autocorrect
 highlight AutocorrectGood ctermfg=Green guifg=Green gui=undercurl
