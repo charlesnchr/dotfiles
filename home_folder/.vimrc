@@ -269,8 +269,8 @@ filetype plugin on
 
 " for vimwiki
 let g:vimwiki_list = [{
-            \ 'path': '$HOME/Github/wiki',
-            \ 'template_path': '$HOME/Github/wiki/templates',
+            \ 'path': '$HOME/Sync/wiki',
+            \ 'template_path': '$HOME/Sync/wiki/templates',
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
@@ -726,7 +726,7 @@ endfunction
 " let g:ranger_replace_netrw = 1
 
 command! -bang -nargs=* RgWiki
-            \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/wiki'}), <bang>0)
+            \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Sync/wiki'}), <bang>0)
 nnoremap <localleader>fa :RgWiki<Cr>
 
 command! -bang -nargs=* RgThesis
@@ -769,8 +769,8 @@ vnoremap <silent> # :<C-U>
 
 augroup remember_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  au BufWinLeave ?* mkview
+  au BufWinEnter ?* silent! loadview
 augroup END
 " not sure I need to set this
 set viewoptions=folds,cursor
@@ -866,8 +866,6 @@ let g:sneak#label = 1
 let g:sneak#s_next = 1
 
 
-
-
 nmap <localleader>gi <Plug>(grammarous-open-info-window)
 nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
 nmap <localleader>gf <Plug>(grammarous-fixit)
@@ -876,3 +874,9 @@ nmap <localleader>gw <Plug>(grammarous-close-info-window)
 map <localleader>gc :GrammarousCheck<cr>
 nmap <localleader>gg <Plug>(operator-grammarous)
 
+
+" augroup autosave
+"     autocmd!
+"     autocmd BufRead * if &filetype == "" | setlocal ft=text | endif
+"     autocmd FileType *.wiki autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
+" augroup END
