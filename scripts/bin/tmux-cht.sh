@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# tmux split-window -h "zsh -i -c ei3"
+
 selected=`cat ~/.tmux-cht-languages ~/.tmux-cht-command | fzf`
 if [[ -z $selected ]]; then
     exit 0
