@@ -245,6 +245,7 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set autoindent |
             \ set fileformat=unix
 
+
 au BufNewFile,BufRead *.tex
             \ set textwidth=80
 
@@ -326,7 +327,7 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '㏑'
-
+let g:airline_section_x = '%{PencilMode()}'
 
 set laststatus=2
 " set showtabline=0
@@ -476,7 +477,7 @@ nnoremap <localleader>vc :G commit -m "Small update"<cr>
 nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
-nnoremap <localleader>q :quit<cr>
+nnoremap <localleader><Esc> :quit<cr>
 nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
@@ -508,8 +509,6 @@ let g:floaterm_height = 0.8
 "nmap <C-k> <Plug>VimwikiPrevLink
 "nmap <C-j> <Plug>VimwikiNextLink
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
-
-"let g:airline_section_x = '%{PencilMode()}'
 
 vnoremap <leader>y :OSCYank<CR>
 
@@ -896,3 +895,10 @@ let g:calendar_first_day = "monday"
 let g:calendar_skip_event_delete_confirm = 1
 nmap <leader>cal :Calendar<cr>
 
+" Add format option 'w' to add trailing white space, indicating that paragraph
+" continues on next line. This is to be used with mutt's 'text_flowed' option.
+augroup mail_trailing_whitespace " {
+    autocmd!
+    " autocmd FileType mail setlocal formatoptions+=w
+    autocmd FileType mail SoftPencil
+augroup END " }
