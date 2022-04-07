@@ -14,12 +14,14 @@ block = "uptime"
 [[block]]
 block = "pacman"
 interval = 600
-format = "{pacman} +{aur}"
-format_singular = "{both}"
+# format = "{pacman} +{aur}"
+# format_singular = "{both}"
+format = "{pacman} "
 format_up_to_date = "system up to date"
 critical_updates_regex = "(linux|linux-lts|linux-zen)"
+format_up_to_date = ""
 # aur_command should output available updates to stdout (ie behave as echo -ne "update\n")
-aur_command = "yay -Qua"
+# aur_command = "yay -Qua"
 on_click = "yay -Qu | rofi -dmenu"
 
 # [[block]]
@@ -59,10 +61,11 @@ block = "memory"
 display_type = "memory"
 format_mem = "{mem_used_percents}"
 format_swap = "{swap_used_percents}"
+interval = 2
 
 [[block]]
 block = "cpu"
-interval = 1
+interval = 2
 
 # [[block]]
 # block = "load"
@@ -79,17 +82,18 @@ interval = 1
 # interval = 1
 
 [[block]]
-allow_missing = true
-hide_missing = true
-block = "battery"
-interval = 10
-format = "{percentage} {time}"
-driver = "apcaccess"
+block = "custom"
+command = "sh ~/bin/i3status-inactivity-suspend.sh get"
+on_click = "sh ~/bin/i3status-inactivity-suspend.sh set"
+interval = 2
 
 [[block]]
-block = "time"
-interval = 5
-format = "%a %d/%m %R"
+block = "custom"
+command = "sh ~/bin/i3status-presentation.sh get"
+on_click = "sh ~/bin/i3status-presentation.sh set"
+interval = 2
+signal = 0
+
 
 # [[block]]
 # block = "custom"
@@ -106,3 +110,9 @@ block = "sound"
 [[block]]
 block = "sound"
 device_kind = "source"
+
+[[block]]
+block = "time"
+interval = 5
+format = "%a %d/%m %R"
+on_click = "orage"
