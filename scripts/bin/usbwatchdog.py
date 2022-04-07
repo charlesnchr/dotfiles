@@ -1,6 +1,6 @@
 ''' ----------------------------------------
 * Creation Time : Fri 18 Mar 2022 11:02:51 GMT
-* Last Modified : Tue 22 Mar 2022 21:46:34 GMT
+* Last Modified : Thu 07 Apr 2022 10:38:55 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'''
@@ -16,9 +16,15 @@ monitor = pyudev.Monitor.from_netlink(ctx)
 monitor.filter_by("input")
 
 def defer_xmodmap():
-    time.sleep(1) # not sure if there's a race here, but it feels like there could be.
+    time.sleep(0) # not sure if there's a race here, but it feels like there could be.
     print('reloading xprofile')
     subprocess.run("source ~/.xprofile", shell=True)
+
+def defer_trackpad_init():
+    time.sleep(1)
+    print('reloading trackpad')
+    subprocess.run("source ~/.xprofile", shell=True)
+    subprocess.run("libinput-gestures-setup restart", shell=True)
 
 
 for device in iter(monitor.poll, None):
@@ -39,17 +45,23 @@ for device in iter(monitor.poll, None):
     print(device.device_path)
 
     # my keyboard, from the output of `lsusb`
-    found_keyboard = True
+    found_keyboard = False
     for device_id in ["3434:0111","4b50:1121"]:
-        if device_id in device.device_path:
+        if device_id in device.device_path.lower():
             found_keyboard = True
             break
 
-    if not found_keyboard:
-        continue
+    # apple magic trackpad
+    found_trackpad = False
+    for device_id in ["05ac:0265"]:
+        if device_id in device.device_path.lower():
+            found_trackpad = True
+            break
 
 
-    print('q2 keyboard')
+    if found_keyboard:
+        # it's the keyboard being added.
+        defer_xmodmap()
 
-    # it's the keyboard being added.
-    defer_xmodmap()
+    if found_trackpad:
+        defer_trackpad_init()
