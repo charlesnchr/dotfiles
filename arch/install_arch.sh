@@ -88,6 +88,8 @@ PACKAGES=$(cat <<-END
     autorandr
     xfce4-settings
     xfce4-settings-gtk3
+    neomutt
+    syncthing
 END
 )
 echo -e "Official packages: $PACKAGES"

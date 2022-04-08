@@ -129,6 +129,7 @@ alias tmrw="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiMakeTomorrowDiar
 # alias vw="vi . -c VimwikiIndex"
 alias vw="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiIndex'"
 alias ttd="tt -n 10 -notheme -showwpm -csv >> ~/wpm.csv"
+alias vc="vi . -c Calendar"
 alias mux=tmuxinator
 alias off="xset dpms force off"
 alias xclip="xclip -selection clipboard"

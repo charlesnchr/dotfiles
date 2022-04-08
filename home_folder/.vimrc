@@ -59,7 +59,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'mg979/vim-visual-multi'
-Plug 'mattn/calendar-vim'
+" Plug 'mattn/calendar-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
@@ -150,6 +150,8 @@ Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
 Plug 'romainl/vim-cool'
+
+Plug 'itchyny/calendar.vim'
 
 
 call plug#end()
@@ -243,6 +245,7 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set autoindent |
             \ set fileformat=unix
 
+
 au BufNewFile,BufRead *.tex
             \ set textwidth=80
 
@@ -324,7 +327,7 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '㏑'
-
+let g:airline_section_x = '%{PencilMode()}'
 
 set laststatus=2
 " set showtabline=0
@@ -474,7 +477,7 @@ nnoremap <localleader>vc :G commit -m "Small update"<cr>
 nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
-nnoremap <localleader>q :quit<cr>
+nnoremap <localleader><Esc> :quit<cr>
 nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
@@ -506,8 +509,6 @@ let g:floaterm_height = 0.8
 "nmap <C-k> <Plug>VimwikiPrevLink
 "nmap <C-j> <Plug>VimwikiNextLink
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
-
-"let g:airline_section_x = '%{PencilMode()}'
 
 vnoremap <leader>y :OSCYank<CR>
 
@@ -767,13 +768,18 @@ vnoremap <silent> # :<C-U>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
 
-augroup remember_folds
+augroup AutoSaveGroup
   autocmd!
-  au BufWinLeave ?* mkview
-  au BufWinEnter ?* silent! loadview
-augroup END
-" not sure I need to set this
+  " view files are about 500 bytes
+  " bufleave but not bufwinleave captures closing 2nd tab
+  " nested is needed by bufwrite* (if triggered via other autocmd)
+  " BufHidden for compatibility with `set hidden`
+  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
+  autocmd BufWinEnter ?* silent! loadview
+augroup end
 set viewoptions=folds,cursor
+set sessionoptions=folds
+
 
 " for autocorrect
 highlight AutocorrectGood ctermfg=Green guifg=Green gui=undercurl
@@ -880,3 +886,19 @@ nmap <localleader>gg <Plug>(operator-grammarous)
 "     autocmd BufRead * if &filetype == "" | setlocal ft=text | endif
 "     autocmd FileType *.wiki autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
 " augroup END
+
+autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
+
+
+let g:calendar_cache_directory = '~/Sync/calendar.vim'
+let g:calendar_first_day = "monday"
+let g:calendar_skip_event_delete_confirm = 1
+nmap <leader>cal :Calendar<cr>
+
+" Add format option 'w' to add trailing white space, indicating that paragraph
+" continues on next line. This is to be used with mutt's 'text_flowed' option.
+augroup mail_trailing_whitespace " {
+    autocmd!
+    " autocmd FileType mail setlocal formatoptions+=w
+    autocmd FileType mail SoftPencil
+augroup END " }
