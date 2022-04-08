@@ -53,7 +53,7 @@ font:
   # Bold font face
   bold:
     family: SauceCodePro Nerd Font
-    style: Regular
+    style: Bold
 
   # Italic font face
   italic:
