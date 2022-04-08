@@ -60,13 +60,13 @@ bindsym $mod+Shift+slash exec --no-startup-id "setxkbmap -option"
 bindsym $mod+m exec --no-startup-id i3-input -F 'mark %s' -l 1 -P 'Mark: '
 bindsym $mod+apostrophe exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Go to: '
 # Use rofi in dmenu mode to GOTO mark
-bindsym $mod+Shift+m exec \
+bindsym $mod+Shift+m exec --no-startup-id \
     i3-msg -t get_marks | \
     jq -r '.[]' | \
     rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Go to Mark: ' | \
     xargs -I{} i3-msg '[con_mark="{}"] focus'
 # Use rofi in dmenu mode to DELETE mark
-bindsym $mod+Shift+Mod1+m exec \
+bindsym $mod+Shift+Mod1+m --no-startup-id exec \
     i3-msg -t get_marks | \
     jq -r '.[]' | \
     rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Unmark' | \
@@ -74,9 +74,12 @@ bindsym $mod+Shift+Mod1+m exec \
 # dmenu version for GOTO
 # bindsym $mod+Shift+m exec i3-msg -t get_marks | jq -r '.[]' | dmenu -p 'Focus:' | xargs -I{} i3-msg '[con_mark="{}"] focus'
 # Use rofi in dmenu mode to SET mark
-bindsym $mod+Mod1+m exec \
+bindsym $mod+Mod1+m exec --no-startup-id \
     "i3-msg mark $(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lines -p 'Mark: ')"
 
+
+bindsym $mod+Mod1+g exec --no-startup-id ~/bin/i3_ws_touch
+bindsym $mod+Mod1+e exec --no-startup-id rofi -show drun -theme ~/.config/rofi/purple.rasi -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automaticall upgrade Alsa -> Pulseaudio later! ##
@@ -147,7 +150,8 @@ bindsym $mod+Mod1+Ctrl+4 exec --no-startup-id "~/bin/i3-swap $(~/bin/i3_get_ws |
 # window cycle behavior
 bindsym $mod+n exec ~/bin/i3-alt-tab.py next current
 bindsym $mod+p exec ~/bin/i3-alt-tab.py prev current
-exec --no-startup-id alttab -mk Control_R
+exec --no-startup-id alttab -mk Control_L -kk grave -d 0
+exec --no-startup-id alttab -kk grave -d 1
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -298,7 +302,7 @@ for_window [class="fiji-Main"] floating enable
 for_window [class="copyq"] floating enable sticky enable border normal
 for_window [class="qalculate-qt"] floating enable sticky enable border normal
 for_window [class=.*] border pixel 2
-
+for_window [workspace=$ws6] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest class="firefox"] focus
@@ -626,8 +630,6 @@ mode "$Workspace_a" {
 
     bindsym Tab move container to workspace back_and_forth; workspace back_and_forth, mode "default"
 
-    bindsym Tab mode "$Workspace"
-
     bindsym semicolon exec "i3-msg move container to workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Bring to workspace') && i3-msg workspace back_and_forth", mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -738,9 +740,11 @@ exec_always --no-startup-id libinput-gestures-setup start
 # exec_always --no-startup-id xmodmap ~/dotfiles/xmodmap
 exec_always --no-startup-id ~/.xprofile
 
+
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/anaconda3/bin/python ~/bin/usbwatchdog.py
+exec --no-startup-id ~/bin/alternating_layouts.py
 
 # master-stack keybinding (moves stack window to master and current master back to stack window)\""
 # bindsym $mod+m exec "i3-msg \\"move left; focus up; move right; focus left\\""
@@ -772,36 +776,6 @@ bindsym $mod+d exec --no-startup-id copyq menu
 bindsym $mod+v exec --no-startup-id copyq toggle
 
 
-# Color palette used for the terminal ( ~/.Xresources file )
-# Colors are gathered based on the documentation:
-# https://i3wm.org/docs/userguide.html#xresources
-# Change the variable name at the place you want to match the color
-# of your terminal like this:
-# [example]
-# If you want your bar to have the same background color as your
-# terminal background change the line 362 from:
-# background #14191D
-# to:
-# background $term_background
-# Same logic applied to everything else.
-set_from_resource $term_background background
-set_from_resource $term_foreground foreground
-set_from_resource $term_color0     color0
-set_from_resource $term_color1     color1
-set_from_resource $term_color2     color2
-set_from_resource $term_color3     color3
-set_from_resource $term_color4     color4
-set_from_resource $term_color5     color5
-set_from_resource $term_color6     color6
-set_from_resource $term_color7     color7
-set_from_resource $term_color8     color8
-set_from_resource $term_color9     color9
-set_from_resource $term_color10    color10
-set_from_resource $term_color11    color11
-set_from_resource $term_color12    color12
-set_from_resource $term_color13    color13
-set_from_resource $term_color14    color14
-set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 #bar {
