@@ -90,6 +90,7 @@ PACKAGES=$(cat <<-END
     xfce4-settings-gtk3
     neomutt
     syncthing
+    urlscan
 END
 )
 echo -e "Official packages: $PACKAGES"
