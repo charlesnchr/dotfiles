@@ -24,13 +24,13 @@ format_up_to_date = ""
 # aur_command = "yay -Qua"
 on_click = "yay -Qu | rofi -dmenu"
 
-# [[block]]
-# block = "pomodoro"
-# length = 25
-# break_length = 5
-# message = "Take a break!"
-# break_message = "Back to work!"
-# notifier = "notifysend"
+[[block]]
+block = "pomodoro"
+length = 25
+break_length = 5
+message = "Take a break!"
+break_message = "Back to work!"
+notifier = "notifysend"
 
 # [[block]]
 # block = "toggle"

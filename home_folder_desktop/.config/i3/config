@@ -302,7 +302,7 @@ for_window [class="fiji-Main"] floating enable
 for_window [class="copyq"] floating enable sticky enable border normal
 for_window [class="qalculate-qt"] floating enable sticky enable border normal
 for_window [class=.*] border pixel 2
-for_window [workspace=$ws6] floating enable
+# for_window [workspace=$ws6] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest class="firefox"] focus
@@ -383,7 +383,8 @@ bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, screen (o)ff, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym l exec --no-startup-id betterlockscreen -l --off 60
+    # bindsym l exec --no-startup-id betterlockscreen -l --off 60, mode "default"
+    bindsym l exec --no-startup-id blurlock, mode "default"
     bindsym o exec --no-startup-id sleep 1 && xset dpms force off, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startupqq-id i3exit switch_user, mode "default"
@@ -731,7 +732,8 @@ exec --no-startup-id copyq
 # exec_always --no-startup-id xautolock -time 4 -locker "~/bin/i3_conditional_lock.sh"
 
 # good option
-exec_always --no-startup-id "killall xidlehook; xidlehook --timer 240 '~/bin/i3_conditional_lock.sh' ''"
+# exec_always --no-startup-id "killall xidlehook; xidlehook --timer 240 '~/bin/i3_conditional_lock.sh' ''"
+
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 # exec_always --no-startup-id ~/.screenlayout/arandr.sh
