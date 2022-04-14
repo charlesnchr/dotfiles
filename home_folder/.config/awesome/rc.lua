@@ -36,7 +36,6 @@ hostname = io.popen("uname -n"):read()
 
 local revelation=require("revelation")
 local TaskList = require('widget.task-list')
-local decorate_cells = require('calendar')
 local lain  = require("lain")
 local separators = lain.util.separators
 local markup = lain.util.markup

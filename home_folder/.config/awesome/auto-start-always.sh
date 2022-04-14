@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon 11 Apr 2022 22:00:29 BST
-* Last Modified : Thu 14 Apr 2022 02:35:15 BST
+* Last Modified : Thu 14 Apr 2022 05:35:51 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -24,3 +24,5 @@ fix_xcursor
 libinput-gestures-setup restart
 ppgrep python | grep usbwatchdog.py || ~/anaconda3/bin/python ~/bin/usbwatchdog.py &
 
+# find pwa app
+exec $(rg -i spotify /home/cc/.local/share/applications | awk '{split($0,a,\":\"); print a[1]}')
