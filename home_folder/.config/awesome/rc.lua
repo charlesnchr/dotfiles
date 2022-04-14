@@ -34,7 +34,9 @@ hostname = io.popen("uname -n"):read()
 -- doesnt work yet
 -- require('volume-adjust')
 
+local revelation=require("revelation")
 local TaskList = require('widget.task-list')
+local decorate_cells = require('calendar')
 local lain  = require("lain")
 local separators = lain.util.separators
 local markup = lain.util.markup
@@ -77,6 +79,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
+revelation.init()
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -94,11 +97,11 @@ altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    floating,
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
+    awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
@@ -155,13 +158,57 @@ local cpu = lain.widget.cpu({
 -- Create a textclock widget
 textclock = wibox.widget.textclock()
 
+local function rounded_shape(size, partial)
+    if partial then
+        return function(cr, width, height)
+                   gears.shape.partially_rounded_rect(cr, width, height,
+                        false, true, false, true, 5)
+               end
+    else
+        return function(cr, width, height)
+                   gears.shape.rounded_rect(cr, width, height, size)
+               end
+    end
+end
+
 -- Add a calendar (credits to kylekewley for the original code)
 local month_calendar = awful.widget.calendar_popup.month({
   screen = s,
   start_sunday = false,
-  week_numbers = true
+  week_numbers = true,
+  style_month   = { padding      = 5,
+                   bg_color     = '#555555',
+                   border_width = 2,
+                   shape        = rounded_shape(10)
+               },
+    style_normal  = { shape    = rounded_shape(5),
+                       border_color = "#777777",
+},
+    style_focus   = { fg_color = '#000000',
+                       bg_color = '#ff9800',
+                       markup   = function(t) return '<b>' .. t .. '</b>' end,
+                       shape    = rounded_shape(5, true)
+    },
+    style_header  = { fg_color = '#de5e1e',
+                       markup   = function(t) return '<b>' .. t .. '</b>' end,
+                       shape    = rounded_shape(10)
+    },
+    style_weekday = { fg_color = '#7788af',
+                       markup   = function(t) return '<b>' .. t .. '</b>' end,
+                       shape    = rounded_shape(5),
+                       border_color = "#ff9800",
+                       border_width = 0
+    },
+    style_weeknumber = { fg_color = '#7788af',
+                       markup   = function(t) return '<b>' .. t .. '</b>' end,
+                       shape    = rounded_shape(5),
+                       opacity = 0.5
+    },
 })
 month_calendar:attach(textclock)
+
+
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -276,6 +323,32 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
+        buttons = tasklist_buttons,
+        layout  = wibox.layout.fixed.horizontal(),
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            widget = awful.widget.clienticon,
+                        },
+                        margins = 3,
+                        widget  = wibox.container.margin,
+                    },
+                    {
+                        id     = "text_role",
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                left  = 10,
+                right = 10,
+                widget = wibox.container.margin
+            },
+            forced_width = 150,
+            id     = "background_role",
+            widget = wibox.container.background,
+        },
         buttons = tasklist_buttons
     }
 
@@ -299,7 +372,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
         {
             layout = wibox.layout.flex.horizontal,
-            TaskList(s)
+            s.mytasklist
+            -- TaskList(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
@@ -314,6 +388,7 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.container.background(wibox.container.margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
             wibox.layout.margin(wibox.widget.systray(), dpi(10), dpi(1), dpi(2), dpi(2)),
             wibox.container.background(wibox.container.margin(textclock, dpi(10), dpi(10)), "#5B60711A"),
+            cal,
             s.mylayoutbox,
         },
     }
@@ -367,6 +442,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey, 'Shift' }, 'i', function() awful.spawn.with_shell('pactl set-source-mute @DEFAULT_SOURCE@ true && notify-send "mic OFF"'); awesome.emit_signal("volume::change") end, {description = 'mic off', group = 'awesome'}),
 
     awful.key({ modkey, altkey }, 'g', function() awful.spawn.with_shell('~/bin/i3_ws_touch') end, {description = 'workspace gui', group = 'awesome'}),
+
+    awful.key({ modkey, }, "BackSpace", function()     revelation({curr_tag_only=true}) end, {description = 'revelation', group = 'awesome'}),
+    awful.key({ modkey, 'Shift' }, "BackSpace", revelation), -- a bit buggy with preserving window-tag location
 
     awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'Show help', group = 'awesome'}),
     awful.key(
@@ -543,11 +621,62 @@ globalkeys = gears.table.join(
     {description = 'emoji', group = 'LCAG layer'}
   ),
 
+
   awful.key(
     {modkey,altkey, 'Control'},
     'x',
     function () awful.spawn.with_shell('maim -s | xclip -selection clipboard -t image/png') end,
     {description = 'screenshot region', group = 'LCAG layer'}
+  ),
+
+  awful.key(
+    {modkey,altkey, 'Control'},
+    '1',
+    function () awful.layout.set(awful.layout.suit.tile) end,
+    {description = 'tile layout', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    '2',
+    function () awful.layout.set(awful.layout.suit.floating) end,
+    {description = 'floating layout', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    '3',
+    function () awful.layout.set(awful.layout.suit.fair) end,
+    {description = 'fair layout', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    '4',
+    function () awful.layout.set(awful.layout.suit.tile.top) end,
+    {description = 'top layout', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    '5',
+    function () awful.layout.set(awful.layout.suit.max) end,
+    {description = 'max layout', group = 'LCAG layer'}
+  ),
+
+  awful.key(
+    {modkey,altkey, 'Control'},
+    'a',
+    function () twothirds() end,
+    {description = 'two thirds', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    's',
+    function () twothirds(true) end,
+    {description = 'two thirds right', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    'd',
+    function () twothirds(false,30) end,
+    {description = 'two thirds right', group = 'LCAG layer'}
   ),
 
     -- Layout manipulation
@@ -581,6 +710,8 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, altkey, "Control" }, "0", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
+    awful.key({ modkey, altkey, "Control" }, "equal", function() awesome.quit() end,
+              {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey, altkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
@@ -655,11 +786,30 @@ function resize(c, direction, del)
 
 end
 
+function twothirds(right,gap)
+    right = right or false
+    gap = gap or 0 -- gap is added more in width
+    local c = client.focus
+    local geom = c.screen.geometry
+
+    if right then
+        geom.x = geom.x + geom.width / 3 - 2
+    end
+    geom.x = geom.x + gap
+    geom.width = geom.width * 2 / 3 - 1 - 6*gap
+    geom.y = geom.y + dpi(22) + gap
+    geom.height = geom.height - dpi(22) - 2 - 2*gap
+    c:geometry(geom)
+end
+
 function move(c, dir, delta)
 
-  local geom = ({left={x=c:geometry().x-delta},right={x=c:geometry().x+delta},up={y=c:geometry().y-delta},down={y=c:geometry().y+delta}})[dir]
+    local geom = ({left={x=c:geometry().x-delta},right={x=c:geometry().x+delta},up={y=c:geometry().y-delta},down={y=c:geometry().y+delta}})[dir]
 
     c:geometry(geom)
+
+    -- another option
+    -- c:relative_move(20,20, 20, 20)
 end
 
 
@@ -1060,7 +1210,7 @@ function double_click_event_handler(double_click_event)
         return true
     end
 
-    double_click_timer = gears.timer.start_new(0.20, function()
+    double_click_timer = gears.timer.start_new(0.40, function()
         double_click_timer = nil
         return false
     end)
@@ -1119,12 +1269,21 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- Enable sloppy focus, so that focus follows mouse. (buggy with some apps, raising even if false)
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {raise = false})
+-- end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+
+-- Focus urgent clients automatically
+client.connect_signal("property::urgent", function(c)
+    c.minimized = false
+    c:jump_to()
+end)
+
+
 

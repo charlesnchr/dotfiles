@@ -48,7 +48,6 @@ local function list_update(w, buttons, label, data, objects)
       bgb = cache.bgb
       tbm = cache.tbm
       ibm = cache.ibm
-      tt  = cache.tt
     else
       ib = wibox.widget.imagebox()
       tb = wibox.widget.textbox()
@@ -56,10 +55,10 @@ local function list_update(w, buttons, label, data, objects)
         clickable_container(
         wibox.container.margin(
           wibox.widget.imagebox(os.getenv('HOME') .. '/.config/awesome/icons/tag-list/tag/close.png'),
-          4,
-          4,
-          4,
-          4
+          2,
+          2,
+          2,
+          2
         )
       )
       cb.shape = gears.shape.circle
@@ -78,8 +77,8 @@ local function list_update(w, buttons, label, data, objects)
       )
       bg_clickable = clickable_container()
       bgb = wibox.container.background()
-      tbm = wibox.container.margin(tb, dpi(4), dpi(4))
-      ibm = wibox.container.margin(ib, dpi(4), dpi(4), dpi(4), dpi(4))
+      tbm = wibox.container.margin(tb, dpi(4), dpi(15))
+      ibm = wibox.container.margin(ib, dpi(15), dpi(4), dpi(4), dpi(4))
       l = wibox.layout.fixed.horizontal()
       ll = wibox.layout.fixed.horizontal()
 
@@ -96,23 +95,30 @@ local function list_update(w, buttons, label, data, objects)
 
       l:buttons(create_buttons(buttons, o))
 
-      -- Tooltip to display whole title, if it was truncated
-      tt = awful.tooltip({
-        objects = {tb},
-        mode = 'outside',
-        align = 'bottom',
-        delay_show = 1,
-      })
-
       data[o] = {
         ib = ib,
         tb = tb,
         bgb = bgb,
         tbm = tbm,
-        ibm = ibm,
-        tt  = tt
+        ibm = ibm
       }
     end
+
+      -- local textOnly = text:match('>(.-)<')
+      -- if (textOnly:len() > 24) then
+      --     text = textOnly:sub(1, 24) .. '...'
+      --     tt:set_text(textOnly)
+      --     tt:add_to_object(tb)
+      -- elseif (textOnly:len() < 10) then
+      --     while textOnly:len() < 10 do
+      --         textOnly = ' ' .. textOnly .. ' '
+      --     end
+      --     text = textOnly
+      --     tt:set_text(textOnly)
+      --     tt:add_to_object(tb)
+      -- else
+      --   tt:remove_from_object(tb)
+      -- end
 
     local text, bg, bg_image, icon, args = label(o, tb)
     args = args or {}
@@ -124,11 +130,7 @@ local function list_update(w, buttons, label, data, objects)
       -- truncate when title is too long
       local textOnly = text:match('>(.-)<')
       if (textOnly:len() > 24) then
-        text = text:gsub('>(.-)<', '>' .. textOnly:sub(1, 21) .. '...<')
-        tt:set_text(textOnly)
-        tt:add_to_object(tb)
-      else
-        tt:remove_from_object(tb)
+        text = textOnly:sub(1, 24) .. '...'
       end
       if not tb:set_markup_silently(text) then
         tb:set_markup('<i>&lt;Invalid text&gt;</i>')

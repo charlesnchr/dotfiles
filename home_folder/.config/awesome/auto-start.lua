@@ -20,7 +20,6 @@ run_on_start_up = {
     -- Add applications that need to be killed between reloads
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/awspawn', -- Spawn "dirty" apps that can linger between sessions
-    'copyq',
     'unclutter',
     'spotify',
 }
