@@ -9,11 +9,13 @@
 # List of applications to run
 APPS=(
     # synergy
+    copyq
     )
 
 # Some applications start child applications that need to be killed on reload
 KILL=(
     # synergys
+    dunst # i3 may start it and it takes precedence over naughty
     )
 
 # First kill lingering apps

@@ -106,3 +106,13 @@ client.connect_signal(
 tag.connect_signal('property::selected', tagCallback)
 
 tag.connect_signal('property::layout', tagCallback)
+
+
+-- init
+for s in screen do
+      gears.timer.delayed_call(
+        function()
+          changesOnScreen(s)
+        end
+      )
+end
