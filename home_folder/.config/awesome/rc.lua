@@ -785,10 +785,10 @@ function resize(c, direction, del)
 
 end
 
-function twothirds(right,gap)
+function twothirds(right,gap,c)
     right = right or false
+    c = c or client.focus
     gap = gap or 0 -- gap is added more in width
-    local c = client.focus
     local geom = c.screen.geometry
 
     if right then
@@ -1174,6 +1174,23 @@ awful.rules.rules = {
     { rule_any = {class = {'Terminator'}},
       properties = {skip_decoration = true, titlebars_enabled = false}
     },
+    { rule_any = {class = {'Spotify'}},
+      properties = {}, callback = function(c)
+          local tag, newscreen, currentscreen = get_tag(6)
+
+            -- c:connect_signal("request::activate", function(context)
+            --     awful.spawn.with_shell('notify-send "hello ' .. context.name .. '"')
+            --     return false
+            -- end)
+
+          if tag then
+              c:move_to_screen(newscreen)
+              c:move_to_tag(tag)
+              awful.screen.focus(currentscreen)
+              twothirds(false,30,c)
+          end
+     end
+    },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -1285,4 +1302,8 @@ client.connect_signal("property::urgent", function(c)
 end)
 
 
-
+awful.ewmh.add_activate_filter(function(c)
+    if c.class == "spotify" then
+        awful.spawn.with_shell('notify-send "cancel ' .. c.name .. '"')
+        return false end
+end, "ewmh")

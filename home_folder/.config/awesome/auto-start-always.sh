@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon 11 Apr 2022 22:00:29 BST
-* Last Modified : Thu 14 Apr 2022 05:51:39 BST
+* Last Modified : Fri 15 Apr 2022 19:40:21 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -25,4 +25,5 @@ libinput-gestures-setup restart
 ppgrep python | grep usbwatchdog.py || ~/anaconda3/bin/python ~/bin/usbwatchdog.py &
 
 # find pwa app
-exo-open $(rg -i spotify /home/cc/.local/share/applications | awk '{split($0,a,":"); print a[1]}')
+# exo-open $(rg -i spotify /home/cc/.local/share/applications | awk '{split($0,a,":"); print a[1]}')
+pgrep Spotify || exo-open ~/.local/share/applications/webcatalog-spotify.desktop
