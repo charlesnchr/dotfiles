@@ -1174,7 +1174,7 @@ awful.rules.rules = {
     { rule_any = {class = {'Terminator'}},
       properties = {skip_decoration = true, titlebars_enabled = false}
     },
-    { rule_any = {class = {'Spotify'}},
+    { rule_any = {class = {'spotify'}},
       properties = {}, callback = function(c)
           local tag, newscreen, currentscreen = get_tag(6)
 
@@ -1189,6 +1189,11 @@ awful.rules.rules = {
               awful.screen.focus(currentscreen)
               twothirds(false,30,c)
           end
+     end
+    },
+    { rule_any = {class = {'copyq'}},
+      properties = {}, callback = function(c)
+         awful.placement.centered(c,nil)
      end
     },
 
