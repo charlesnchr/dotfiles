@@ -52,6 +52,17 @@ bindsym $mod+i exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ false
 bindsym $mod+Mod1+i exec --no-startup-id pactl set-source-volume @DEFAULT_SOURCE@ 100%
 bindsym $mod+Shift+i exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
 
+# apps
+bindsym $mod+Mod1+Control+Shift+t exec --no-startup-id alacritty
+bindsym $mod+Mod1+Control+Shift+Return exec --no-startup-id alacritty
+bindsym $mod+Mod1+Control+Shift+f exec --no-startup-id firefox
+bindsym $mod+Mod1+Control+Shift+r exec --no-startup-id --no-startup-id "alacritty -e zsh -c \\"zsh -ic 'ranger'\\""
+bindsym $mod+Mod1+Control+Shift+d exec --no-startup-id dolphin
+bindsym $mod+Mod1+Control+Shift+s exec --no-startup-id spotify
+bindsym $mod+Mod1+Control+Shift+n exec --no-startup-id notion-app
+bindsym $mod+Mod1+Control+Shift+b exec --no-startup-id alacritty -e btop
+bindsym $mod+Mod1+Control+Shift+$mod+F3 exec --no-startup-id pcmanfm
+
 # xmodmap
 bindsym $mod+Shift+slash exec --no-startup-id "setxkbmap -option"
 
@@ -60,26 +71,26 @@ bindsym $mod+Shift+slash exec --no-startup-id "setxkbmap -option"
 bindsym $mod+m exec --no-startup-id i3-input -F 'mark %s' -l 1 -P 'Mark: '
 bindsym $mod+apostrophe exec --no-startup-id i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Go to: '
 # Use rofi in dmenu mode to GOTO mark
-bindsym $mod+Shift+m exec --no-startup-id \
+bindsym $mod+Shift+Mod1+m exec --no-startup-id \
     i3-msg -t get_marks | \
     jq -r '.[]' | \
     rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Go to Mark: ' | \
     xargs -I{} i3-msg '[con_mark="{}"] focus'
 # Use rofi in dmenu mode to DELETE mark
-bindsym $mod+Shift+Mod1+m --no-startup-id exec \
-    i3-msg -t get_marks | \
-    jq -r '.[]' | \
-    rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Unmark' | \
-    xargs -I{} i3-msg '[con_mark="{}"] unmark'
+# bindsym $mod+Shift+Mod1+m --no-startup-id exec \
+#     i3-msg -t get_marks | \
+#     jq -r '.[]' | \
+#     rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p 'Unmark' | \
+#     xargs -I{} i3-msg '[con_mark="{}"] unmark'
 # dmenu version for GOTO
 # bindsym $mod+Shift+m exec i3-msg -t get_marks | jq -r '.[]' | dmenu -p 'Focus:' | xargs -I{} i3-msg '[con_mark="{}"] focus'
 # Use rofi in dmenu mode to SET mark
-bindsym $mod+Mod1+m exec --no-startup-id \
-    "i3-msg mark $(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lines -p 'Mark: ')"
+# bindsym $mod+Shift+Mod1+m exec --no-startup-id \
+#     "i3-msg mark $(rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -lines 0 -no-fixed-num-lines -p 'Mark: ')"
 
 
 bindsym $mod+Mod1+g exec --no-startup-id ~/bin/i3_ws_touch
-bindsym $mod+Mod1+e exec --no-startup-id rofi -show drun -theme ~/.config/rofi/purple.rasi -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
+bindsym $mod+Mod1+ctrl+e exec --no-startup-id rofi -show drun -theme ~/.config/rofi/purple.rasi -run-shell-command 'alacritty -e zsh -ic "{cmd} && read"', mode "default"
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automaticall upgrade Alsa -> Pulseaudio later! ##
@@ -131,15 +142,15 @@ bindsym $mod+Shift+b move container to workspace back_and_forth
 bindsym $mod+Mod1+b move container to workspace back_and_forth; workspace back_and_forth
 
 # resize
-bindsym $mod+Mod1+Ctrl+n resize shrink width 20 px or 20 ppt
-bindsym $mod+Mod1+Ctrl+m resize grow height 20 px or 20 ppt
-bindsym $mod+Mod1+Ctrl+comma resize shrink height 20 px or 20 ppt
-bindsym $mod+Mod1+Ctrl+period resize grow width 20 px or 20 ppt
-bindsym $mod+Shift+Mod1+Ctrl+n resize shrink width 5 px or 5 ppt
-bindsym $mod+Shift+Mod1+Ctrl+m resize grow height 5 px or 5 ppt
-bindsym $mod+Shift+Mod1+Ctrl+comma resize shrink height 5 px or 5 ppt
-bindsym $mod+Shift+Mod1+Ctrl+period resize grow width 5 px or 5 ppt
-bindsym $mod+Mod1+Ctrl+r exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
+bindsym $mod+Mod1+n resize shrink width 20 px or 20 ppt
+bindsym $mod+Mod1+m resize grow height 20 px or 20 ppt
+bindsym $mod+Mod1+comma resize shrink height 20 px or 20 ppt
+bindsym $mod+Mod1+period resize grow width 20 px or 20 ppt
+bindsym $mod+Shift+n resize shrink width 5 px or 5 ppt
+bindsym $mod+Shift+m resize grow height 5 px or 5 ppt
+bindsym $mod+Shift+comma resize shrink height 5 px or 5 ppt
+bindsym $mod+Shift+period resize grow width 5 px or 5 ppt
+bindsym $mod+Mod1+Ctrl+b exec --no-startup-id ~/anaconda3/bin/i3_balance_workspace
 
 # workspace menus
 bindsym $mod+Mod1+Ctrl+1 exec --no-startup-id i3-msg workspace $(~/bin/i3_get_ws | rofi -dmenu -theme ~/.config/rofi/dmenu_cc.rasi -p "Workspace")
@@ -172,14 +183,17 @@ bindsym $mod+s scratchpad show
 bindsym $mod+Mod1+h focus output left
 bindsym $mod+Mod1+l focus output right
 
+bindsym $mod+Shift+Ctrl+semicolon move workspace to output left
+bindsym $mod+Shift+Ctrl+apostrophe move workspace to output right
+bindsym $mod+Shift+semicolon move to output left; focus output left
+bindsym $mod+Shift+apostrophe move to output right; focus output right
+
 bindsym $mod+Ctrl+l workspace next_on_output
 bindsym $mod+Ctrl+h workspace prev_on_output
 
-bindsym $mod+Ctrl+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
-bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
+bindsym $mod+Ctrl+Shift+Mod1+l exec --no-startup-id ~/bin/i3_next_numerical_ws
+# bindsym $mod+Ctrl+Mod1+h exec --no-startup-id ~/bin/i3_prev_numerical_ws
 
-bindsym $mod+Mod1+Shift+h move workspace to output left
-bindsym $mod+Mod1+Shift+l move workspace to output right
 
 
 # Workspace names
@@ -227,6 +241,10 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
+
+bindsym $mod+Mod1+Control+Shift+1 workspace $ws1
+bindsym $mod+Mod1+Control+Shift+2 workspace $ws2
+bindsym $mod+Mod1+Control+Shift+3 workspace $ws3
 
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -302,7 +320,7 @@ for_window [class="fiji-Main"] floating enable
 for_window [class="copyq"] floating enable sticky enable border normal
 for_window [class="qalculate-qt"] floating enable sticky enable border normal
 for_window [class=.*] border pixel 2
-# for_window [workspace=$ws6] floating enable
+for_window [workspace=$ws3] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest class="firefox"] focus
@@ -411,7 +429,7 @@ mode "$Apps" {
     bindsym s exec --no-startup-id spotify, mode "default"
     bindsym n exec --no-startup-id notion-app, mode "default"
     bindsym b exec --no-startup-id alacritty -e btop, mode "default"
-    bindsym $mod+Shift+F3 exec pcmanfm_pkexec, mode "default"
+    bindsym $mod+F3 exec --no-startup-id pcmanfm, mode "default"
     # exit system mode: "Enter" or "Escape"
     bindsym Escape mode "default"
 }
@@ -606,7 +624,7 @@ mode "$Workspace_select" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+Ctrl+Mod1+e mode "$Workspace_a"
+# bindsym $mod+Ctrl+Shift+Mod1+e mode "$Workspace_a"
 set $Workspace_a Bring to
 mode "$Workspace_a" {
     bindsym a move container to workspace $ws1; workspace $ws1, mode "default"
@@ -746,7 +764,7 @@ exec_always --no-startup-id ~/.xprofile
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/anaconda3/bin/python ~/bin/usbwatchdog.py
-exec --no-startup-id ~/bin/alternating_layouts.py
+# exec --no-startup-id ~/bin/alternating_layouts.py
 
 # master-stack keybinding (moves stack window to master and current master back to stack window)\""
 # bindsym $mod+m exec "i3-msg \\"move left; focus up; move right; focus left\\""
@@ -835,7 +853,7 @@ bar {
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
   client.focused          #556064 #556064 #80FFF9 #FDF6E3
-  client.focused          #111111 #555555 #ffffff #2e9ef4  #FFA500
+  client.focused          #111111 #555555 #ffffff #2e9ef4  #8B25C4
   client.focused_inactive #111111 #555555 #ffffff #2e9ef4
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2

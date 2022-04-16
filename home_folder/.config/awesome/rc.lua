@@ -270,8 +270,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- naughty.notify({text=tostring(screen.count())})
 
     if screen.count() ~= 3 then
-            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
-            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
+            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
+            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
@@ -284,8 +284,8 @@ awful.screen.connect_for_each_screen(function(s)
         -- Each screen has its own tag table.
         if s.index == 1 then
             -- awful.tag({ "🤖", "🌎", "🐺", "🐋", "📭" }, s, awful.layout.layouts[1])
-            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
-            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
             awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
             awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
             awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
@@ -356,6 +356,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal })
     -- s.mywibox.buttons(taglist_buttons)
     --
+    local mic_widget = require('awesome-wm-widgets.mic-widget.volume')
     local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
     local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
     local pomodoroarc_widget = require("awesome-wm-widgets.pomodoroarc-widget.pomodoroarc")
@@ -377,12 +378,13 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             pomodoroarc_widget,
-            arrow("#5B60711A", "#4A556E"),
-            wibox.container.background(wibox.container.margin(volume_widget{ widget_type = 'icon_and_text', font = 'sans 10' }, dpi(2), dpi(3)), "#4A556E"),
-            arrow("#4A556E", "#777E76"),
-            wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, dpi(2), dpi(3)), "#777E76"),
-
-            arrow("#777E76", "#4B696D"),
+            arrow("#5B60711A", "#2A5878"),
+            wibox.container.background(wibox.container.margin(volume_widget{ widget_type = 'icon_and_text', font = 'sans 10' }, dpi(2), dpi(3)), "#2A5878"),
+            arrow("#2A5878", "#4A556E"),
+            wibox.container.background(wibox.container.margin(mic_widget{ widget_type = 'icon_and_text', font = 'sans 10' }, dpi(2), dpi(3)), "#4A556E"),
+            arrow("#4A556E", "#344356"),
+            wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, dpi(2), dpi(3)), "#344356"),
+            arrow("#344356", "#4B696D"),
             wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(4)), "#4B696D"),
             wibox.container.background(wibox.container.margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
             wibox.layout.margin(wibox.widget.systray(), dpi(10), dpi(1), dpi(2), dpi(2)),
@@ -677,6 +679,18 @@ globalkeys = gears.table.join(
     function () twothirds(false,30) end,
     {description = 'two thirds right', group = 'LCAG layer'}
   ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    'bracketleft',
+    function () onehalf(false) end,
+    {description = 'one half', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey, 'Control'},
+    'bracketright',
+    function () onehalf(true) end,
+    {description = 'one half right', group = 'LCAG layer'}
+  ),
 
     -- Layout manipulation
     awful.key({ modkey, altkey   }, "Escape", function () awful.client.swap.byidx(  1)    end,
@@ -800,6 +814,23 @@ function twothirds(right,gap,c)
     geom.height = geom.height - dpi(22) - 2 - 2*gap
     c:geometry(geom)
 end
+
+function onehalf(right,gap,c)
+    right = right or false
+    c = c or client.focus
+    gap = gap or 0 -- gap is added more in width
+    local geom = c.screen.geometry
+
+    if right then
+        geom.x = geom.x + geom.width / 2
+    end
+    geom.x = geom.x + gap
+    geom.width = geom.width / 2 - 2 - 6*gap
+    geom.y = geom.y + dpi(22) + gap
+    geom.height = geom.height - dpi(22) - 2 - 2*gap
+    c:geometry(geom)
+end
+
 
 function move(c, dir, delta)
 
@@ -1189,6 +1220,36 @@ awful.rules.rules = {
               awful.screen.focus(currentscreen)
               twothirds(false,30,c)
           end
+     end
+    },
+    { rule_any = {class = {'dolphin'}},
+      properties = {}, callback = function(c)
+
+
+            -- c:connect_signal("request::activate", function(context)
+                --local currentscreen = awful.screen.focused()
+                --awful.spawn.with_shell('notify-send "hello ' .. context.name .. '"')
+                --awful.spawn.with_shell('notify-send "dolphin ' .. context.screen.index .. '"')
+                ---- c:move_to_screen(currentscreen)
+                ----
+                ---- twothirds(false,30,c)
+                ---- return false
+
+                --return true
+            --end)
+
+            local currentscreen = awful.screen.focused()
+                gears.timer {
+                    timeout   = 0.5,
+                    call_now  = true,
+                    autostart = false,
+                    callback  = function()
+                        c:move_to_screen(currentscreen)
+                        -- You should read it from `/sys/class/power_supply/` (on Linux)
+                        -- instead of spawning a shell. This is only an example.
+                        awful.spawn.with_shell('notify-send "timer "')
+                    end
+                }
      end
     },
     { rule_any = {class = {'copyq'}},
