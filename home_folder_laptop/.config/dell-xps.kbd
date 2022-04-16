@@ -56,10 +56,12 @@
 (defalias spc_fn2 (tap-hold-next-release 200 spc (layer-toggle spc_fn2)))
 (defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
 (defalias i3layer (tap-hold-next-release 200 (layer-next i3layer) (layer-toggle i3layer)))
+(defalias i3layer_r (tap-hold-next-release 200 (layer-next i3layer_r) (layer-toggle i3layer_r)))
+(defalias i3layer_y (tap-hold-next-release 200 (layer-next i3layer_y) (layer-toggle i3layer_y)))
 (defalias i3layer_shift (tap-hold-next-release 200 (layer-next i3layer_shift) (layer-toggle i3layer_shift)))
 (defalias i3layer_move (tap-hold-next-release 200 (layer-next i3layer_move) (layer-toggle i3layer_move)))
 (defalias i3layer_bring (tap-hold-next-release 200 (layer-next i3layer_bring) (layer-toggle i3layer_bring)))
-(defalias i3layer_ws (tap-hold-next-release 200 (layer-next i3layer_ws) (layer-toggle i3layer_bring)))
+(defalias i3layer_ws (tap-hold-next-release 200 (layer-next i3layer_ws) (layer-toggle i3layer_ws)))
 
 (defsrc
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
@@ -86,7 +88,7 @@
 (deflayer spc_fn
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
   `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
-  M-b       @mq       @cw       end       @i3       @ct       @i3apps       @cu       @cd       @c6       home       S-[       S-]       del
+  M-b       @mq       @cw       end       @i3layer_r       @ct       @i3layer_y       @cu       @cd       @c6       home       S-[       S-]       del
   lctl    M-1   M-2     M-3       @i3layer     @i3layer_ws       lft   down    up    rght       @wslft       @wsrght       M-ret
   lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-A-ret
   lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
@@ -123,6 +125,28 @@
   @caps   C-M-h       C-M-l       @i3layer_shift       f       g       M-h       M-j      M-k       M-l       ;       '       M-f
   lsft    z       x       c       v       b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       @rsft
   lmet            @ctl2    @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer i3layer_r
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       M-A-C-1       M-A-C-2       M-A-C-3       M-A-C-4       M-A-C-5       M-A-C-6       M-A-C-7       M-A-C-8       M-A-C-9       M-A-C-0       M-A-C--       M-A-C-=       M-A-C-bspc
+  tab     M-A-C-q       M-A-C-w       M-A-C-e       M-A-C-r       M-A-C-t       M-A-C-y       M-A-C-u       M-A-C-i       M-A-C-o       M-A-C-p       [       ]       \
+  caps    M-A-C-a       M-A-C-s       M-A-C-d       M-A-C-f       M-A-C-g       M-A-C-h       M-A-C-j       M-A-C-k       M-A-C-l       ;       '       ret
+  lsft    M-A-C-z       M-A-C-x       M-A-C-c       M-A-C-v       M-A-C-b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       rsft
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer i3layer_y
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
+  `       M-A-C-S-1       M-A-C-S-2       M-A-C-S-3       M-A-C-S-4       M-A-C-S-5       M-A-C-S-6       M-A-C-S-7       M-A-C-S-8       M-A-C-S-9       M-A-C-S-0       M-A-C-S--       M-A-C-S-=       M-A-C-S-bspc
+  tab     M-A-C-S-q       M-A-C-S-w       M-A-C-S-e       M-A-C-S-r       M-A-C-S-t       M-A-C-S-y       M-A-C-S-u       M-A-C-S-i       M-A-C-S-o       M-A-C-S-p       [       ]       \
+  caps    M-A-C-S-a       M-A-C-S-s       M-A-C-S-d       M-A-C-S-f       M-A-C-S-g       M-A-C-S-h       M-A-C-S-j       M-A-C-S-k       M-A-C-S-l       ;       '       ret
+  lsft    M-A-C-S-z       M-A-C-S-x       M-A-C-S-c       M-A-C-S-v       M-A-C-S-b       M-A-C-S-n       M-A-C-S-m       M-A-C-S-,       M-A-C-.       /       rsft
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
 )
