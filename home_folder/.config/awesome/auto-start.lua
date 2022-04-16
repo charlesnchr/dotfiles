@@ -21,7 +21,7 @@ run_on_start_up = {
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/awspawn', -- Spawn "dirty" apps that can linger between sessions
     'unclutter',
-    -- 'spotify',
+    'spotify',
 }
 
 for _, app in ipairs(run_on_start_up) do
