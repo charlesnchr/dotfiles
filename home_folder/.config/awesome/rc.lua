@@ -358,7 +358,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- s.mywibox.buttons(taglist_buttons)
 
     local mic_widget = require('mic-widget.volume')
-    local volume_widget = require('widget.volume-widget.volume')
+    local volume_widget = require('volume-widget.volume')
     local cpu_widget = require("widget.cpu-widget.cpu-widget")
     local pomodoroarc_widget = require("widget.pomodoroarc-widget.pomodoroarc")
 
