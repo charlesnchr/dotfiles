@@ -400,8 +400,8 @@ end)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 5, awful.tag.viewnext),
+    awful.button({ }, 4, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -728,7 +728,9 @@ end),
         awful.spawn('dolphin --qwindowgeometry 800x800+' .. geometry.x .. '+30')
     end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
+    -- awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('spotify') end, {description = "open spotify", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "p", function () awful.spawn("kitty -e spt") end, {description = "open spt", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "n", function () awful.spawn('notion-app') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "b", function () awful.spawn('alacritty -e btop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "r", function () awful.spawn("alacritty -e zsh -c \"zsh -ic 'ranger'\"") end, {description = "open a terminal", group = "launcher"}),
@@ -926,10 +928,12 @@ clientkeys = gears.table.join(
     awful.key({ modkey, 'Shift' }, "apostrophe",      function (c) c:move_to_screen(c.screen.index+1)               end,
               {description = "move to next screen", group = "client"}),
 
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey, altkey, 'Control' }, "t",      function (c) c.ontop = not c.ontop            end,
+              {description = "toggle floating", group = "client"}),
+    awful.key({ modkey, altkey, 'Control' }, "f",      function (c) c.floating = not c.floating            end,
               {description = "toggle keep on top", group = "client"}),
+    awful.key({ modkey, altkey, 'Control' }, "y",      function (c) c.sticky = not c.sticky            end,
+              {description = "toggle sticky", group = "client"}),
 
     -- minimize
     awful.key({ modkey,           }, "n",
@@ -1229,6 +1233,8 @@ awful.rules.rules = {
               c:move_to_tag(tag)
               awful.screen.focus(currentscreen)
               twothirds(false,30,c)
+              c.minimized = true
+              awful.spawn("kitty -e spt", {tag = tag})
           end
      end
     },
@@ -1376,3 +1382,63 @@ end)
 --     end
 --     return false
 -- end)
+
+
+-- Store geometries when switching layouts
+local client_geos = {}
+
+function client_or_tag_floating(c)
+    if c.maximized then
+        return false
+    end
+
+    if c.floating then
+        return true
+    end
+
+    local tag_floating = false
+    if c.first_tag then
+        local tag_layout_name = awful.layout.getname(c.first_tag.layout)
+        tag_floating = tag_layout_name == "floating"
+    end
+
+    return tag_floating
+end
+
+function should_show_titlebars(c)
+    return not c.requests_no_titlebar and client_or_tag_floating(c)
+end
+
+function apply_geometry(c)
+    if client_or_tag_floating(c) then
+        c:geometry(client_geos[c.window])
+    end
+end
+
+function save_geometry(c)
+    if client_or_tag_floating(c) then
+        client_geos[c.window] = c:geometry()
+    end
+end
+
+tag.connect_signal("property::layout", function(t)
+    for _, c in ipairs(t:clients()) do
+        if client_or_tag_floating(c) then
+            apply_geometry(c)
+        end
+        c:emit_signal("request::titlebars")
+    end
+end)
+
+client.connect_signal("property::floating", function(c)
+    -- if should_show_titlebars(c) then
+    --     awful.titlebar.show(c)
+    -- else
+    --     awful.titlebar.hide(c)
+    -- end
+    apply_geometry(c)
+end)
+
+client.connect_signal("property::geometry", save_geometry)
+client.connect_signal("manage", save_geometry)
+client.connect_signal("unmanage", function(c) client_geos[c.window] = nil end)
