@@ -24,11 +24,7 @@ local function TOG_VOLUME_CMD(device) return 'amixer -D ' .. device .. ' sset Ca
 
 
 local widget_types = {
-    icon_and_text = require("awesome-wm-widgets.volume-widget.widgets.icon-and-text-widget"),
-    icon = require("awesome-wm-widgets.volume-widget.widgets.icon-widget"),
-    arc = require("awesome-wm-widgets.volume-widget.widgets.arc-widget"),
-    horizontal_bar = require("awesome-wm-widgets.volume-widget.widgets.horizontal-bar-widget"),
-    vertical_bar = require("awesome-wm-widgets.volume-widget.widgets.vertical-bar-widget")
+    icon_and_text = require("mic-widget.widgets.icon-and-text-widget"),
 }
 local volume = {}
 

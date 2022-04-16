@@ -1,4 +1,4 @@
--- If LuaRocks is installed, make sure that packages installed through it are
+-- If LuaRocks is installed, make sure that packages installed through it arelocal cyclefocus = require('cyclefocus')
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
@@ -35,6 +35,7 @@ hostname = io.popen("uname -n"):read()
 -- require('volume-adjust')
 
 local revelation=require("revelation")
+local cyclefocus = require('cyclefocus')
 local TaskList = require('widget.task-list')
 local lain  = require("lain")
 local separators = lain.util.separators
@@ -272,7 +273,7 @@ awful.screen.connect_for_each_screen(function(s)
     if screen.count() ~= 3 then
             awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
-            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
+            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("🎵", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
@@ -286,7 +287,7 @@ awful.screen.connect_for_each_screen(function(s)
             -- awful.tag({ "🤖", "🌎", "🐺", "🐋", "📭" }, s, awful.layout.layouts[1])
             awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
             awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
-            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
             awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
             awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
             awful.tag.add("🗿", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
@@ -356,7 +357,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal })
     -- s.mywibox.buttons(taglist_buttons)
     --
-    local mic_widget = require('awesome-wm-widgets.mic-widget.volume')
+    local mic_widget = require('mic-widget.volume')
     local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
     local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
     local pomodoroarc_widget = require("awesome-wm-widgets.pomodoroarc-widget.pomodoroarc")
@@ -433,7 +434,7 @@ globalkeys = gears.table.join(
     awful.key({ }, 'XF86AudioPlay', function() awful.spawn('playerctl play-pause') end, {description = 'play-pause', group = 'awesome'}),
     awful.key({ }, 'XF86AudioPause', function() awful.spawn('playerctl play-pause') end, {description = 'play-pause', group = 'awesome'}),
     awful.key({ }, 'XF86AudioNext', function() awful.spawn('playerctl next') end, {description = 'play next', group = 'awesome'}),
-    awful.key({ }, 'XF86AudioPrev', function() awful.spawn('playerctl prev') end, {description = 'play prev', group = 'awesome'}),
+    awful.key({ }, 'XF86AudioPrev', function() awful.spawn('playerctl previous') end, {description = 'play prev', group = 'awesome'}),
     -- awful.key({ }, 'XF86Tools', function() awful.spawn('rofi -combi-modi window,drun -show combi -modi combi -theme ~/.config/rofi/purple.rasi -selected-row 1') end, {description = 'rofi', group = 'awesome'}),
 
     awful.key({ modkey }, 'o', function() awful.spawn.with_shell('pactl set-sink-mute @DEFAULT_SINK@ false') end, {description = 'unmute', group = 'awesome'}),
@@ -489,7 +490,7 @@ globalkeys = gears.table.join(
   awful.key({modkey, altkey}, 'l', awful.screen.focus_bydirection("right"), {description = 'view next', group = 'tag'}),
   awful.key({altkey, 'Control'}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
   awful.key({altkey, 'Control'}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-  awful.key({altkey}, 'Tab', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+  awful.key({modkey}, 'Tab', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
   awful.key({modkey}, 'b', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
 
     -- By-direction client focus
@@ -699,22 +700,35 @@ globalkeys = gears.table.join(
               {description = "swap with previous client by index", group = "client"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
-        {description = "go back", group = "client"}),
+    -- awful.key({ modkey,           }, "Tab",
+    --     function ()
+    --         awful.client.focus.history.previous()
+    --         if client.focus then
+    --             client.focus:raise()
+    --         end
+    --     end,
+    --     {description = "go back", group = "client"}),
+        --
+-- modkey+Tab: cycle through all clients.
+awful.key({ altkey }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Alt_L",display_notifications = false})
+end),
+-- modkey+Shift+Tab: backwards
+awful.key({ altkey, "Shift" }, "Tab", function(c)
+    cyclefocus.cycle({modifier="Alt_L"})
+end),
 
     -- Standard program
     awful.key({ modkey }, "Return", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey }, "Return", function () awful.spawn('firefox') end, {description = "firefox", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "t", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "d", function () awful.spawn('dolphin') end, {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "d", function ()
+        local currentscreen = awful.screen.focused()
+        local geometry = currentscreen.geometry
+        awful.spawn('dolphin --qwindowgeometry 800x800+' .. geometry.x .. '+30')
+    end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn('spotify') end, {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "n", function () awful.spawn('notion-app') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "b", function () awful.spawn('alacritty -e btop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "r", function () awful.spawn("alacritty -e zsh -c \"zsh -ic 'ranger'\"") end, {description = "open a terminal", group = "launcher"}),
@@ -1205,14 +1219,10 @@ awful.rules.rules = {
     { rule_any = {class = {'Terminator'}},
       properties = {skip_decoration = true, titlebars_enabled = false}
     },
-    { rule_any = {class = {'spotify'}},
+    { rule_any = {class = {'Spotify'}},
       properties = {}, callback = function(c)
           local tag, newscreen, currentscreen = get_tag(6)
 
-            -- c:connect_signal("request::activate", function(context)
-            --     awful.spawn.with_shell('notify-send "hello ' .. context.name .. '"')
-            --     return false
-            -- end)
 
           if tag then
               c:move_to_screen(newscreen)
@@ -1220,36 +1230,6 @@ awful.rules.rules = {
               awful.screen.focus(currentscreen)
               twothirds(false,30,c)
           end
-     end
-    },
-    { rule_any = {class = {'dolphin'}},
-      properties = {}, callback = function(c)
-
-
-            -- c:connect_signal("request::activate", function(context)
-                --local currentscreen = awful.screen.focused()
-                --awful.spawn.with_shell('notify-send "hello ' .. context.name .. '"')
-                --awful.spawn.with_shell('notify-send "dolphin ' .. context.screen.index .. '"')
-                ---- c:move_to_screen(currentscreen)
-                ----
-                ---- twothirds(false,30,c)
-                ---- return false
-
-                --return true
-            --end)
-
-            local currentscreen = awful.screen.focused()
-                gears.timer {
-                    timeout   = 0.5,
-                    call_now  = true,
-                    autostart = false,
-                    callback  = function()
-                        c:move_to_screen(currentscreen)
-                        -- You should read it from `/sys/class/power_supply/` (on Linux)
-                        -- instead of spawning a shell. This is only an example.
-                        awful.spawn.with_shell('notify-send "timer "')
-                    end
-                }
      end
     },
     { rule_any = {class = {'copyq'}},
@@ -1368,8 +1348,31 @@ client.connect_signal("property::urgent", function(c)
 end)
 
 
-awful.ewmh.add_activate_filter(function(c)
-    if c.class == "spotify" then
-        awful.spawn.with_shell('notify-send "cancel ' .. c.name .. '"')
-        return false end
-end, "ewmh")
+-- Spotify misbehaving bug (cant solve it)
+-- awful.ewmh.add_activate_filter(function(c)
+--     if c.class == "Spotify" then
+--         awful.spawn.with_shell('notify-send "cancel ' .. c.name .. '"')
+--         return false end
+-- end, "ewmh")
+
+-- client.connect_signal("focus", function(c)
+--     if c.class == "Spotify" then
+--         awful.spawn.with_shell('notify-send "hello ' .. c.name .. '"')
+
+--         awful.client.focus.byidx(1)
+--         if awful.client.ismarked() then
+--             awful.screen.focus_relative(-1)
+--             awful.client.getmarked()
+--         end
+--         if client.focus then
+--             client.focus:raise()
+--         end
+--         awful.client.togglemarked()
+
+--         -- awful.client.focus.history.previous()
+--         -- awful.screen.focus(screen[1])
+--         -- cyclefocus.cycle({modifier="Super_L"})
+--         return false
+--     end
+--     return false
+-- end)
