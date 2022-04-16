@@ -356,11 +356,11 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal })
     -- s.mywibox.buttons(taglist_buttons)
-    --
+
     local mic_widget = require('mic-widget.volume')
-    local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
-    local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-    local pomodoroarc_widget = require("awesome-wm-widgets.pomodoroarc-widget.pomodoroarc")
+    local volume_widget = require('widget.volume-widget.volume')
+    local cpu_widget = require("widget.cpu-widget.cpu-widget")
+    local pomodoroarc_widget = require("widget.pomodoroarc-widget.pomodoroarc")
 
 
     -- Add widgets to the wibox
