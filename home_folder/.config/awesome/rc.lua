@@ -729,8 +729,8 @@ end),
     end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "open a terminal", group = "launcher"}),
     -- awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('spotify') end, {description = "open spotify", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "p", function () awful.spawn("kitty -e spt") end, {description = "open spt", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell("kitty -e ncspot") end, {description = "open spotify", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "p", function () awful.spawn("spotify") end, {description = "open spt", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "n", function () awful.spawn('notion-app') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "b", function () awful.spawn('alacritty -e btop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "r", function () awful.spawn("alacritty -e zsh -c \"zsh -ic 'ranger'\"") end, {description = "open a terminal", group = "launcher"}),
@@ -739,9 +739,9 @@ end),
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, altkey, "Control" }, "0", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
+
     awful.key({ modkey, altkey, "Control" }, "equal", function() awesome.quit() end,
               {description = "quit awesome", group = "awesome"}),
-
     awful.key({ modkey, altkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
@@ -1234,7 +1234,19 @@ awful.rules.rules = {
               awful.screen.focus(currentscreen)
               twothirds(false,30,c)
               c.minimized = true
-              awful.spawn("kitty -e spt", {tag = tag})
+          end
+     end
+    },
+    { rule_any = {class = {'kitty'}},
+      properties = {}, callback = function(c)
+          local tag, newscreen, currentscreen = get_tag(6)
+
+
+          if tag then
+              c:move_to_screen(newscreen)
+              c:move_to_tag(tag)
+              awful.screen.focus(currentscreen)
+              onehalf(false,30,c)
           end
      end
     },
