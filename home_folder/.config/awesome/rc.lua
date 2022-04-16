@@ -735,15 +735,36 @@ end),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "b", function () awful.spawn('alacritty -e btop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "r", function () awful.spawn("alacritty -e zsh -c \"zsh -ic 'ranger'\"") end, {description = "open a terminal", group = "launcher"}),
 
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-              {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, altkey, "Control" }, "0", awesome.restart,
-              {description = "reload awesome", group = "awesome"}),
 
-    awful.key({ modkey, altkey, "Control" }, "equal", function() awesome.quit() end,
-              {description = "quit awesome", group = "awesome"}),
-    awful.key({ modkey, altkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
+    -- power menu
+    awful.key({ modkey, altkey, "Control" }, "6", function() awful.spawn("blurlock") end,
+              {description = "lock", group = "power"}),
+
+    awful.key({ modkey, "Control" }, "r", awesome.restart,
+              {description = "reload awesome", group = "power"}),
+    awful.key({ modkey, altkey, "Control" }, "7", awesome.restart,
+              {description = "reload awesome", group = "power"}),
+
+    awful.key({ modkey, altkey, "Control" }, "8", function() awesome.quit() end,
+              {description = "quit awesome", group = "power"}),
+
+    awful.key({ modkey, altkey, "Control" }, "9",
+        function()
+            awful.spawn.with_shell("blurlock && systemctl suspend")
+        end, {description = "suspend", group = "power"}),
+
+    awful.key({ modkey, altkey, "Control" }, "0",
+        function()
+            awful.spawn.with_shell("blurlock && systemctl hibernate")
+        end, {description = "hibernate", group = "power"}),
+
+    awful.key({ modkey, altkey, "Control" }, "minus", function()
+            awful.spawn.with_shell("systemctl reboot")
+        end, {description = "reboot", group = "power"}),
+
+    awful.key({ modkey, altkey, "Control" }, "equal", function()
+            awful.spawn.with_shell("systemctl poweroff")
+        end, {description = "poweroff", group = "power"}),
 
     awful.key({ modkey, altkey }, "period",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
