@@ -24,6 +24,7 @@ PACKAGES=$(cat <<-END
     rofimoji
     tmuxinator
     texlive-core
+    thunar
     dolphin
     dolphin-plugins
     ark
@@ -174,3 +175,24 @@ fi
 
 
 echo "Install e.g. Teams via Flathub/Discover"
+
+
+if ask "Install ncspot from Github"; then
+    yay --noconfirm -S ncspot-git
+    yay --noconfirm -R ncspot-git # keep dependencies
+    git clone https://github.com/hrkfdn/ncspot.git ~/ncspot
+    cd ~/ncspot
+    cargo build --release --features cover
+    cp target/release/ncspot ~/bin
+fi
+
+
+if ask "Install personal awesome fork"; then
+    yay --noconfirm -S awesome-git
+    yay --noconfirm -R awesome-git # keep dependencies
+    git clone https://github.com/charlesnchr/awesome ~/awesome
+    cd ~/awesome
+    make
+    sudo make install
+    sudo cp awesome.desktop /usr/share/xsessions
+fi

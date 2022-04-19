@@ -2,7 +2,7 @@
 
 # vim: ft=cfg
 # Basic options
-default_keybindings = false
+default_keybindings = true
 use_nerdfont = true
 notify = true
 gapless = true
@@ -38,8 +38,10 @@ flip_status_indicators=true
 "Ctrl+n" = "next"
 "r" = "repeat"
 "z" = "shuffle"
-"D" = "delete"
+"F12" = "delete"
+"d" = "noop"
 "S" = "save"
+"s" = "noop"
 # Open context menu
 "O" = "open current"
 "o" = "open selected"
