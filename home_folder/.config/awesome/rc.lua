@@ -1,4 +1,4 @@
--- If LuaRocks is installed, make sure that packages installed through it arelocal cyclefocus = require('cyclefocus')
+-- If LuaRocks is installed, meke sure that packages installed through it arelocal cyclefocus = require('cyclefocus')
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
@@ -7,6 +7,7 @@ local gears = require("gears")
 local awful = require("awful")
 local dpi   = require("beautiful.xresources").apply_dpi
 require("awful.autofocus")
+local freedesktop   = require("freedesktop")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -111,29 +112,51 @@ awful.layout.layouts = {
     -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
+    -- awful.layout.suit.corner.sw5
     -- awful.layout.suit.corner.se,
 }
 -- }}}
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+-- Create a launcher widget and a main menu
+local myawesomemenu = {
+   { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+   { "Manual", string.format("%s -e man awesome", terminal) },
+   { "Edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
+   { "Restart", awesome.restart },
+   { "Quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
+awful.util.mymainmenu = freedesktop.menu.build {
+    before = {
+        { "Awesome", myawesomemenu, beautiful.awesome_icon },
+        -- other triads can be put here
+    },
+    after = {
+        { "Open terminal", terminal },
+        -- other triads can be put here
+    }
+}
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
+
+-- close menu when mouse leaves?
+-- awful.util.mymainmenu.wibox:connect_signal("mouse::leave", function()
+--     if not awful.util.mymainmenu.active_child or
+--        (awful.util.mymainmenu.wibox ~= mouse.current_wibox and
+--        awful.util.mymainmenu.active_child.wibox ~= mouse.current_wibox) then
+--         awful.util.mymainmenu:hide()
+--     else
+--         awful.util.mymainmenu.active_child.wibox:connect_signal("mouse::leave",
+--         function()
+--             if awful.util.mymainmenu.wibox ~= mouse.current_wibox then
+--                 awful.util.mymainmenu:hide()
+--             end
+--         end)
+--     end
+-- end)
 
 -- {{{ Wibar
 
@@ -354,7 +377,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal})
     -- s.mywibox.buttons(taglist_buttons)
 
     local mic_widget = require('mic-widget.volume')
@@ -399,9 +422,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 5, awful.tag.viewnext),
-    awful.button({ }, 4, awful.tag.viewprev)
+    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end)
 ))
 -- }}}
 
@@ -476,7 +497,7 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    awful.key({ modkey,           }, "w", function () awful.util.mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
 
@@ -575,6 +596,15 @@ globalkeys = gears.table.join(
   ),
 
   awful.key(
+    {modkey},
+    'Shift_L',
+    function()
+      awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+    end,
+    {description = 'Show rofi', group = 'LCAG layer'}
+  ),
+
+  awful.key(
     {modkey,altkey, 'Control'},
     'j',
     function () awful.client.focus.byidx(  1)    end,
@@ -623,12 +653,44 @@ globalkeys = gears.table.join(
     {description = 'emoji', group = 'LCAG layer'}
   ),
 
+  awful.key(
+    {modkey,altkey,'Shift','Control'},
+    'c',
+    function () awful.spawn('qalculate-qt') end,
+    {description = 'qalculate', group = 'launcher'}
+  ),
+
+  -- screenshot
+  awful.key(
+    {modkey,altkey,'Shift', 'Control'},
+    'w',
+    function () awful.spawn.with_shell('maim  -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png') end,
+    {description = 'screenshot window', group = 'launcher'}
+  ),
+  awful.key(
+    {modkey,altkey,'Shift', 'Control'},
+    'a',
+    function () awful.spawn.with_shell('maim -u | xclip -selection clipboard -t image/png') end,
+    {description = 'screenshot all', group = 'launcher'}
+  ),
+  awful.key(
+    {modkey,altkey,'Shift', 'Control'},
+    'x',
+    function () awful.spawn.with_shell('maim -s | xclip -selection clipboard -t image/png') end,
+    {description = 'screenshot region', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey,'Shift', 'Control'},
+    'm',
+    function () awful.spawn('pavucontrol') end,
+    {description = 'pavucontrol', group = 'LCAG layer'}
+  ),
 
   awful.key(
     {modkey,altkey, 'Control'},
     'x',
-    function () awful.spawn.with_shell('maim -s | xclip -selection clipboard -t image/png') end,
-    {description = 'screenshot region', group = 'LCAG layer'}
+    function () awful.spawn('xkill') end,
+    {description = 'xkill', group = 'LCAG layer'}
   ),
 
   awful.key(
@@ -722,15 +784,18 @@ end),
     awful.key({ modkey }, "Return", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey }, "Return", function () awful.spawn('firefox') end, {description = "firefox", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "t", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
+    -- awful.key({ modkey, altkey, 'Shift', 'Control' }, "d", function ()
+    --     local currentscreen = awful.screen.focused()
+    --     local geometry = currentscreen.geometry
+    --     awful.spawn('dolphin --qwindowgeometry 800x800+' .. geometry.x .. '+30')
+    -- end, {description = "open dolphin", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "d", function ()
-        local currentscreen = awful.screen.focused()
-        local geometry = currentscreen.geometry
-        awful.spawn('dolphin --qwindowgeometry 800x800+' .. geometry.x .. '+30')
-    end, {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "open a terminal", group = "launcher"}),
+        awful.spawn('thunar')
+    end, {description = "open thunar", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "firefox", group = "launcher"}),
     -- awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell("kitty -e ncspot") end, {description = "open spotify", group = "launcher"}),
-    awful.key({ modkey, altkey, 'Shift', 'Control' }, "p", function () awful.spawn("spotify") end, {description = "open spt", group = "launcher"}),
+    awful.key({ modkey, altkey, 'Shift', 'Control' }, "p", function () awful.spawn("spotify") end, {description = "spotify", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "n", function () awful.spawn('notion-app') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "b", function () awful.spawn('alacritty -e btop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "r", function () awful.spawn("alacritty -e zsh -c \"zsh -ic 'ranger'\"") end, {description = "open a terminal", group = "launcher"}),
@@ -1211,10 +1276,12 @@ awful.rules.rules = {
         instance = {
           "DTA",  -- Firefox addon DownThemAll.
           "copyq",  -- Includes session name in class.
+          "pavucontrol",
           "pinentry",
         },
         class = {
           "Arandr",
+          "qalculate-qt",
           "Blueman-manager",
           "Gpick",
           "Kruler",
@@ -1271,8 +1338,9 @@ awful.rules.rules = {
           end
      end
     },
-    { rule_any = {class = {'copyq'}},
+    { rule_any = {class = {'copyq','qalculate-qt'}},
       properties = {}, callback = function(c)
+         c:geometry({width = 800, height = 500})
          awful.placement.centered(c,nil)
      end
     },

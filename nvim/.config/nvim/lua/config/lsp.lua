@@ -1,6 +1,8 @@
 local api = vim.api
 local lsp = vim.lsp
 
+vim.notify = require("notify")
+
 local M = {}
 
 function M.show_line_diagnostics()
@@ -37,10 +39,6 @@ local custom_attach = function(client, bufnr)
   buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   buf_set_keymap("n", "<space>d", "<cmd>lua vim.diagnostic.open_float(0, { scope = 'line', border = 'none' })<CR>", opts)
 
-  vim.cmd([[
-    autocmd CursorHold <buffer> lua require('config.lsp').show_line_diagnostics()
-  ]])
-
   -- Set some key bindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
@@ -72,33 +70,31 @@ end
 local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local lspconfig = require("lspconfig")
-
-lspconfig.pylsp.setup({
-  on_attach = custom_attach,
-  settings = {
-    pylsp = {
-      plugins = {
-        pylint = { enabled = true, executable = "pylint" },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = true },
-        jedi_completion = { fuzzy = true },
-        pyls_isort = { enabled = true },
-        pylsp_mypy = { enabled = false },
-      },
-    },
-  },
-  flags = {
-    debounce_text_changes = 200,
-  },
-  capabilities = capabilities,
-})
+-- lspconfig.pylsp.setup({
+--     settings = {
+--         pylsp = {
+--             plugins = {
+--                 pylint = { enabled = true, executable = "/home/cc/anaconda3/bin/pylint"  },
+--                 pyflakes = { enabled = true },
+--                 flake8 = { enabled = true },
+--                 pycodestyle = { enabled = false },
+--                 jedi_completion = { fuzzy = true },
+--                 pyls_isort = { enabled = true },
+--                 pylsp_mypy = { enabled = true },
+--             },
+--         },
+--     },
+--     flags = {
+--         debounce_text_changes = 200,
+--     },
+--     capabilities = capabilities,
+-- })
 
 -- lspconfig.pyright.setup{
 --   on_attach = custom_attach,
 --   capabilities = capabilities
 -- }
---
+
 
 local tabnine = require("cmp_tabnine.config")
 tabnine:setup({
@@ -109,62 +105,6 @@ tabnine:setup({
 	snippet_placeholder = "..",
 })
 
---lspconfig.ltex.setup{}
-
-lspconfig.clangd.setup({
-  on_attach = custom_attach,
-  capabilities = capabilities,
-  filetypes = { "c", "cpp", "cc" },
-  flags = {
-    debounce_text_changes = 500,
-  },
-})
-
--- set up vim-language-server
-lspconfig.vimls.setup({
-  on_attach = custom_attach,
-  flags = {
-    debounce_text_changes = 500,
-  },
-  capabilities = capabilities,
-})
-
-local sumneko_binary_path = vim.fn.exepath("lua-language-server")
-if vim.g.is_mac or vim.g.is_linux and sumneko_binary_path ~= "" then
-  local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ":h:h:h")
-
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
-
-  require("lspconfig").sumneko_lua.setup({
-    on_attach = custom_attach,
-    cmd = { sumneko_binary_path, "-E", sumneko_root_path .. "/main.lua" },
-    settings = {
-      Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-          -- Setup your lua path
-          path = runtime_path,
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = api.nvim_get_runtime_file("", true),
-        },
-        -- Do not send telemetry data containing a randomized but unique identifier
-        telemetry = {
-          enable = false,
-        },
-      },
-    },
-    capabilities = capabilities,
-  })
-end
 
 -- Change diagnostic signs.
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
@@ -175,7 +115,7 @@ vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSig
 -- global config for diagnostic
 vim.diagnostic.config({
   underline = false,
-  virtual_text = true,
+  virtual_text = false,
   signs = true,
   severity_sort = true,
 })
@@ -204,44 +144,23 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 })
 
 
-
-
-
 -- Combine base config for each server and merge user-defined settings.
 local function make_config(server_name)
 	-- Setup base config for each server.
 	local c = {}
 	c.on_attach = on_attach
-	c.capabilities = vim.lsp.protocol.make_client_capabilities()
-	c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
+	-- c.capabilities = vim.lsp.protocol.make_client_capabilities()
+	-- c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
+    c.capabilities = capabilities
 	c.flags = {
 		debounce_text_changes = 150,
 	}
-
-	-- cmp_nvim_lsp enables following options:
-	--   completionItem = {
-	--     commitCharactersSupport = true,
-	--     deprecatedSupport = true,
-	--     documentationFormat = { "markdown", "plaintext" },
-
-	--     insertReplaceSupport = true,
-	--     labelDetailsSupport = true,
-	--     preselectSupport = true,
-	--     resolveSupport = {
-	--       properties = { "documentation", "detail", "additionalTextEdits" }
-	--     },
-	--     snippetSupport = true,
-	--     tagSupport = {
-	--       valueSet = { 1 }
-	--     }
-	--   }
 
 	-- Merge user-defined lsp settings.
 	-- These can be overridden locally by lua/lsp-local/<server_name>.lua
 	local exists, module = pcall(require, 'lsp-local.'..server_name)
 	if not exists then
 		exists, module = pcall(require, 'lsp.'..server_name)
-
 	end
 	if exists then
 		local user_config = module.config(c)
@@ -253,14 +172,19 @@ end
 
 
 
-
-
 if vim.fn.has('vim_starting') then
 	-- Setup language servers using nvim-lsp-installer
 	-- See https://github.com/williamboman/nvim-lsp-installer
 	local lsp_installer = require('nvim-lsp-installer')
 
 	lsp_installer.on_server_ready(function(server)
+        -- disable, testing pyright
+        if(server.name == 'pylsp') then
+            return false
+        end
+        -- if(server.name == 'pyright') then
+        --     return false
+        -- end
 		local opts = make_config(server.name)
 		server:setup(opts)
 		vim.cmd [[ do User LspAttachBuffers ]]
@@ -274,19 +198,6 @@ if vim.fn.has('vim_starting') then
 		'<cmd>lua require("user").diagnostic.publish_loclist(true)<CR>',
 		args
 	)
-
-	vim.api.nvim_exec([[
-		augroup user_lspconfig
-
-			autocmd!
-			" See https://github.com/kosayoda/nvim-lightbulb
-
-			autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-			" Automatic diagnostic hover
-			" autocmd CursorHold * lua require("user").diagnostic.show_line_diagnostics({ focusable=false })
-		augroup END
-	]], false)
-
 end
 
 return M

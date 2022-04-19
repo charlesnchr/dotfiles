@@ -156,9 +156,9 @@ Plug 'itchyny/calendar.vim'
 
 call plug#end()
 
+set updatetime=100
 lua require('lua-init')
 
-set updatetime=500
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
 let g:python3_host_prog = expand('~/anaconda3/bin/python')
@@ -219,6 +219,14 @@ nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>e :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
 nnoremap <localleader>af :CtrlPLine<cr>
+
+  " let g:ctrlp_prompt_mappings = {
+  "   \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+  "   \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+  "   \ 'PrtHistory(-1)':       ['<c-j>'],
+  "   \ 'PrtHistory(1)':        ['<c-k>'] }
+
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10'
 
 " " don't show the help in normal mode
 " let g:Lf_HideHelp = 1
@@ -477,7 +485,7 @@ nnoremap <localleader>vc :G commit -m "Small update"<cr>
 nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
-nnoremap <localleader><Esc> :quit<cr>
+nnoremap <localleader>q :quit<cr>
 nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
@@ -867,6 +875,9 @@ let g:ale_fixers = {
 \   'css': ['prettier'],
 \   'tex': ['prettier'],
 \}
+let g:ale_linters = {
+\   'python': [''],
+\}
 
 let g:sneak#label = 1
 let g:sneak#s_next = 1
@@ -902,3 +913,6 @@ augroup mail_trailing_whitespace " {
     " autocmd FileType mail setlocal formatoptions+=w
     autocmd FileType mail SoftPencil
 augroup END " }
+
+nnoremap <silent> f    <cmd>lua vim.lsp.buf.formatting()<CR>
+" autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
