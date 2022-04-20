@@ -628,15 +628,6 @@ globalkeys = gears.table.join(
   ),
 
   awful.key(
-    {modkey},
-    'Shift_L',
-    function()
-      awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
-    end,
-    {description = 'Show rofi', group = 'LCAG layer'}
-  ),
-
-  awful.key(
     {modkey,altkey, 'Control'},
     'j',
     function () awful.client.focus.byidx(  1)    end,
