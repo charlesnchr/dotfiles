@@ -27,7 +27,7 @@ flip_status_indicators=true
 ##################
 "p" = "playpause"
 "Enter" = "play"
-"s" = "stop"
+"P" = "stop"
 
 ##################
 # Track manipulation
