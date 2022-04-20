@@ -819,8 +819,8 @@ end),
     --     awful.spawn('dolphin --qwindowgeometry 800x800+' .. geometry.x .. '+30')
     -- end, {description = "open dolphin", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "d", function ()
-        awful.spawn('thunar')
-    end, {description = "open thunar", group = "launcher"}),
+        awful.spawn('nautilus')
+    end, {description = "open nautilus", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "f", function () awful.spawn('firefox') end, {description = "firefox", group = "launcher"}),
     -- awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell('exo-open ~/.local/share/applications/webcatalog-spotify.desktop') end, {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, altkey, 'Shift', 'Control' }, "s", function () awful.spawn.with_shell("kitty -e ncspot") end, {description = "open spotify", group = "launcher"}),
