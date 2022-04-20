@@ -163,7 +163,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 local arrow = separators.arrow_left
 
 -- MEM
-local memicon = wibox.widget.imagebox(theme.widget_mem)
+local memicon = wibox.widget.imagebox(theme.widget_mem, true)
+-- memicon.forced_height = 20
+-- local memicon = wibox.widget {
+--     image  = theme.widget_mem,
+--     resize = true,
+--     widget = wibox.widget.imagebox
+-- }
 local mem = lain.widget.mem({
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. mem_now.used .. "MB "))
@@ -172,12 +178,35 @@ local mem = lain.widget.mem({
 
 -- CPU
 local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
+
+-- local cpuicon =  wibox.widget {
+--     image         = theme.widget_cpu,
+--     dpi           = 10,
+--     resize        = true,
+--     forced_height = 30,
+--     forced_width  = 30,
+--     widget        = wibox.widget.imagebox
+--     }
 local cpu = lain.widget.cpu({
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
     end
 })
 
+-- local watch = awful.widget.watch('sh bin/i3status-inactivity-suspend.sh', 15)
+-- local watch = awful.widget.watch('echo "😅hej"', 15)
+local inactivity_suspend_status = wibox.widget{
+    font = "sans 18",
+    widget = awful.widget.watch('sh bin/i3status-inactivity-suspend.sh', 2),
+    buttons = gears.table.join(
+    awful.button({ }, 1, function () awful.spawn.with_shell("sh ~/bin/i3status-inactivity-suspend.sh set") end))
+}
+local presentation_status = wibox.widget{
+    font = "sans 18",
+    widget = awful.widget.watch('sh bin/i3status-presentation.sh', 2),
+    buttons = gears.table.join(
+    awful.button({ }, 1, function () awful.spawn.with_shell("sh ~/bin/i3status-presentation.sh set") end))
+}
 -- Create a textclock widget
 textclock = wibox.widget.textclock()
 
@@ -402,7 +431,10 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             pomodoroarc_widget,
-            arrow("#5B60711A", "#2A5878"),
+            arrow("#5B60711A", "#5366B6"),
+            wibox.container.background(wibox.container.margin(inactivity_suspend_status, dpi(8), dpi(4)), "#5366B6"),
+            wibox.container.background(wibox.container.margin(presentation_status, dpi(4), dpi(8)), "#5366B6"),
+            arrow("#5366B6", "#2A5878"),
             wibox.container.background(wibox.container.margin(volume_widget{ widget_type = 'icon_and_text', font = 'sans 10' }, dpi(2), dpi(3)), "#2A5878"),
             arrow("#2A5878", "#4A556E"),
             wibox.container.background(wibox.container.margin(mic_widget{ widget_type = 'icon_and_text', font = 'sans 10' }, dpi(2), dpi(3)), "#4A556E"),
@@ -578,12 +610,12 @@ globalkeys = gears.table.join(
 
   -- rofi
   awful.key(
-    {modkey},
+    {altkey},
     'grave',
     function()
-      awful.spawn('rofi -combi-modi window,drun -show combi -modi combi -theme ~/.config/rofi/purple.rasi -selected-row 1')
+      awful.spawn.with_shell('rofi -show window -theme ~/.config/rofi/purple_windows.rasi -selected-row 1')
     end,
-    {description = 'Main menu', group = 'awesome'}
+    {description = 'Rofi window', group = 'awesome'}
   ),
 
   awful.key(
@@ -678,6 +710,12 @@ globalkeys = gears.table.join(
     'x',
     function () awful.spawn.with_shell('maim -s | xclip -selection clipboard -t image/png') end,
     {description = 'screenshot region', group = 'LCAG layer'}
+  ),
+  awful.key(
+    {modkey,altkey,'Shift', 'Control'},
+    'z',
+    function () awful.spawn.with_shell('~/bin/dm-maim') end,
+    {description = 'screenshot utility', group = 'LCAG layer'}
   ),
   awful.key(
     {modkey,altkey,'Shift', 'Control'},
@@ -802,7 +840,9 @@ end),
 
 
     -- power menu
-    awful.key({ modkey, altkey, "Control" }, "6", function() awful.spawn("blurlock") end,
+    awful.key({ modkey, altkey, "Control" }, "6", function()
+        awful.spawn.with_shell("blurlock")
+    end,
               {description = "lock", group = "power"}),
 
     awful.key({ modkey, "Control" }, "r", awesome.restart,
@@ -810,25 +850,25 @@ end),
     awful.key({ modkey, altkey, "Control" }, "7", awesome.restart,
               {description = "reload awesome", group = "power"}),
 
-    awful.key({ modkey, altkey, "Control" }, "8", function() awesome.quit() end,
+    awful.key({ modkey, altkey, "Control" }, "8", function() awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Quit?' 'killall awesome'") end,
               {description = "quit awesome", group = "power"}),
 
     awful.key({ modkey, altkey, "Control" }, "9",
         function()
-            awful.spawn.with_shell("blurlock && systemctl suspend")
+            awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Suspend?' 'blurlock && systemctl suspend'")
         end, {description = "suspend", group = "power"}),
 
     awful.key({ modkey, altkey, "Control" }, "0",
         function()
-            awful.spawn.with_shell("blurlock && systemctl hibernate")
+            awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Hibernate?' 'blurlock && systemctl hibernate'")
         end, {description = "hibernate", group = "power"}),
 
     awful.key({ modkey, altkey, "Control" }, "minus", function()
-            awful.spawn.with_shell("systemctl reboot")
+            awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Reboot?' 'blurlock && systemctl reboot'")
         end, {description = "reboot", group = "power"}),
 
     awful.key({ modkey, altkey, "Control" }, "equal", function()
-            awful.spawn.with_shell("systemctl poweroff")
+            awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Power off?' 'blurlock && systemctl poweroff'")
         end, {description = "poweroff", group = "power"}),
 
     awful.key({ modkey, altkey }, "period",     function () awful.tag.incmwfact( 0.05)          end,
