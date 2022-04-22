@@ -90,7 +90,7 @@
   `       S-1       S-2       S-3       S-4       S-5       S-6       S-7       S-8       S-9       S-0       S--       S-=       @cbspc
   M-b       @mq       @cw       end       @i3layer_r       @ct       @i3layer_y       @cu       @cd       @c6       home       S-[       S-]       del
   lctl    M-1   M-2     M-3       @i3layer     @i3layer_ws       lft   down    up    rght       @wslft       @wsrght       M-ret
-  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       M-b       M-A-ret
+  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       @i3layer_ws       M-A-ret
   lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
@@ -131,10 +131,10 @@
 
 (deflayer i3layer_r
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     prnt    ins     del
-  `       M-A-C-1       M-A-C-2       M-A-C-3       M-A-C-4       M-A-C-5       M-A-C-6       M-A-C-7       M-A-C-8       M-A-C-9       M-A-C-0       M-A-C--       M-A-C-=       M-A-C-bspc
-  tab     M-A-C-q       M-A-C-w       M-A-C-e       M-A-C-r       M-A-C-t       M-A-C-y       M-A-C-u       M-A-C-i       M-A-C-o       M-A-C-p       [       ]       \
+  M-A-C-`       M-A-C-1       M-A-C-2       M-A-C-3       M-A-C-4       M-A-C-5       M-A-C-6       M-A-C-7       M-A-C-8       M-A-C-9       M-A-C-0       M-A-C--       M-A-C-=       M-A-C-bspc
+  tab     M-A-C-q       M-A-C-w       M-A-C-e       M-A-C-r       M-A-C-t       M-A-C-y       M-A-C-u       M-A-C-i       M-A-C-o       M-A-C-p       M-A-C-[       M-A-C-]       \
   caps    M-A-C-a       M-A-C-s       M-A-C-d       M-A-C-f       M-A-C-g       M-A-C-h       M-A-C-j       M-A-C-k       M-A-C-l       ;       '       ret
-  lsft    M-A-C-z       M-A-C-x       M-A-C-c       M-A-C-v       M-A-C-b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       /       rsft
+  lsft    M-A-C-z       M-A-C-x       M-A-C-c       M-A-C-v       M-A-C-b       M-A-C-n       M-A-C-m       M-A-C-,       M-A-C-.       M-A-C-/       rsft
   lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
