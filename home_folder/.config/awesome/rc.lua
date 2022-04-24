@@ -193,6 +193,8 @@ local cpu = lain.widget.cpu({
     end
 })
 
+widget_battery = require('widget.battery')
+
 -- local watch = awful.widget.watch('sh bin/i3status-inactivity-suspend.sh', 15)
 -- local watch = awful.widget.watch('echo "😅hej"', 15)
 local inactivity_suspend_status = wibox.widget{
@@ -443,6 +445,7 @@ awful.screen.connect_for_each_screen(function(s)
             arrow("#344356", "#4B696D"),
             wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(4)), "#4B696D"),
             wibox.container.background(wibox.container.margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
+            widget_battery,
             wibox.layout.margin(wibox.widget.systray(), dpi(10), dpi(1), dpi(2), dpi(2)),
             wibox.container.background(wibox.container.margin(textclock, dpi(10), dpi(10)), "#5B60711A"),
             cal,
@@ -544,7 +547,7 @@ globalkeys = gears.table.join(
   awful.key({altkey, 'Control'}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
   awful.key({altkey, 'Control'}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
   awful.key({modkey}, 'Tab', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
-  awful.key({modkey}, 'b', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+  -- awful.key({modkey}, 'b', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
 
     -- By-direction client focus
     awful.key({ modkey }, "j",
@@ -638,21 +641,7 @@ globalkeys = gears.table.join(
     {modkey,altkey, 'Control'},
     'k',
     function () awful.client.focus.byidx( -1)    end,
-    {description = 'focus next', group = 'LCAG layer'}
-  ),
-
-  awful.key(
-    {modkey,altkey, 'Control', 'Shift'},
-    'j',
-    function () awful.client.swap.byidx(  1)    end,
-    {description = 'swap next', group = 'LCAG layer'}
-  ),
-
-  awful.key(
-    {modkey,altkey, 'Control', 'Shift'},
-    'k',
-    function () awful.client.swap.byidx( -1)    end,
-    {description = 'swap prev', group = 'LCAG layer'}
+    {description = 'focus prev', group = 'LCAG layer'}
   ),
 
   awful.key(
@@ -696,23 +685,26 @@ globalkeys = gears.table.join(
     function () awful.spawn.with_shell('maim -u | xclip -selection clipboard -t image/png') end,
     {description = 'screenshot all', group = 'launcher'}
   ),
+
   awful.key(
     {modkey,altkey,'Shift', 'Control'},
     'x',
     function () awful.spawn.with_shell('maim -s | xclip -selection clipboard -t image/png') end,
-    {description = 'screenshot region', group = 'LCAG layer'}
+    {description = 'screenshot region', group = 'launcher'}
   ),
+
   awful.key(
     {modkey,altkey,'Shift', 'Control'},
     'z',
     function () awful.spawn.with_shell('~/bin/dm-maim') end,
-    {description = 'screenshot utility', group = 'LCAG layer'}
+    {description = 'screenshot utility', group = 'launcher'}
   ),
+
   awful.key(
     {modkey,altkey,'Shift', 'Control'},
     'm',
     function () awful.spawn('pavucontrol') end,
-    {description = 'pavucontrol', group = 'LCAG layer'}
+    {description = 'pavucontrol', group = 'launcher'}
   ),
 
   awful.key(
@@ -799,15 +791,16 @@ globalkeys = gears.table.join(
     --         end
     --     end,
     --     {description = "go back", group = "client"}),
-        --
--- modkey+Tab: cycle through all clients.
-awful.key({ altkey }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Alt_L",display_notifications = false})
-end),
--- modkey+Shift+Tab: backwards
-awful.key({ altkey, "Shift" }, "Tab", function(c)
-    cyclefocus.cycle({modifier="Alt_L"})
-end),
+
+
+    -- modkey+Tab: cycle through all clients.
+    awful.key({ altkey }, "Tab", function(c)
+        cyclefocus.cycle({modifier="Alt_L",display_notifications = false})
+    end),
+    -- modkey+Shift+Tab: backwards
+    awful.key({ altkey, "Shift" }, "Tab", function(c)
+        cyclefocus.cycle({modifier="Alt_L"})
+    end),
 
     -- Standard program
     awful.key({ modkey }, "Return", function () awful.spawn(terminal) end, {description = "open a terminal", group = "launcher"}),
@@ -840,6 +833,11 @@ end),
               {description = "reload awesome", group = "power"}),
     awful.key({ modkey, altkey, "Control" }, "7", awesome.restart,
               {description = "reload awesome", group = "power"}),
+
+     awful.key({ modkey, altkey, "Shift", "Control" }, "bracketright", function()
+          awful.spawn("notify-send 'restarting kmonad'")
+          awful.spawn.with_shell("killall kmonad; sleep 0.5 && kmonad ~/.config/dell-xps.kbd")
+      end, {description = "reload kmonad", group = "power"}),
 
     awful.key({ modkey, altkey, "Control" }, "8", function() awful.spawn.with_shell("~/bin/rofi-confirm.sh 'Quit?' 'killall awesome'") end,
               {description = "quit awesome", group = "power"}),
@@ -883,7 +881,7 @@ end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
-    awful.key({ modkey, altkey, 'Control' }, "b",
+    awful.key({ modkey, altkey, "Control" }, "g",
               function ()
                   local c = awful.client.restore()
                   -- Focus restored client
