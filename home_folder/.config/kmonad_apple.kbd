@@ -86,7 +86,7 @@
   grv  S-1    S-2    S-3    S-4    S-5    S-6    S-7    S-8    S-9    S-0    S--    S-=    A-bspc
   A-tab  M-q    M-w    M-A-C-e    @i3layer    M-t    @i3layer_y    M-A-C-u    M-A-C-i    C-6    M-A-C-p    S-[    S-]
   @caps  A-1  A-2   A-3   A-4   A-5  lft   down    up    rght    @wslft       @wsrght    \  A-ret
-  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-h       M-l       @i3layer_ws
+  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws
   A-M-ret  up
   @ctl2 lctl lalt lmet       @spc2        rmet ralt            lft down rght
 )
@@ -111,7 +111,8 @@
 
 (deflayer i3layer
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  102d  M-A-C-1    M-A-C-2    M-A-C-3    M-A-C-4    M-A-C-5    M-A-C-6    M-A-C-7    M-A-C-8    M-A-C-9    M-A-C-0    -    =    bspc
+  102d  M-A-C-1    M-A-C-2    M-A-C-3    M-A-C-4    M-A-C-5    M-A-C-6    M-A-C-7    M-A-C-8    M-A-C-9    M-A-C-0    -
+  =    M-A-C-bspc
   tab     @i3layer_shift2       @i3layer_shift       @i3layer_bring       M-A-C-r       t       y       pgup       pgdn
   @i3layer_move     M-A-C-1       home       end
   @caps M-A-C-a M-A-C-s   @i3layer_shift    M-A-C-f    M-A-C-g    A-h    A-j    A-k    A-l    A-M-h    A-M-l    \ M-A-C-f
@@ -145,7 +146,7 @@
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps a s   d    f    g    A-S-h    A-S-j    A-S-k    A-S-l    ;    '    \ ret
+  @caps a s   d    f    g    A-S-h    A-S-j    A-S-k    A-S-l    A-S-;    A-S-'    \ S-A-M-f
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
   @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
 )

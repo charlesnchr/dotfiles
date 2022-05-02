@@ -104,7 +104,7 @@ shift + alt - w : \
 
 # Make window native fullscreen
 ctrl + cmd + alt - f         : yabai -m window --toggle zoom-fullscreen
-shift + ctrl + cmd + alt - f : yabai -m window --toggle native-fullscreen
+shift + cmd + alt - f : yabai -m window --toggle native-fullscreen
 
 
 # focus window
@@ -246,10 +246,12 @@ shift + ctrl + alt + cmd - i : yabai -m window --grid 2:2:0:1:1:1
 shift + ctrl + alt + cmd - o : yabai -m window --grid 2:2:1:0:1:1
 # bottom right
 shift + ctrl + alt + cmd - p : yabai -m window --grid 2:2:1:1:1:1
+# fullscreen
+shift + ctrl + alt + cmd - g : yabai -m window --grid 1:1:0:0:1:1
 
 # minimize
-lctrl + alt + cmd - n : yabai -m window --minimize
-lctrl + alt + cmd - g : yabai -m space --deminimize
+lctrl + alt + cmd - backspace : yabai -m window --minimize
+# lctrl + alt + cmd - g : yabai -m space --deminimize
 
 
 
@@ -276,14 +278,26 @@ lctrl + alt + cmd - g : yabai -m space --deminimize
 #   | jq -sre 'add | map(select(."is-minimized"==false)) | . as $array | length as $array_length | index(map(select(."has-focus"==true))) as $has_index | if $has_index > 0 then nth($has_index - 1).id else nth($array_length - 1).id end'  \
 #   | xargs -I{} yabai -m window --focus {}
 
-lctrl + alt + cmd - p : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir
-lctrl + alt + cmd - u : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir
+lctrl + alt + cmd - p : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
+lctrl + alt + cmd - u : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
 
 
-lctrl + alt - right : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir
-lctrl + alt - left : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir
-lctrl + alt - down : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir
-lctrl + alt - up : sh /Users/cc/.config/yabai/cycle_window.sh 1 _dir
+# from github: https://github.com/koekeishiya/yabai/issues/113  --  doesn't work
+# cycle through all visible windows sorted by: coordinates -> display index
+# ctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.visible == 1 and .subrole != \"AXUnknown\")) | reverse | nth(index(map(select(.focused == 1))) - 1).id")"
+# same github page but works well
+lctrl + alt + cmd - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+lctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+# lctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+
+lctrl + alt - right : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
+lctrl + alt - left : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 1
+lctrl + alt - down : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 1
+lctrl + alt - up : sh /Users/cc/.config/yabai/cycle_window.sh 1 _dir 1
+
+# move displays
+alt + shift - 0x29 : yabai -m window --display west; yabai -m display --focus west
+alt + shift - 0x27 : yabai -m window --display east; yabai -m display --focus east
 
 # most recent current screen
 lctrl + alt + cmd - i : yabai -m query --spaces --space \
