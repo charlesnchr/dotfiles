@@ -35,9 +35,6 @@ cmp.setup({
             vim.fn["UltiSnips#Anon"](args.body)
         end,
     },
-    documentation = {
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
     mapping = {
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),

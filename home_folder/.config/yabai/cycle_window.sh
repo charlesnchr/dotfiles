@@ -1,25 +1,30 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon May  2 14:03:41 2022
-* Last Modified : Mon May  2 19:17:40 2022
+* Last Modified : Mon May  2 22:29:59 2022
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
+
+# Arguments:
+## $1: 0/1 = next/prev
+## $2: x_dir/y_dir
+## $3: 0/1 = circular boundary
 
 if [ "$2" = "x_dir" ]; then
     IDS=($(yabai -m query --spaces --space \
       | jq -re ".index" \
       | xargs -I{} yabai -m query --windows --space {} | jq 'sort_by(.frame.x) | .[] | .id'))
 
-    /usr/bin/env osascript <<< \
-        "display notification \"x dir\" with title \"Yabai\"";
+    # /usr/bin/env osascript <<< \
+    #     "display notification \"x dir\" with title \"Yabai\"";
 else
     IDS=($(yabai -m query --spaces --space \
       | jq -re ".index" \
       | xargs -I{} yabai -m query --windows --space {} | jq 'sort_by(.frame.y) | .[] | .id'))
 
-    /usr/bin/env osascript <<< \
-        "display notification \"y dir\" with title \"Yabai\"";
+    # /usr/bin/env osascript <<< \
+    #     "display notification \"y dir\" with title \"Yabai\"";
 fi
 
 # IDS=($(yabai -m query --spaces --space \
@@ -44,13 +49,21 @@ for i in "${!IDS[@]}"; do
            # echo "next "
            NEW_IDX=$(( $i + 1 ))
            if (( $NEW_IDX >= len )); then
-               NEW_IDX=0
+               if [ $3 -eq 0 ]; then
+                   NEW_IDX=0
+               else
+                   NEW_IDX = $len
+               fi
            fi
        else
            # echo "prev "
            NEW_IDX=$(( $i - 1 ))
            if (( $NEW_IDX < 0 )); then
-               NEW_IDX=$(( $len-1 ))
+               if [ $3 -eq 0 ]; then
+                   NEW_IDX=$(( $len-1 ))
+               else
+                   NEW_IDX = 0
+               fi
            fi
        fi
        break;
