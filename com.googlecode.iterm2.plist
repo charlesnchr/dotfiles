@@ -414,6 +414,10 @@
 	<integer>7</integer>
 	<key>MaxVertically</key>
 	<true/>
+	<key>NeverWarnAboutShortLivedSessions_F4CA1C85-9D4F-4719-AA57-5F3BF6747C21</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_F4CA1C85-9D4F-4719-AA57-5F3BF6747C21_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -676,7 +680,9 @@
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<false/>
+			<true/>
+			<key>Blur Radius</key>
+			<real>24.539195478723407</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -777,7 +783,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Use Transparency</key>
-			<false/>
+			<true/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1242,6 +1248,8 @@
 			<false/>
 			<key>Normal Font</key>
 			<string>SauceCodeProNerdFontComplete-Medium 15</string>
+			<key>Only The Default BG Color Uses Transparency</key>
+			<false/>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -1449,7 +1457,7 @@
 			<key>Title Components</key>
 			<integer>256</integer>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.055551861702127711</real>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
 			<key>Unicode Version</key>
@@ -1471,7 +1479,7 @@
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
-			<integer>0</integer>
+			<integer>12</integer>
 			<key>Working Directory</key>
 			<string>/Users/cc</string>
 		</dict>
@@ -1481,7 +1489,7 @@
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenFileInNewWindows</key>
-	<false/>
+	<true/>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PasteSpecialRegex</key>
@@ -1527,11 +1535,11 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
-	<key>PreventEscapeSequenceFromClearingHistory</key>
-	<false/>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
+	<false/>
+	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
 	<key>SensitiveScrollWheel</key>
 	<true/>
@@ -1560,7 +1568,7 @@
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>5</integer>
+	<integer>6</integer>
 	<key>TabTransform</key>
 	<integer>2</integer>
 	<key>TabViewType</key>
