@@ -92,6 +92,8 @@ PACKAGES=$(cat <<-END
     neomutt
     syncthing
     urlscan
+    evince
+    nautilus
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -146,7 +148,7 @@ if ask "Python packages" Y; then
     pip install pyudev i3-balance-workspace
 fi
 
-SNAP_packages="code"
+SNAP_packages="code --classic"
 if ask "Install snapd and link"; then
     echo 'linking for snap -- assuming installed'
     # pamac install snapd libpamac-snap-plugin

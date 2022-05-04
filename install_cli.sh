@@ -11,7 +11,7 @@ source ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
 # autojump
-git clone git://github.com/wting/autojump.git ~/autojump
+git clone https://github.com/wting/autojump.git ~/autojump
 cd ~/autojump
 ./install.py
 

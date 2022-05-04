@@ -320,11 +320,11 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
+    -- Wallpaper -- nice option for same image on all
+    -- set_wallpaper(s)
     -- naughty.notify({text=tostring(screen.count())})
 
-    if screen.count() ~= 3 then
+    if screen.count() == 1 then
             awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
@@ -334,7 +334,20 @@ awful.screen.connect_for_each_screen(function(s)
             awful.tag.add("🏰", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("🐧", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("📓", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
-            awful.tag.add("⚗", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+    elseif screen.count() == 2 then
+        if s.index == 1 then
+            -- awful.tag({ "🤖", "🌎", "🐺", "🐋", "📭" }, s, awful.layout.layouts[1])
+            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐧", { screen = s, selected = true, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("📓", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+        elseif s.index == 2 then
+            awful.tag.add("🎵", { screen = s, selected = true, layout = awful.layout.layouts[3], gap = 3, gap_single_client  = true })
+            awful.tag.add("🏰", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+        end
     else
         -- Each screen has its own tag table.
         if s.index == 1 then
@@ -1115,7 +1128,7 @@ function get_tag(i)
     local newscreen
     local tag
 
-    if count > 1 then
+    if count == 3 then
         if i < 6 then
             newscreen = screen[1]
             tag = newscreen.tags[i]
@@ -1140,6 +1153,23 @@ function get_tag(i)
         elseif i == 12 then
             newscreen = screen[1]
             tag = newscreen.tags[6]
+        end
+    elseif count == 2 then
+        if i < 6 then
+            newscreen = screen[1]
+            tag = newscreen.tags[i]
+        elseif i == 6 then
+            newscreen = screen[2]
+            tag = newscreen.tags[1]
+        elseif i == 7 then
+            newscreen = screen[2]
+            tag = newscreen.tags[2]
+        elseif i == 8 then
+            newscreen = screen[1]
+            tag = newscreen.tags[6]
+        elseif i == 9 then
+            newscreen = screen[1]
+            tag = newscreen.tags[7]
         end
     else
         newscreen = currentscreen
