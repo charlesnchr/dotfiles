@@ -638,7 +638,17 @@ globalkeys = gears.table.join(
     {modkey,altkey, 'Control'},
     'e',
     function()
-      awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        local count = screen.count()
+        local currentscreen = awful.screen.focused()
+        if count == 2 then
+            if currentscreen.index == 2 then
+                awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+            else
+                awful.spawn('rofi -dpi 1 -show drun -theme ~/.config/rofi/purple.rasi')
+            end
+        else
+            awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        end
     end,
     {description = 'Show rofi', group = 'LCAG layer'}
   ),
