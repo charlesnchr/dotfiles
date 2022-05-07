@@ -28,6 +28,13 @@ require('modules.quake-terminal')
 -- dofile('sliders.lua')
 hostname = io.popen("uname -n"):read()
 
+-- fix screen order on work pc -- otherwise west/east monitor is inversed
+if hostname == "alienware" then
+    if screen.count() == 3 then
+        screen[2]:swap(screen[3])
+    end
+end
+
 -- resize floating windows
 -- require("collision")()
 -- collision_resize_width = 0
@@ -475,10 +482,6 @@ root.buttons(gears.table.join(
 -- }}}
 
 
--- fix screen order on work pc -- otherwise west/east monitor is inversed
-if hostname == "alienware" then
-    screen[2]:swap(screen[3])
-end
 
 
 
