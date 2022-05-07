@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon 11 Apr 2022 22:00:29 BST
-* Last Modified : Mon 02 May 2022 09:49:19 BST
+* Last Modified : Sat 07 May 2022 12:06:39 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -19,7 +19,7 @@ ff-theme-util
 fix_xcursor
 
 
-# nitrogen --restore
+nitrogen --restore
 ~/.xprofile
 libinput-gestures-setup restart
 ppgrep python | grep usbwatchdog.py || ~/anaconda3/bin/python ~/bin/usbwatchdog.py &
