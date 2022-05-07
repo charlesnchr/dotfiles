@@ -394,10 +394,13 @@ nnoremap <ScrollWheelDown> <C-E>
 map <localleader>s <Plug>(easymotion-s)
 
 " latex
-" let g:vimtex_view_method = 'skim'
+if has('mac')
+    let g:vimtex_view_method = 'skim'
+elseif has('unix')
+    let g:latex_view_general_viewer = 'zathura'
+    let g:vimtex_view_method = "zathura"
+endif
 let g:vimtex_syntax_conceal_disable = 1
-let g:latex_view_general_viewer = 'zathura'
-let g:vimtex_view_method = "zathura"
 " let g:vimtex_compiler_latexmk = {
 "             \ 'executable' : 'latexmk',
 "             \ 'options' : [
