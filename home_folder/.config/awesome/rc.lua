@@ -475,6 +475,11 @@ root.buttons(gears.table.join(
 -- }}}
 
 
+-- fix screen order on work pc -- otherwise west/east monitor is inversed
+if hostname == "alienware" then
+    screen[2]:swap(screen[3])
+end
+
 
 
 local r_ajust = {
