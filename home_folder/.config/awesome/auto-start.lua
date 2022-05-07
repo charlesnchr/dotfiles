@@ -12,7 +12,6 @@ end
 run_on_start_up = {
     'picom -b --experimental-backends',
     'nm-applet', -- wifi
-    'kmix --keepvisibility', -- shows an audiocontrol applet in systray when installed.
     --'blueberry-tray', -- Bluetooth tray icon
     'numlockx on', -- enable numlock
     '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1', -- credential manager
