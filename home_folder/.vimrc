@@ -514,10 +514,9 @@ let g:floaterm_height = 0.8
 
 
 "let g:taskwiki_sort_orders={"T": "end-"}
-"nmap <C-k> <Plug>VimwikiPrevLink
-"nmap <C-j> <Plug>VimwikiNextLink
+nmap <C-k> <Plug>VimwikiPrevLink
+nmap <C-j> <Plug>VimwikiNextLink
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
-
 vnoremap <leader>y :OSCYank<CR>
 
 "------------------------------------------------------------------------------
