@@ -226,7 +226,7 @@ nnoremap <localleader>af :CtrlPLine<cr>
   "   \ 'PrtHistory(-1)':       ['<c-j>'],
   "   \ 'PrtHistory(1)':        ['<c-k>'] }
 
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10'
+" let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10'
 
 " " don't show the help in normal mode
 " let g:Lf_HideHelp = 1

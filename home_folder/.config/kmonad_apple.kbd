@@ -73,7 +73,7 @@
 
 
 (deflayer default
-  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   @caps a s   d    f    g    h    j    k    l    ;    '    \ ret
@@ -82,10 +82,10 @@
 )
 
 (deflayer spc_fn
-  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  S-1    S-2    S-3    S-4    S-5    S-6    S-7    S-8    S-9    S-0    S--    S-=    A-bspc
   A-tab  M-q    M-w    M-A-C-e    @i3layer    M-t    @i3layer_y    M-A-C-u    M-A-C-i    C-6    M-A-C-p    S-[    S-]
-  @caps  A-1  A-2   A-3   A-4   A-5  lft   down    up    rght    @wslft       @wsrght    \  A-ret
+  @caps  A-1  A-2   A-3   A-4   A-5  lft   down    up    rght    @wslft       @wsrght    del  A-ret
   lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws
   A-M-ret  up
   @ctl2 lctl lalt lmet       @spc2        rmet ralt            lft down rght
@@ -164,7 +164,7 @@
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    ;       '   \    ret
+  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    A-0       '   \    ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
   @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
 )
@@ -174,7 +174,7 @@
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps   A-S-1       A-S-2       A-S-3       A-S-4       A-S-5       A-S-6       A-S-7       A-S-8       A-S-9       0
+  @caps   A-S-1       A-S-2       A-S-3       A-S-4       A-S-5       A-S-6       A-S-7       A-S-8       A-S-9       A-S-0
   '       \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
   @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
@@ -184,7 +184,7 @@
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       0
+  @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       M-A-0
   '       \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
   @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
