@@ -148,8 +148,9 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 local function make_config(server_name)
 	-- Setup base config for each server.
 	local c = {}
-	c.on_attach = on_attach
-	-- c.capabilities = vim.lsp.protocol.make_client_capabilities()
+	-- c.on_attach = on_attach
+    c.on_attach = custom_attach
+    -- c.capabilities = vim.lsp.protocol.make_client_capabilities()
 	-- c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
     c.capabilities = capabilities
 	c.flags = {
@@ -179,9 +180,9 @@ if vim.fn.has('vim_starting') then
 
 	lsp_installer.on_server_ready(function(server)
         -- disable, testing pyright
-        if(server.name == 'pylsp') then
-            return false
-        end
+        -- if(server.name == 'pylsp') then
+        --     return false
+        -- end
         -- if(server.name == 'pyright') then
         --     return false
         -- end
