@@ -19,3 +19,6 @@ if ask "Install GTK theme"; then
     gsettings set org.gnome.desktop.interface gtk-theme "Nordic"
     gsettings set org.gnome.desktop.wm.preferences theme "Nordic"
 fi
+
+
+echo "now use lxappearance and kvantum to set themes"
