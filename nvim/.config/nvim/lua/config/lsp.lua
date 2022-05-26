@@ -180,9 +180,9 @@ if vim.fn.has('vim_starting') then
 
 	lsp_installer.on_server_ready(function(server)
         -- disable, testing pyright
-        -- if(server.name == 'pylsp') then
-        --     return false
-        -- end
+        if(server.name == 'pylsp') then
+            return false
+        end
         -- if(server.name == 'pyright') then
         --     return false
         -- end
