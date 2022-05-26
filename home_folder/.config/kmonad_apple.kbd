@@ -86,8 +86,7 @@
   grv  S-1    S-2    S-3    S-4    S-5    S-6    S-7    S-8    S-9    S-0    S--    S-=    A-bspc
   A-tab  M-q    M-w    M-A-C-e    @i3layer    M-t    @i3layer_y    M-A-C-u    M-A-C-i    C-6    M-A-C-p    S-[    S-]
   @caps  A-1  A-2   A-3   A-4   A-5  lft   down    up    rght    @wslft       @wsrght    del  A-ret
-  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws
-  A-M-ret  up
+  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws  A-M-ret  up
   @ctl2 lctl lalt lmet       @spc2        rmet ralt            lft down rght
 )
 
