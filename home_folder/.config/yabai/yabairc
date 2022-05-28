@@ -89,7 +89,7 @@ yabai -m config mouse_action2               resize
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Stickies" app="^Stickies$" manage=off
 yabai -m rule --add space=4 manage=off
-yabai -m rule --add label="Mail" app="^Mail$" manage=off space=4
+yabai -m rule --add label="Mail" app="^Mail$" manage=off space=5
 yabai -m rule --add label="Slack" app="^Slack$" manage=off space=5
 yabai -m rule --add label="Calendar" app="^Calendar$" manage=off space=5
 yabai -m rule --add label="Signal" app="^Signal$" manage=off space=5

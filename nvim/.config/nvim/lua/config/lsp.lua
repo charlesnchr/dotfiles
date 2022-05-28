@@ -70,11 +70,11 @@ end
 local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- lspconfig.pylsp.setup({
+-- require'lspconfig'.pylsp.setup({
 --     settings = {
 --         pylsp = {
 --             plugins = {
---                 pylint = { enabled = true, executable = "/home/cc/anaconda3/bin/pylint"  },
+--                 pylint = { enabled = true, executable = "~/anaconda3/bin/pylint"  },
 --                 pyflakes = { enabled = true },
 --                 flake8 = { enabled = true },
 --                 pycodestyle = { enabled = false },
@@ -90,10 +90,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 --     capabilities = capabilities,
 -- })
 
--- lspconfig.pyright.setup{
---   on_attach = custom_attach,
+-- require'lspconfig'.pyright.setup{
 --   capabilities = capabilities
 -- }
+-- make_config('pyright')
 
 
 local tabnine = require("cmp_tabnine.config")
@@ -148,8 +148,8 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 local function make_config(server_name)
 	-- Setup base config for each server.
 	local c = {}
-	-- c.on_attach = on_attach
-    c.on_attach = custom_attach
+	c.on_attach = on_attach
+    -- c.on_attach = custom_attach
     -- c.capabilities = vim.lsp.protocol.make_client_capabilities()
 	-- c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
     c.capabilities = capabilities
@@ -180,9 +180,9 @@ if vim.fn.has('vim_starting') then
 
 	lsp_installer.on_server_ready(function(server)
         -- disable, testing pyright
-        if(server.name == 'pylsp') then
-            return false
-        end
+        -- if(server.name == 'pylsp') then
+        --     return false
+        -- end
         -- if(server.name == 'pyright') then
         --     return false
         -- end
