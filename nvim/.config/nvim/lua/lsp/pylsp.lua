@@ -10,7 +10,7 @@ local config = {
   settings = {
     pylsp = {
       plugins = {
-        pylint = { enabled = true, executable = "/home/cc/anaconda3/bin/pylint" },
+        pylint = { enabled = true, executable = os.getenv( "HOME" ).."/anaconda3/bin/pylint" },
         pyflakes = { enabled = true },
         flake8 = { enabled = true },
         pycodestyle = { enabled = false },
