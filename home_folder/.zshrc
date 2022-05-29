@@ -237,3 +237,5 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 # Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/zshrc.post.zsh"
+
+export BAT_THEME="Solarized (dark)"
