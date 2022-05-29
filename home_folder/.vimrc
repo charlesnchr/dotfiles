@@ -152,7 +152,8 @@ Plug 'kana/vim-operator-user'
 Plug 'romainl/vim-cool'
 
 Plug 'itchyny/calendar.vim'
-
+Plug 'jesseleite/vim-agriculture'
+Plug 'f-person/auto-dark-mode.nvim'
 
 call plug#end()
 
@@ -306,7 +307,6 @@ let g:startify_bookmarks = [
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 " let g:airline_theme = 'tomorrow'
-let g:airline_theme = 'palenight'
 " let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
 
 if !exists('g:airline_symbols')
@@ -353,9 +353,42 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 " nnoremap <leader>nn :NextColorScheme<CR>
 " colorscheme challenger_deep
 
+" for mac: theme applied via auto theme plugin
 set termguicolors
-set background=dark
-colorscheme palenight
+
+if has('mac')
+
+    " for mac: theme applied on startup, then synced via lua theme
+    let output =  system("defaults read -g AppleInterfaceStyle")
+    if v:shell_error != 0
+        let g:airline_theme = 'zenburn'
+        set background=light
+        colorscheme rakr
+    else
+        let g:airline_theme = 'palenight'
+        set background=dark
+        colorscheme palenight
+    endif
+elseif has('unix')
+    let g:airline_theme = 'palenight'
+    set background=dark
+    colorscheme palenight
+endif
+
+" fix for :Rg and Ranger preview
+augroup update_bat_theme
+    autocmd!
+    autocmd colorscheme * call ToggleBatEnvVar()
+augroup end
+function ToggleBatEnvVar()
+    if (&background == "light")
+        let $BAT_THEME='Solarized (dark)'
+    else
+        let $BAT_THEME='Solarized (dark)'
+    endif
+endfunction
+
+" colorscheme palenight
 " colorscheme space-vim-dark
 " colorscheme solarized8_high
 
@@ -743,7 +776,8 @@ nnoremap <localleader>fa :RgWiki<Cr>
 command! -bang -nargs=* RgThesis
             \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/phd-thesis'}), <bang>0)
 nnoremap <localleader>fs :RgThesis<Cr>
-
+" using vim-agriculture this would be equivalent
+" nnoremap <localleader>fs :RgRaw -g '*.tex' '' ~/Github/phd-thesis<Cr>
 
 " create file if does not exist
 noremap <leader>gf :e <cfile><cr>
@@ -918,3 +952,8 @@ augroup END " }
 
 nnoremap <silent> f    <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+
+nmap <localleader>/ <Plug>RgRawSearch
+vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
+nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
+
