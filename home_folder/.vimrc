@@ -59,7 +59,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'mg979/vim-visual-multi'
-" Plug 'mattn/calendar-vim'
+Plug 'mattn/calendar-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
@@ -68,7 +68,9 @@ Plug 'jpalardy/vim-slime'
 " Plug 'hanschen/vim-ipython-cell'
 " Plug 'jupyter-vim/jupyter-vim'
 
+" highlighting occurrences, toggling hlsearch
 " Plug 'kevinhwang91/nvim-hlslens'
+Plug 'romainl/vim-cool'
 
 " Plug 'kassio/neoterm'
 Plug 'preservim/tagbar'
@@ -102,7 +104,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-calc'
+" Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
@@ -136,7 +138,7 @@ Plug 'vim-scripts/repeatable-motions.vim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
 
@@ -144,16 +146,21 @@ Plug 'sedm0784/vim-you-autocorrect'
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
-Plug 'romainl/vim-cool'
 
-Plug 'itchyny/calendar.vim'
+" Plug 'itchyny/calendar.vim'
 Plug 'jesseleite/vim-agriculture'
 Plug 'f-person/auto-dark-mode.nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'chrisbra/recover.vim'
+" Plug 'hrsh7th/cmp-copilot'
+Plug 'ziontee113/color-picker.nvim'
+Plug 'ptzz/lf.vim'
+
 
 call plug#end()
 
@@ -776,6 +783,7 @@ nnoremap <localleader>fa :RgWiki<Cr>
 command! -bang -nargs=* RgThesis
             \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/phd-thesis'}), <bang>0)
 nnoremap <localleader>fs :RgThesis<Cr>
+
 " using vim-agriculture this would be equivalent
 " nnoremap <localleader>fs :RgRaw -g '*.tex' '' ~/Github/phd-thesis<Cr>
 
@@ -934,13 +942,13 @@ nmap <localleader>gg <Plug>(operator-grammarous)
 "     autocmd FileType *.wiki autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
 " augroup END
 
-autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
 
-
-let g:calendar_cache_directory = '~/Sync/calendar.vim'
-let g:calendar_first_day = "monday"
-let g:calendar_skip_event_delete_confirm = 1
-nmap <leader>cal :Calendar<cr>
+" for the other calendar app
+" autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
+" let g:calendar_cache_directory = '~/Sync/calendar.vim'
+" let g:calendar_first_day = "monday"
+" let g:calendar_skip_event_delete_confirm = 1
+" nmap <leader>cal :Calendar<cr>
 
 " Add format option 'w' to add trailing white space, indicating that paragraph
 " continues on next line. This is to be used with mutt's 'text_flowed' option.
@@ -953,7 +961,12 @@ augroup END " }
 nnoremap <silent> f    <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
 
-nmap <localleader>/ <Plug>RgRawSearch
+nmap <localleader>/ :Rg<cr>
 vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
 nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 
+" highlight occurrences
+" Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
+" already do by pressing the <j> key, which is a waste of keys!
+" Be useful <enter> key!:
+nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>

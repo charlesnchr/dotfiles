@@ -7,7 +7,8 @@ local source_mapping = {
         emoji = "(Emoji)",
         path = "(Path)",
         calc = "(Calc)",
-        cmp_tabnine = "(Tabnine)",
+        -- cmp_tabnine = "(Tabnine)",
+        copilot = "(Copilot)",
         ultisnips = "(Snippet)",
         buffer = "(Buffer)",
 }
@@ -37,7 +38,8 @@ cmp.setup({
     },
     mapping = {
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-t>'] = cmp.mapping.complete(),
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ["<C-n>"] = cmp.mapping(function(fallback)
@@ -58,7 +60,8 @@ cmp.setup({
         { name = "path" },
         { name = "luasnip" },
         { name = 'ultisnips' }, -- For ultisnips user.
-        { name = "cmp_tabnine" },
+        -- { name = "cmp_tabnine" },
+        { name = "copilot" },
         { name = "nvim_lua" },
         { name = "buffer" },
         { name = "calc" },
@@ -81,7 +84,8 @@ cmp.setup({
             emoji = "(Emoji)",
             path = "(Path)",
             calc = "(Calc)",
-            cmp_tabnine = "(Tabnine)",
+            -- cmp_tabnine = "(Tabnine)",
+            copilot = "(Copilot)",
             ultisnips = "(Snippet)",
             buffer = "(Buffer)",
         },
@@ -95,12 +99,12 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.kind = lspkind.presets.default[vim_item.kind]
             local menu = source_mapping[entry.source.name]
-            if entry.source.name == "cmp_tabnine" then
-                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                    menu = entry.completion_item.data.detail .. " " .. menu
-                end
-                vim_item.kind = ""
-            end
+            -- if entry.source.name == "cmp_tabnine" then
+            --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+            --         menu = entry.completion_item.data.detail .. " " .. menu
+            --     end
+            --     vim_item.kind = ""
+            -- end
             vim_item.menu = menu
             return vim_item
         end,
@@ -256,6 +260,7 @@ auto_dark_mode.setup({
 	set_dark_mode = function()
 		vim.api.nvim_set_option('background', 'dark')
 		vim.cmd('colorscheme palenight')
+
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option('background', 'light')
@@ -263,3 +268,23 @@ auto_dark_mode.setup({
 	end,
 })
 auto_dark_mode.init()
+
+
+
+-- For color-picker.nvim
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
+vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
+
+-- only need setup() if you want to change progress bar icons
+require("color-picker").setup({
+	-- ["icons"] = { "ﱢ", "" },
+	-- ["icons"] = { "ﮊ", "" },
+	-- ["icons"] = { "", "ﰕ" },
+	["icons"] = { "ﱢ", "" },
+	-- ["icons"] = { "", "" },
+	-- ["icons"] = { "", "" },
+})
+
+vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.

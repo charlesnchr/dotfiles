@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/profile.pre.bash"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=nvim
 export TERMINAL=alacritty
@@ -13,6 +11,3 @@ else
 fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
-
-# Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/profile.post.bash"
