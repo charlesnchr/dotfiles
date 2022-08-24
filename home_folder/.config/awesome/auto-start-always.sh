@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon 11 Apr 2022 22:00:29 BST
-* Last Modified : Sat 16 Apr 2022 23:43:48 BST
+* Last Modified : Mon 02 May 2022 00:32:26 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -29,7 +29,7 @@ ppgrep python | grep usbwatchdog.py || ~/anaconda3/bin/python ~/bin/usbwatchdog.
 # pgrep Spotify || exo-open ~/.local/share/applications/webcatalog-spotify.desktop
 pgrep ncspot || kitty -e ~/bin/ncspot
 
-if [ "$(hostname)" -eq "xps" ]; then
+if [ "$(hostname)" == "xps" ]; then
     notify-send "Starting Kmonad"
     kmonad ~/.config/dell-xps.kbd
 fi
