@@ -59,16 +59,18 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'mg979/vim-visual-multi'
-" Plug 'mattn/calendar-vim'
+Plug 'mattn/calendar-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
 Plug 'jpalardy/vim-slime'
 " slows down start-up
-" Plug 'hanschen/vim-ipython-cell'
+Plug 'hanschen/vim-ipython-cell'
 " Plug 'jupyter-vim/jupyter-vim'
 
+" highlighting occurrences, toggling hlsearch
 " Plug 'kevinhwang91/nvim-hlslens'
+Plug 'romainl/vim-cool'
 
 " Plug 'kassio/neoterm'
 Plug 'preservim/tagbar'
@@ -102,7 +104,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-calc'
+" Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
@@ -136,7 +138,7 @@ Plug 'vim-scripts/repeatable-motions.vim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
 
@@ -144,14 +146,19 @@ Plug 'sedm0784/vim-you-autocorrect'
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'github/copilot.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
-Plug 'romainl/vim-cool'
 
-Plug 'itchyny/calendar.vim'
+" Plug 'itchyny/calendar.vim'
+Plug 'jesseleite/vim-agriculture'
+Plug 'f-person/auto-dark-mode.nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'chrisbra/recover.vim'
+Plug 'ziontee113/color-picker.nvim'
+" Plug 'ptzz/lf.vim'
+Plug 'charlesnchr/ranger-floaterm.vim'
 
 
 call plug#end()
@@ -161,7 +168,11 @@ lua require('lua-init')
 
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
-let g:python3_host_prog = expand('~/anaconda3/bin/python')
+if has('mac')
+    let g:python3_host_prog = expand('~/anaconda3/bin/python')
+elseif has('unix')
+    let g:python3_host_prog = expand('~/anaconda3/envs/oni38/bin/python')
+endif
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -226,7 +237,7 @@ nnoremap <localleader>af :CtrlPLine<cr>
   "   \ 'PrtHistory(-1)':       ['<c-j>'],
   "   \ 'PrtHistory(1)':        ['<c-k>'] }
 
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10'
+" let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:10'
 
 " " don't show the help in normal mode
 " let g:Lf_HideHelp = 1
@@ -306,7 +317,6 @@ let g:startify_bookmarks = [
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 " let g:airline_theme = 'tomorrow'
-let g:airline_theme = 'palenight'
 " let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
 
 if !exists('g:airline_symbols')
@@ -353,15 +363,55 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 " nnoremap <leader>nn :NextColorScheme<CR>
 " colorscheme challenger_deep
 
+" for mac: theme applied via auto theme plugin
 set termguicolors
-set background=dark
-colorscheme palenight
+
+if has('mac')
+    " for mac: theme applied on startup, then synced via lua theme
+    let output =  system("defaults read -g AppleInterfaceStyle")
+    if v:shell_error != 0
+        let g:airline_theme = 'gruvbox'
+        set background=light
+        colorscheme PaperColor
+    else
+        let g:airline_theme = 'palenight'
+        set background=dark
+        colorscheme palenight
+    endif
+elseif has('unix')
+    " let g:airline_theme = 'palenight'
+    " set background=dark
+    " colorscheme palenight
+
+    let g:airline_theme = 'gruvbox'
+    set background=light
+    colorscheme PaperColor
+endif
+
+" fix for :Rg and Ranger preview
+augroup update_bat_theme
+    autocmd!
+    autocmd colorscheme * call ToggleBatEnvVar()
+augroup end
+function ToggleBatEnvVar()
+    if (&background == "light")
+        let $BAT_THEME='Solarized (dark)'
+    else
+        let $BAT_THEME='Solarized (dark)'
+    endif
+endfunction
+
+" colorscheme palenight
 " colorscheme space-vim-dark
 " colorscheme solarized8_high
 
 
 set nu rnu " relative line numbering
-set clipboard=unnamed " public copy/paste register
+if has('mac')
+    set clipboard=unnamed " public copy/paste register
+elseif has('unix') " for server, not sure if necessary
+    set clipboard=unnamedplus
+endif
 
 set ignorecase
 set wildignorecase " affects :e
@@ -394,10 +444,13 @@ nnoremap <ScrollWheelDown> <C-E>
 map <localleader>s <Plug>(easymotion-s)
 
 " latex
-" let g:vimtex_view_method = 'skim'
+if has('mac')
+    let g:vimtex_view_method = 'skim'
+elseif has('unix')
+    let g:latex_view_general_viewer = 'zathura'
+    let g:vimtex_view_method = "zathura"
+endif
 let g:vimtex_syntax_conceal_disable = 1
-let g:latex_view_general_viewer = 'zathura'
-let g:vimtex_view_method = "zathura"
 " let g:vimtex_compiler_latexmk = {
 "             \ 'executable' : 'latexmk',
 "             \ 'options' : [
@@ -514,10 +567,9 @@ let g:floaterm_height = 0.8
 
 
 "let g:taskwiki_sort_orders={"T": "end-"}
-"nmap <C-k> <Plug>VimwikiPrevLink
-"nmap <C-j> <Plug>VimwikiNextLink
+nmap <C-k> <Plug>VimwikiPrevLink
+nmap <C-j> <Plug>VimwikiNextLink
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
-
 vnoremap <leader>y :OSCYank<CR>
 
 "------------------------------------------------------------------------------
@@ -560,6 +612,7 @@ nmap <F10> :IPythonCellInsertBelow<CR>a
 imap <F9> <C-o>:IPythonCellInsertAbove<CR>
 imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 
+nmap <localleader>r :SlimeSend1 %run test.py<CR>
 
 "------------------------------------------------------------------------------
 " slime configuration
@@ -742,6 +795,8 @@ command! -bang -nargs=* RgThesis
             \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/phd-thesis'}), <bang>0)
 nnoremap <localleader>fs :RgThesis<Cr>
 
+" using vim-agriculture this would be equivalent
+" nnoremap <localleader>fs :RgRaw -g '*.tex' '' ~/Github/phd-thesis<Cr>
 
 " create file if does not exist
 noremap <leader>gf :e <cfile><cr>
@@ -898,13 +953,7 @@ nmap <localleader>gg <Plug>(operator-grammarous)
 "     autocmd FileType *.wiki autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
 " augroup END
 
-autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
 
-
-let g:calendar_cache_directory = '~/Sync/calendar.vim'
-let g:calendar_first_day = "monday"
-let g:calendar_skip_event_delete_confirm = 1
-nmap <leader>cal :Calendar<cr>
 
 " Add format option 'w' to add trailing white space, indicating that paragraph
 " continues on next line. This is to be used with mutt's 'text_flowed' option.
@@ -914,5 +963,17 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-nnoremap <silent> f    <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+
+nmap <localleader>/ :Rg<cr>
+vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
+nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
+
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
+
+" highlight occurrences
+" Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
+" already do by pressing the <j> key, which is a waste of keys!
+" Be useful <enter> key!:
+nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>

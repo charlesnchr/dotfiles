@@ -103,35 +103,65 @@ font:
 #     background: '#b362ff'
 #     text: '#c2c2c2'
 
+# Used for a long time
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x1f2022'
+#     foreground: '0xa3a3a3'
+#   # Colors the cursor will use if `custom_cursor_colors` is true
+#   cursor:
+#     text: '0x1f2022'
+#     cursor: '0xa3a3a3'
+#   # Normal colors
+#   normal:
+#     black:   '0x1f2022'
+#     red:     '0xf2241f'
+#     green:   '0x67b11d'
+#     yellow:  '0xb1951d'
+#     blue:    '0x4f97d7'
+#     magenta: '0xa31db1'
+#     cyan:    '0x2d9574'
+#     white:   '0xa3a3a3'
+#   # Bright colors
+#   bright:
+#     black:   '0x585858'
+#     red:     '0xf2241f'
+#     green:   '0x67b11d'
+#     yellow:  '0xb1951d'
+#     blue:    '0x4f97d7'
+#     magenta: '0xa31db1'
+#     cyan:    '0x2d9574'
+#     white:   '0xf8f8f8'
+#
+
 colors:
   # Default colors
   primary:
-    background: '0x1f2022'
-    foreground: '0xa3a3a3'
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x1f2022'
-    cursor: '0xa3a3a3'
+    background: '0x24283b'
+    foreground: '0xa9b1d6'
+
   # Normal colors
   normal:
-    black:   '0x1f2022'
-    red:     '0xf2241f'
-    green:   '0x67b11d'
-    yellow:  '0xb1951d'
-    blue:    '0x4f97d7'
-    magenta: '0xa31db1'
-    cyan:    '0x2d9574'
-    white:   '0xa3a3a3'
+    black:   '0x32344a'
+    red:     '0xf7768e'
+    green:   '0x9ece6a'
+    yellow:  '0xe0af68'
+    blue:    '0x7aa2f7'
+    magenta: '0xad8ee6'
+    cyan:    '0x449dab'
+    white:   '0x9699a8'
+
   # Bright colors
   bright:
-    black:   '0x585858'
-    red:     '0xf2241f'
-    green:   '0x67b11d'
-    yellow:  '0xb1951d'
-    blue:    '0x4f97d7'
-    magenta: '0xa31db1'
-    cyan:    '0x2d9574'
-    white:   '0xf8f8f8'
+    black:   '0x444b6a'
+    red:     '0xff7a93'
+    green:   '0xb9f27c'
+    yellow:  '0xff9e64'
+    blue:    '0x7da6ff'
+    magenta: '0xbb9af7'
+    cyan:    '0x0db9d7'
+    white:   '0xacb0d0'
 
 key_bindings:
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }
@@ -648,7 +678,7 @@ save_to_clipboard: true
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /usr/bin/zsh
+  program: zsh
 #  args:
 #    - --login
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 : ' ----------------------------------------
 * Creation Time : Mon 11 Apr 2022 22:00:29 BST
-* Last Modified : Mon 02 May 2022 00:32:26 BST
+* Last Modified : Wed 24 Aug 2022 14:39:17 BST
 * Author : Charles N. Christensen
 * Github : github.com/charlesnchr
 ----------------------------------------'
@@ -19,7 +19,7 @@ ff-theme-util
 fix_xcursor
 
 
-# nitrogen --restore
+nitrogen --restore
 ~/.xprofile
 libinput-gestures-setup restart
 ppgrep python | grep usbwatchdog.py || ~/anaconda3/bin/python ~/bin/usbwatchdog.py &
@@ -33,3 +33,4 @@ if [ "$(hostname)" == "xps" ]; then
     notify-send "Starting Kmonad"
     kmonad ~/.config/dell-xps.kbd
 fi
+

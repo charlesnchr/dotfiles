@@ -70,11 +70,11 @@ end
 local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- lspconfig.pylsp.setup({
+-- require'lspconfig'.pylsp.setup({
 --     settings = {
 --         pylsp = {
 --             plugins = {
---                 pylint = { enabled = true, executable = "/home/cc/anaconda3/bin/pylint"  },
+--                 pylint = { enabled = true, executable = "~/anaconda3/bin/pylint"  },
 --                 pyflakes = { enabled = true },
 --                 flake8 = { enabled = true },
 --                 pycodestyle = { enabled = false },
@@ -90,20 +90,20 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 --     capabilities = capabilities,
 -- })
 
--- lspconfig.pyright.setup{
---   on_attach = custom_attach,
+-- require'lspconfig'.pyright.setup{
 --   capabilities = capabilities
 -- }
+-- make_config('pyright')
 
 
-local tabnine = require("cmp_tabnine.config")
-tabnine:setup({
-	max_lines = 1000,
-	max_num_results = 20,
-	sort = true,
-	run_on_every_keystroke = true,
-	snippet_placeholder = "..",
-})
+-- local tabnine = require("cmp_tabnine.config")
+-- tabnine:setup({
+-- 	max_lines = 1000,
+-- 	max_num_results = 20,
+-- 	sort = true,
+-- 	run_on_every_keystroke = true,
+-- 	snippet_placeholder = "..",
+-- })
 
 
 -- Change diagnostic signs.
@@ -146,10 +146,12 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 
 -- Combine base config for each server and merge user-defined settings.
 local function make_config(server_name)
+
 	-- Setup base config for each server.
 	local c = {}
 	c.on_attach = on_attach
-	-- c.capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- c.on_attach = custom_attach
+    -- c.capabilities = vim.lsp.protocol.make_client_capabilities()
 	-- c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
     c.capabilities = capabilities
 	c.flags = {
@@ -179,9 +181,9 @@ if vim.fn.has('vim_starting') then
 
 	lsp_installer.on_server_ready(function(server)
         -- disable, testing pyright
-        if(server.name == 'pylsp') then
-            return false
-        end
+        -- if(server.name == 'pylsp') then
+        --     return false
+        -- end
         -- if(server.name == 'pyright') then
         --     return false
         -- end
@@ -198,6 +200,21 @@ if vim.fn.has('vim_starting') then
 		'<cmd>lua require("user").diagnostic.publish_loclist(true)<CR>',
 		args
 	)
+
+  vim.api.nvim_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", args)
+  vim.api.nvim_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<leader>sh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>d", "<cmd>lua require('config.lsp').show_line_diagnostics()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", args)
+  vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", args)
+  vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", args)
+  vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", args)
+  vim.api.nvim_set_keymap("n", "<space>d", "<cmd>lua vim.diagnostic.open_float(0, { scope = 'line', border = 'none' })<CR>", args)
 end
 
 return M
