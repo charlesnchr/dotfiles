@@ -13,15 +13,15 @@ CACTV=$(echo $color3 | sed 's/#//')
 CNORM=$(echo $color1 | sed 's/#//')
 CINSE=$(echo $foreground | sed 's/#//')
 
-# yabai -m config status_bar                   on
-# yabai -m config status_bar_background_color  0xff$CBACK
-# yabai -m config status_bar_foreground_color  0xff$CFORE
-
-
 
 # ===== Loading Scripting Additions ============
 
 # See: https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup
+
+# this requires adding:
+# cc ALL = (root) NOPASSWD: /opt/homebrew/bin/yabai --load-sa
+# to: /private/etc/sudoers.d/yabai
+# e.g. with: sudo visudo -f /private/etc/sudoers.d/yabai
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
@@ -32,28 +32,26 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 yabai -m signal --add event=space_changed action="osascript -e \"tell application id 'tracesOf.Uebersicht' to refresh widget id 'simple-bar-spaces-jsx'\""
 
-
-yabai -m config window_border                on
-yabai -m config window_border_width          4
 yabai -m config active_window_border_color   0xff$CACTV
 yabai -m config normal_window_border_color   0xff$CNORM
 yabai -m config insert_window_border_color   0xff$CINSE
 
-
 declare -A gaps
 declare -A color
 
-gaps["top"]="8"
-gaps["bottom"]="8"
-gaps["left"]="8"
-gaps["right"]="8"
-gaps["inner"]="8"
+gaps["top"]="4"
+gaps["bottom"]="4"
+gaps["left"]="4"
+gaps["right"]="4"
+gaps["inner"]="4"
 
 color["focused"]="0xE0808080"
 color["normal"]="0x00010101"
 color["preselect"]="0xE02d74da"
 
-yabai -m config layout                      bsp
+yabai -m config layout                      float
+yabai -m config --space 1 layout            bsp
+yabai -m config --space 2 layout            bsp
 
 yabai -m config top_padding                 "${gaps["top"]}"
 yabai -m config bottom_padding              "${gaps["bottom"]}"
@@ -68,7 +66,7 @@ yabai -m config window_topmost              off
 yabai -m config window_opacity              off
 yabai -m config window_shadow               float
 
-yabai -m config window_border               on
+yabai -m config window_border               off
 yabai -m config window_border_width         2
 yabai -m config active_window_border_color  "${color["focused"]}"
 yabai -m config normal_window_border_color  "${color["normal"]}"
@@ -84,13 +82,15 @@ yabai -m config mouse_modifier              fn
 yabai -m config mouse_action1               move
 yabai -m config mouse_action2               resize
 
-yabai -m config external_bar all:23:0
+# yabai -m config external_bar all:23:0
 
 # ===== Rules ==================================
 
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Stickies" app="^Stickies$" manage=off
+yabai -m rule --add space=4 manage=off
 yabai -m rule --add label="Mail" app="^Mail$" manage=off space=4
+yabai -m rule --add label="Slack" app="^Slack$" manage=off space=4
 yabai -m rule --add label="Calendar" app="^Calendar$" manage=off space=4
 yabai -m rule --add label="Signal" app="^Signal$" manage=off space=4
 yabai -m rule --add label="Microsoft Teams" app="^Microsoft Teams$" manage=off space=4
@@ -109,17 +109,44 @@ yabai -m rule --add label="Software Update" title="Software Update" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 
 yabai -m rule --add label="Alacritty" app="^Alacritty$"
-yabai -m rule --add label="Firefox" app="^Firefox$"
-yabai -m rule --add label="Notion" app="^Notion$" space=9
 yabai -m rule --add label="iTerm" app="^iTerm$"
 yabai -m rule --add label="Spotify" app="^Spotify$" manage=on space=6
-yabai -m rule --add label="Finder" app="^Finder$" manage=on
-yabai -m rule --add label="OmniGraffle" app="^OmniGraffle$" manage=on space=3
-yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
+yabai -m rule --add label="Finder" app="^Finder$" manage=off
+# yabai -m rule --add label="OmniGraffle" app="^OmniGraffle$" manage=on space=3
+# yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
 
 # ===== Signals ================================
 
+# spacebar
+
+# spacebar -m config position             top
+# spacebar -m config height               26
+# spacebar -m config title                off
+# spacebar -m config spaces               on
+# spacebar -m config clock                on
+# spacebar -m config power                on
+# spacebar -m config padding_left         20
+# spacebar -m config padding_right        20
+# spacebar -m config spacing_left         25
+# spacebar -m config spacing_right        15
+# spacebar -m config text_font            "Helvetica:Bold:12.0"
+# spacebar -m config icon_font            "Font Awesome 6 Free:Solid:12.0"
+# spacebar -m config background_color     0xff202020
+# spacebar -m config foreground_color     0xffa8a8a8
+# spacebar -m config space_icon_color     0xff458588
+# spacebar -m config power_icon_color     0xffcd950c
+# spacebar -m config battery_icon_color   0xffd75f5f
+# spacebar -m config dnd_icon_color       0xffa8a8a8
+# spacebar -m config clock_icon_color     0xffa8a8a8
+# spacebar -m config power_icon_strip      
+# spacebar -m config space_icon_strip     1 2 3 4 5 6 7 8 9
+# spacebar -m config space_icon           
+# spacebar -m config clock_icon           
+# spacebar -m config dnd_icon             
+# spacebar -m config clock_format         "%d/%m %R"
+# spacebar -m config right_shell          off
+# spacebar -m config right_shell_icon     v
+# spacebar -m config right_shell_command  "whoami"
+
 set +x
 printf "yabai: configuration loaded...\\n"
-
-

@@ -7,7 +7,7 @@ local source_mapping = {
         emoji = "(Emoji)",
         path = "(Path)",
         calc = "(Calc)",
-        cmp_tabnine = "(Tabnine)",
+        -- cmp_tabnine = "(Tabnine)",
         ultisnips = "(Snippet)",
         buffer = "(Buffer)",
 }
@@ -35,21 +35,31 @@ cmp.setup({
             vim.fn["UltiSnips#Anon"](args.body)
         end,
     },
-    documentation = {
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
     mapping = {
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-t>'] = cmp.mapping.complete(),
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ["<C-n>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            end
+        end, { "i", "s" }),
+        ["<C-p>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            end
+        end, { "i", "s" }),
     },
     sources = {
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "luasnip" },
         { name = 'ultisnips' }, -- For ultisnips user.
-        { name = "cmp_tabnine" },
+        -- { name = "cmp_tabnine" },
         { name = "nvim_lua" },
         { name = "buffer" },
         { name = "calc" },
@@ -72,7 +82,7 @@ cmp.setup({
             emoji = "(Emoji)",
             path = "(Path)",
             calc = "(Calc)",
-            cmp_tabnine = "(Tabnine)",
+            -- cmp_tabnine = "(Tabnine)",
             ultisnips = "(Snippet)",
             buffer = "(Buffer)",
         },
@@ -86,12 +96,12 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.kind = lspkind.presets.default[vim_item.kind]
             local menu = source_mapping[entry.source.name]
-            if entry.source.name == "cmp_tabnine" then
-                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                    menu = entry.completion_item.data.detail .. " " .. menu
-                end
-                vim_item.kind = ""
-            end
+            -- if entry.source.name == "cmp_tabnine" then
+            --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+            --         menu = entry.completion_item.data.detail .. " " .. menu
+            --     end
+            --     vim_item.kind = ""
+            -- end
             vim_item.menu = menu
             return vim_item
         end,
@@ -130,10 +140,6 @@ require'nvim-tree'.setup {
         enable = true,
         auto_open = true,
     },
-    update_to_buf_dir = {
-        enable = true,
-        auto_open = true,
-    },
     open_on_tab = false,
     hijack_cursor = false,
     update_cwd = false,
@@ -165,7 +171,6 @@ require'nvim-tree'.setup {
         height = 30,
         hide_root_folder = false,
         side = "left",
-        auto_resize = false,
         mappings = {
             list = {
                 { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
@@ -195,11 +200,6 @@ require'nvim-tree'.setup {
         open_file = {
             resize_window = true,
             quit_on_open = true,
-        },
-        window_picker = {
-            enable = false,
-            chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-            exclude = {},
         },
     }
 }
@@ -249,3 +249,41 @@ require("telescope").setup({
         },
     },
 })
+
+local auto_dark_mode = require('auto-dark-mode')
+
+auto_dark_mode.setup({
+	update_interval = 1000,
+	set_dark_mode = function()
+		vim.api.nvim_set_option('background', 'dark')
+		vim.cmd('colorscheme palenight')
+		vim.cmd('AirlineTheme palenight')
+
+	end,
+	set_light_mode = function()
+		vim.api.nvim_set_option('background', 'light')
+		vim.cmd('colorscheme PaperColor')
+		vim.cmd('AirlineTheme gruvbox')
+	end,
+})
+auto_dark_mode.init()
+
+
+
+-- For color-picker.nvim
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
+vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
+
+-- only need setup() if you want to change progress bar icons
+require("color-picker").setup({
+	-- ["icons"] = { "ﱢ", "" },
+	-- ["icons"] = { "ﮊ", "" },
+	-- ["icons"] = { "", "ﰕ" },
+	["icons"] = { "ﱢ", "" },
+	-- ["icons"] = { "", "" },
+	-- ["icons"] = { "", "" },
+})
+
+vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.

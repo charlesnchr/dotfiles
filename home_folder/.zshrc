@@ -230,3 +230,11 @@ PERL5LIB="/home/cc/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/cc/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/cc/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/cc/perl5"; export PERL_MM_OPT;
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+export BAT_THEME="Solarized (dark)"
+
+# much faster
+export FZF_DEFAULT_COMMAND='fd --type file -H'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

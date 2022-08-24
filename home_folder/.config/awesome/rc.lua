@@ -28,6 +28,13 @@ require('modules.quake-terminal')
 -- dofile('sliders.lua')
 hostname = io.popen("uname -n"):read()
 
+-- fix screen order on work pc -- otherwise west/east monitor is inversed
+if hostname == "alienware" then
+    if screen.count() == 3 then
+        screen[2]:swap(screen[3])
+    end
+end
+
 -- resize floating windows
 -- require("collision")()
 -- collision_resize_width = 0
@@ -320,11 +327,11 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
+    -- Wallpaper -- nice option for same image on all
+    -- set_wallpaper(s)
     -- naughty.notify({text=tostring(screen.count())})
 
-    if screen.count() ~= 3 then
+    if screen.count() == 1 then
             awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client = true })
             awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
@@ -334,6 +341,20 @@ awful.screen.connect_for_each_screen(function(s)
             awful.tag.add("🏰", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("🐧", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("📓", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
+    elseif screen.count() == 2 then
+        if s.index == 1 then
+            -- awful.tag({ "🤖", "🌎", "🐺", "🐋", "📭" }, s, awful.layout.layouts[1])
+            awful.tag.add("🤖", { screen = s, selected = true, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🌎", { screen = s, layout = awful.layout.layouts[2], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐺", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐋", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("📭", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("🐧", { screen = s, selected = true, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+            awful.tag.add("📓", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+        elseif s.index == 2 then
+            awful.tag.add("🎵", { screen = s, selected = true, layout = awful.layout.layouts[3], gap = 3, gap_single_client  = true })
+            awful.tag.add("🏰", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
+        end
     else
         -- Each screen has its own tag table.
         if s.index == 1 then
@@ -459,6 +480,7 @@ root.buttons(gears.table.join(
     awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end)
 ))
 -- }}}
+
 
 
 
@@ -624,35 +646,45 @@ globalkeys = gears.table.join(
     {modkey,altkey, 'Control'},
     'e',
     function()
-      awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        local count = screen.count()
+        local currentscreen = awful.screen.focused()
+        if count == 2 then
+            if currentscreen.index == 2 then
+                awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+            else
+                awful.spawn('rofi -dpi 1 -show drun -theme ~/.config/rofi/purple.rasi')
+            end
+        else
+            awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        end
     end,
     {description = 'Show rofi', group = 'LCAG layer'}
   ),
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'j',
+    'period',
     function () awful.client.focus.byidx(  1)    end,
     {description = 'focus next', group = 'LCAG layer'}
   ),
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'k',
+    'comma',
     function () awful.client.focus.byidx( -1)    end,
     {description = 'focus prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'h',
+    {modkey,altkey, 'Shift', 'Control'},
+    'comma',
     function () awful.client.swap.byidx( -1)    end,
     {description = 'swap prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'l',
+    {modkey,altkey, 'Shift', 'Control'},
+    'period',
     function () awful.client.swap.byidx( 1)    end,
     {description = 'swap next', group = 'LCAG layer'}
   ),
@@ -1114,7 +1146,7 @@ function get_tag(i)
     local newscreen
     local tag
 
-    if count > 1 then
+    if count == 3 then
         if i < 6 then
             newscreen = screen[1]
             tag = newscreen.tags[i]
@@ -1139,6 +1171,23 @@ function get_tag(i)
         elseif i == 12 then
             newscreen = screen[1]
             tag = newscreen.tags[6]
+        end
+    elseif count == 2 then
+        if i < 6 then
+            newscreen = screen[1]
+            tag = newscreen.tags[i]
+        elseif i == 6 then
+            newscreen = screen[2]
+            tag = newscreen.tags[1]
+        elseif i == 7 then
+            newscreen = screen[2]
+            tag = newscreen.tags[2]
+        elseif i == 8 then
+            newscreen = screen[1]
+            tag = newscreen.tags[6]
+        elseif i == 9 then
+            newscreen = screen[1]
+            tag = newscreen.tags[7]
         end
     else
         newscreen = currentscreen
