@@ -372,7 +372,7 @@ if has('mac')
     if v:shell_error != 0
         let g:airline_theme = 'gruvbox'
         set background=light
-        colorscheme rakr
+        colorscheme PaperColor
     else
         let g:airline_theme = 'palenight'
         set background=dark
@@ -385,7 +385,7 @@ elseif has('unix')
 
     let g:airline_theme = 'gruvbox'
     set background=light
-    colorscheme rakr
+    colorscheme PaperColor
 endif
 
 " fix for :Rg and Ranger preview
@@ -966,7 +966,7 @@ augroup END " }
 nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
 
-nmap <localleader>/ <Plug>RgRawSearch
+nmap <localleader>/ :Rg<cr>
 vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
 nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 

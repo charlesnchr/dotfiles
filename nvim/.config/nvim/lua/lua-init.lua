@@ -262,7 +262,7 @@ auto_dark_mode.setup({
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option('background', 'light')
-		vim.cmd('colorscheme rakr')
+		vim.cmd('colorscheme PaperColor')
 		vim.cmd('AirlineTheme gruvbox')
 	end,
 })
