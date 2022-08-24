@@ -334,7 +334,6 @@ awful.screen.connect_for_each_screen(function(s)
             awful.tag.add("🏰", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("🐧", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
             awful.tag.add("📓", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client = true })
-            awful.tag.add("⚗", { screen = s, layout = awful.layout.layouts[1], gap = 3, gap_single_client  = true })
     else
         -- Each screen has its own tag table.
         if s.index == 1 then
