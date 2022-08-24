@@ -157,6 +157,8 @@ Plug 'f-person/auto-dark-mode.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
+" Plug 'ptzz/lf.vim'
+Plug 'charlesnchr/ranger-floaterm.vim'
 
 
 call plug#end()
@@ -368,7 +370,7 @@ if has('mac')
     " for mac: theme applied on startup, then synced via lua theme
     let output =  system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
-        let g:airline_theme = 'zenburn'
+        let g:airline_theme = 'gruvbox'
         set background=light
         colorscheme rakr
     else
@@ -380,14 +382,10 @@ elseif has('unix')
     " let g:airline_theme = 'palenight'
     " set background=dark
     " colorscheme palenight
-    " let g:airline_theme = 'palenight'
 
-    let g:airline_theme = 'zenburn'
+    let g:airline_theme = 'gruvbox'
     set background=light
-    colorscheme PaperColor
-
-    " set background=light
-    " colorscheme rakr
+    colorscheme rakr
 endif
 
 " fix for :Rg and Ranger preview
