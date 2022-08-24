@@ -663,28 +663,28 @@ globalkeys = gears.table.join(
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'j',
+    'period',
     function () awful.client.focus.byidx(  1)    end,
     {description = 'focus next', group = 'LCAG layer'}
   ),
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'k',
+    'comma',
     function () awful.client.focus.byidx( -1)    end,
     {description = 'focus prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'h',
+    {modkey,altkey, 'Shift', 'Control'},
+    'comma',
     function () awful.client.swap.byidx( -1)    end,
     {description = 'swap prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'l',
+    {modkey,altkey, 'Shift', 'Control'},
+    'period',
     function () awful.client.swap.byidx( 1)    end,
     {description = 'swap next', group = 'LCAG layer'}
   ),

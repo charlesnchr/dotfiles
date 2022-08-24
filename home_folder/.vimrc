@@ -65,7 +65,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
 Plug 'jpalardy/vim-slime'
 " slows down start-up
-" Plug 'hanschen/vim-ipython-cell'
+Plug 'hanschen/vim-ipython-cell'
 " Plug 'jupyter-vim/jupyter-vim'
 
 " Plug 'kevinhwang91/nvim-hlslens'
@@ -91,7 +91,6 @@ Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'sbdchd/neoformat'
 Plug 'simnalamburt/vim-mundo'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
@@ -136,7 +135,7 @@ Plug 'vim-scripts/repeatable-motions.vim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'panozzaj/vim-autocorrect'
 Plug 'sedm0784/vim-you-autocorrect'
 
@@ -162,7 +161,8 @@ lua require('lua-init')
 
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
-let g:python3_host_prog = expand('~/anaconda3/bin/python')
+" let g:python3_host_prog = expand('~/anaconda3/bin/python')
+let g:python3_host_prog = expand('~/anaconda3/envs/oni38/bin/python')
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -357,7 +357,6 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 set termguicolors
 
 if has('mac')
-
     " for mac: theme applied on startup, then synced via lua theme
     let output =  system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
@@ -370,9 +369,17 @@ if has('mac')
         colorscheme palenight
     endif
 elseif has('unix')
-    let g:airline_theme = 'palenight'
-    set background=dark
-    colorscheme palenight
+    " let g:airline_theme = 'palenight'
+    " set background=dark
+    " colorscheme palenight
+    " let g:airline_theme = 'palenight'
+
+    let g:airline_theme = 'zenburn'
+    set background=light
+    colorscheme PaperColor
+
+    " set background=light
+    " colorscheme rakr
 endif
 
 " fix for :Rg and Ranger preview
@@ -394,7 +401,8 @@ endfunction
 
 
 set nu rnu " relative line numbering
-set clipboard=unnamed " public copy/paste register
+" set clipboard=unnamed " public copy/paste register
+set clipboard=unnamedplus
 
 set ignorecase
 set wildignorecase " affects :e
@@ -595,6 +603,7 @@ nmap <F10> :IPythonCellInsertBelow<CR>a
 imap <F9> <C-o>:IPythonCellInsertAbove<CR>
 imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 
+nmap <localleader>r :SlimeSend1 %run test.py<CR>
 
 "------------------------------------------------------------------------------
 " slime configuration
@@ -611,7 +620,7 @@ nmap <leader>s <Plug>SlimeSendCell
 " always send text to the top-right pane in the current tmux tab without asking
 let g:slime_default_config = {
             \ 'socket_name': get(split($TMUX, ','), 0),
-            \ 'target_pane': '{right-of}' }
+            \ 'target_pane': '{top-right}' }
 let g:slime_dont_ask_default = 1
 
 "------------------------------------------------------------------------------
@@ -950,10 +959,11 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-nnoremap <silent> f    <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
 
 nmap <localleader>/ <Plug>RgRawSearch
 vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
 nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
