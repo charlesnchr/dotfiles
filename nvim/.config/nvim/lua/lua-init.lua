@@ -123,6 +123,7 @@ require("bufferline").setup{
     }
 }
 
+
 -- empty setup using defaults: add your own options
 require'nvim-tree'.setup {
     disable_netrw = true,
@@ -262,8 +263,8 @@ auto_dark_mode.setup({
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option('background', 'light')
-		vim.cmd('colorscheme rakr')
-		vim.cmd('AirlineTheme gruvbox')
+		vim.cmd('colorscheme PaperColor')
+		vim.cmd('AirlineTheme atomic')
 	end,
 })
 auto_dark_mode.init()
