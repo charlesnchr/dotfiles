@@ -164,10 +164,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 source $HOME/dotfiles/.zshrc_local
 
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
-bindkey "^[^[OA" up-line-or-beginning-search
-bindkey "^[^[OB" down-line-or-beginning-search
-bindkey "^[^[OC" forward-char
-bindkey "^[^[OD" backward-char
+# bindkey "^[^[OA" up-line-or-beginning-search
+# bindkey "^[^[OB" down-line-or-beginning-search
+# bindkey "^[^[OC" forward-char
+# bindkey "^[^[OD" backward-char
 
 
 

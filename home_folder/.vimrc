@@ -317,7 +317,7 @@ let g:startify_bookmarks = [
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 " let g:airline_theme = 'tomorrow'
-" let g:airline#extensions#tabline#enabled = 2           " enable airline tabline
+let g:airline#extensions#tabline#enabled = 0           " enable airline tabline
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -370,9 +370,9 @@ if has('mac')
     " for mac: theme applied on startup, then synced via lua theme
     let output =  system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
-        let g:airline_theme = 'gruvbox'
+        let g:airline_theme = 'atomic'
         set background=light
-        colorscheme rakr
+        colorscheme PaperColor
     else
         let g:airline_theme = 'palenight'
         set background=dark
@@ -383,9 +383,9 @@ elseif has('unix')
     " set background=dark
     " colorscheme palenight
 
-    let g:airline_theme = 'gruvbox'
+    let g:airline_theme = 'atomic'
     set background=light
-    colorscheme rakr
+    colorscheme PaperColor
 endif
 
 " fix for :Rg and Ranger preview
@@ -966,7 +966,7 @@ augroup END " }
 nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
 
-nmap <localleader>/ <Plug>RgRawSearch
+nmap <localleader>/ :Rg<cr>
 vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
 nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 
