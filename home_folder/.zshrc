@@ -236,5 +236,5 @@ export PATH="$HOME/.poetry/bin:$PATH"
 export BAT_THEME="Solarized (dark)"
 
 # much faster
-export FZF_DEFAULT_COMMAND='fd --type file'
+export FZF_DEFAULT_COMMAND='fd --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

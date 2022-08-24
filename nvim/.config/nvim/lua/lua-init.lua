@@ -260,11 +260,13 @@ auto_dark_mode.setup({
 	set_dark_mode = function()
 		vim.api.nvim_set_option('background', 'dark')
 		vim.cmd('colorscheme palenight')
+		vim.cmd('AirlineTheme palenight')
 
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option('background', 'light')
 		vim.cmd('colorscheme rakr')
+		vim.cmd('AirlineTheme gruvbox')
 	end,
 })
 auto_dark_mode.init()
