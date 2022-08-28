@@ -10,7 +10,7 @@ if exists('g:GuiLoaded')
   GuiTabline 0
   GuiPopupmenu 0
   GuiLinespace 2
-  GuiFont! SauceCodePro\ Nerd\ Font:h14
+  GuiFont! SauceCodePro\ Nerd\ Font:h12
 endif
 
 if exists('g:fvim_loaded')

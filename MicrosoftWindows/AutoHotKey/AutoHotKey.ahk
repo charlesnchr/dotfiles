@@ -51,5 +51,9 @@ State     := 0
 StartTime := ""
 return
 
+!LControl::
+Send !{Esc}
+Return
+
 ; Toggle CapsLock if both LControl+RControl are pressed
 ~LControl & RControl::Send {CapsLock Down}
