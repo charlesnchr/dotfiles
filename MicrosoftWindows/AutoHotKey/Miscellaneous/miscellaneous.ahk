@@ -169,9 +169,9 @@ GetMonitorIndexFromWindow(windowHandle) {
 ; Youtube enhanced
 ; #Space:: Winset, AlwaysOnTop, Toggle, A
 
-CapsLock::
-Send !{Space}
-Return
+; CapsLock::
+; Send !{Space}
+; Return
 
 CapsLock & SC027::
 {
@@ -199,11 +199,6 @@ CapsLock & SC01A::
 		Send,Å
 		Return
 }
-
-CapsLock & 7:: Send,{{}
-CapsLock & 8:: Send,[
-CapsLock & 9:: Send,]
-CapsLock & 0:: Send,{}}
 
 CapsLock & v:: ;replaces backslashes with forward slashes in a file name that is stored on the clipboard
 StringReplace,temp,clipboard,\,/,All
@@ -235,41 +230,67 @@ return
 
 
 CapsLock & 1::
-IfWinExist, ahk_exe firefox.exe ; vivaldi.exe
-{
-    WinActivate ; use the window found above
-	WinSet, Top,, A
-}
-else
-{
-	; cmd := "C:\Users\"
-    ; cmd2 := "\AppData\Local\Vivaldi\Application\vivaldi.exe"
-    ; run %cmd%%A_UserName%%cmd2%
-	; cmd := "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-	; cmd := "C:\Program Files\Google\Chrome\Application\chrome.exe"
-	cmd := "C:\Program Files\Mozilla Firefox\firefox.exe"
-	run %cmd%
-}
-return
+Send {f1}
+Return
 
 CapsLock & 2::
-{
-IfWinExist, ahk_class CabinetWClass
-{
-	WinActivate
-	WinSet, Top,, A
-}
-else
-{
-	send #2
-}
-}
+Send {f2}
+Return
+
+CapsLock & 3::
+Send {f3}
+Return
+
+CapsLock & 4::
+   if getkeystate("alt") = 1
+        Send,!{f4}
+    else
+        Send,{f4}
 return
-
-
 
 
 CapsLock & 5::
+Send {f5}
+Return
+
+CapsLock & 6::
+Send {f6}
+Return
+
+CapsLock & 7::
+Send {f7}
+Return
+
+CapsLock & 8::
+Send {f8}
+Return
+
+CapsLock & 9::
+Send {f9}
+Return
+
+CapsLock & 0::
+Send {f10}
+Return
+
+CapsLock & -::
+Send {f11}
+Return
+
+CapsLock & =::
+Send {f12}
+Return
+
+
+
+
+
+
+
+
+
+
+CapsLock & g::
 IfWinExist, ahk_exe Notion.exe
 {
 	IfWinActive, ahk_exe Notion.exe
@@ -290,172 +311,7 @@ else
 }
 return
 
-CapsLock & m::
-IfWinExist, ahk_exe PotPlayerMini64.exe
-{
-	IfWinActive, ahk_exe PotPlayerMini64.exe
-	{
-		WinMinimize, A
-	}
-	else
-	{
-		WinActivate ; use the window found above
-		WinSet, Top,, A
-	}
-}
-else
-{
-    cmd2 := "C:\Program Files\DAUM\PotPlayer\PotPlayerMini64.exe"
-    run %cmd2%
-}
-return
 
-CapsLock & X::
-if getkeystate("shift") = 1
-IfWinExist, ahk_exe WhatsApp.exe
-{
-	IfWinActive, ahk_exe WhatsApp.exe
-	{
-		WinSet, Bottom,, A
-		WinMinimize, A
-	}
-	else
-	{
-		WinSet, Top,, A
-		WinActivate ; use the window found above
-	}
-}
-else
-{
-	cmd := "C:\Users\"
-    cmd2 := "\AppData\Local\WhatsApp\WhatsApp.exe"
-    run %cmd%%A_UserName%%cmd2%
-}
-else if getkeystate("control") = 1
-IfWinExist, ahk_exe Discord.exe
-{
-	IfWinActive, ahk_exe Discord.exe
-	{
-		WinSet, Bottom,, A
-		WinMinimize, A
-	}
-	else
-	{
-		WinSet, Top,, A
-		WinActivate ; use the window found above
-	}
-}
-else
-{
-	cmd := "C:\Users\charl\AppData\Local\Discord\Update.exe --processStart Discord.exe"
-	run %cmd%
-}
-else if getkeystate("alt") = 1
-{
-	IfWinExist, ahk_exe Slack.exe
-	{
-		IfWinActive, ahk_exe Slack.exe
-		{
-			WinSet, Bottom,, A
-			WinMinimize, A
-		}
-		else
-		{
-			WinSet, Top,, A
-			WinActivate ; use the window found above
-		}
-	}
-	else
-	{
-		cmd := "C:\Program Files\Slack\Slack.exe"
-		run %cmd%
-	}
-}
-else
-{
-IfWinExist, ahk_exe Messenger.exe
-{
-	IfWinActive, ahk_exe Messenger.exe
-	{
-		WinMinimize, A
-	}
-	else
-	{
-		WinActivate ; use the window found above
-		WinSet, Top,, A
-	}
-}
-else
-{
-	cmd := "shell:AppsFolder\FACEBOOK.317180B0BB486_8xx8rvfyw5nnt!App"
-    run %cmd%
-}
-}
-
-return
-
-
-
-
-CapsLock & 3::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 0
-IfWinExist, Visual Studio Code
-{
-    WinActivate ; use the window found above
-	WinSet, Top,, A
-}
-else
-{
-    Send #3 ; Run code ,, Hide ; this will be administrator
-}
-else
-{
-	cmd := "C:\Users\"
-    cmd2 := "\Documents\GitHub"
-    run %cmd%%A_UserName%%cmd2%
-	Sleep, 100
-	Send, +{tab}
-}
-return
-
-CapsLock & 4::
-if getkeystate("shift") = 0
-	send #4
-if getkeystate("shift") = 1
-IfWinExist, GitHub Desktop
-{
-	IfWinActive, GitHub Desktop
-	{
-		WinMinimize, A
-	}
-	else
-	{
-    WinActivate ; use the window found above
-	WinSet, Top,, A
-	}
-}
-else
-{
-	cmd := "C:\Users\"
-    cmd2 := "\AppData\Local\GitHubDesktop\GitHubDesktop.exe"
-    run %cmd%%A_UserName%%cmd2%
-}
-return
-
-
-CapsLock & S::
-if getkeystate("shift") = 0
-	send !{Escape}
-else
-{
-	cmd1 := "C:\Users\"
-	cmd2 := "\"
-    run %cmd1%%A_UserName%%cmd2%
-	Sleep, 100
-	Send, +{tab}
-}
-return
 
 
 CapsLock & C::
@@ -473,42 +329,8 @@ else
 return
 
 
-CapsLock & D::
+CapsLock & ]::
 SetTitleMatchMode, 2
-if getkeystate("shift") = 1
-IfWinExist, (Downloads)
-    WinActivate ; use the window found above
-else
-{
-	cmd := "C:\Users\"
-    cmd2 := "\Desktop"
-    run %cmd%%A_UserName%%cmd2%
-	Sleep, 100
-	Send, +{tab}
-}
-else
-{
-IfWinExist, ahk_exe alacritty.exe ; vivaldi.exe
-{
-    WinActivate ; use the window found above
-	WinSet, Top,, A
-}
-else
-{
-	; cmd := "C:\Users\"
-    ; cmd2 := "\AppData\Local\Vivaldi\Application\vivaldi.exe"
-    ; run %cmd%%A_UserName%%cmd2%
-	; cmd := "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-	; cmd := "C:\Program Files\Google\Chrome\Application\chrome.exe"
-	cmd := "C:\Users\Charles\scoop\apps\alacritty\current\alacritty.exe --working-directory C:\Users\"
-	run %cmd%%A_UserName%
-}
-}
-return
-
-CapsLock & A::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 1
 IfWinExist, (0main)
 {
  	WinActivate ; use the window found above
@@ -523,13 +345,9 @@ else
 	Sleep, 100
 	Send, +{tab}
 }
-else
-{
-	Send !{Space}
-}
 return
 
-CapsLock & F::
+CapsLock & [::
 SetTitleMatchMode, 2
 if getkeystate("shift") = 1
 IfWinExist, (My Drive)
@@ -548,7 +366,7 @@ return
 
 
 
-CapsLock & E::
+CapsLock & y::
 SetTitleMatchMode, 2
 if getkeystate("shift") = 1
 IfWinExist, (D:)
@@ -581,76 +399,96 @@ else
 }
 return
 
-CapsLock & R::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 1
-IfWinExist, (D:)
-    WinActivate ; use the window found above
-else
-{
-    run ifconfig
-}
-else
-{
-	IfWinExist, ahk_exe WindowsTerminal.exe
-	{
-    	WinActivate ; use the window found above
-		WinSet, Top,, A
-	}
-	else
-	{
-		Send #5 ;; run wt
-	}
-	Sleep, 200
-	Send ^T
-
-}
-return
-
-CapsLock & Q::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 1
-IfWinExist, (Downloads)
-    WinActivate ; use the window found above
-else
-{
-	cmd := "C:\Users\"
-    cmd2 := "\Downloads"
-    run %cmd%%A_UserName%%cmd2%
-	Sleep, 100
-	Send, +{tab}
-}
-else
-{
-IfWinExist, ahk_exe firefox.exe ; vivaldi.exe
-{
-    WinActivate ; use the window found above
-	WinSet, Top,, A
-}
-else
-{
-	; cmd := "C:\Users\"
-    ; cmd2 := "\AppData\Local\Vivaldi\Application\vivaldi.exe"
-    ; run %cmd%%A_UserName%%cmd2%
-	; cmd := "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-	; cmd := "C:\Program Files\Google\Chrome\Application\chrome.exe"
-	cmd := "C:\Program Files\Mozilla Firefox\firefox.exe"
-	run %cmd%
-}
-}
-return
 
 CapsLock & ESC::WinClose, A
-CapsLock & W::
-    Send ^w
+
+
+; AutoHotkey Media Keys
+; ^!Space::Send       {Media_Play_Pause}
+; ^!Left::Send        {Media_Prev}
+; ^!Right::Send       {Media_Next}
+; ^!NumpadMult::Send  {Volume_Mute}
+; ^!NumpadAdd::Send   {Volume_Up}
+; ^!NumpadSub::Send   {Volume_Down}
+
+; media keys
+
+CapsLock & w::
+   if getkeystate("shift") = 1
+        Send,{Volume_Up}
+    else
+        Send,{w}
 return
-CapsLock & T::
-    Send ^t
+
+CapsLock & s::
+SetTitleMatchMode, 2
+if getkeystate("shift") = 1
+    Send,{Volume_Down}
+else
+    IfWinExist, Brave
+    {
+        WinActivate ; use the window found above
+        WinSet, Top,, A
+    }
+    else
+    {
+        Send #1 ; Run code ,, Hide ; this will be administrator
+    }
+return
+
+CapsLock & a::
+SetTitleMatchMode, 2
+if getkeystate("shift") = 1
+    Send,{Media_Prev}
+else
+    IfWinExist, Neovim
+    {
+        WinActivate ; use the window found above
+        WinSet, Top,, A
+    }
+    else
+    {
+        Send #3 ; Run code ,, Hide ; this will be administrator
+    }
+return
+
+CapsLock & d::
+SetTitleMatchMode, 2
+if getkeystate("shift") = 1
+    Send,{Media_Next}
+else
+    IfWinExist, ahk_class CabinetWClass
+    {
+        WinActivate
+        WinSet, Top,, A
+    }
+    else
+    {
+        send #2
+    }
+return
+
+CapsLock & q::
+SetTitleMatchMode, 2
+if getkeystate("shift") = 1
+    Send,{Media_Play_Pause}
+else
+	IfWinExist, ahk_exe WindowsTerminal.exe
+    {
+        WinActivate ; use the window found above
+        WinSet, Top,, A
+    }
+    else
+    {
+        Send #4 ; Run code ,, Hide ; this will be administrator
+    }
 return
 
 
 
-CapsLock & N::
+
+
+CapsLock & p::
 IfWinActive, ahk_exe SumatraPDF.exe
 {
 WinMinimize, A
@@ -694,27 +532,6 @@ Return
 ;; Mouse alt window navigation
 !XButton1::send !{Up}     ; Alt + Left Mouse Button
 
-
-;Note +/- 120 seems to be the "default" scroll
-CapsLock & Y::
-vel:=0
-Loop, 50000
-{
-	if stopit = 1
-		{
-		stopit = 0
-		break
-		}
-Sleep, 50
-PostMW(vel)
-}
-return
-
-CapsLock & g::
-	stopit = 1
-return
-
-
 ;; CapsLock & r::vel+=1
 ;; CapsLock & ::vel-=1
 
@@ -732,17 +549,16 @@ PostMW(delta)
 
 
 
-
-CapsLock & -:: Send, {—}
-
-
+; Hyphen shortcut like mac
++#-:: Send, {—}
 
 
 ;; Coding etc
 ;; SC029:: Send, \
 ;; CapsLock & SC029:: Send, ½
 
-CapsLock & BS::Send,{Del}
+CapsLock & BS::Send,^{BS}
+CapsLock & \::Send,{Del}
 
 
 
@@ -904,6 +720,56 @@ CapsLock & o::
 			Send,!^+{End}
 return
 
+CapsLock & n::
+       if getkeystate("shift") = 0
+           if getkeystate("ctrl") = 0
+		if getkeystate("alt") = 0
+	      		Send,^{Left}
+		else
+			Send,!{Left}
+	   else
+		if getkeystate("alt") = 0
+			Send,^{Left}
+		else
+			Send,!^{Left}
+       else
+           if getkeystate("ctrl") = 0
+		if getkeystate("alt") = 0
+	      		Send,+^{Left}
+		else
+			Send,!+{Left}
+	   else
+		if getkeystate("alt") = 0
+			Send,^+{Left}
+		else
+			Send,!^+{Left}
+return
+
+CapsLock & m::
+       if getkeystate("shift") = 0
+           if getkeystate("ctrl") = 0
+		if getkeystate("alt") = 0
+	      		Send,^{Right}
+		else
+			Send,!{Right}
+	   else
+		if getkeystate("alt") = 0
+			Send,^{Right}
+		else
+			Send,!^{Right}
+       else
+           if getkeystate("ctrl") = 0
+		if getkeystate("alt") = 0
+	      		Send,+^{Right}
+		else
+			Send,!+{Right}
+	   else
+		if getkeystate("alt") = 0
+			Send,^+{Right}
+		else
+			Send,!^+{Right}
+return
+
 
 ; Win+<
 #<::
@@ -917,3 +783,4 @@ return
     Sleep 1000
     SendMessage 0x112, 0xF170, 2, , Program Manager  ; Monitor off
     Return
+

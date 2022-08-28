@@ -157,8 +157,12 @@ Plug 'f-person/auto-dark-mode.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
-" Plug 'ptzz/lf.vim'
-Plug 'charlesnchr/ranger-floaterm.vim'
+
+if has("win32")
+    Plug 'ptzz/lf.vim'
+else
+    Plug 'charlesnchr/ranger-floaterm.vim'
+endif
 
 
 call plug#end()
@@ -172,6 +176,8 @@ if has('mac')
     let g:python3_host_prog = expand('~/anaconda3/bin/python')
 elseif has('unix')
     let g:python3_host_prog = expand('~/anaconda3/envs/oni38/bin/python')
+else
+    let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
 
 let mapleader = ","
@@ -386,6 +392,17 @@ elseif has('unix')
     let g:airline_theme = 'atomic'
     set background=light
     colorscheme PaperColor
+else
+    let g:airline_theme = 'palenight'
+    set background=dark
+    colorscheme palenight
+endif
+
+if has("win32")
+    set shell=powershell
+    set shellcmdflag=-command
+    set shellquote=\"
+    set shellxquote=
 endif
 
 " fix for :Rg and Ranger preview
