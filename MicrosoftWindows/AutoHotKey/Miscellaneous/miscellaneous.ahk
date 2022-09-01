@@ -567,105 +567,130 @@ CapsLock & \::Send,{Del}
 
 SetCapsLockState, AlwaysOff
 
-CapsLock & k::
-       if getkeystate("shift") = 0
-           if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,{Up}
-		else
-			Send,!{Up}
-	   else
-		if getkeystate("alt") = 0
-			Send,^{Up}
-		else
-			Send,!^{Up}
-       else
-           if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,+{Up}
-		else
-			Send,!+{Up}
-	   else
-		if getkeystate("alt") = 0
-			Send,^+{Up}
-		else
-			Send,!^+{Up}
-return
-
-CapsLock & l::
-        if getkeystate("shift") = 0
-           if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,{Right}
-		else
-			Send,!{Right}
-	   else
-		if getkeystate("alt") = 0
-			Send,^{Right}
-		else
-			Send,!^{Right}
-       else
-           if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,+{Right}
-		else
-			Send,!+{Right}
-	   else
-		if getkeystate("alt") = 0
-			Send,^+{Right}
-		else
-			Send,!^+{Right}
-return
-
 CapsLock & h::
        if getkeystate("shift") = 0
            if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,{Left}
-		else
-			Send,!{Left}
-	   else
-		if getkeystate("alt") = 0
-			Send,^{Left}
-		else
-			Send,!^{Left}
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,{Left}
+                    else
+                        Send,#{Left}
+                else
+                    Send,!{Left}
+           else
+                if getkeystate("alt") = 0
+                    Send,^{Left}
+                else
+                    Send,!^{Left}
        else
            if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,+{Left}
-		else
-			Send,!+{Left}
-	   else
-		if getkeystate("alt") = 0
-			Send,^+{Left}
-		else
-			Send,!^+{Left}
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,+{Left}
+                    else
+                        Send,+#{Left}
+                else
+                    Send,!+{Left}
+           else
+                if getkeystate("alt") = 0
+                    Send,^+{Left}
+                else
+                    Send,!^+{Left}
 return
 
 CapsLock & j::
        if getkeystate("shift") = 0
            if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,{Down}
-		else
-			Send,!{Down}
-	   else
-		if getkeystate("alt") = 0
-			Send,^{Down}
-		else
-			Send,!^{Down}
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,{Down}
+                    else
+                        Send,#{Down}
+                else
+                    Send,!{Down}
+           else
+                if getkeystate("alt") = 0
+                    Send,^{Down}
+                else
+                    Send,!^{Down}
        else
            if getkeystate("ctrl") = 0
-		if getkeystate("alt") = 0
-	      		Send,+{Down}
-		else
-			Send,!+{Down}
-	   else
-		if getkeystate("alt") = 0
-			Send,^+{Down}
-		else
-			Send,!^+{Down}
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,+{Down}
+                    else
+                        Send,+#{Down}
+                else
+                    Send,!+{Down}
+           else
+                if getkeystate("alt") = 0
+                    Send,^+{Down}
+                else
+                    Send,!^+{Down}
 return
+
+CapsLock & k::
+       if getkeystate("shift") = 0
+           if getkeystate("ctrl") = 0
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,{Up}
+                    else
+                        Send,#{Up}
+                else
+                    Send,!{Up}
+           else
+                if getkeystate("alt") = 0
+                    Send,^{Up}
+                else
+                    Send,!^{Up}
+       else
+           if getkeystate("ctrl") = 0
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,+{Up}
+                    else
+                        Send,+#{Up}
+                else
+                    Send,!+{Up}
+           else
+                if getkeystate("alt") = 0
+                    Send,^+{Up}
+                else
+                    Send,!^+{Up}
+return
+
+CapsLock & l::
+       if getkeystate("shift") = 0
+           if getkeystate("ctrl") = 0
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,{Right}
+                    else
+                        Send,#{Right}
+                else
+                    Send,!{Right}
+           else
+                if getkeystate("alt") = 0
+                    Send,^{Right}
+                else
+                    Send,!^{Right}
+       else
+           if getkeystate("ctrl") = 0
+                if getkeystate("alt") = 0
+                    if getkeystate("lwin") = 0
+                        Send,+{Right}
+                    else
+                        Send,+#{Right}
+                else
+                    Send,!+{Right}
+           else
+                if getkeystate("alt") = 0
+                    Send,^+{Right}
+                else
+                    Send,!^+{Right}
+return
+
 
 CapsLock & Space::
 	Send,!{Space}
