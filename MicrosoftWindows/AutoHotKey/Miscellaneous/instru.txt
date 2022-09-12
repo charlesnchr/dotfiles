@@ -1,0 +1,11 @@
+jupyter lab --generate-config
+
+C:\Users\charl\.jupyter\jupyter_notebook_config.py
+
+#------------------------------------------------------------------------------
+# LabApp(NotebookApp) configuration
+#------------------------------------------------------------------------------
+
+## The app directory to launch JupyterLab from.
+#c.LabApp.app_dir = 'C:\\Users\\charl\\Anaconda3\\share\\jupyter\\lab'
+c.LabApp.browser = "C:/Program Files/Google/Chrome/Application/chrome.exe --app=%s"		
