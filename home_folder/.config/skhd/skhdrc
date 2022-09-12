@@ -1,5 +1,6 @@
 # open apps
-alt - return : "${HOME}"/.config/yabai/open_iterm2.sh
+alt + shift - return : "${HOME}"/.config/yabai/open_iterm2.sh
+alt - 2 : "${HOME}"/.config/yabai/open_iterm2.sh
 alt + cmd - return : "${HOME}"/.config/yabai/open_firefox.sh
 
 # Navigation
@@ -11,7 +12,7 @@ alt - p : yabai -m window --focus east
 # Moving windows
 shift + alt - u: yabai -m window --warp west
 shift + alt - i: yabai -m window --warp south
-shift + alt - o: yabai -m window --warp north
+shift + alt - 9: yabai -m window --warp north
 shift + alt - p: yabai -m window --warp east
 
 # Move focus container to workspace
@@ -28,6 +29,7 @@ shift + alt - p: yabai -m window --warp east
 #                   yabai -m window --resize bottom:0:-200
 # alt + cmd - 0x2F : yabai -m window --resize right:200:0; \
 #                   yabai -m window --resize left:200:0
+
 
 # Resize windows
 shift + alt + cmd - n : yabai -m window --resize left:-50:0; \
@@ -60,7 +62,7 @@ shift + alt - 0x2B : yabai -m window --insert north
 shift + alt - 0x2F : yabai -m window --insert east
 
 # Float / Unfloat window
-shift + alt - space : \
+alt - space : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
@@ -90,7 +92,7 @@ shift + alt - e : \
 #     } & ' sh {} $current_space
 
 # Make window native fullscreen
-# ctrl + cmd + alt - f         : yabai -m window --toggle zoom-fullscreen # better handled with Rectangle Pro
+alt - return         : yabai -m window --toggle zoom-fullscreen # better handled with Rectangle Pro
 # shift + cmd + alt - f : yabai -m window --toggle native-fullscreen
 ctrl + cmd + alt - f : yabai -m window --toggle native-fullscreen
 
@@ -126,6 +128,7 @@ alt + shift - f7 : yabai -m window --space 7
 alt + shift - f8 : yabai -m window --space 8
 alt + shift - f9 : yabai -m window --space 9
 alt + shift - f10 : yabai -m window --space 10
+alt + shift - w : yabai -m window --space recent
 
 
 # alt + shift + ctrl - f1 : yabai -m window --space 1; yabai -m space --focus 1
@@ -159,7 +162,8 @@ alt - f7 : yabai -m space --focus 7
 alt - f8 : yabai -m space --focus 8
 alt - f9 : yabai -m space --focus 9
 alt - f10 : yabai -m space --focus 10
-alt - tab : yabai -m space --focus recent
+alt - w : yabai -m space --focus recent
+
 
 ctrl + alt - l : yabai -m space --focus next
 ctrl + alt - h : yabai -m space --focus prev
@@ -241,7 +245,7 @@ alt - 0x1E  : yabai -m display --focus east
 # # shift + ctrl + alt + cmd - g : yabai -m window --grid 1:1:0:0:1:1
 
 # minimize
-alt - w : yabai -m window --minimize
+# alt - w : yabai -m window --minimize
 # lctrl + alt + cmd - g : yabai -m space --deminimize
 
 
@@ -287,8 +291,8 @@ alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(
 # lctrl + alt - up : sh /Users/cc/.config/yabai/cycle_window.sh 1 _dir 1
 
 # move displays (not as good as Rectangle Pro -- rebinded same keys via Kmonad to use Rectangle Pro)
-# alt + ctrl - 0x29 : yabai -m window --display west; yabai -m display --focus west
-# alt + ctrl - 0x27 : yabai -m window --display east; yabai -m display --focus east
+alt + ctrl - 8 : yabai -m window --display west; yabai -m display --focus west
+alt + ctrl - 9 : yabai -m window --display east; yabai -m display --focus east
 
 # most recent current screen
 alt - v : yabai -m query --spaces --space \
