@@ -179,7 +179,7 @@ source $HOME/dotfiles/.zshrc_local
 # alias for ssh to make panel naming for tmux
 ssh() {
     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
-        tmux rename-window "$(echo $* | cut -d . -f 1)"
+        tmux rename-window "$(echo $* | cut -w -f 1)"
         command ssh "$@"
         tmux set-window-option automatic-rename "on" 1>/dev/null
     else
@@ -198,6 +198,11 @@ jv() {
 t() {
     [[ ! $(tmux a) ]] && tmuxinator Home
 }
+
+tgz() {
+    tar cf - "$@" | pv -s $[$(du -sk "$@" | awk '{print $1}') * 1024] | gzip > "$@".tgz
+}
+
 
 # function pywal {
 #     # generate color scheme from current wallpaper

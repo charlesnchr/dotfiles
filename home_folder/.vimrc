@@ -601,8 +601,9 @@ augroup ipython_cell_highlight
 augroup END
 
 " map [c and ]c to jump to the previous and next cell header
-" nnoremap [c :IPythonCellPrevCell<CR>
-" nnoremap ]c :IPythonCellNextCell<CR>
+au BufNewFile,BufRead *.py nmap [c :IPythonCellPrevCell<CR>
+au BufNewFile,BufRead *.py nmap ]c :IPythonCellNextCell<CR>
+
 
 " map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
 nmap <F9> :IPythonCellInsertAbove<CR>a
@@ -621,10 +622,14 @@ nmap <localleader>r :SlimeSend1 %run test.py<CR>
 let g:slime_target = 'tmux'
 
 " fix paste issues in ipython
-let g:slime_python_ipython = 1
+" let g:slime_python_ipython = 1
+
+let g:slime_bracketed_paste = 1
+
 
 let g:slime_cell_delimiter = "# %%"
 nmap <leader>s <Plug>SlimeSendCell
+" nmap <leader>s <Plug>IPythonCellExecuteCell
 
 " always send text to the top-right pane in the current tmux tab without asking
 let g:slime_default_config = {
