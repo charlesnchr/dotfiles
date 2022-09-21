@@ -1,4 +1,5 @@
 # open apps
+#
 alt + shift - return : "${HOME}"/.config/yabai/open_iterm2.sh
 alt - 2 : "${HOME}"/.config/yabai/open_iterm2.sh
 alt + cmd - return : "${HOME}"/.config/yabai/open_firefox.sh
@@ -32,13 +33,13 @@ shift + alt - p: yabai -m window --warp east
 
 
 # Resize windows
-shift + alt + cmd - n : yabai -m window --resize left:-50:0; \
+ctrl + alt - u : yabai -m window --resize left:-50:0; \
                   yabai -m window --resize right:-50:0
-shift + alt + cmd - m : yabai -m window --resize bottom:0:50; \
+ctrl + alt - i : yabai -m window --resize bottom:0:50; \
                   yabai -m window --resize top:0:50
-shift + alt + cmd - 0x2B : yabai -m window --resize top:0:-50; \
+ctrl + alt - 9 : yabai -m window --resize top:0:-50; \
                   yabai -m window --resize bottom:0:-50
-shift + alt + cmd - 0x2F : yabai -m window --resize right:50:0; \
+ctrl + alt - p : yabai -m window --resize right:50:0; \
                   yabai -m window --resize left:50:0
 
 # Equalize size of windows
@@ -165,8 +166,8 @@ alt - f10 : yabai -m space --focus 10
 alt - w : yabai -m space --focus recent
 
 
-ctrl + alt - l : yabai -m space --focus next
-ctrl + alt - h : yabai -m space --focus prev
+ctrl + shift + alt - l : yabai -m space --focus next
+ctrl + shift + alt - h : yabai -m space --focus prev
 
 # send window to desktop and follow focus
 # shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
@@ -303,3 +304,8 @@ alt - v : yabai -m query --spaces --space \
 
 # cmd + shift - k : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ]; then (yabai -m window --focus stack.next || yabai -m window --focus stack.first); else yabai -m window --focus next || yabai -m window --focus first; fi
 # cmd + shift - j : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ]; then (yabai -m window --focus stack.prev || yabai -m window --focus stack.last); else yabai -m window --focus prev || yabai -m window --focus last; fi
+#
+
+alt - 7 : yabai -m space --layout bsp
+alt - 8 : yabai -m space --layout stack
+alt - 9 : yabai -m space --layout float

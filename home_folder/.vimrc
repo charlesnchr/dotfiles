@@ -29,7 +29,6 @@ Plug 'godlygeek/tabular'
 " writing
 Plug 'reedes/vim-pencil'
 Plug 'lervag/vimtex'
-Plug 'easymotion/vim-easymotion'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'xolox/vim-misc'
 " styling
@@ -146,7 +145,7 @@ Plug 'sedm0784/vim-you-autocorrect'
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak' " easier than easymotion
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
@@ -163,6 +162,9 @@ if has("win32")
 else
     Plug 'charlesnchr/ranger-floaterm.vim'
 endif
+
+Plug 'Pocco81/auto-save.nvim'
+Plug 'liuchengxu/vista.vim'
 
 
 call plug#end()
@@ -232,6 +234,7 @@ nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
+nnoremap <localleader>s :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>e :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
@@ -458,7 +461,6 @@ au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <ScrollWheelUp> <C-Y>
 nnoremap <ScrollWheelDown> <C-E>
 
-map <localleader>s <Plug>(easymotion-s)
 
 " latex
 if has('mac')
@@ -999,3 +1001,5 @@ autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | exe
 " already do by pressing the <j> key, which is a waste of keys!
 " Be useful <enter> key!:
 nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
+
+nnoremap <BS> <C-^>
