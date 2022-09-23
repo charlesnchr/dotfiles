@@ -29,14 +29,13 @@ Plug 'godlygeek/tabular'
 " writing
 Plug 'reedes/vim-pencil'
 Plug 'lervag/vimtex'
-Plug 'easymotion/vim-easymotion'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'xolox/vim-misc'
 " styling
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 " misc
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 
@@ -147,7 +146,7 @@ Plug 'sedm0784/vim-you-autocorrect'
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak' " easier than easymotion
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
@@ -158,9 +157,16 @@ Plug 'f-person/auto-dark-mode.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
-" Plug 'ptzz/lf.vim'
-Plug 'charlesnchr/ranger-floaterm.vim'
+
+if has("win32")
+    Plug 'ptzz/lf.vim'
+else
+    Plug 'charlesnchr/ranger-floaterm.vim'
+endif
+
 Plug 'will133/vim-dirdiff'
+Plug 'Pocco81/auto-save.nvim'
+Plug 'liuchengxu/vista.vim'
 
 
 call plug#end()
@@ -174,6 +180,8 @@ if has('mac')
     let g:python3_host_prog = expand('~/anaconda3/bin/python')
 elseif has('unix')
     let g:python3_host_prog = expand('~/anaconda3/envs/oni38/bin/python')
+else
+    let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
 
 let mapleader = ","
@@ -228,6 +236,7 @@ nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
+nnoremap <localleader>s :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 nnoremap <localleader>e :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
@@ -395,6 +404,14 @@ elseif has('unix')
     endif
 endif
 
+if has("win32")
+    set shell=powershell
+    set shellcmdflag=-command
+    set shellquote=\"
+    set shellxquote=
+endif
+
+
 " fix for :Rg and Ranger preview
 augroup update_bat_theme
     autocmd!
@@ -448,7 +465,6 @@ au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <ScrollWheelUp> <C-Y>
 nnoremap <ScrollWheelDown> <C-E>
 
-map <localleader>s <Plug>(easymotion-s)
 
 " latex
 if has('mac')
@@ -608,6 +624,9 @@ augroup END
 " map [c and ]c to jump to the previous and next cell header
 autocmd FileType python map <buffer> [c :IPythonCellPrevCell<CR>
 autocmd FileType python map <buffer> ]c :IPythonCellNextCell<CR>
+" au BufNewFile,BufRead *.py nmap [c :IPythonCellPrevCell<CR>
+" au BufNewFile,BufRead *.py nmap ]c :IPythonCellNextCell<CR>
+
 
 " map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
 nmap <F9> :IPythonCellInsertAbove<CR>a
@@ -627,6 +646,7 @@ let g:slime_target = 'tmux'
 
 " fix paste issues in ipython
 let g:slime_python_ipython = 1
+" let g:slime_bracketed_paste = 1
 
 let g:slime_cell_delimiter = "# %%"
 nmap <leader>s <Plug>SlimeSendCell

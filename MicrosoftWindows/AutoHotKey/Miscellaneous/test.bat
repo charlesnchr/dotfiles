@@ -1,0 +1,1 @@
+start JL_cmd.lnk /C %USERPROFILE%\Dropbox\3^ Diverse\IT\AutoHotKey\Miscellaneous\jupyterlab.bat
