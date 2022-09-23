@@ -179,7 +179,7 @@ source $HOME/dotfiles/.zshrc_local
 # alias for ssh to make panel naming for tmux
 ssh() {
     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
-        tmux rename-window "$(echo $* | cut -d . -f 1)"
+        tmux rename-window "$(echo $* | cut -w -f 1)"
         command ssh "$@"
         tmux set-window-option automatic-rename "on" 1>/dev/null
     else
@@ -190,6 +190,15 @@ ssh() {
 jcd() {
 	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
 }
+
+jf() {
+    cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
+}
+
+jr() {
+    goto=$(j -s | fzf | cut -d ":" -f 2 | xargs); if [ $goto ] && r $goto
+}
+
 
 jv() {
 	file="$(AUTOJUMP_DATA_DIR=~/.autojump.vim/global autojump $@)"; if [ -n "$file" ]; then vim "$file"; fi
@@ -256,3 +265,22 @@ export BAT_THEME="Solarized (dark)"
 export FZF_DEFAULT_COMMAND='fd --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+
+# configuring history
+HISTORY_START_WITH_GLOBAL="true" # for per-directory-history plugin
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.

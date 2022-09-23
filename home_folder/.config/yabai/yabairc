@@ -78,7 +78,7 @@ yabai -m config split_ratio                 0.50
 
 yabai -m config auto_balance                off
 
-yabai -m config mouse_modifier              fn
+yabai -m config mouse_modifier              alt
 yabai -m config mouse_action1               move
 yabai -m config mouse_action2               resize
 
@@ -89,34 +89,31 @@ yabai -m config mouse_action2               resize
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Stickies" app="^Stickies$" manage=off
 yabai -m rule --add space=4 manage=off
-yabai -m rule --add label="Mail" app="^Mail$" manage=off space=4
-yabai -m rule --add label="Slack" app="^Slack$" manage=off space=4
-yabai -m rule --add label="Calendar" app="^Calendar$" manage=off space=4
-yabai -m rule --add label="Signal" app="^Signal$" manage=off space=4
+yabai -m rule --add label="Mail" app="^Mail$" space=4
+yabai -m rule --add label="Slack" app="^Slack$" space=4
+yabai -m rule --add label="Calendar" app="^Calendar$" space=4
 yabai -m rule --add label="Microsoft Teams" app="^Microsoft Teams$" manage=off space=4
-yabai -m rule --add label="WhatsApp" app="^WhatsApp$" manage=off space=4
+yabai -m rule --add label="WhatsApp" app="^WhatsApp$" space=4
 yabai -m rule --add label="(Fiji Is Just) ImageJ" app="^ImageJ$" manage=off
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
-yabai -m rule --add label="macfeh" app="^macfeh$" manage=off
+yabai -m rule --add label="macfeh" app="^macfeh$"
 yabai -m rule --add label="System Preferences" app="^System Preferences$" title=".*" manage=off
-yabai -m rule --add label="App Store" app="^App Store$" manage=off
-yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$" manage=off
-yabai -m rule --add label="KeePassXC" app="^KeePassXC$" manage=off
+yabai -m rule --add label="App Store" app="^App Store$"
+yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$"
+yabai -m rule --add label="KeePassXC" app="^KeePassXC$"
 yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
-yabai -m rule --add label="mpv" app="^mpv$" manage=off
 yabai -m rule --add label="Software Update" title="Software Update" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 
-yabai -m rule --add label="Alacritty" app="^Alacritty$"
+
+yabai -m rule --add label="Alacritty" app="^Alacritty$" manage=off
 yabai -m rule --add label="iTerm" app="^iTerm$"
-yabai -m rule --add label="Spotify" app="^Spotify$" manage=on space=6
-yabai -m rule --add label="Finder" app="^Finder$" manage=off
+yabai -m rule --add label="Spotify" app="^Spotify$" space=6
+yabai -m rule --add label="Finder" app="^Finder$"
 # yabai -m rule --add label="OmniGraffle" app="^OmniGraffle$" manage=on space=3
 # yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
-
 # ===== Signals ================================
-
 # spacebar
 
 # spacebar -m config position             top
@@ -145,8 +142,8 @@ yabai -m rule --add label="Finder" app="^Finder$" manage=off
 # spacebar -m config dnd_icon             
 # spacebar -m config clock_format         "%d/%m %R"
 # spacebar -m config right_shell          off
-# spacebar -m config right_shell_icon     v
-# spacebar -m config right_shell_command  "whoami"
+# spacebar -m config right_shell_icon     v spacebar -m config right_shell_command  "whoami"
 
 set +x
 printf "yabai: configuration loaded...\\n"
+
