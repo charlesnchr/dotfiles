@@ -195,9 +195,26 @@ jv() {
 	file="$(AUTOJUMP_DATA_DIR=~/.autojump.vim/global autojump $@)"; if [ -n "$file" ]; then vim "$file"; fi
 }
 
+jf() {
+    cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
+}
+
 t() {
     [[ ! $(tmux a) ]] && tmuxinator Home
 }
+ 
+tgz() {
+    tar cf - "$@" | pv -s $[$(du -sk "$@" | awk '{print $1}') * 1024] | gzip > "$@".tgz
+}
+
+zstp() {
+    tar -cf - "$@" | pv -s $[$(du -sk "$@" | awk '{print $1}') * 1024] | zstd -T0 > "$@".tar.zst
+}
+
+colo() {
+    if [ $(cat ~/dotfiles/is_dark_mode) -eq 1 ]; then x=0; else x=1; fi; echo $x > ~/dotfiles/is_dark_mode
+}
+
 
 # function pywal {
 #     # generate color scheme from current wallpaper
@@ -238,3 +255,4 @@ export BAT_THEME="Solarized (dark)"
 # much faster
 export FZF_DEFAULT_COMMAND='fd --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+

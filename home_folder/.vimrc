@@ -36,7 +36,7 @@ Plug 'xolox/vim-misc'
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 " misc
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 
@@ -91,6 +91,7 @@ Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " " Have not added any parsers yet
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sbdchd/neoformat'
@@ -159,6 +160,7 @@ Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
 " Plug 'ptzz/lf.vim'
 Plug 'charlesnchr/ranger-floaterm.vim'
+Plug 'will133/vim-dirdiff'
 
 
 call plug#end()
@@ -379,13 +381,18 @@ if has('mac')
         colorscheme palenight
     endif
 elseif has('unix')
-    " let g:airline_theme = 'palenight'
-    " set background=dark
-    " colorscheme palenight
 
-    let g:airline_theme = 'atomic'
-    set background=light
-    colorscheme PaperColor
+    let output =  system("cat ~/dotfiles/is_dark_mode")
+
+    if output == 0
+        let g:airline_theme = 'atomic'
+        set background=light
+        colorscheme PaperColor
+    else
+        let g:airline_theme = 'palenight'
+        set background=dark
+        colorscheme palenight
+    endif
 endif
 
 " fix for :Rg and Ranger preview
@@ -558,8 +565,6 @@ hi VimwikiHeader3 guifg=#83c8eb
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
 nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
-nmap <F4> :! save_screenshot.sh ~/0main/wiki/images<CR>
-imap <F4> <C-R>=strftime("%Y-%m-%d")<CR>
 
 " let g:floaterm_wintype = 'split'
 let g:floaterm_width = 0.8
@@ -567,8 +572,8 @@ let g:floaterm_height = 0.8
 
 
 "let g:taskwiki_sort_orders={"T": "end-"}
-nmap <C-k> <Plug>VimwikiPrevLink
-nmap <C-j> <Plug>VimwikiNextLink
+" nmap <C-k> <Plug>VimwikiPrevLink
+" nmap <C-j> <Plug>VimwikiNextLink
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
 vnoremap <leader>y :OSCYank<CR>
 
@@ -601,8 +606,8 @@ augroup ipython_cell_highlight
 augroup END
 
 " map [c and ]c to jump to the previous and next cell header
-" nnoremap [c :IPythonCellPrevCell<CR>
-" nnoremap ]c :IPythonCellNextCell<CR>
+autocmd FileType python map <buffer> [c :IPythonCellPrevCell<CR>
+autocmd FileType python map <buffer> ]c :IPythonCellNextCell<CR>
 
 " map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
 nmap <F9> :IPythonCellInsertAbove<CR>a
@@ -643,12 +648,12 @@ inoremap <C-t>     <Esc>:tabnew<CR>
 
 " N.B.: below bindings conflict with tmux window bindings
 " move to the previous/next tabpage.
-" nnoremap <C-j> gT
-" nnoremap <C-k> gt
+nnoremap <C-k> gT
+nnoremap <C-j> gt
 " Go to last active tab
 " au TabLeave * let g:lasttab = tabpagenr()
-" nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-" vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+" nnoremap <silent> <c-j> :exe "tabn ".g:lasttab<cr>
+" vnoremap <silent> <c-j> :exe "tabn ".g:lasttab<cr>
 
 let g:UltiSnipsSnippetDirectories = ['~/.local/share/nvim/plugged/ultisnips']
 
@@ -753,10 +758,6 @@ autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<C
 
 nnoremap <localleader>= <cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>
 nnoremap <localleader>- <cmd>lua require("harpoon.mark").add_file()<cr>
-nnoremap <C-h> <cmd>lua require("harpoon.ui").nav_file(1)<cr>
-nnoremap <C-j> <cmd>lua require("harpoon.ui").nav_file(2)<cr>
-nnoremap <C-k> <cmd>lua require("harpoon.ui").nav_file(3)<cr>
-nnoremap <C-l> <cmd>lua require("harpoon.ui").nav_file(4)<cr>
 nnoremap <localleader>1 <cmd>lua require("harpoon.ui").nav_file(1)<cr>
 nnoremap <localleader>2 <cmd>lua require("harpoon.ui").nav_file(2)<cr>
 nnoremap <localleader>3 <cmd>lua require("harpoon.ui").nav_file(3)<cr>
@@ -831,17 +832,18 @@ vnoremap <silent> # :<C-U>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
 
-augroup AutoSaveGroup
-  autocmd!
-  " view files are about 500 bytes
-  " bufleave but not bufwinleave captures closing 2nd tab
-  " nested is needed by bufwrite* (if triggered via other autocmd)
-  " BufHidden for compatibility with `set hidden`
-  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
-  autocmd BufWinEnter ?* silent! loadview
-augroup end
-set viewoptions=folds,cursor
-set sessionoptions=folds
+" Was once used for maintaining folds in latex and markdown files
+" augroup AutoSaveGroup
+"   autocmd!
+"   " view files are about 500 bytes
+"   " bufleave but not bufwinleave captures closing 2nd tab
+"   " nested is needed by bufwrite* (if triggered via other autocmd)
+"   " BufHidden for compatibility with `set hidden`
+"   autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
+"   autocmd BufWinEnter ?* silent! loadview
+" augroup end
+" set viewoptions=folds,cursor
+" set sessionoptions=folds
 
 
 " for autocorrect
@@ -976,4 +978,7 @@ autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | exe
 " Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
 " already do by pressing the <j> key, which is a waste of keys!
 " Be useful <enter> key!:
-nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
+nnoremap <silent> <localleader><return> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
+
+" 'edit alternate file' convenience mapping
+nnoremap <BS> <C-^>
