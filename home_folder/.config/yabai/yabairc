@@ -52,6 +52,8 @@ color["preselect"]="0xE02d74da"
 yabai -m config layout                      float
 yabai -m config --space 1 layout            bsp
 yabai -m config --space 2 layout            bsp
+yabai -m config --space 3 layout            bsp
+yabai -m config --space 6 layout            bsp
 
 yabai -m config top_padding                 "${gaps["top"]}"
 yabai -m config bottom_padding              "${gaps["bottom"]}"

@@ -61,6 +61,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
+
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
@@ -223,7 +224,6 @@ zstp() {
 #     wal -i $current_wallpaper -n
 # }
 
-
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -276,3 +276,7 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
+export LS_COLORS="$(vivid -m 8-bit generate solarized-dark)"
+# alias ls="gls --color"
+

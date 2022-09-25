@@ -90,6 +90,7 @@ Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " " Have not added any parsers yet
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sbdchd/neoformat'
@@ -165,7 +166,6 @@ endif
 
 Plug 'Pocco81/auto-save.nvim'
 Plug 'liuchengxu/vista.vim'
-
 
 call plug#end()
 
