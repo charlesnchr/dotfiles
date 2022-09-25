@@ -143,7 +143,7 @@ require'nvim-tree'.setup {
     },
     open_on_tab = false,
     hijack_cursor = false,
-    update_cwd = false,
+    update_cwd = true,
     diagnostics = {
         enable = false,
         icons = {
@@ -168,7 +168,7 @@ require'nvim-tree'.setup {
         timeout = 200,
     },
     view = {
-        width = 30,
+        width = 40,
         height = 30,
         hide_root_folder = false,
         side = "left",
@@ -183,7 +183,7 @@ require'nvim-tree'.setup {
             },
         },
         number = false,
-        relativenumber = false,
+        relativenumber = true,
         signcolumn = "yes",
     },
     filters = {
@@ -196,7 +196,9 @@ require'nvim-tree'.setup {
     },
     actions = {
         change_dir = {
-            global = false,
+          enable = false,
+          global = false,
+          restrict_above_cwd = false,
         },
         open_file = {
             resize_window = true,
@@ -254,7 +256,7 @@ require("telescope").setup({
 local auto_dark_mode = require('auto-dark-mode')
 
 auto_dark_mode.setup({
-	update_interval = 1000,
+	update_interval = 2000,
 	set_dark_mode = function()
 		vim.api.nvim_set_option('background', 'dark')
 		vim.cmd('colorscheme palenight')
@@ -288,7 +290,6 @@ require("color-picker").setup({
 })
 
 vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.
-
 
 require("auto-save").setup {
     enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
@@ -324,3 +325,44 @@ require("auto-save").setup {
 		after_saving = nil -- ran after doing the actual save
 	}
 }
+
+
+
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "lua", "rust" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "javascript" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+
+
+
