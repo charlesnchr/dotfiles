@@ -54,6 +54,7 @@ yabai -m config --space 1 layout            bsp
 yabai -m config --space 2 layout            bsp
 yabai -m config --space 3 layout            bsp
 yabai -m config --space 6 layout            bsp
+yabai -m config --space 9 layout            bsp
 
 yabai -m config top_padding                 "${gaps["top"]}"
 yabai -m config bottom_padding              "${gaps["bottom"]}"
@@ -90,13 +91,12 @@ yabai -m config mouse_action2               resize
 
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Stickies" app="^Stickies$" manage=off
-yabai -m rule --add space=4 manage=off
 yabai -m rule --add label="Mail" app="^Mail$" space=4
 yabai -m rule --add label="Slack" app="^Slack$" space=4
 yabai -m rule --add label="Calendar" app="^Calendar$" space=4
-yabai -m rule --add label="Microsoft Teams" app="^Microsoft Teams$" manage=off space=4
 yabai -m rule --add label="WhatsApp" app="^WhatsApp$" space=4
-yabai -m rule --add label="(Fiji Is Just) ImageJ" app="^ImageJ$" manage=off
+yabai -m rule --add label="(Fiji Is Just) ImageJ" app="^ImageJ$" space=7
+yabai -m rule --add label="MATLAB" app="^MATLAB.*" space=7
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
 yabai -m rule --add label="macfeh" app="^macfeh$"
 yabai -m rule --add label="System Preferences" app="^System Preferences$" title=".*" manage=off
@@ -114,7 +114,8 @@ yabai -m rule --add label="iTerm" app="^iTerm$"
 yabai -m rule --add label="Spotify" app="^Spotify$" space=6
 yabai -m rule --add label="Finder" app="^Finder$"
 # yabai -m rule --add label="OmniGraffle" app="^OmniGraffle$" manage=on space=3
-# yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
+yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
+
 # ===== Signals ================================
 # spacebar
 

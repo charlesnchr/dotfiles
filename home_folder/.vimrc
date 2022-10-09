@@ -124,7 +124,9 @@ Plug 'folke/trouble.nvim'
 Plug 'trotter/autojump.vim'
 Plug 'arcticicestudio/nord-vim'
 " Plug 'christoomey/vim-tmux-navigator'
-Plug 'jdhao/whitespace.nvim'
+" provides keybinding, strip
+Plug 'ntpeters/vim-better-whitespace'
+
 " not completely sure why the below module is needed, but I get an error by
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
 Plug 'kosayoda/nvim-lightbulb'
@@ -167,6 +169,8 @@ endif
 Plug 'will133/vim-dirdiff'
 Plug 'Pocco81/auto-save.nvim'
 Plug 'liuchengxu/vista.vim'
+Plug 'smjonas/live-command.nvim'
+Plug 'simrat39/symbols-outline.nvim'
 
 call plug#end()
 
@@ -615,10 +619,10 @@ let g:repl_program = {
 " nnoremap <F7> :IPythonCellExecuteCellVerboseJump<CR>
 " inoremap <F7> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
 
-augroup ipython_cell_highlight
-    autocmd!
-    autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
-augroup END
+" augroup ipython_cell_highlight
+"     autocmd!
+"     autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
+" augroup END
 
 " map [c and ]c to jump to the previous and next cell header
 autocmd FileType python map <buffer> [c :IPythonCellPrevCell<CR>
@@ -769,7 +773,7 @@ autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " 
 " Write all buffers before navigating from Vim to tmux pane
 " let g:tmux_navigator_save_on_switch = 2
 
-nnoremap <silent> <leader><Space> :<C-U>StripTrailingWhitespace<CR>
+nnoremap <silent> <leader><Space> :<C-U>StripWhitespace<CR>
 
 let g:vimspector_enable_mappings = 'HUMAN'
 autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<CR>

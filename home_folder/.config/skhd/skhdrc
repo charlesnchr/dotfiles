@@ -67,6 +67,9 @@ alt - space : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
+alt + ctrl - space : yabai -m window --toggle sticky ; \
+                 yabai -m window --toggle topmost ;
+
 # Float / Unfloat space (does not seem to work)
 # shift + lctrl - space : \
 #     yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
@@ -308,4 +311,4 @@ alt - v : yabai -m query --spaces --space \
 
 alt - 7 : yabai -m space --layout bsp
 alt - 8 : yabai -m space --layout stack
-alt - 9 : yabai -m space --layout float
+alt + ctrl - f9 : yabai -m space --layout float

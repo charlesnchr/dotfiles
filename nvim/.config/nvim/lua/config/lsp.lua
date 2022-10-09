@@ -70,26 +70,6 @@ end
 local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- require'lspconfig'.pylsp.setup({
---     settings = {
---         pylsp = {
---             plugins = {
---                 pylint = { enabled = true, executable = "~/anaconda3/bin/pylint"  },
---                 pyflakes = { enabled = true },
---                 flake8 = { enabled = true },
---                 pycodestyle = { enabled = false },
---                 jedi_completion = { fuzzy = true },
---                 pyls_isort = { enabled = true },
---                 pylsp_mypy = { enabled = true },
---             },
---         },
---     },
---     flags = {
---         debounce_text_changes = 200,
---     },
---     capabilities = capabilities,
--- })
-
 -- require'lspconfig'.pyright.setup{
 --   capabilities = capabilities
 -- }
@@ -144,54 +124,8 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 })
 
 
--- Combine base config for each server and merge user-defined settings.
-local function make_config(server_name)
-
-	-- Setup base config for each server.
-	local c = {}
-	c.on_attach = on_attach
-    -- c.on_attach = custom_attach
-    -- c.capabilities = vim.lsp.protocol.make_client_capabilities()
-	-- c.capabilities = require('cmp_nvim_lsp').update_capabilities(c.capabilities)
-    c.capabilities = capabilities
-	c.flags = {
-		debounce_text_changes = 150,
-	}
-
-	-- Merge user-defined lsp settings.
-	-- These can be overridden locally by lua/lsp-local/<server_name>.lua
-	local exists, module = pcall(require, 'lsp-local.'..server_name)
-	if not exists then
-		exists, module = pcall(require, 'lsp.'..server_name)
-	end
-	if exists then
-		local user_config = module.config(c)
-		for k, v in pairs(user_config) do c[k] = v end
-	end
-
-	return c
-end
-
-
 
 if vim.fn.has('vim_starting') then
-	-- Setup language servers using nvim-lsp-installer
-	-- See https://github.com/williamboman/nvim-lsp-installer
-	local lsp_installer = require('nvim-lsp-installer')
-
-	lsp_installer.on_server_ready(function(server)
-        -- disable, testing pyright
-        -- if(server.name == 'pylsp') then
-        --     return false
-        -- end
-        -- if(server.name == 'pyright') then
-        --     return false
-        -- end
-		local opts = make_config(server.name)
-		server:setup(opts)
-		vim.cmd [[ do User LspAttachBuffers ]]
-	end)
-
 	-- global custom location-list diagnostics window toggle.
 	local args = { noremap = true, silent = true }
 	vim.api.nvim_set_keymap(
@@ -217,5 +151,135 @@ if vim.fn.has('vim_starting') then
   vim.api.nvim_set_keymap("n", "<space>d", "<cmd>lua vim.diagnostic.open_float(0, { scope = 'line', border = 'none' })<CR>", args)
 end
 
-return M
 
+local function config(_config)
+	return vim.tbl_deep_extend("force", {
+		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		on_attach = function()
+			vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+			vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+			vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+			vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+			vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+			vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+			vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+			vim.keymap.set("n", "<leader>vco", function() vim.lsp.buf.code_action({
+                filter = function(code_action)
+                    if not code_action or not code_action.data then
+                        return false
+                    end
+
+                    local data = code_action.data.id
+                    return string.sub(data, #data - 1, #data) == ":0"
+                end,
+                apply = true
+            }) end, opts)
+			vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+			vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+			vim.keymap.set({ inoremap = true, silent = true }, "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+		end,
+	}, _config or {})
+end
+
+require'lspconfig'.pylsp.setup(config({
+    settings = {
+        pylsp = {
+            plugins = {
+                pylint = { enabled = true },
+                pyflakes = { enabled = true },
+                flake8 = { enabled = true },
+                pycodestyle = { enabled = false },
+                jedi_completion = { fuzzy = true },
+                pyls_isort = { enabled = true },
+                pylsp_mypy = { enabled = true },
+            },
+        },
+    },
+    flags = {
+        debounce_text_changes = 200,
+    },
+    capabilities = capabilities,
+}))
+
+
+
+require("lspconfig").zls.setup(config())
+
+require("lspconfig").tsserver.setup(config())
+
+require("lspconfig").ccls.setup(config())
+
+-- require("lspconfig").jedi_language_server.setup(config())
+
+require("lspconfig").svelte.setup(config())
+
+require("lspconfig").solang.setup(config())
+
+require("lspconfig").cssls.setup(config())
+
+require("lspconfig").gopls.setup(config({
+	cmd = { "gopls", "serve" },
+	settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+		},
+	},
+}))
+
+-- who even uses this?
+require("lspconfig").rust_analyzer.setup(config({
+	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+	--[[
+    settings = {
+        rust = {
+            unstable_features = true,
+            build_on_save = false,
+            all_features = true,
+        },
+    }
+    --]]
+}))
+
+require("lspconfig").sumneko_lua.setup(config({
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = vim.split(package.path, ";"),
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+		},
+	},
+}))
+
+local opts = {
+	-- whether to highlight the currently hovered symbol
+	-- disable if your cpu usage is higher than you want it
+	-- or you just hate the highlight
+	-- default: true
+	highlight_hovered_item = true,
+
+	-- whether to show outline guides
+	-- default: true
+	show_guides = true,
+}
+
+require("symbols-outline").setup(opts)
+
+
+return M
