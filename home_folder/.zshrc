@@ -225,7 +225,6 @@ colo() {
     if [ $(cat ~/dotfiles/is_dark_mode) -eq 1 ]; then x=0; else x=1; fi; echo $x > ~/dotfiles/is_dark_mode
 }
 
-
 # function pywal {
 #     # generate color scheme from current wallpaper
 #     current_wallpaper="$(osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)')"
