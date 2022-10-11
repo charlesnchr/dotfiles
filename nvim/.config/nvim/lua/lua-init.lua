@@ -1,5 +1,5 @@
 require("nvim-lsp-installer").setup({
-    automatic_installation = false, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
     ui = {
         icons = {
             server_installed = "✓",
@@ -180,7 +180,6 @@ require'nvim-tree'.setup {
     },
     view = {
         width = 40,
-        height = 30,
         hide_root_folder = false,
         side = "left",
         mappings = {
@@ -364,7 +363,8 @@ require'nvim-treesitter.configs'.setup {
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    disable = { },
+    -- 20221011: TS for help has a whitespace bug: "Text :cmd" shows as "Text:cmd"
+    disable = { "help" },
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).

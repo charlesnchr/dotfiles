@@ -171,6 +171,7 @@ Plug 'Pocco81/auto-save.nvim'
 Plug 'liuchengxu/vista.vim'
 Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
+Plug 'TimUntersberger/neogit'
 
 call plug#end()
 
