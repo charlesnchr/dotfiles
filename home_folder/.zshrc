@@ -172,7 +172,6 @@ source $HOME/dotfiles/.zshrc_local
 
 
 
-
 # antigen bundle MikeDacre/tmux-zsh-vim-titles
 # antigen apply
 
@@ -287,5 +286,3 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 export LS_COLORS="$(vivid -m 8-bit generate solarized-dark)"
 # alias ls="gls --color"
 
-# 10ms for key sequences
-KEYTIMEOUT=1
