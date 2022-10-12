@@ -838,8 +838,8 @@ augroup AutoHeader
     autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Author :.*/s//\* Author : Charles N. Christensen"
     autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Github :.*/s//\* Github : github.com\\/charlesnchr"
     autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Creation Date :.*/s//\* Creation Time : " .strftime("%c")
-    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh execute "normal ma"
-    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Last Modified :.*/s/\* Last Modified :.*/\* Last Modified : " .strftime("%c")
+    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh silent! execute "normal ma"
+    autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h,*.py,*.md,*.sh silent! exe "g/\* Last Modified :.*/s/\* Last Modified :.*/\* Last Modified : " .strftime("%c")
     autocmd bufwritepost,filewritepost *.c,*.cpp,*.h,*.py,*.md,*.sh execute "normal `a"
 augroup END
 
@@ -1006,3 +1006,9 @@ nnoremap <silent> <localleader><return> :let searchTerm = '\v<'.expand("<cword>"
 
 " 'edit alternate file' convenience mapping
 nnoremap <BS> <C-^>
+
+" black on save (catch error E790 which is when saved right after undo)
+augroup black_on_save
+  autocmd!
+  au BufWritePre * try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
+augroup end
