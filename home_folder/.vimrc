@@ -52,6 +52,8 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
+Plug 'bps/vim-textobj-python'
+
 Plug 'mhinz/vim-startify'
 Plug 'akinsho/bufferline.nvim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -62,10 +64,10 @@ Plug 'mattn/calendar-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
-Plug 'jpalardy/vim-slime'
-" slows down start-up
-Plug 'hanschen/vim-ipython-cell'
+Plug 'jpalardy/vim-slime', { 'for': 'python' }
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }" slows down start-up
 " Plug 'jupyter-vim/jupyter-vim'
+" Plug 'klafyvel/vim-slime-cells'
 
 " highlighting occurrences, toggling hlsearch
 " Plug 'kevinhwang91/nvim-hlslens'
@@ -91,6 +93,7 @@ Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 " " Have not added any parsers yet
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sbdchd/neoformat'
@@ -137,7 +140,6 @@ Plug 'ThePrimeagen/harpoon'
 " for C-h, C-l to repeat after t,f,T,F
 Plug 'vim-scripts/repeatable-motions.vim'
 
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'rcarriga/nvim-notify'
 
 " Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
@@ -172,11 +174,11 @@ Plug 'liuchengxu/vista.vim'
 Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
 set updatetime=100
-lua require('lua-init')
 
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
@@ -187,6 +189,8 @@ elseif has('unix')
 else
     let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
+
+lua require('lua-init')
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -324,7 +328,7 @@ let g:startify_bookmarks = [
             \ { 'g': '~/GitHub' },
             \ '~/0main',
             \ ]
-
+let g:startify_change_to_dir = 0
 
 " air-line
 " alternative statusline with clock and cwd
@@ -333,6 +337,7 @@ let g:startify_bookmarks = [
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 " let g:airline_theme = 'tomorrow'
 let g:airline#extensions#tabline#enabled = 0           " enable airline tabline
+let g:airline#extensions#branch#enabled = 0           " disable branch
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -458,6 +463,7 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 nmap <F2> :TagbarOpenAutoClose<CR>
 nmap <leader>ga :TagbarToggle<CR>
 nmap <leader>a :TagbarOpenAutoClose<CR>
+let g:tagbar_sort = 0
 
 
 if !exists('g:lasttab')
@@ -597,6 +603,38 @@ let g:floaterm_height = 0.8
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
 vnoremap <leader>y :OSCYank<CR>
 
+
+"------------------------------------------------------------------------------
+" slime configuration
+"------------------------------------------------------------------------------
+" always use tmux
+let g:slime_target = 'tmux'
+
+" fix paste issues in ipython
+" let g:slime_python_ipython = 1
+let g:slime_bracketed_paste = 1
+" let g:slime_no_mappings = 1
+
+let g:slime_cell_delimiter = "# %%"
+nmap <leader>s <Plug>SlimeSendCell
+
+
+" always send text to the top-right pane in the current tmux tab without asking
+let g:slime_default_config = {
+            \ 'socket_name': get(split($TMUX, ','), 0),
+            \ 'target_pane': ':.1' }
+            " \ 'target_pane': '{right-of}' }
+let g:slime_dont_ask_default = 1
+
+nmap <c-c>v <Plug>SlimeConfig
+
+" " vim-slime-cells
+" nmap <c-c><c-c> <Plug>SlimeCellsSendAndGoToNext
+" nmap <c-c><c-j> <Plug>SlimeCellsNext
+" nmap <c-c><c-k> <Plug>SlimeCellsPrev
+" autocmd FileType python map [c <Plug>SlimeCellsPrev
+" autocmd FileType python map ]c <Plug>SlimeCellsNext
+
 "------------------------------------------------------------------------------
 " IPython  configuration
 "------------------------------------------------------------------------------
@@ -606,8 +644,8 @@ vnoremap <leader>y :OSCYank<CR>
 " inoremap <F5> <C-o>:w<CR><C-o>:IPythonCellRun<CR>
 
 " map <F6> to evaluate current cell without saving
-nnoremap <F6> :IPythonCellExecuteCellVerbose<CR>
-inoremap <F6> <C-o>:IPythonCellExecuteCellVerbose<CR>
+nnoremap <F6> :IPythonCellExecuteCellVerboseJump<CR>
+inoremap <F6> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
 "nnoremap <F6> :REPLSendSession<CR>
 "inoremap <F6> <C-o>:REPLSendSession<CR>
 let g:repl_program = {
@@ -620,10 +658,10 @@ let g:repl_program = {
 " nnoremap <F7> :IPythonCellExecuteCellVerboseJump<CR>
 " inoremap <F7> <C-o>:IPythonCellExecuteCellVerboseJump<CR>
 
-" augroup ipython_cell_highlight
-"     autocmd!
-"     autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
-" augroup END
+ " augroup ipython_cell_highlight
+ "     autocmd!
+ "     autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
+ " augroup END
 
 " map [c and ]c to jump to the previous and next cell header
 autocmd FileType python map <buffer> [c :IPythonCellPrevCell<CR>
@@ -641,25 +679,6 @@ imap <F9> <C-o>:IPythonCellInsertAbove<CR>
 imap <F10> <C-o>:IPythonCellInsertBelow<CR>
 
 nmap <localleader>r :SlimeSend1 %run test.py<CR>
-
-"------------------------------------------------------------------------------
-" slime configuration
-"------------------------------------------------------------------------------
-" always use tmux
-let g:slime_target = 'tmux'
-
-" fix paste issues in ipython
-let g:slime_python_ipython = 1
-" let g:slime_bracketed_paste = 1
-
-let g:slime_cell_delimiter = "# %%"
-nmap <leader>s <Plug>SlimeSendCell
-
-" always send text to the top-right pane in the current tmux tab without asking
-let g:slime_default_config = {
-            \ 'socket_name': get(split($TMUX, ','), 0),
-            \ 'target_pane': '{right-of}' }
-let g:slime_dont_ask_default = 1
 
 "------------------------------------------------------------------------------
 " tab navigation
@@ -1012,3 +1031,5 @@ augroup black_on_save
   autocmd!
   au BufWritePre * try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
 augroup end
+
+

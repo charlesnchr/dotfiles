@@ -139,7 +139,7 @@ require("bufferline").setup{
 require'nvim-tree'.setup {
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
+    open_on_setup = true,
     ignore_buffer_on_setup = false,
     ignore_ft_on_setup = {
         "startify",
@@ -174,7 +174,7 @@ require'nvim-tree'.setup {
         args = {},
     },
     git = {
-        enable = true,
+        enable = false,
         ignore = false,
         timeout = 200,
     },
@@ -265,28 +265,28 @@ require("telescope").setup({
 
 local auto_dark_mode = require('auto-dark-mode')
 
-auto_dark_mode.setup({
-	update_interval = 2000,
-	set_dark_mode = function()
-		vim.api.nvim_set_option('background', 'dark')
-		vim.cmd('colorscheme palenight')
-		vim.cmd('AirlineTheme palenight')
+-- auto_dark_mode.setup({
+-- 	update_interval = 2000,
+-- 	set_dark_mode = function()
+-- 		vim.api.nvim_set_option('background', 'dark')
+-- 		vim.cmd('colorscheme palenight')
+-- 		vim.cmd('AirlineTheme palenight')
 
-	end,
-	set_light_mode = function()
-		vim.api.nvim_set_option('background', 'light')
-		vim.cmd('colorscheme PaperColor')
-		vim.cmd('AirlineTheme atomic')
-	end,
-})
-auto_dark_mode.init()
+-- 	end,
+-- 	set_light_mode = function()
+-- 		vim.api.nvim_set_option('background', 'light')
+-- 		vim.cmd('colorscheme PaperColor')
+-- 		vim.cmd('AirlineTheme atomic')
+-- 	end,
+-- })
+-- auto_dark_mode.init()
 
 
 
 -- For color-picker.nvim
 local opts = { noremap = true, silent = true }
 
-vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
+-- vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
 vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
 
 -- only need setup() if you want to change progress bar icons
