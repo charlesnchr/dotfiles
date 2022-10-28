@@ -67,8 +67,8 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities())
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- require'lspconfig'.pyright.setup{
 --   capabilities = capabilities
@@ -154,7 +154,7 @@ end
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		-- capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		on_attach = function()
 			vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 			vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -182,6 +182,9 @@ local function config(_config)
 end
 
 require'lspconfig'.pylsp.setup(config({
+    cmd_env = {
+        PATH = "/home/cc/anaconda3/envs/py310/bin:" .. vim.env.PATH
+    },
     settings = {
         pylsp = {
             plugins = {
