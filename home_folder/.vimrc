@@ -338,6 +338,7 @@ let g:startify_change_to_dir = 0
 " let g:airline_theme = 'tomorrow'
 let g:airline#extensions#tabline#enabled = 0           " enable airline tabline
 let g:airline#extensions#branch#enabled = 0           " disable branch
+set statusline+=%{gutentags#statusline()}
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -1012,8 +1013,9 @@ nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
 
 nmap <localleader>/ :Rg<cr>
-vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
-nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
+nmap <localleader>. :RgRaw -. ''<cr>
+" vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
+" nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 
 autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
 
@@ -1027,9 +1029,13 @@ nnoremap <silent> <localleader><return> :let searchTerm = '\v<'.expand("<cword>"
 nnoremap <BS> <C-^>
 
 " black on save (catch error E790 which is when saved right after undo)
-augroup black_on_save
+augroup prettier_on_save
   autocmd!
-  au BufWritePre * try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
+  au BufWritePre *.py,*.jsx try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
 augroup end
 
+let g:neoformat_enabled_javascriptreact = ['prettier']
+let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_python = ['black']
 
+let g:gutentags_define_advanced_commands=1

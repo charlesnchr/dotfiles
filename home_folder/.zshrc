@@ -16,7 +16,6 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/tools/node-v14.15.4-linux-x64/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -211,7 +210,7 @@ jf() {
 t() {
     [[ ! $(tmux a) ]] && tmuxinator Home
 }
- 
+
 tgz() {
     tar cf - "$@" | pv -s $[$(du -sk "$@" | awk '{print $1}') * 1024] | gzip > "$@".tgz
 }
@@ -248,14 +247,7 @@ setopt menu_complete
 bindkey "^U" backward-kill-line
 bindkey '^Q' beginning-of-line
 
-# this was added by CPAN, not sure I wanna keep it
-PATH="/home/cc/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/cc/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/cc/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/cc/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/cc/perl5"; export PERL_MM_OPT;
-
-export PATH="$HOME/.poetry/bin:$PATH"
+# export PATH="$HOME/.poetry/bin:$PATH"
 
 export BAT_THEME="Solarized (dark)"
 
@@ -285,4 +277,3 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 export LS_COLORS="$(vivid -m 8-bit generate solarized-dark)"
 # alias ls="gls --color"
-

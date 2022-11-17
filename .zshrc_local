@@ -5,4 +5,4 @@ conda activate base
 autoload -U compinit && compinit -u
 
 # eval "$(zoxide init zsh)"
-
+export PYTHON_LSP_HOME=/Users/cc/anaconda3/bin/
