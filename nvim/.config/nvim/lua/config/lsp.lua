@@ -183,7 +183,7 @@ end
 
 require'lspconfig'.pylsp.setup(config({
     cmd_env = {
-        PATH = "/home/cc/anaconda3/envs/py310/bin:" .. vim.env.PATH
+        PATH = vim.env.PYTHON_LSP_HOME .. ":" .. vim.env.PATH
     },
     settings = {
         pylsp = {

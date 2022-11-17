@@ -1,5 +1,5 @@
 require("nvim-lsp-installer").setup({
-    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    automatic_installation = { exclude = { "pylsp", } },
     ui = {
         icons = {
             server_installed = "✓",
@@ -265,21 +265,20 @@ require("telescope").setup({
 
 local auto_dark_mode = require('auto-dark-mode')
 
--- auto_dark_mode.setup({
--- 	update_interval = 2000,
--- 	set_dark_mode = function()
--- 		vim.api.nvim_set_option('background', 'dark')
--- 		vim.cmd('colorscheme palenight')
--- 		vim.cmd('AirlineTheme palenight')
-
--- 	end,
--- 	set_light_mode = function()
--- 		vim.api.nvim_set_option('background', 'light')
--- 		vim.cmd('colorscheme PaperColor')
--- 		vim.cmd('AirlineTheme atomic')
--- 	end,
--- })
--- auto_dark_mode.init()
+auto_dark_mode.setup({
+	update_interval = 2000,
+	set_dark_mode = function()
+		vim.api.nvim_set_option('background', 'dark')
+		vim.cmd('colorscheme palenight')
+		vim.cmd('AirlineTheme palenight')
+	end,
+	set_light_mode = function()
+		vim.api.nvim_set_option('background', 'light')
+		vim.cmd('colorscheme PaperColor')
+		vim.cmd('AirlineTheme atomic')
+	end,
+})
+auto_dark_mode.init()
 
 
 
