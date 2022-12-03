@@ -103,6 +103,7 @@ ctrl + cmd + alt - f : yabai -m window --toggle native-fullscreen
 
 # focus window
 alt - 0x2C : yabai -m window --swap largest
+alt - c : yabai -m window --swap largest
 
 # swap managed window
 # shift + alt - h : yabai -m window --swap north
