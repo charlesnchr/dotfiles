@@ -133,7 +133,6 @@ Plug 'ntpeters/vim-better-whitespace'
 " not completely sure why the below module is needed, but I get an error by
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
 Plug 'kosayoda/nvim-lightbulb'
-Plug 'danro/rename.vim'
 " Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 
@@ -185,7 +184,7 @@ set updatetime=100
 if has('mac')
     let g:python3_host_prog = expand('~/anaconda3/bin/python')
 elseif has('unix')
-    let g:python3_host_prog = expand('~/anaconda3/envs/oni38/bin/python')
+    let g:python3_host_prog = expand('~/anaconda3/envs/oni310/bin/python')
 else
     let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
@@ -465,6 +464,7 @@ nmap <F2> :TagbarOpenAutoClose<CR>
 nmap <leader>ga :TagbarToggle<CR>
 nmap <leader>a :TagbarOpenAutoClose<CR>
 let g:tagbar_sort = 0
+let g:tagbar_width = 60
 
 
 if !exists('g:lasttab')
