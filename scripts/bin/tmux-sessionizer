@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find -L ~/Github ~/Documents/GitHub/onirepos ~/2work/onirepos ~/0main/1.Projects -mindepth 1 -maxdepth 1 -type d  -not -path '*/.*' | fzf)
+    selected=$(find -L ~/Github ~/Documents/GitHub/onirepos ~/2work ~/2work/onirepos ~/0main/Syncthing ~/0main/1.Projects -mindepth 1 -maxdepth 1 -type d  -not -path '*/.*' | fzf)
 fi
 
 if [[ -z $selected ]]; then

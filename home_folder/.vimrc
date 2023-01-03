@@ -310,8 +310,8 @@ filetype plugin on
 
 " for vimwiki
 let g:vimwiki_list = [{
-            \ 'path': '$HOME/Sync/wiki',
-            \ 'template_path': '$HOME/Sync/wiki/templates',
+            \ 'path': '$HOME/0main/Syncthing/wiki',
+            \ 'template_path': '$HOME/0main/Syncthing/wiki/templates',
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
@@ -322,6 +322,8 @@ let g:vimwiki_ext2syntax = {
 " let g:vimwiki_ext2syntax = {
 "             \}
 let g:vimwiki_global_ext = 0
+
+let g:startify_files_number = 10
 let g:startify_bookmarks = [
             \ { 'p': '~/0main/0phd' },
             \ { 'c': '~/0main/0phd/ccRestore' },
@@ -329,6 +331,21 @@ let g:startify_bookmarks = [
             \ '~/0main',
             \ ]
 let g:startify_change_to_dir = 0
+
+function! s:list_commits()
+  let git = 'git '
+  let commits = systemlist(git .' log --oneline | head -n10')
+  let git = 'G'. git[1:]
+  return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+endfunction
+
+let g:startify_lists = [
+      \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+      \ { 'header': ['   MRU'],            'type': 'files' },
+      \ { 'header': ['   Sessions'],       'type': 'sessions' },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
+      \ ]
 
 " air-line
 " alternative statusline with clock and cwd
@@ -820,7 +837,6 @@ let g:peekaboo_prefix = '<localleader>'
 " nnoremap <C-d> f
 " nnoremap <C-u> t
 
-let g:startify_files_number = 20
 
 
 " wrapper for bufferline goto
@@ -833,7 +849,7 @@ endfunction
 " let g:ranger_replace_netrw = 1
 
 command! -bang -nargs=* RgWiki
-            \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Sync/wiki'}), <bang>0)
+            \ call fzf#vim#grep("rg -g '*.{wiki,md}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/0main/Syncthing/wiki'}), <bang>0)
 nnoremap <localleader>fa :RgWiki<Cr>
 
 command! -bang -nargs=* RgThesis
@@ -1036,3 +1052,6 @@ let g:neoformat_enabled_typescript = ['prettier']
 let g:neoformat_enabled_python = ['black']
 
 let g:gutentags_define_advanced_commands=1
+
+silent! iunmap <buffer> <Tab>
+
