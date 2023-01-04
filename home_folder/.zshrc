@@ -223,6 +223,29 @@ colo() {
     if [ $(cat ~/dotfiles/is_dark_mode) -eq 1 ]; then x=0; else x=1; fi; echo $x > ~/dotfiles/is_dark_mode
 }
 
+wikistats() {
+    echo "Now at day:"
+    date +%j
+
+    echo "Total pages:"
+    ls -1 ~/0main/Syncthing/wiki/diary/2023-*.wiki | wc -l | awk -F' ' '{print $1}'
+
+    echo "Total words:"
+    wc -w ~/0main/Syncthing/wiki/diary/2023-*.wiki | tail -n 1 | awk '{print $1}'
+
+    echo "Number of days run:"
+    grep "\[X\] Jogging" ~/0main/Syncthing/wiki/diary/** | wc -l | awk -F' ' '{print $1}'
+
+    echo "Total distance:"
+    grep "Jogging" ~/0main/Syncthing/wiki/diary/* --no-filename | sed 's/[^0-9]*//g' | awk '{s+=$1} END {print s}'
+
+    echo "Number of days I've read:"
+    grep "\[X\] Read," ~/0main/Syncthing/wiki/diary/** | wc -l | awk -F' ' '{print $1}'
+
+    echo "Number of days making ankicards:"
+    grep "\[X\] Anki flashcard" ~/0main/Syncthing/wiki/diary/** | wc -l | awk -F' ' '{print $1}'
+}
+
 # function pywal {
 #     # generate color scheme from current wallpaper
 #     current_wallpaper="$(osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)')"
