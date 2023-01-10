@@ -246,6 +246,30 @@ wikistats() {
     grep "\[X\] Anki flashcard" ~/0main/Syncthing/wiki/diary/** | wc -l | awk -F' ' '{print $1}'
 }
 
+
+jog() {
+    sqlite3 $HOME/.histdb/zsh-history.db "
+    SELECT
+        replace(commands.argv, '
+        ', '
+        ')
+        FROM commands
+        JOIN history ON history.command_id = commands.id
+        JOIN places ON history.place_id = places.id
+        WHERE history.exit_status = 0
+        AND dir = '${PWD}'
+        AND places.host = '${HOST}'
+        AND commands.argv != 'jog'
+        AND commands.argv NOT LIKE 'z %'
+        AND commands.argv NOT LIKE 'cd %'
+        AND commands.argv != '..'
+        ORDER BY start_time DESC
+        LIMIT 10
+        "
+    }
+
+
+
 # function pywal {
 #     # generate color scheme from current wallpaper
 #     current_wallpaper="$(osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)')"
@@ -260,9 +284,22 @@ source $HOME/tools/antigen/antigen.zsh
 antigen init $HOME/dotfiles/.antigenrc
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
 # User configuration
 # Author: Charles
 # I have it after antigen because some packages will overwrite otherwise
+
+# zsh vi mode, toggle per-directory
+function per-directory-history() {
+  per-directory-history-toggle-history
+}
+
+# The plugin will auto execute this zvm_after_lazy_keybindings function
+function zvm_after_lazy_keybindings() {
+  zvm_define_widget per-directory-history
+  zvm_bindkey vicmd '^G' per-directory-history
+}
+
 
 setopt menu_complete
 
@@ -300,3 +337,13 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 export LS_COLORS="$(vivid -m 8-bit generate solarized-dark)"
 # alias ls="gls --color"
+
+function zle-line-init zle-keymap-select {
+    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
