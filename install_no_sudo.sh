@@ -19,3 +19,8 @@ mv ./nvim.appimage ~/bin/nvim
 
 # zsh and tmux
 conda install -y -c conda-forge zsh tmux
+
+# other packages
+conda install -c conda-forge ripgrep
+npm install -g fd-find
+
