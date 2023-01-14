@@ -178,6 +178,9 @@ fi
 
 echo "Install e.g. Teams via Flathub/Discover"
 
+# for laptop
+echo "for laptop: fix the idle vs deep sleep kernel parameter, see arch wiki"
+
 
 if ask "Install ncspot from Github"; then
     yay --noconfirm -S ncspot-git
@@ -198,3 +201,24 @@ if ask "Install personal awesome fork"; then
     sudo make install
     sudo cp awesome.desktop /usr/share/xsessions
 fi
+
+
+if ask "Run general install script now?" Y; then
+    bash ~/dotfiles/install.sh
+fi
+
+if ask "Configure libinput-gestures" N; then
+    # extra
+    sudo gpasswd -a $USER input
+    echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh
+fi
+
+
+if ask "Configure redshift" N; then
+    echo "[redshift]
+    allowed=true
+    system=false
+    users=" | sudo tee -a /etc/geoclue/geoclue.conf
+fi
+
+

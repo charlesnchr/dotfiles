@@ -34,7 +34,7 @@ RUN \
 	&& source ~/anaconda3/etc/profile.d/conda.sh \
 	&& conda activate base \
 	&& conda install -y -c conda-forge universal-ctags rclone tmux \
-	&& pip install ranger scikit-image numpy matplotlib
+	&& pip install ranger-fm scikit-image numpy matplotlib
 
 RUN \
 	echo 'nodejs' \
