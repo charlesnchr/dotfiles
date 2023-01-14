@@ -257,11 +257,20 @@ require("telescope").setup({
     defaults = {
         mappings = {
             i = {
-                ["<esc>"] = actions.close,
+                -- ["<esc>"] = actions.close,
+                ["<C-f>"] = actions.send_to_qflist + actions.open_qflist
+            },
+            n = {
+                ["<C-f>"] = actions.send_to_qflist + actions.open_qflist
             },
         },
+        file_ignore_patterns = { "node_modules", "tags" }
     },
 })
+
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
 
 local auto_dark_mode = require('auto-dark-mode')
 

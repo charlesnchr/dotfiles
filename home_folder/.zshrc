@@ -311,8 +311,11 @@ bindkey '^Q' beginning-of-line
 
 export BAT_THEME="Solarized (dark)"
 
-# much faster
-export FZF_DEFAULT_COMMAND='fd --type file -H'
+# fd is much faster
+# used for while:
+# export FZF_DEFAULT_COMMAND='fd --type file -H'
+# trying this to improve :Rg in vim
+export FZF_DEFAULT_COMMAND='fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,tmp,tags} --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 
@@ -337,13 +340,3 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 export LS_COLORS="$(vivid -m 8-bit generate solarized-dark)"
 # alias ls="gls --color"
-
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    RPS2=$RPS1
-    zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
-

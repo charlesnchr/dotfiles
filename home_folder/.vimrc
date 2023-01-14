@@ -741,16 +741,36 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 " nnoremap <leader>fb <cmd>Telescope buffers<cr>
 " nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <localleader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tf <cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers({sort_lastused = true})<cr>
-nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
-nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
-nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
+" nnoremap <leader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <localleader>p <cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <leader>tf <cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <leader>tg <cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <leader>tb <cmd>lua require'telescope.builtin'.buffers({sort_lastused = true})<cr>
+" nnoremap <leader>th <cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <leader>tk <cmd>lua require'telescope.builtin'.keymaps(require('telescope.themes').get_ivy({}))<cr>
+" nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
+" nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
+
+nnoremap <localleader>p <cmd>lua require'telescope.builtin'.git_files()<cr>
+nnoremap <localleader>js <cmd>lua require'telescope.builtin'.git_files()<cr>
+nnoremap <localleader>jf <cmd>lua require'telescope.builtin'.find_files()<cr>
+nnoremap <localleader>jg <cmd>lua require'telescope.builtin'.live_grep()<cr>
+
+" like :Rg
+nnoremap <localleader>jr <cmd>lua require'telescope.builtin'.grep_string{ search = '' }<cr>
+" cleaned up Rg-like
+nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
+" with hidden files
+nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
+
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_lastused = true})<cr>
+nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
+nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
+nnoremap <localleader>je <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>
+nnoremap <localleader>jd <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
+nnoremap <localleader>ja <cmd>lua require'telescope.builtin'.current_buffer_tags()<cr>
+nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
 
 "call wilder#setup({'modes': [':', '/', '?']})
 
@@ -858,6 +878,13 @@ nnoremap <localleader>fs :RgThesis<Cr>
 
 " using vim-agriculture this would be equivalent
 " nnoremap <localleader>fs :RgRaw -g '*.tex' '' ~/Github/phd-thesis<Cr>
+
+nmap <localleader>/ :Rg<cr>
+" hidden files search with vim-agriculture
+nmap <localleader>. :RgRaw -. ''<cr>
+" vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
+" nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
+
 
 " create file if does not exist
 noremap <leader>gf :e <cfile><cr>
@@ -1024,11 +1051,6 @@ augroup END " }
 
 nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 " autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-
-nmap <localleader>/ :Rg<cr>
-nmap <localleader>. :RgRaw -. ''<cr>
-" vmap <localleader>/ <Plug>RgRawVisualSelection<cr>
-" nmap <localleader>* <Plug>RgRawWordUnderCursor<cr>
 
 autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
 
