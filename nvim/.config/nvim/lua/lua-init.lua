@@ -1,27 +1,27 @@
-require("nvim-lsp-installer").setup({
-    automatic_installation = { exclude = { "pylsp", } },
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
-    }
-})
+-- require("nvim-lsp-installer").setup({
+--     automatic_installation = { exclude = { "pylsp", } },
+--     ui = {
+--         icons = {
+--             server_installed = "✓",
+--             server_pending = "➜",
+--             server_uninstalled = "✗"
+--         }
+--     }
+-- })
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+-- local cmp = require'cmp'
 
-local source_mapping = {
-        nvim_lsp = "(LSP)",
-        nvim_lua = "(Lua)",
-        emoji = "(Emoji)",
-        path = "(Path)",
-        calc = "(Calc)",
-        -- cmp_tabnine = "(Tabnine)",
-        ultisnips = "(Snippet)",
-        buffer = "(Buffer)",
-}
+-- local source_mapping = {
+--         nvim_lsp = "(LSP)",
+--         nvim_lua = "(Lua)",
+--         emoji = "(Emoji)",
+--         path = "(Path)",
+--         calc = "(Calc)",
+--         -- cmp_tabnine = "(Tabnine)",
+--         ultisnips = "(Snippet)",
+--         buffer = "(Buffer)",
+-- }
 
 
  -- vim_item.kind = kind_icons[vim_item.kind]
@@ -37,87 +37,87 @@ local source_mapping = {
  --    ultisnips = 1,
 -- };
 
-local lspkind = require'lspkind'
+-- local lspkind = require'lspkind'
 
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            -- For `ultisnips` user.
-            vim.fn["UltiSnips#Anon"](args.body)
-        end,
-    },
-    mapping = {
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-t>'] = cmp.mapping.complete(),
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ["<C-n>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-            end
-        end, { "i", "s" }),
-        ["<C-p>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            end
-        end, { "i", "s" }),
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "path" },
-        { name = "luasnip" },
-        { name = 'ultisnips' }, -- For ultisnips user.
-        -- { name = "cmp_tabnine" },
-        { name = "nvim_lua" },
-        { name = "buffer" },
-        { name = "calc" },
-        { name = "emoji" },
-        { name = "treesitter" },
-        { name = "crates" },
-    },
-    completion = {
-        keyword_length = 1,
-        completeopt = "menu,noselect"
-    },
-    experimental = {
-        ghost_text = true,
-        native_menu = false,
-    },
-    formatting = {
-        fields = { "kind", "abbr", "menu" },
-        source_names = {
-            nvim_lsp = "(LSP)",
-            emoji = "(Emoji)",
-            path = "(Path)",
-            calc = "(Calc)",
-            -- cmp_tabnine = "(Tabnine)",
-            ultisnips = "(Snippet)",
-            buffer = "(Buffer)",
-        },
-        duplicates = {
-            buffer = 1,
-            path = 1,
-            nvim_lsp = 0,
-            luasnip = 1,
-        },
-        duplicates_default = 0,
-        format = function(entry, vim_item)
-            vim_item.kind = lspkind.presets.default[vim_item.kind]
-            local menu = source_mapping[entry.source.name]
-            -- if entry.source.name == "cmp_tabnine" then
-            --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-            --         menu = entry.completion_item.data.detail .. " " .. menu
-            --     end
-            --     vim_item.kind = ""
-            -- end
-            vim_item.menu = menu
-            return vim_item
-        end,
-    }
-})
+-- cmp.setup({
+--     snippet = {
+--         expand = function(args)
+--             -- For `ultisnips` user.
+--             vim.fn["UltiSnips#Anon"](args.body)
+--         end,
+--     },
+--     mapping = {
+--         ['<C-e>'] = cmp.mapping.abort(),
+--         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+--         ['<C-t>'] = cmp.mapping.complete(),
+--         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+--         ['<C-d>'] = cmp.mapping.scroll_docs(4),
+--         ["<C-n>"] = cmp.mapping(function(fallback)
+--             if cmp.visible() then
+--                 cmp.select_next_item()
+--             else
+--                 fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+--             end
+--         end, { "i", "s" }),
+--         ["<C-p>"] = cmp.mapping(function()
+--             if cmp.visible() then
+--                 cmp.select_prev_item()
+--             end
+--         end, { "i", "s" }),
+--     },
+--     sources = {
+--         { name = "nvim_lsp" },
+--         { name = "path" },
+--         { name = "luasnip" },
+--         { name = 'ultisnips' }, -- For ultisnips user.
+--         -- { name = "cmp_tabnine" },
+--         { name = "nvim_lua" },
+--         { name = "buffer" },
+--         { name = "calc" },
+--         { name = "emoji" },
+--         { name = "treesitter" },
+--         { name = "crates" },
+--     },
+--     completion = {
+--         keyword_length = 1,
+--         completeopt = "menu,noselect"
+--     },
+--     experimental = {
+--         ghost_text = true,
+--         native_menu = false,
+--     },
+--     formatting = {
+--         fields = { "kind", "abbr", "menu" },
+--         source_names = {
+--             nvim_lsp = "(LSP)",
+--             emoji = "(Emoji)",
+--             path = "(Path)",
+--             calc = "(Calc)",
+--             -- cmp_tabnine = "(Tabnine)",
+--             ultisnips = "(Snippet)",
+--             buffer = "(Buffer)",
+--         },
+--         duplicates = {
+--             buffer = 1,
+--             path = 1,
+--             nvim_lsp = 0,
+--             luasnip = 1,
+--         },
+--         duplicates_default = 0,
+--         format = function(entry, vim_item)
+--             vim_item.kind = lspkind.presets.default[vim_item.kind]
+--             local menu = source_mapping[entry.source.name]
+--             -- if entry.source.name == "cmp_tabnine" then
+--             --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+--             --         menu = entry.completion_item.data.detail .. " " .. menu
+--             --     end
+--             --     vim_item.kind = ""
+--             -- end
+--             vim_item.menu = menu
+--             return vim_item
+--         end,
+--     }
+-- })
 
 
 --require("trouble").setup {
@@ -126,7 +126,7 @@ cmp.setup({
 -- refer to the configuration section below
 --}
 
-require'config.lsp'
+-- require'config.lsp'
 
 require("bufferline").setup{
     options = {
@@ -270,7 +270,7 @@ require("telescope").setup({
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
-require('telescope').load_extension('fzf')
+-- require('telescope').load_extension('fzf')
 
 local auto_dark_mode = require('auto-dark-mode')
 
@@ -347,40 +347,40 @@ require("auto-save").setup {
 
 
 
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "python" },
+-- require'nvim-treesitter.configs'.setup {
+--   -- A list of parser names, or "all"
+--   ensure_installed = { "c", "lua", "rust", "python" },
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+--   -- Install parsers synchronously (only applied to `ensure_installed`)
+--   sync_install = false,
 
-  -- Automatically install missing parsers when entering buffer
-  auto_install = true,
+--   -- Automatically install missing parsers when entering buffer
+--   auto_install = true,
 
-  -- List of parsers to ignore installing (for "all")
-  ignore_install = { },
+--   -- List of parsers to ignore installing (for "all")
+--   ignore_install = { },
 
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+--   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+--   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
+--   highlight = {
+--     -- `false` will disable the whole extension
+--     enable = true,
 
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- 20221011: TS for help has a whitespace bug: "Text :cmd" shows as "Text:cmd"
-    disable = { "help" },
+--     -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+--     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+--     -- the name of the parser)
+--     -- list of language that will be disabled
+--     -- 20221011: TS for help has a whitespace bug: "Text :cmd" shows as "Text:cmd"
+--     disable = { "help" },
 
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+--     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+--     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+--     -- Using this option may slow down your editor, and you may see some duplicate highlights.
+--     -- Instead of true it can also be a list of languages
+--     additional_vim_regex_highlighting = false,
+--   },
+-- }
 
 require("live-command").setup {
   commands = {

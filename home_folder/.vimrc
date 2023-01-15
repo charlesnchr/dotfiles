@@ -35,13 +35,13 @@ Plug 'xolox/vim-misc'
 Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 " misc
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 " Plug 'ycm-core/YouCompleteMe'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
 
 " not very good imo
@@ -91,9 +91,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " " Have not added any parsers yet
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+" Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sbdchd/neoformat'
@@ -102,19 +102,19 @@ Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
 Plug 'folke/which-key.nvim'
 
-Plug 'hrsh7th/cmp-omni'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-" Plug 'hrsh7th/cmp-calc'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'williamboman/nvim-lsp-installer'
-Plug 'neovim/nvim-lspconfig'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-" Plug 'L3MON4D3/LuaSnip'
-" Plug 'saadparwaiz2/cmp_luasnip'
-" Plug 'rafamadriz/friendly-snippets'
+" Plug 'hrsh7th/cmp-omni'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-cmdline'
+" " Plug 'hrsh7th/cmp-calc'
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'williamboman/nvim-lsp-installer'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" " Plug 'L3MON4D3/LuaSnip'
+" " Plug 'saadparwaiz2/cmp_luasnip'
+" " Plug 'rafamadriz/friendly-snippets'
 
 
 Plug 'folke/trouble.nvim'
