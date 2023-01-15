@@ -2,22 +2,14 @@
 
 source ~/dotfiles/ask.sh
 
-if ask "Install conda" Y; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
+if ask "Install conda" N; then
+    wget https://repo.aknaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
     bash ~/anaconda.sh -b -p $HOME/anaconda3
 fi
 
-if ask "Install node/nvim without sudo" Y; then
+if ask "Install node/nvim without sudo" N; then
     # Node
-    # Ref: https://johnpapa.net/node-and-npm-without-sudo/
-    wget https://nodejs.org/dist/v14.15.4/node-v14.15.4-linux-x64.tar.xz
-    mkdir -p $HOME/tools
-    mkdir -p $HOME/bin
-    # extract node to a custom directory, the directory should exist.
-    tar xvf node-v14.15.4-linux-x64.tar.xz --directory=$HOME/tools
-    ln -sf $HOME/tools/node-v14.15.4-linux-x64/bin/npm $HOME/bin/npm
-    ln -sf $HOME/tools/node-v14.15.4-linux-x64/bin/npx $HOME/bin/npx
-    ln -sf $HOME/tools/node-v14.15.4-linux-x64/bin/node $HOME/bin/node
+    conda install -c conda-forge nodejs
 
     # Nvim
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
@@ -33,13 +25,14 @@ if ask "Install node/nvim without sudo" Y; then
 fi
 
 if ask "zsh, tmux, nvim, node and python must be install. Continue?" Y; then
-    # pass
-    echo "Assuming zsh, tmux, nvim, node and python are installed"
+    :
 else
     exit 1
 fi
 
+
 # load conda
+echo "Loading conda"
 source ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
@@ -52,7 +45,7 @@ conda activate base
 # - node
 # - python
 
-if ask "Install autojump, fzf, tmux plugin manager, fd-find and antigen"; then
+if ask "Install autojump, fzf, tmux plugin manager, fd-find and antigen" N; then
 
     # autojump
     git clone https://github.com/wting/autojump.git ~/autojump
@@ -77,24 +70,6 @@ if ask "Install autojump, fzf, tmux plugin manager, fd-find and antigen"; then
 fi
 
 
-# NVIM
-if ask "Set up nvim plugins etc." Y; then
-    # vim plug
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    pip install -U pynvim
-    nvim +'PlugInstall --sync' +qa
-    nvim +'LspInstall vimls pylsp jsonls rust_analyzer'
-fi
-
-if ask "Install conda utilities (rclone, ripgrep, ctags)" Y; then
-    conda install -y -c conda-forge universal-ctags rclone ripgrep
-fi
-
-if ask "Install pip utilities (ranger, skimage, numpy)" Y; then
-    pip install ranger-fm scikit-image numpy matplotlib opencv-python
-fi
-
 
 
 
@@ -110,7 +85,7 @@ function move_if() {
     mv $1 $dirname
 }
 
-if ask "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named $dirname?" Y; then
+if ask "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named $dirname?" N; then
     mkdir -p $dirname
     move_if ~/.profile
     move_if ~/.zshrc
@@ -134,7 +109,7 @@ else
 fi
 
 # setting up links
-if ask "Use stow to set up links" Y; then
+if ask "Use stow to set up links" N; then
 
     stow home_folder
     stow scripts
@@ -166,13 +141,13 @@ if ask "Use stow to set up links" Y; then
     stow mime-settings
 
 else
-    if ask "Use reduced symlink setup instead" Y; then
+    if ask "Use reduced symlink setup instead" N; then
         ln -sfn ~/dotfiles/home_folder/.profile ~/.profile
         ln -sfn ~/dotfiles/home_folder/.zshrc ~/.zshrc
         ln -sfn ~/dotfiles/home_folder/.tmux.conf ~/.tmux.conf
         ln -sfn ~/dotfiles/home_folder/.vim ~/.vim
         ln -sfn ~/dotfiles/home_folder/.vimrc ~/.vimrc
-        ln -sfn ~/dotfiles/nvim ~/.config/nvim
+        ln -sfn ~/dotfiles/nvim/.config/nvim ~/.config/nvim
         ln -sfn ~/dotfiles/home_folder/.config/ranger ~/.config/ranger
         ln -sfn ~/dotfiles/home_folder/.tmux-cht-command ~/.tmux-cht-command
         ln -sfn ~/dotfiles/home_folder/.tmux-cht-languages ~/.tmux-cht-languages
@@ -186,10 +161,10 @@ if ask "Set up submodule dotfiles_private and run dotfiles_private/install.sh?" 
 fi
 
 # Set up themes (for linux)
-if ask "Set up themes?"; then
+if ask "Set up themes?" N; then
 
     # KDE theme
-    if ask "Install kde theme"; then
+    if ask "Install kde theme" N; then
         git clone https://github.com/tonyfettes/materia-nord-kvantum.git
         cd materia-nord-kvantum
         sudo mv Kvantum/MateriaNordDark /usr/share/Kvantum
@@ -198,7 +173,7 @@ if ask "Set up themes?"; then
     # GTK theme
     # https://github.com/EliverLara/Nordic
     # https://www.gnome-look.org/p/1267246/
-    if ask "Install GTK theme"; then
+    if ask "Install GTK theme" N; then
         wget https://github.com/EliverLara/Nordic/releases/download/v2.1.0/Nordic-darker-v40.tar.xz
         tar xvf Nordic-darker-v40.tar.xz
         sudo mv Nordic-darker-v40 /usr/share/themes
@@ -208,5 +183,24 @@ if ask "Set up themes?"; then
 
 
     echo "now use lxappearance and kvantum to set themes"
+fi
+
+
+# NVIM
+if ask "Set up nvim plugins etc." N; then
+    # vim plug
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    pip install -U pynvim
+    nvim +'PlugInstall --sync' +qa
+    nvim +'LspInstall vimls pylsp jsonls rust_analyzer'
+fi
+
+if ask "Install conda utilities (rclone, ripgrep, ctags)" N; then
+    conda install -y -c conda-forge universal-ctags rclone ripgrep
+fi
+
+if ask "Install pip utilities (ranger, skimage, numpy)" N; then
+    pip install ranger-fm scikit-image numpy matplotlib opencv-python
 fi
 
