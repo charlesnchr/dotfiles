@@ -315,7 +315,6 @@ let g:vimwiki_list = [{
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
             \'.wiki': 'markdown',
-            \'.md': 'markdown'
             \}
 " if I don't like markdown
 " let g:vimwiki_ext2syntax = {
@@ -618,7 +617,12 @@ let g:floaterm_height = 0.8
 "let g:taskwiki_sort_orders={"T": "end-"}
 " nmap <C-k> <Plug>VimwikiPrevLink
 " nmap <C-j> <Plug>VimwikiNextLink
+autocmd FileType vimwiki map <buffer> <C-k> <Plug>VimwikiGoToPrevHeader<CR>
+autocmd FileType vimwiki map <buffer> <C-j> <Plug>VimwikiGoToNextHeader<CR>
+autocmd FileType vimwiki map <buffer> <C-h> <Plug>VimwikiDiaryPrevDay<CR>
+autocmd FileType vimwiki map <buffer> <C-l> <Plug>VimwikiDiaryNextDay<CR>
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
+
 vnoremap <leader>y :OSCYank<CR>
 
 
@@ -893,6 +897,7 @@ noremap <leader>gf :e <cfile><cr>
 augroup AutoHeader
     autocmd!
     autocmd bufnewfile *.c so ~/dotfiles/headers/c_header.txt
+    autocmd bufnewfile */diary/*.wiki so ~/dotfiles/headers/wiki_header.txt
     autocmd bufnewfile *.cpp so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.h so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.py so ~/dotfiles/headers/py_header.txt
