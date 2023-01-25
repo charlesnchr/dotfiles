@@ -411,7 +411,7 @@ if has('mac')
         set background=light
         colorscheme PaperColor
     else
-        let g:airline_theme = 'atomic'
+        let g:airline_theme = 'catppuccin'
         set background=dark
         colorscheme tokyonight
     endif
@@ -424,9 +424,9 @@ elseif has('unix')
         set background=light
         colorscheme PaperColor
     else
-        let g:airline_theme = 'gruvbox'
+        let g:airline_theme = 'catppuccin'
         set background=dark
-        colorscheme gruvbox
+        colorscheme tokyonight
     endif
 endif
 

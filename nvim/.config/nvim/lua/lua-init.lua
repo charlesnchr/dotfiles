@@ -279,7 +279,7 @@ auto_dark_mode.setup({
 	set_dark_mode = function()
 		vim.api.nvim_set_option('background', 'dark')
 		vim.cmd('colorscheme tokyonight')
-		vim.cmd('AirlineTheme atomic')
+		vim.cmd('AirlineTheme catppuccin')
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option('background', 'light')
