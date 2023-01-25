@@ -174,6 +174,7 @@ Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
 Plug 'github/copilot.vim'
+Plug 'folke/tokyonight.nvim'
 
 call plug#end()
 
@@ -410,9 +411,9 @@ if has('mac')
         set background=light
         colorscheme PaperColor
     else
-        let g:airline_theme = 'palenight'
+        let g:airline_theme = 'atomic'
         set background=dark
-        colorscheme palenight
+        colorscheme tokyonight
     endif
 elseif has('unix')
 
@@ -423,9 +424,9 @@ elseif has('unix')
         set background=light
         colorscheme PaperColor
     else
-        let g:airline_theme = 'palenight'
+        let g:airline_theme = 'gruvbox'
         set background=dark
-        colorscheme palenight
+        colorscheme gruvbox
     endif
 endif
 
@@ -775,6 +776,8 @@ nnoremap <localleader>je <cmd>lua require'telescope.builtin'.oldfiles({include_c
 nnoremap <localleader>jd <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
 nnoremap <localleader>ja <cmd>lua require'telescope.builtin'.current_buffer_tags()<cr>
 nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
+nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags()<cr>
+nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
 
 "call wilder#setup({'modes': [':', '/', '?']})
 
@@ -1082,3 +1085,81 @@ let g:gutentags_define_advanced_commands=1
 
 silent! iunmap <buffer> <Tab>
 
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
+
+
+" recommended gutentags options from https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+let g:gutentags_ctags_exclude = [
+      \ '*.git', '*.svg', '*.hg',
+      \ '*/tests/*',
+      \ 'build',
+      \ 'dist',
+      \ '*sites/*/files/*',
+      \ 'bin',
+      \ 'node_modules',
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '*.md',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      \ ]
+
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['package.json', '.git']
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
+
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+
+let g:gutentags_ctags_extra_args = [
+      \ '--tag-relative=yes',
+      \ '--fields=+ailmnS',
+      \ ]

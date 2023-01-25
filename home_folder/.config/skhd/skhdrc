@@ -42,8 +42,12 @@ ctrl + alt - 9 : yabai -m window --resize top:0:-50; \
 ctrl + alt - p : yabai -m window --resize right:50:0; \
                   yabai -m window --resize left:50:0
 
+
 # Equalize size of windows
 alt - b : yabai -m space --balance
+
+# Resize to master stack type grid (intended for 2x2)
+alt - c: yabai -m space --balance; yabai -m window --swap largest; yabai -m window --resize bottom:0:350; yabai -m window --resize top:0:350; yabai -m window --resize right:450:0; yabai -m window --resize left:450:0
 
 # Enable / Disable gaps in current workspace
 lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
@@ -103,7 +107,7 @@ ctrl + cmd + alt - f : yabai -m window --toggle native-fullscreen
 
 # focus window
 alt - 0x2C : yabai -m window --swap largest
-alt - c : yabai -m window --swap largest
+# alt - c : yabai -m window --swap largest
 
 # swap managed window
 # shift + alt - h : yabai -m window --swap north
@@ -314,3 +318,5 @@ alt - v : yabai -m query --spaces --space \
 alt - 7 : yabai -m space --layout bsp
 alt - 8 : yabai -m space --layout stack
 alt + ctrl - f9 : yabai -m space --layout float
+
+
