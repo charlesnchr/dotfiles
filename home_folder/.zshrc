@@ -289,6 +289,8 @@ antigen init $HOME/dotfiles/.antigenrc
 # Author: Charles
 # I have it after antigen because some packages will overwrite otherwise
 
+source $HOME/dotfiles/scripts/histdb-fzf-widget.sh
+
 # zsh vi mode, toggle per-directory
 function per-directory-history() {
   per-directory-history-toggle-history
@@ -298,6 +300,7 @@ function per-directory-history() {
 function zvm_after_lazy_keybindings() {
   zvm_define_widget per-directory-history
   zvm_bindkey vicmd '^G' per-directory-history
+  zvm_bindkey vicmd '^F' histdb-fzf-widget
 }
 
 
