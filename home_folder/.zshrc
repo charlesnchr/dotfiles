@@ -289,7 +289,7 @@ antigen init $HOME/dotfiles/.antigenrc
 # Author: Charles
 # I have it after antigen because some packages will overwrite otherwise
 
-source $HOME/dotfiles/scripts/histdb-fzf-widget.sh
+source $HOME/bin/histdb-fzf-widget.sh
 
 # zsh vi mode, toggle per-directory
 function per-directory-history() {
