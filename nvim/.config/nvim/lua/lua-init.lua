@@ -134,45 +134,14 @@ require("bufferline").setup{
     }
 }
 
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 
--- empty setup using defaults: add your own options
-require'nvim-tree'.setup {
-    disable_netrw = true,
-    hijack_netrw = true,
-    open_on_setup = true,
-    ignore_buffer_on_setup = false,
-    ignore_ft_on_setup = {
-        "startify",
-        "dashboard",
-        "alpha",
-    },
-    auto_reload_on_write = true,
-    hijack_unnamed_buffer_when_opening = false,
-    hijack_directories = {
-        enable = true,
-        auto_open = true,
-    },
-    open_on_tab = false,
-    hijack_cursor = false,
-    update_cwd = true,
-    diagnostics = {
-        enable = false,
-        icons = {
-            hint = "",
-            info = "",
-            warning = "",
-            error = "",
-        },
-    },
-    update_focused_file = {
-        enable = true,
-        update_cwd = true,
-        ignore_list = {},
-    },
-    system_open = {
-        cmd = nil,
-        args = {},
-    },
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
     git = {
         enable = false,
         ignore = false,
@@ -196,26 +165,8 @@ require'nvim-tree'.setup {
         relativenumber = true,
         signcolumn = "yes",
     },
-    filters = {
-        dotfiles = false,
-        custom = { "node_modules", ".cache" },
-    },
-    trash = {
-        cmd = "trash",
-        require_confirm = true,
-    },
-    actions = {
-        change_dir = {
-          enable = false,
-          global = false,
-          restrict_above_cwd = false,
-        },
-        open_file = {
-            resize_window = true,
-            quit_on_open = true,
-        },
-    }
-}
+})
+
 
 
 -- no use for this currently, spell is annoying, chktex buggy

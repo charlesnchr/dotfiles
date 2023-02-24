@@ -877,7 +877,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -899,7 +899,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -921,7 +921,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -943,7 +943,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -965,7 +965,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -987,7 +987,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -1009,7 +1009,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -1031,7 +1031,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -1053,7 +1053,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -1075,7 +1075,7 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "left_shift"
+                                            "shift"
                                         ]
                                     }
                                 },
@@ -1094,11 +1094,11 @@
                                     "key_code": "semicolon",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_option"
+                                            "option"
                                         ],
                                         "optional": [
-                                            "left_shift",
-                                            "left_command"
+                                            "shift",
+                                            "command"
                                         ]
                                     }
                                 },
@@ -1119,11 +1119,11 @@
                                     "key_code": "quote",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_option"
+                                            "option"
                                         ],
                                         "optional": [
-                                            "left_shift",
-                                            "left_command"
+                                            "shift",
+                                            "command"
                                         ]
                                     }
                                 },
