@@ -175,6 +175,7 @@ Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
 Plug 'github/copilot.vim'
 Plug 'folke/tokyonight.nvim'
+Plug 'knsh14/vim-github-link'
 
 call plug#end()
 
