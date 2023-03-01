@@ -1164,3 +1164,6 @@ let g:gutentags_ctags_extra_args = [
       \ '--tag-relative=yes',
       \ '--fields=+ailmnS',
       \ ]
+
+
+" gh copy :GetCurrentBranchLink then tty-copy <C-prefix ]> in tmux
