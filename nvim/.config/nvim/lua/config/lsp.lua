@@ -104,10 +104,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = {
       severity_limit = "Hint",
-    },
-    virtual_text = {
-      severity_limit = "Error",
-    },
+    }
   }
 )
 
@@ -210,7 +207,18 @@ require("lspconfig").zls.setup(config())
 
 require("lspconfig").tsserver.setup(config())
 
-require("lspconfig").ccls.setup(config())
+local lspconfig = require'lspconfig'
+lspconfig.ccls.setup {
+  init_options = {
+    compilationDatabaseDirectory = "build";
+    index = {
+      threads = 0;
+    };
+    clang = {
+      excludeArgs = { "-frounding-math"} ;
+    };
+  }
+}
 
 -- require("lspconfig").jedi_language_server.setup(config())
 

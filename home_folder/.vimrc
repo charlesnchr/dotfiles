@@ -1167,4 +1167,6 @@ let g:gutentags_ctags_extra_args = [
 
 
 " gh copy :GetCurrentBranchLink then: (a) :OscYankReg + or (b) tty-copy <C-prefix ]> in tmux
-map <localleader>gh :exec 'GetCurrentBranchLink' <Bar> OSCYankReg +
+map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
+
+
