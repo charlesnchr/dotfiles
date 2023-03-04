@@ -1220,18 +1220,6 @@
                                         "type": "device_unless"
                                     },
                                     {
-                                        "identifiers": [
-                                            {
-                                                "description": "Corne (foostan)",
-                                                "is_keyboard": true,
-                                                "is_pointing_device": false,
-                                                "product_id": 1,
-                                                "vendor_id": 18003
-                                            }
-                                        ],
-                                        "type": "device_unless"
-                                    },
-                                    {
                                         "bundle_identifiers": [
                                             "^com\\.microsoft\\.rdc$",
                                             "^com\\.microsoft\\.rdc\\.mac$",
