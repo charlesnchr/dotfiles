@@ -176,6 +176,7 @@ Plug 'TimUntersberger/neogit'
 Plug 'github/copilot.vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'knsh14/vim-github-link'
+Plug 'tpope/vim-rhubarb'
 
 call plug#end()
 
@@ -489,6 +490,7 @@ if !exists('g:lasttab')
     let g:lasttab = 1
 endif
 nmap <leader><Tab> :exe "tabn ".g:lasttab<CR>
+nmap <localleader><Tab> <C-^>
 au TabLeave * let g:lasttab = tabpagenr()
 
 nnoremap <ScrollWheelUp> <C-Y>
@@ -688,8 +690,8 @@ let g:repl_program = {
  " augroup END
 
 " map [c and ]c to jump to the previous and next cell header
-autocmd FileType python map <buffer> [c :IPythonCellPrevCell<CR>
-autocmd FileType python map <buffer> ]c :IPythonCellNextCell<CR>
+autocmd FileType python map <buffer> [g :IPythonCellPrevCell<CR>
+autocmd FileType python map <buffer> ]g :IPythonCellNextCell<CR>
 " au BufNewFile,BufRead *.py nmap [c :IPythonCellPrevCell<CR>
 " au BufNewFile,BufRead *.py nmap ]c :IPythonCellNextCell<CR>
 
@@ -1079,7 +1081,9 @@ augroup prettier_on_save
 augroup end
 
 let g:neoformat_enabled_javascriptreact = ['prettier']
+let g:neoformat_enabled_typescriptreact = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_python = ['black']
 
 let g:gutentags_define_advanced_commands=1
@@ -1089,21 +1093,66 @@ silent! iunmap <buffer> <Tab>
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
   \ 'kinds': [
-    \ 'c:classes',
-    \ 'n:modules',
-    \ 'f:functions',
-    \ 'v:variables',
-    \ 'v:varlambdas',
-    \ 'm:members',
-    \ 'i:interfaces',
-    \ 'e:enums',
+        \ 'C:constant',
+        \ 'G:generator',
+        \ 'a:alias',
+        \ 'c:class',
+        \ 'e:enumerator',
+        \ 'f:function',
+        \ 'g:enum',
+        \ 'i:interface',
+        \ 'm:method',
+        \ 'n:namespace',
+        \ 'p:property',
+        \ 'v:variable',
   \ ]
 \ }
+
+
+let g:tagbar_type_javascriptreact = {
+ \ 'ctagstype': 'javascript',
+ \ 'kinds': [
+       \ 'A:array',
+       \ 'P:property',
+       \ 'T:tags',
+       \ 'O:objects',
+       \ 'I:imports',
+       \ 'E:exports',
+       \ 's:styled components',
+       \ 'C:constant',
+       \ 'G:getter',
+       \ 'M:field',
+       \ 'S:setter',
+       \ 'c:class',
+       \ 'f:function',
+       \ 'g:generator',
+       \ 'm:method',
+       \ 'p:property',
+       \ 'v:variable',
+ \ ]}
+
+let g:tagbar_type_typescriptreact = {
+ \ 'ctagstype': 'typescript',
+ \ 'kinds': [
+        \ 'C:constant',
+        \ 'G:generator',
+        \ 'a:alias',
+        \ 'c:class',
+        \ 'e:enumerator',
+        \ 'f:function',
+        \ 'g:enum',
+        \ 'i:interface',
+        \ 'm:method',
+        \ 'n:namespace',
+        \ 'p:property',
+        \ 'v:variable',
+  \ ]}
 
 
 " recommended gutentags options from https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
 let g:gutentags_ctags_exclude = [
       \ '*.git', '*.svg', '*.hg',
+      \ '.next',
       \ '*/tests/*',
       \ 'build',
       \ 'dist',
@@ -1150,8 +1199,10 @@ let g:gutentags_ctags_exclude = [
       \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
       \ ]
 
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['package.json', '.git']
+" below options seem to create unneccessary extra tags files
+" let g:gutentags_add_default_project_roots = 1
+" let g:gutentags_project_root = ['package.json', '.git']
+
 let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
 command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
 
@@ -1163,6 +1214,7 @@ let g:gutentags_generate_on_empty_buffer = 0
 let g:gutentags_ctags_extra_args = [
       \ '--tag-relative=yes',
       \ '--fields=+ailmnS',
+      \ '--langmap=TypeScript:+.tsx -R',
       \ ]
 
 

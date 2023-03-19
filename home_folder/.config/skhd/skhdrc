@@ -33,14 +33,14 @@ shift + alt - p: yabai -m window --warp east
 
 
 # Resize windows
-ctrl + alt - u : yabai -m window --resize left:-50:0; \
-                  yabai -m window --resize right:-50:0
-ctrl + alt - i : yabai -m window --resize bottom:0:50; \
-                  yabai -m window --resize top:0:50
-ctrl + alt - 9 : yabai -m window --resize top:0:-50; \
-                  yabai -m window --resize bottom:0:-50
-ctrl + alt - p : yabai -m window --resize right:50:0; \
-                  yabai -m window --resize left:50:0
+ctrl + alt - u : yabai -m window --resize left:-150:0; \
+                  yabai -m window --resize right:-150:0
+ctrl + alt - i : yabai -m window --resize bottom:0:150; \
+                  yabai -m window --resize top:0:150
+ctrl + alt - 9 : yabai -m window --resize top:0:-150; \
+                  yabai -m window --resize bottom:0:-150
+ctrl + alt - p : yabai -m window --resize right:150:0; \
+                  yabai -m window --resize left:150:0
 
 
 # Equalize size of windows
@@ -216,7 +216,7 @@ alt - 0x1E  : yabai -m display --focus east
 # alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-# alt - e : yabai -m window --toggle split
+alt - 0x2B : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
 # alt - t : yabai -m window --toggle float;\
@@ -283,8 +283,9 @@ alt - 0x1E  : yabai -m display --focus east
 #   | jq -sre 'add | map(select(."is-minimized"==false)) | . as $array | length as $array_length | index(map(select(."has-focus"==true))) as $has_index | if $has_index > 0 then nth($has_index - 1).id else nth($array_length - 1).id end'  \
 #   | xargs -I{} yabai -m window --focus {}
 
-alt - 0x2B : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-alt - 0x2F : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
+# comman and dot
+# alt - 0x2B : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
+# alt - 0x2F : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
 
 
 # from github: https://github.com/koekeishiya/yabai/issues/113  --  doesn't work
@@ -293,6 +294,8 @@ alt - 0x2F : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
 # same github page but works well
 alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
 alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+ctrl + alt - n : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
+ctrl + alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
 # lctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
 
 # lctrl + alt - right : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
