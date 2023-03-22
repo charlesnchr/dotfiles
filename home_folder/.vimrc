@@ -177,6 +177,8 @@ Plug 'github/copilot.vim'
 Plug 'folke/tokyonight.nvim'
 Plug 'knsh14/vim-github-link'
 Plug 'tpope/vim-rhubarb'
+Plug 'stevearc/aerial.nvim'
+Plug 'LoricAndre/OneTerm.nvim'
 
 call plug#end()
 
@@ -246,9 +248,9 @@ nnoremap <localleader>fw :Windows<cr>
 nnoremap <localleader>aj :CtrlPTag<cr>
 nnoremap <localleader>aa :CtrlPBufTag<cr>
 nnoremap <localleader>as :CtrlPBuffer<cr>
-nnoremap <localleader>s :CtrlPBuffer<cr>
+" nnoremap <localleader>s :CtrlPBuffer<cr>
 nnoremap <localleader>ad :CtrlPMRUFiles<cr>
-nnoremap <localleader>e :CtrlPMRUFiles<cr>
+" nnoremap <localleader>e :CtrlPMRUFiles<cr>
 let g:ctrlp_cmd = 'CtrlPMRUFiles'
 nnoremap <localleader>af :CtrlPLine<cr>
 
@@ -572,7 +574,7 @@ let g:neoterm_autoscroll = 1
 
 " bufmer cycle
 " :nnoremap <localleader><tab> :b#<CR>
-:nnoremap <localleader><tab> :CtrlPBuffer<cr>
+" :nnoremap <localleader><tab> :CtrlPBuffer<cr>
 " :nnoremap <localleader><S-tab> :bprevious<CR>
 
 " -------------------
@@ -772,15 +774,18 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 " with hidden files
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
-nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_lastused = true})<cr>
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
+nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
-nnoremap <localleader>je <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>
+nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>
 nnoremap <localleader>jd <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
 nnoremap <localleader>ja <cmd>lua require'telescope.builtin'.current_buffer_tags()<cr>
-nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
+nnoremap <localleader>jz <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
 nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags()<cr>
 nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
+nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.lsp_document_symbols()<cr>
+nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
 
 "call wilder#setup({'modes': [':', '/', '?']})
 
@@ -1221,4 +1226,10 @@ let g:gutentags_ctags_extra_args = [
 " gh copy :GetCurrentBranchLink then: (a) :OscYankReg + or (b) tty-copy <C-prefix ]> in tmux
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
 
+nmap <leader>e :AerialToggle<CR>
 
+" free bindings
+" localleader s/e
+" localleader tab
+"
+nmap <localleader>n :Neoformat<CR>

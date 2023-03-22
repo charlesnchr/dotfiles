@@ -78,7 +78,7 @@ drop_bigpdf() {
 drop_bigimage() {
     # 5120 == 5 MB * 1024
     # change this number for different sizes
-    if [[ `du "${FILE_PATH}" | cut -f1` -gt 5120 ]]; then
+    if [[ `du "${FILE_PATH}" | cut -f1` -gt 21200 ]]; then
         echo '----- TOO BIG IMAGE -----'
         exit 0
     fi

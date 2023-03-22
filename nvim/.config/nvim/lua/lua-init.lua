@@ -223,6 +223,7 @@ require("telescope").setup({
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 
+
 local auto_dark_mode = require('auto-dark-mode')
 
 auto_dark_mode.setup({
@@ -338,3 +339,18 @@ require("live-command").setup {
     Norm = { cmd = "norm" },
   },
 }
+
+
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '<c-k>', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', '<c-j>', '<cmd>AerialNext<CR>', {buffer = bufnr})
+  end
+})
+
+require('telescope').load_extension('aerial')
+
+-- You probably also want to set a keymap to toggle aerial
+vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
