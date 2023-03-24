@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 
+paths=(
+  ~/Github
+  ~/Documents/GitHub/onirepos
+  ~/1private
+  ~/2work
+  ~/2work/onirepos
+  ~/0main/Syncthing
+  ~/0main/1.Projects
+)
+
+# Filter out non-existent directories from paths array
+paths=($(printf "%s\n" "${paths[@]}" | while read -r path; do
+  if [[ -d $path ]]; then
+    printf "%s\n" "$path"
+  fi
+done))
+
+# Use the filtered paths array in find command
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find -L ~/Github ~/Documents/GitHub/onirepos ~/1private ~/2work ~/2work/onirepos ~/0main/Syncthing ~/0main/1.Projects -mindepth 1 -maxdepth 1 -type d  -not -path '*/.*' | fzf)
+    selected=$(find -L "${paths[@]}" -mindepth 1 -maxdepth 1 -type d -not -path '*/.*' | fzf --height=80% --margin=20%,20% --preview 'tree {}' --prompt="projects > ")
 fi
 
 if [[ -z $selected ]]; then

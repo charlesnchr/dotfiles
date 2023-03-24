@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+selected=$(tmux list-sessions | fzf --height=80% --margin=20%,20% --prompt="tmux sessions > " | awk '{print $1}')
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+tmux switch-client -t $selected
+
