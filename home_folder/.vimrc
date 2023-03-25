@@ -594,6 +594,7 @@ nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :PlugInstall<cr>
 nnoremap <localleader>vg :G<cr>
 nnoremap <localleader>vc :G commit -m "Small update"<cr>
+nnoremap <localleader>vn :G log --name-status<cr>
 nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
@@ -1236,4 +1237,5 @@ nmap <localleader>n :Neoformat<CR>
 
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+
 

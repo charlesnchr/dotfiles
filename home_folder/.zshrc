@@ -304,11 +304,16 @@ function zvm_after_lazy_keybindings() {
 }
 
 
+bindkey '^X^F' histdb-fzf-widget
+
 setopt menu_complete
 
 # standard bash mapping (overrules delete whole line on macos)
 bindkey "^U" backward-kill-line
-bindkey '^Q' beginning-of-line
+# bindkey '^Q' beginning-of-line
+bindkey "\ea" beginning-of-line
+# bindkey '^X^A' beginning-of-line
+
 
 # export PATH="$HOME/.poetry/bin:$PATH"
 

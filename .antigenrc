@@ -14,7 +14,7 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle larkery/zsh-histdb
 antigen bundle charlesnchr/ranger-autojump
 
-antigen bundle jeffreytse/zsh-vi-mode
+# antigen bundle jeffreytse/zsh-vi-mode
 
 # Load the theme.
 antigen theme romkatv/powerlevel10k
