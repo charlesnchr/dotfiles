@@ -1,124 +1,133 @@
 require("nvim-lsp-installer").setup({
-    automatic_installation = { exclude = { "pylsp", } },
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
-    }
+	automatic_installation = { exclude = { "pylsp" } },
+	ui = {
+		icons = {
+			server_installed = "✓",
+			server_pending = "➜",
+			server_uninstalled = "✗",
+		},
+	},
 })
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local cmp = require("cmp")
 
 local source_mapping = {
-        nvim_lsp = "(LSP)",
-        nvim_lua = "(Lua)",
-        emoji = "(Emoji)",
-        path = "(Path)",
-        calc = "(Calc)",
-        -- cmp_tabnine = "(Tabnine)",
-        ultisnips = "(Snippet)",
-        buffer = "(Buffer)",
+	nvim_lsp = "(LSP)",
+	nvim_lua = "(Lua)",
+	emoji = "(Emoji)",
+	path = "(Path)",
+	calc = "(Calc)",
+	-- cmp_tabnine = "(Tabnine)",
+	ultisnips = "(Snippet)",
+	buffer = "(Buffer)",
 }
 
-
- -- vim_item.kind = kind_icons[vim_item.kind]
+-- vim_item.kind = kind_icons[vim_item.kind]
 -- -- vim_item.menu = source_names[entry.source.name]
 -- vim_item.dup = duplicates[entry.source.name]
- --  -- or cmp.formatting.duplicates_default
+--  -- or cmp.formatting.duplicates_default
 -- return vim_item
 -- local duplicates = {
- --    buffer = 1,
- --    path = 1,
- --    nvim_lsp = 0,
- --    luasnip = 1,
- --    ultisnips = 1,
+--    buffer = 1,
+--    path = 1,
+--    nvim_lsp = 0,
+--    luasnip = 1,
+--    ultisnips = 1,
 -- };
 
-local lspkind = require'lspkind'
+local lspkind = require("lspkind")
 
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            -- For `ultisnips` user.
-            vim.fn["UltiSnips#Anon"](args.body)
-        end,
-    },
-    mapping = {
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-t>'] = cmp.mapping.complete(),
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ["<C-n>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-            end
-        end, { "i", "s" }),
-        ["<C-p>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            end
-        end, { "i", "s" }),
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "path" },
-        { name = "luasnip" },
-        { name = 'ultisnips' }, -- For ultisnips user.
-        -- { name = "cmp_tabnine" },
-        { name = "nvim_lua" },
-        { name = "buffer" },
-        { name = "calc" },
-        { name = "emoji" },
-        { name = "treesitter" },
-        { name = "crates" },
-    },
-    completion = {
-        keyword_length = 1,
-        completeopt = "menu,noselect"
-    },
-    experimental = {
-        ghost_text = true,
-        native_menu = false,
-    },
-    formatting = {
-        fields = { "kind", "abbr", "menu" },
-        source_names = {
-            nvim_lsp = "(LSP)",
-            emoji = "(Emoji)",
-            path = "(Path)",
-            calc = "(Calc)",
-            -- cmp_tabnine = "(Tabnine)",
-            ultisnips = "(Snippet)",
-            buffer = "(Buffer)",
-        },
-        duplicates = {
-            buffer = 1,
-            path = 1,
-            nvim_lsp = 0,
-            luasnip = 1,
-        },
-        duplicates_default = 0,
-        format = function(entry, vim_item)
-            vim_item.kind = lspkind.presets.default[vim_item.kind]
-            local menu = source_mapping[entry.source.name]
-            -- if entry.source.name == "cmp_tabnine" then
-            --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-            --         menu = entry.completion_item.data.detail .. " " .. menu
-            --     end
-            --     vim_item.kind = ""
-            -- end
-            vim_item.menu = menu
-            return vim_item
-        end,
-    }
+	window = {
+		completion = { -- rounded border; thin-style scrollbar
+			border = nil,
+			scrollbar = "",
+		},
+		documentation = { -- no border; native-style scrollbar
+			border = "rounded",
+			scrollbar = "",
+			-- other options
+		},
+	},
+	snippet = {
+		expand = function(args)
+			-- For `ultisnips` user.
+			vim.fn["UltiSnips#Anon"](args.body)
+		end,
+	},
+	mapping = {
+		["<C-e>"] = cmp.mapping.abort(),
+		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+		["<C-t>"] = cmp.mapping.complete(),
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
+		["<C-n>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+			end
+		end, { "i", "s" }),
+		["<C-p>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_prev_item()
+			end
+		end, { "i", "s" }),
+	},
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "path" },
+		{ name = "luasnip" },
+		{ name = "ultisnips" }, -- For ultisnips user.
+		-- { name = "cmp_tabnine" },
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+		{ name = "calc" },
+		{ name = "emoji" },
+		{ name = "treesitter" },
+		{ name = "crates" },
+	},
+	completion = {
+		keyword_length = 1,
+		completeopt = "menu,noselect",
+	},
+	experimental = {
+		ghost_text = true,
+		native_menu = false,
+	},
+	formatting = {
+		fields = { "kind", "abbr", "menu" },
+		source_names = {
+			nvim_lsp = "(LSP)",
+			emoji = "(Emoji)",
+			path = "(Path)",
+			calc = "(Calc)",
+			-- cmp_tabnine = "(Tabnine)",
+			ultisnips = "(Snippet)",
+			buffer = "(Buffer)",
+		},
+		duplicates = {
+			buffer = 1,
+			path = 1,
+			nvim_lsp = 0,
+			luasnip = 1,
+		},
+		duplicates_default = 0,
+		format = function(entry, vim_item)
+			vim_item.kind = lspkind.presets.default[vim_item.kind]
+			local menu = source_mapping[entry.source.name]
+			-- if entry.source.name == "cmp_tabnine" then
+			--     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+			--         menu = entry.completion_item.data.detail .. " " .. menu
+			--     end
+			--     vim_item.kind = ""
+			-- end
+			vim_item.menu = menu
+			return vim_item
+		end,
+	},
 })
-
 
 --require("trouble").setup {
 -- your configuration comes here
@@ -126,13 +135,13 @@ cmp.setup({
 -- refer to the configuration section below
 --}
 
-require'config.lsp'
+require("config.lsp")
 
-require("bufferline").setup{
-    options = {
-        middle_mouse_command = "vertical sbuffer %d"
-    }
-}
+require("bufferline").setup({
+	options = {
+		middle_mouse_command = "vertical sbuffer %d",
+	},
+})
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
@@ -142,32 +151,30 @@ require("nvim-tree").setup()
 
 -- OR setup with some options
 require("nvim-tree").setup({
-    git = {
-        enable = false,
-        ignore = false,
-        timeout = 200,
-    },
-    view = {
-        width = 40,
-        hide_root_folder = false,
-        side = "left",
-        mappings = {
-            list = {
-                { key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-                { key = "h", action = "close_node" },
-                { key = "v", action = "vsplit" },
-                { key = "C", action = "cd" },
-                { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
-                { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
-            },
-        },
-        number = false,
-        relativenumber = true,
-        signcolumn = "yes",
-    },
+	git = {
+		enable = false,
+		ignore = false,
+		timeout = 200,
+	},
+	view = {
+		width = 40,
+		hide_root_folder = false,
+		side = "left",
+		mappings = {
+			list = {
+				{ key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+				{ key = "h", action = "close_node" },
+				{ key = "v", action = "vsplit" },
+				{ key = "C", action = "cd" },
+				{ key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
+				{ key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
+			},
+		},
+		number = false,
+		relativenumber = true,
+		signcolumn = "yes",
+	},
 })
-
-
 
 -- no use for this currently, spell is annoying, chktex buggy
 -- require("null-ls").setup({
@@ -179,8 +186,6 @@ require("nvim-tree").setup({
 --         -- require("null-ls").builtins.formatting.latexindent,
 --     },
 -- })
-
-
 
 -- vim.g.neoformat_lua_stylua = {
 --     exe = "stylua",
@@ -205,43 +210,40 @@ require("nvim-tree").setup({
 local actions = require("telescope.actions")
 
 require("telescope").setup({
-    defaults = {
-        mappings = {
-            i = {
-                -- ["<esc>"] = actions.close,
-                ["<C-f>"] = actions.send_to_qflist + actions.open_qflist
-            },
-            n = {
-                ["<C-f>"] = actions.send_to_qflist + actions.open_qflist
-            },
-        },
-        file_ignore_patterns = { "node_modules", "tags" }
-    },
+	defaults = {
+		mappings = {
+			i = {
+				-- ["<esc>"] = actions.close,
+				["<C-f>"] = actions.send_to_qflist + actions.open_qflist,
+			},
+			n = {
+				["<C-f>"] = actions.send_to_qflist + actions.open_qflist,
+			},
+		},
+		file_ignore_patterns = { "node_modules", "tags" },
+	},
 })
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
-require('telescope').load_extension('fzf')
+require("telescope").load_extension("fzf")
 
-
-local auto_dark_mode = require('auto-dark-mode')
+local auto_dark_mode = require("auto-dark-mode")
 
 auto_dark_mode.setup({
 	update_interval = 2000,
 	set_dark_mode = function()
-		vim.api.nvim_set_option('background', 'dark')
-		vim.cmd('colorscheme tokyonight')
-		vim.cmd('AirlineTheme catppuccin')
+		vim.api.nvim_set_option("background", "dark")
+		vim.cmd("colorscheme tokyonight")
+		vim.cmd("AirlineTheme catppuccin")
 	end,
 	set_light_mode = function()
-		vim.api.nvim_set_option('background', 'light')
-		vim.cmd('colorscheme PaperColor')
-		vim.cmd('AirlineTheme atomic')
+		vim.api.nvim_set_option("background", "light")
+		vim.cmd("colorscheme PaperColor")
+		vim.cmd("AirlineTheme atomic")
 	end,
 })
 auto_dark_mode.init()
-
-
 
 -- For color-picker.nvim
 local opts = { noremap = true, silent = true }
@@ -261,16 +263,16 @@ require("color-picker").setup({
 
 vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.
 
-require("auto-save").setup {
-    enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-    execution_message = {
+require("auto-save").setup({
+	enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
+	execution_message = {
 		message = function() -- message to print on save
 			return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
 		end,
 		dim = 0.18, -- dim the color of `message`
 		cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
 	},
-    trigger_events = {"InsertLeave", "TextChanged"}, -- vim events that trigger auto-save. See :h events
+	trigger_events = { "InsertLeave", "TextChanged" }, -- vim events that trigger auto-save. See :h events
 	-- function that determines whether to save the current buffer or not
 	-- return true: if buffer is ok to be saved
 	-- return false: if it's not ok to be saved
@@ -279,78 +281,155 @@ require("auto-save").setup {
 		local utils = require("auto-save.utils.data")
 
 		if
-			fn.getbufvar(buf, "&modifiable") == 1 and
-			not utils.not_in(fn.getbufvar(buf, "&filetype"), {'vimwiki'}) then
+			fn.getbufvar(buf, "&modifiable") == 1 and not utils.not_in(fn.getbufvar(buf, "&filetype"), { "vimwiki" })
+		then
 			return true -- met condition(s), can save
 		end
 		return false -- can't save
 	end,
-    write_all_buffers = false, -- write all buffers when the current one meets `condition`
-    debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
+	write_all_buffers = false, -- write all buffers when the current one meets `condition`
+	debounce_delay = 135, -- saves the file at most every `debounce_delay` milliseconds
 	callbacks = { -- functions to be executed at different intervals
 		enabling = nil, -- ran when enabling auto-save
 		disabling = nil, -- ran when disabling auto-save
 		before_asserting_save = nil, -- ran before checking `condition`
 		before_saving = nil, -- ran before doing the actual save
-		after_saving = nil -- ran after doing the actual save
-	}
-}
-
-
-
-
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "python" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  auto_install = true,
-
-  -- List of parsers to ignore installing (for "all")
-  ignore_install = { },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- 20221011: TS for help has a whitespace bug: "Text :cmd" shows as "Text:cmd"
-    disable = { "help" },
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
-
-require("live-command").setup {
-  commands = {
-    Norm = { cmd = "norm" },
-  },
-}
-
-
-require('aerial').setup({
-  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-  on_attach = function(bufnr)
-    -- Jump forwards/backwards with '{' and '}'
-    vim.keymap.set('n', '<c-k>', '<cmd>AerialPrev<CR>', {buffer = bufnr})
-    vim.keymap.set('n', '<c-j>', '<cmd>AerialNext<CR>', {buffer = bufnr})
-  end
+		after_saving = nil, -- ran after doing the actual save
+	},
 })
 
-require('telescope').load_extension('aerial')
+require("nvim-treesitter.configs").setup({
+	-- A list of parser names, or "all"
+	ensure_installed = { "c", "lua", "rust", "python" },
+
+	-- Install parsers synchronously (only applied to `ensure_installed`)
+	sync_install = false,
+
+	-- Automatically install missing parsers when entering buffer
+	auto_install = true,
+
+	-- List of parsers to ignore installing (for "all")
+	ignore_install = {},
+
+	---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+	-- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+	highlight = {
+		-- `false` will disable the whole extension
+		enable = true,
+
+		-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+		-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+		-- the name of the parser)
+		-- list of language that will be disabled
+		-- 20221011: TS for help has a whitespace bug: "Text :cmd" shows as "Text:cmd"
+		disable = { "help" },
+
+		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+		-- Using this option may slow down your editor, and you may see some duplicate highlights.
+		-- Instead of true it can also be a list of languages
+		additional_vim_regex_highlighting = false,
+	},
+})
+
+require("live-command").setup({
+	commands = {
+		Norm = { cmd = "norm" },
+	},
+})
+
+require("aerial").setup({
+	-- optionally use on_attach to set keymaps when aerial has attached to a buffer
+	on_attach = function(bufnr)
+		-- Jump forwards/backwards with '{' and '}'
+		vim.keymap.set("n", "<c-k>", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+		vim.keymap.set("n", "<c-j>", "<cmd>AerialNext<CR>", { buffer = bufnr })
+	end,
+})
+
+require("telescope").load_extension("aerial")
 
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+
+require("toggleterm").setup()
+
+require("chatgpt").setup({
+	welcome_message = WELCOME_MESSAGE,
+	loading_text = "loading",
+	question_sign = "", -- you can use emoji if you want e.g. 🙂
+	answer_sign = "ﮧ", -- 🤖
+	max_line_length = 120,
+	yank_register = "+",
+	chat_layout = {
+		relative = "editor",
+		position = "50%",
+		size = {
+			height = "80%",
+			width = "80%",
+		},
+	},
+	settings_window = {
+		border = {
+			style = "rounded",
+			text = {
+				top = " Settings ",
+			},
+		},
+	},
+	chat_window = {
+		filetype = "chatgpt",
+		border = {
+			highlight = "FloatBorder",
+			style = "rounded",
+			text = {
+				top = " ChatGPT ",
+			},
+		},
+	},
+	chat_input = {
+		prompt = "  ",
+		border = {
+			highlight = "FloatBorder",
+			style = "rounded",
+			text = {
+				top_align = "center",
+				top = " Prompt ",
+			},
+		},
+	},
+	openai_params = {
+		model = "gpt-3.5-turbo",
+		frequency_penalty = 0,
+		presence_penalty = 0,
+		max_tokens = 300,
+		temperature = 0,
+		top_p = 1,
+		n = 1,
+	},
+	openai_edit_params = {
+		model = "gpt-3.5-turbo",
+		frequency_penalty = 0,
+		presence_penalty = 0,
+		max_tokens = 300,
+		temperature = 0,
+		top_p = 1,
+		n = 1,
+	},
+	keymaps = {
+		close = { "<C-c>" },
+		submit = "<C-Enter>",
+		yank_last = "<C-y>",
+		yank_last_code = "<C-k>",
+		scroll_up = "<C-u>",
+		scroll_down = "<C-d>",
+		toggle_settings = "<C-o>",
+		new_session = "<C-n>",
+		cycle_windows = "<Tab>",
+		-- in the Sessions pane
+		select_session = "<Space>",
+		rename_session = "r",
+		delete_session = "d",
+	},
+})

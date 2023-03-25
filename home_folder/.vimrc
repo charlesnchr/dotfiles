@@ -22,7 +22,7 @@ Plug 'rafi/awesome-vim-colorschemes'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 "Plug 'ervandew/supertab'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
 " Plug 'Konfekt/FastFold'
@@ -178,7 +178,10 @@ Plug 'folke/tokyonight.nvim'
 Plug 'knsh14/vim-github-link'
 Plug 'tpope/vim-rhubarb'
 Plug 'stevearc/aerial.nvim'
-Plug 'LoricAndre/OneTerm.nvim'
+Plug 'nikvdp/neomux'
+Plug 'akinsho/toggleterm.nvim'
+Plug 'jackMort/ChatGPT.nvim'
+Plug 'MunifTanjim/nui.nvim'
 
 call plug#end()
 
@@ -245,14 +248,14 @@ nnoremap <silent>    <A-8> :BufferLineGoToBuffer 8<CR>
 
 nnoremap <localleader>fh :History<cr>
 nnoremap <localleader>fw :Windows<cr>
-nnoremap <localleader>aj :CtrlPTag<cr>
-nnoremap <localleader>aa :CtrlPBufTag<cr>
-nnoremap <localleader>as :CtrlPBuffer<cr>
+" nnoremap <localleader>aj :CtrlPTag<cr>
+" nnoremap <localleader>aa :CtrlPBufTag<cr>
+" nnoremap <localleader>as :CtrlPBuffer<cr>
 " nnoremap <localleader>s :CtrlPBuffer<cr>
-nnoremap <localleader>ad :CtrlPMRUFiles<cr>
+" nnoremap <localleader>ad :CtrlPMRUFiles<cr>
 " nnoremap <localleader>e :CtrlPMRUFiles<cr>
-let g:ctrlp_cmd = 'CtrlPMRUFiles'
-nnoremap <localleader>af :CtrlPLine<cr>
+" let g:ctrlp_cmd = 'CtrlPMRUFiles'
+" nnoremap <localleader>af :CtrlPLine<cr>
 
   " let g:ctrlp_prompt_mappings = {
   "   \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
@@ -714,8 +717,8 @@ nmap <localleader>r :SlimeSend1 %run test.py<CR>
 " tab navigation: Alt or Ctrl+Shift may not work in terminal:
 " http://vim.wikia.com/wiki/Alternative_tab_navigation
 " Tab navigation like Firefox: only 'open new tab' works in terminal
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-t>     <Esc>:tabnew<CR>
+" nnoremap <C-t>     :tabnew<CR>
+" inoremap <C-t>     <Esc>:tabnew<CR>
 
 " N.B.: below bindings conflict with tmux window bindings
 " move to the previous/next tabpage.
@@ -812,7 +815,7 @@ nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+nnoremap gr <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
 
 
@@ -1065,9 +1068,6 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-nnoremap <silent> <localleader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-" autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-
 autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
 
 " highlight occurrences
@@ -1082,7 +1082,7 @@ nnoremap <BS> <C-^>
 " black on save (catch error E790 which is when saved right after undo)
 augroup prettier_on_save
   autocmd!
-  au BufWritePre *.py,*.jsx try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
+  au BufWritePre *.py,*.jsx,*.tsx,*.js,*.ts try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
 augroup end
 
 let g:neoformat_enabled_javascriptreact = ['prettier']
@@ -1226,10 +1226,14 @@ let g:gutentags_ctags_extra_args = [
 " gh copy :GetCurrentBranchLink then: (a) :OscYankReg + or (b) tty-copy <C-prefix ]> in tmux
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
 
-nmap <leader>e :AerialToggle<CR>
+" nmap <leader>e :AerialToggle<CR>
 
 " free bindings
 " localleader s/e
 " localleader tab
 "
 nmap <localleader>n :Neoformat<CR>
+
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+
