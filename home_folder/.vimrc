@@ -599,7 +599,6 @@ nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
-nnoremap <localleader>x :bd<cr>
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 " nicer to have pwd
@@ -766,7 +765,6 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>tr <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
 " nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
-nnoremap <localleader>p <cmd>lua require'telescope.builtin'.git_files()<cr>
 nnoremap <localleader>js <cmd>lua require'telescope.builtin'.git_files()<cr>
 nnoremap <localleader>jf <cmd>lua require'telescope.builtin'.find_files()<cr>
 nnoremap <localleader>jg <cmd>lua require'telescope.builtin'.live_grep()<cr>
@@ -790,6 +788,8 @@ nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags()<cr>
 nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
 nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.lsp_document_symbols()<cr>
 nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
+nnoremap <localleader>ji <cmd>lua require'telescope.builtin'.commands()<cr>
+nnoremap <localleader>p <cmd>lua require'telescope.builtin'.commands()<cr>
 
 "call wilder#setup({'modes': [':', '/', '?']})
 
@@ -1234,8 +1234,8 @@ map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
 " localleader tab
 "
 nmap <localleader>n :Neoformat<CR>
+nmap <localleader>xc :ChatGPT<CR>
 
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
-
 

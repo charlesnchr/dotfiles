@@ -269,13 +269,6 @@ jog() {
     }
 
 
-
-# function pywal {
-#     # generate color scheme from current wallpaper
-#     current_wallpaper="$(osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)')"
-#     wal -i $current_wallpaper -n
-# }
-
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -296,12 +289,13 @@ function per-directory-history() {
   per-directory-history-toggle-history
 }
 
+# zsh vi mode -- uncomment this if used
 # The plugin will auto execute this zvm_after_lazy_keybindings function
-function zvm_after_lazy_keybindings() {
-  zvm_define_widget per-directory-history
-  zvm_bindkey vicmd '^G' per-directory-history
-  zvm_bindkey vicmd '^F' histdb-fzf-widget
-}
+# function zvm_after_lazy_keybindings() {
+#   zvm_define_widget per-directory-history
+#   zvm_bindkey vicmd '^G' per-directory-history
+#   zvm_bindkey vicmd '^F' histdb-fzf-widget
+# }
 
 
 bindkey '^X^F' histdb-fzf-widget
@@ -310,9 +304,14 @@ setopt menu_complete
 
 # standard bash mapping (overrules delete whole line on macos)
 bindkey "^U" backward-kill-line
+
+# clash with tmux prefix
 # bindkey '^Q' beginning-of-line
-bindkey "\ea" beginning-of-line
+
+# does not seem to work
 # bindkey '^X^A' beginning-of-line
+bindkey "\ea" beginning-of-line
+bindkey "\ee" end-of-line
 
 
 # export PATH="$HOME/.poetry/bin:$PATH"
