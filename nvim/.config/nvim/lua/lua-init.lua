@@ -222,11 +222,19 @@ require("telescope").setup({
 		},
 		file_ignore_patterns = { "node_modules", "tags" },
 	},
+	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({
+				-- even more opts
+			}),
+		},
+	},
 })
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("ui-select")
 
 local auto_dark_mode = require("auto-dark-mode")
 
@@ -432,4 +440,22 @@ require("chatgpt").setup({
 		rename_session = "r",
 		delete_session = "d",
 	},
+})
+
+require("lspsaga").setup({
+	symbol_in_winbar = {
+		enable = false,
+		separator = " ",
+		ignore_patterns = {},
+		hide_keyword = true,
+		show_file = true,
+		folder_level = 2,
+		respect_root = false,
+		color_mode = true,
+	},
+})
+
+require('leap').add_default_mappings()
+
+require('dressing').setup({
 })

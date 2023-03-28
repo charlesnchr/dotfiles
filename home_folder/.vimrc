@@ -14,7 +14,9 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-syntastic/syntastic'
-Plug 'dense-analysis/ale'
+
+" got to be annoying with underline
+" Plug 'dense-analysis/ale'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'preservim/nerdtree'
@@ -133,7 +135,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " not completely sure why the below module is needed, but I get an error by
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
 Plug 'kosayoda/nvim-lightbulb'
-" Plug 'puremourning/vimspector'
+Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 
 " for C-h, C-l to repeat after t,f,T,F
@@ -149,7 +151,7 @@ Plug 'sedm0784/vim-you-autocorrect'
 " not ideal
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'justinmk/vim-sneak' " easier than easymotion
+" Plug 'justinmk/vim-sneak' " easier than easymotion
 Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
@@ -182,6 +184,11 @@ Plug 'nikvdp/neomux'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'jackMort/ChatGPT.nvim'
 Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'ggandor/leap.nvim'
+Plug 'dstein64/vim-startuptime'
+Plug 'stevearc/dressing.nvim'
 
 call plug#end()
 
@@ -591,7 +598,7 @@ inoremap <C-S-s> <Esc>:w<cr>
 nnoremap <localleader>ve :e ~/.vimrc<cr>
 nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
-nnoremap <localleader>vp :PlugInstall<cr>
+nnoremap <localleader>vp :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
 nnoremap <localleader>vg :G<cr>
 nnoremap <localleader>vc :G commit -m "Small update"<cr>
 nnoremap <localleader>vn :G log --name-status<cr>
@@ -1227,7 +1234,7 @@ let g:gutentags_ctags_extra_args = [
 " gh copy :GetCurrentBranchLink then: (a) :OscYankReg + or (b) tty-copy <C-prefix ]> in tmux
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
 
-" nmap <leader>e :AerialToggle<CR>
+nmap <leader>e :AerialToggle<CR>
 
 " free bindings
 " localleader s/e
@@ -1238,4 +1245,8 @@ nmap <localleader>xc :ChatGPT<CR>
 
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+
+nnoremap <localleader>] :Lspsaga  goto_definition<CR>
+nnoremap <leader>] :Lspsaga  peek_definition<CR>
 

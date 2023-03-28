@@ -11,6 +11,20 @@ vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignW
 vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
+
+-- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+--   underline = false,
+--   virtual_text = false,
+--   signs = true,
+--   update_in_insert = false,
+-- })
+
+-- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
+lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+})
+
+
 -- global config for diagnostic
 vim.diagnostic.config({
 	underline = false,
@@ -21,25 +35,38 @@ vim.diagnostic.config({
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+	underline = false,
 	border = "rounded",
 })
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+	underline = false,
 	border = "rounded",
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+
+lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+	underline = false,
+	virtual_text = false,
+	signs = true,
+	update_in_insert = false,
 	signs = {
 		severity_limit = "Hint",
 	},
 })
 
--- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
---   underline = false,
---   virtual_text = false,
---   signs = true,
---   update_in_insert = false,
--- })
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+	underline = false,
+    signs = {
+      severity_limit = "Hint",
+    },
+    virtual_text = {
+      severity_limit = "Error",
+    },
+  }
+)
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
@@ -51,20 +78,19 @@ local function config(_config)
 			vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			vim.keymap.set("n", "<leader>vws", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 			vim.keymap.set("n", "<space>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-			vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-			vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-			vim.keymap.set("n", "<leader>vca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+			vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+			vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 
 			vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 			vim.keymap.set("x", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR><ESC>", opts)
 
 			vim.keymap.set("n", "<Leader>la", '<cmd>lua require("user").diagnostic.publish_loclist(true)<CR>', opts)
 			vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-			vim.keymap.set("n", "<C-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+			vim.keymap.set("n", "<space>ld", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 			vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			vim.keymap.set("n", "<space>lh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 			vim.keymap.set("n", "<space>lw", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-			vim.keymap.set("n", "<space>ld", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+			vim.keymap.set("n", "<space>lq", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
 			vim.keymap.set(
 				"n",
 				"<space>ll",
@@ -73,8 +99,6 @@ local function config(_config)
 			)
 			vim.keymap.set("n", "<space>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 			vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-			vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-			vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 			vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
 			vim.keymap.set("n", "<space>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
@@ -172,18 +196,18 @@ require("lspconfig").rust_analyzer.setup(config({
     --]]
 }))
 
-local opts = {
-	-- whether to highlight the currently hovered symbol
-	-- disable if your cpu usage is higher than you want it
-	-- or you just hate the highlight
-	-- default: true
-	highlight_hovered_item = true,
+-- local opts = {
+-- 	-- whether to highlight the currently hovered symbol
+-- 	-- disable if your cpu usage is higher than you want it
+-- 	-- or you just hate the highlight
+-- 	-- default: true
+-- 	highlight_hovered_item = true,
 
-	-- whether to show outline guides
-	-- default: true
-	show_guides = true,
-}
+-- 	-- whether to show outline guides
+-- 	-- default: true
+-- 	show_guides = true,
+-- }
 
-require("symbols-outline").setup(opts)
+-- require("symbols-outline").setup(opts)
 
 return M
