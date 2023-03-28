@@ -5,6 +5,41 @@ vim.notify = require("notify")
 
 local M = {}
 
+
+-- Define a global variable to keep track of the LSP document highlight state
+lsp_document_highlight_enabled = false
+-- Define a function to toggle the LSP document highlight
+function toggle_lsp_document_highlight()
+    if lsp_document_highlight_enabled then
+        -- Check if the autogroup exists before trying to delete it
+        vim.cmd([[
+        hi! clear LspReferenceRead Visual
+        hi! clear LspReferenceText Visual
+        hi! clear LspReferenceWrite Visual
+        augroup lsp_document_highlight
+            autocmd!
+        augroup END
+        augroup! lsp_document_highlight
+        ]])
+        lsp_document_highlight_enabled = false
+    else
+        vim.cmd([[
+        hi! link LspReferenceRead Visual
+        hi! link LspReferenceText Visual
+        hi! link LspReferenceWrite Visual
+            augroup lsp_document_highlight
+                autocmd! * <buffer>
+                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+        ]])
+        lsp_document_highlight_enabled = true
+    end
+end
+-- Bind the toggle_lsp_document_highlight function to a key mapping
+vim.api.nvim_set_keymap('n', '<space>lv', ':lua toggle_lsp_document_highlight()<CR>', { noremap = true, silent = true })
+
+
 -- Change diagnostic signs.
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
@@ -102,17 +137,7 @@ local function config(_config)
 			vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
 			vim.keymap.set("n", "<space>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
-			-- The blow command will highlight the current variable and its usages in the buffer.
-			-- vim.cmd([[
-      -- hi! link LspReferenceRead Visual
-      -- hi! link LspReferenceText Visual
-      -- hi! link LspReferenceWrite Visual
-      -- augroup lsp_document_highlight
-        -- autocmd! * <buffer>
-        -- autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        -- autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      -- augroup END
-    -- ]])
+
 
 			if vim.g.logging_level == "debug" then
 				local msg = string.format("Language server %s started!", client.name)
