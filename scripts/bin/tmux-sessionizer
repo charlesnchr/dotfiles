@@ -33,7 +33,7 @@ done
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf "%s\n" "${selected_dirs[@]}" | fzf --height=80% --margin=20%,20% --preview 'tree {}' --prompt="projects > ")
+    selected=$(printf "%s\n" "${selected_dirs[@]}" | fzf --height=80% --margin=5%,5% --preview 'tree {}' --prompt="projects > ")
 fi
 
 if [[ -z $selected ]]; then

@@ -161,7 +161,6 @@ export EDITOR=nvim;
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-source $HOME/dotfiles/.zshrc_local
 
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
 # bindkey "^[^[OA" up-line-or-beginning-search
@@ -217,10 +216,6 @@ tgz() {
 
 zstp() {
     tar -cf - "$@" | pv -s $[$(du -sk "$@" | awk '{print $1}') * 1024] | zstd -T0 > "$@".tar.zst
-}
-
-colo() {
-    if [ $(cat ~/dotfiles/is_dark_mode) -eq 1 ]; then x=0; else x=1; fi; echo $x > ~/dotfiles/is_dark_mode
 }
 
 wikistats() {

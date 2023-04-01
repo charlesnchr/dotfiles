@@ -189,6 +189,7 @@ Plug 'glepnir/lspsaga.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'dstein64/vim-startuptime'
 Plug 'stevearc/dressing.nvim'
+" Plug 'mbbill/undotree'
 
 call plug#end()
 
@@ -1246,7 +1247,10 @@ nmap <localleader>xc :ChatGPT<CR>
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
-
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>
 
+cnoremap <A-b> <C-Left>
+cnoremap <A-f> <C-Right>
+cnoremap <A-a> <Home>
+cnoremap <A-e> <End>
