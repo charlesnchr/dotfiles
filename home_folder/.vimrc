@@ -126,7 +126,7 @@ Plug 'folke/trouble.nvim'
 " Plug 'itchyny/lightline.vim'
 
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'trotter/autojump.vim'
+Plug 'trotter/autojump.vim', { 'on': 'J' }
 Plug 'arcticicestudio/nord-vim'
 " Plug 'christoomey/vim-tmux-navigator'
 " provides keybinding, strip
@@ -180,7 +180,7 @@ Plug 'folke/tokyonight.nvim'
 Plug 'knsh14/vim-github-link'
 Plug 'tpope/vim-rhubarb'
 Plug 'stevearc/aerial.nvim'
-Plug 'nikvdp/neomux'
+" Plug 'nikvdp/neomux'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'jackMort/ChatGPT.nvim'
 Plug 'MunifTanjim/nui.nvim'
@@ -730,8 +730,8 @@ nmap <localleader>r :SlimeSend1 %run test.py<CR>
 
 " N.B.: below bindings conflict with tmux window bindings
 " move to the previous/next tabpage.
-nnoremap <C-k> gT
-nnoremap <C-j> gt
+" nnoremap <C-k> gT
+" nnoremap <C-j> gt
 " Go to last active tab
 " au TabLeave * let g:lasttab = tabpagenr()
 " nnoremap <silent> <c-j> :exe "tabn ".g:lasttab<cr>

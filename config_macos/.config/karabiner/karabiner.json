@@ -989,7 +989,8 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "shift"
+                                            "shift",
+                                            "control"
                                         ]
                                     }
                                 },
@@ -1011,7 +1012,8 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "shift"
+                                            "shift",
+                                            "control"
                                         ]
                                     }
                                 },
@@ -1033,7 +1035,8 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "shift"
+                                            "shift",
+                                            "control"
                                         ]
                                     }
                                 },
@@ -1055,7 +1058,8 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "shift"
+                                            "shift",
+                                            "control"
                                         ]
                                     }
                                 },
@@ -1077,7 +1081,8 @@
                                             "option"
                                         ],
                                         "optional": [
-                                            "shift"
+                                            "shift",
+                                            "control"
                                         ]
                                     }
                                 },
