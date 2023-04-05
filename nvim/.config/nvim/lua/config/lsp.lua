@@ -66,7 +66,7 @@ vim.diagnostic.config({
 	virtual_text = false,
 	signs = true,
 	severity_sort = true,
-	float = { border = "rounded", scope = "line" },
+	float = { border = "rounded", scope = "line", source = "always" },
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
