@@ -160,16 +160,16 @@ require("nvim-tree").setup({
 		width = 40,
 		hide_root_folder = false,
 		side = "left",
-		mappings = {
-			list = {
-				{ key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
-				{ key = "h", action = "close_node" },
-				{ key = "v", action = "vsplit" },
-				{ key = "C", action = "cd" },
-				{ key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
-				{ key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
-			},
-		},
+		-- mappings = {
+		-- 	list = {
+		-- 		{ key = { "l", "<CR>", "o" }, action = "edit", mode = "n" },
+		-- 		{ key = "h", action = "close_node" },
+		-- 		{ key = "v", action = "vsplit" },
+		-- 		{ key = "C", action = "cd" },
+		-- 		{ key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
+		-- 		{ key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
+		-- 	},
+		-- },
 		number = false,
 		relativenumber = true,
 		signcolumn = "yes",
