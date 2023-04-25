@@ -54,7 +54,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 
 Plug 'kana/vim-textobj-user'
 Plug 'rbonvall/vim-textobj-latex'
-Plug 'bps/vim-textobj-python'
+Plug 'jeetsukumaran/vim-pythonsense'
 
 Plug 'mhinz/vim-startify'
 Plug 'akinsho/bufferline.nvim'
@@ -135,7 +135,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " not completely sure why the below module is needed, but I get an error by
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
 Plug 'kosayoda/nvim-lightbulb'
-Plug 'puremourning/vimspector'
+" Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 
 " for C-h, C-l to repeat after t,f,T,F
@@ -189,7 +189,7 @@ Plug 'glepnir/lspsaga.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'dstein64/vim-startuptime'
 Plug 'stevearc/dressing.nvim'
-" Plug 'mbbill/undotree'
+" Plug 'folke/noice.nvim'
 
 call plug#end()
 
@@ -799,7 +799,6 @@ nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial(
 nnoremap <localleader>ji <cmd>lua require'telescope.builtin'.commands()<cr>
 nnoremap <localleader>p <cmd>lua require'telescope.builtin'.commands()<cr>
 
-"call wilder#setup({'modes': [':', '/', '?']})
 
 set undofile
 set undodir=~/.vim/undo
@@ -860,7 +859,7 @@ autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " 
 
 nnoremap <silent> <leader><Space> :<C-U>StripWhitespace<CR>
 
-let g:vimspector_enable_mappings = 'HUMAN'
+" let g:vimspector_enable_mappings = 'HUMAN'
 autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<CR>
 
 

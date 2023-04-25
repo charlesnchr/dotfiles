@@ -47,7 +47,7 @@ ctrl + alt - f9 : yabai -m window --resize right:150:0; \
 alt - b : yabai -m space --balance
 
 # Resize to master stack type grid (intended for 2x2)
-alt - c: yabai -m space --balance; yabai -m window --swap largest; yabai -m window --resize bottom:0:350; yabai -m window --resize top:0:350; yabai -m window --resize right:450:0; yabai -m window --resize left:450:0
+alt - c: ~/bin/yabai_conditional_resizing.sh
 
 # Enable / Disable gaps in current workspace
 lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
@@ -134,7 +134,7 @@ alt - f4 : yabai -m space --focus 4
 alt - f5 : yabai -m space --focus 5
 alt - 5 : yabai -m space --focus 6
 alt - i : yabai -m space --focus 7
-alt - 9 : yabai -m space --focus 8
+alt - f12 : yabai -m space --focus 8
 alt - p : yabai -m space --focus 9
 alt - f10 : yabai -m space --focus 10
 
@@ -146,7 +146,7 @@ alt + shift - f4 : yabai -m window --space 4
 alt + shift - f5 : yabai -m window --space 5
 alt + shift - 5 : yabai -m window --space 6
 alt + shift - i : yabai -m window --space 7
-alt + shift - 9 : yabai -m window --space 8
+alt + shift - f12 : yabai -m window --space 8
 alt + shift - p : yabai -m window --space 9
 alt + shift - f10 : yabai -m window --space 10
 alt + shift - w : yabai -m window --space recent
@@ -291,10 +291,10 @@ alt - 0x2B : yabai -m window --toggle split
 # cycle through all visible windows sorted by: coordinates -> display index
 # ctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.visible == 1 and .subrole != \"AXUnknown\")) | reverse | nth(index(map(select(.focused == 1))) - 1).id")"
 # same github page but works well
-alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
-# alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
-ctrl + alt - n : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-ctrl + alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
+ctrl + alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+ctrl + alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+alt - n : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 1
+alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
 # lctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
 
 # lctrl + alt - right : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
@@ -304,7 +304,7 @@ ctrl + alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
 
 # move displays (not as good as Rectangle Pro -- rebinded same keys via Kmonad to use Rectangle Pro)
 alt + ctrl - 8 : yabai -m window --display west; yabai -m display --focus west
-alt + ctrl - 9 : yabai -m window --display east; yabai -m display --focus east
+alt + ctrl - f12 : yabai -m window --display east; yabai -m display --focus east
 
 # most recent current screen
 alt - v : yabai -m query --spaces --space \
@@ -319,6 +319,6 @@ alt - v : yabai -m query --spaces --space \
 
 alt - 7 : yabai -m space --layout bsp
 alt - 8 : yabai -m space --layout stack
-alt + ctrl - f9 : yabai -m space --layout float
+alt - 9 : yabai -m space --layout float
 
 

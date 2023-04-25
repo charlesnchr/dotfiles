@@ -3,7 +3,7 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Get files from nfp
-# @raycast.mode fullOutput
+# @raycast.mode inline
 
 # Documentation:
 # @raycast.author Charles
