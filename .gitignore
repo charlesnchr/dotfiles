@@ -3,3 +3,5 @@ tags
 dotfiles_private
 home_folder/.config/qalculate/qalculate-qt.cfg
 *.pyc
+*.vim
+.zshrc_local
