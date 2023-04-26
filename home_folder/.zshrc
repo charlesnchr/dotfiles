@@ -160,8 +160,6 @@ export EDITOR=nvim;
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-source $HOME/dotfiles/.zshrc_local
-
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
 # bindkey "^[^[OA" up-line-or-beginning-search
 # bindkey "^[^[OB" down-line-or-beginning-search
