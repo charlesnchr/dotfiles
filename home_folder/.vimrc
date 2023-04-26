@@ -57,7 +57,7 @@ Plug 'rbonvall/vim-textobj-latex'
 Plug 'jeetsukumaran/vim-pythonsense'
 
 Plug 'mhinz/vim-startify'
-Plug 'akinsho/bufferline.nvim'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -67,7 +67,7 @@ Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }" slows down start-up
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } " slows down start-up
 " Plug 'jupyter-vim/jupyter-vim'
 " Plug 'klafyvel/vim-slime-cells'
 
@@ -1076,7 +1076,7 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
 
 " highlight occurrences
 " Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
@@ -1231,8 +1231,8 @@ let g:gutentags_ctags_extra_args = [
       \ ]
 
 
-" gh copy :GetCurrentBranchLink then: (a) :OscYankReg + or (b) tty-copy <C-prefix ]> in tmux
-map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>
+" gh copy :GetCurrentBranchLink then: (a) :OscYankRegister + or (b) tty-copy <C-prefix ]> in tmux
+map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankRegister +<CR>:echo @+<CR>
 
 nmap <leader>e :AerialToggle<CR>
 
