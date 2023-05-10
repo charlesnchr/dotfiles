@@ -147,86 +147,6 @@ require("bufferline").setup({
 vim.opt.termguicolors = true
 
 
-local function nvim_tree_on_attach(bufnr)
-  local api = require('nvim-tree.api')
-
-  local function opts(desc)
-    return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
-
-  -- Default mappings. Feel free to modify or remove as you wish.
-  --
-  -- BEGIN_DEFAULT_ON_ATTACH
-  vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node,          opts('CD'))
-  vim.keymap.set('n', '<C-e>', api.node.open.replace_tree_buffer,     opts('Open: In Place'))
-  vim.keymap.set('n', '<C-k>', api.node.show_info_popup,              opts('Info'))
-  vim.keymap.set('n', '<C-r>', api.fs.rename_sub,                     opts('Rename: Omit Filename'))
-  vim.keymap.set('n', '<C-t>', api.node.open.tab,                     opts('Open: New Tab'))
-  vim.keymap.set('n', '<C-v>', api.node.open.vertical,                opts('Open: Vertical Split'))
-  vim.keymap.set('n', '<C-x>', api.node.open.horizontal,              opts('Open: Horizontal Split'))
-  vim.keymap.set('n', '<BS>',  api.node.navigate.parent_close,        opts('Close Directory'))
-  vim.keymap.set('n', '<CR>',  api.node.open.edit,                    opts('Open'))
-  vim.keymap.set('n', '<Tab>', api.node.open.preview,                 opts('Open Preview'))
-  vim.keymap.set('n', '>',     api.node.navigate.sibling.next,        opts('Next Sibling'))
-  vim.keymap.set('n', '<',     api.node.navigate.sibling.prev,        opts('Previous Sibling'))
-  vim.keymap.set('n', '.',     api.node.run.cmd,                      opts('Run Command'))
-  vim.keymap.set('n', '-',     api.tree.change_root_to_parent,        opts('Up'))
-  vim.keymap.set('n', 'a',     api.fs.create,                         opts('Create'))
-  vim.keymap.set('n', 'bmv',   api.marks.bulk.move,                   opts('Move Bookmarked'))
-  vim.keymap.set('n', 'B',     api.tree.toggle_no_buffer_filter,      opts('Toggle No Buffer'))
-  vim.keymap.set('n', 'c',     api.fs.copy.node,                      opts('Copy'))
-  vim.keymap.set('n', 'C',     api.tree.toggle_git_clean_filter,      opts('Toggle Git Clean'))
-  vim.keymap.set('n', '[c',    api.node.navigate.git.prev,            opts('Prev Git'))
-  vim.keymap.set('n', ']c',    api.node.navigate.git.next,            opts('Next Git'))
-  vim.keymap.set('n', 'd',     api.fs.remove,                         opts('Delete'))
-  vim.keymap.set('n', 'D',     api.fs.trash,                          opts('Trash'))
-  vim.keymap.set('n', 'E',     api.tree.expand_all,                   opts('Expand All'))
-  vim.keymap.set('n', 'e',     api.fs.rename_basename,                opts('Rename: Basename'))
-  vim.keymap.set('n', ']e',    api.node.navigate.diagnostics.next,    opts('Next Diagnostic'))
-  vim.keymap.set('n', '[e',    api.node.navigate.diagnostics.prev,    opts('Prev Diagnostic'))
-  vim.keymap.set('n', 'F',     api.live_filter.clear,                 opts('Clean Filter'))
-  vim.keymap.set('n', 'f',     api.live_filter.start,                 opts('Filter'))
-  vim.keymap.set('n', 'g?',    api.tree.toggle_help,                  opts('Help'))
-  vim.keymap.set('n', 'gy',    api.fs.copy.absolute_path,             opts('Copy Absolute Path'))
-  vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,         opts('Toggle Dotfiles'))
-  vim.keymap.set('n', 'I',     api.tree.toggle_gitignore_filter,      opts('Toggle Git Ignore'))
-  vim.keymap.set('n', 'J',     api.node.navigate.sibling.last,        opts('Last Sibling'))
-  vim.keymap.set('n', 'K',     api.node.navigate.sibling.first,       opts('First Sibling'))
-  vim.keymap.set('n', 'm',     api.marks.toggle,                      opts('Toggle Bookmark'))
-  vim.keymap.set('n', 'o',     api.node.open.edit,                    opts('Open'))
-  vim.keymap.set('n', 'O',     api.node.open.no_window_picker,        opts('Open: No Window Picker'))
-  vim.keymap.set('n', 'p',     api.fs.paste,                          opts('Paste'))
-  vim.keymap.set('n', 'P',     api.node.navigate.parent,              opts('Parent Directory'))
-  vim.keymap.set('n', 'q',     api.tree.close,                        opts('Close'))
-  vim.keymap.set('n', 'r',     api.fs.rename,                         opts('Rename'))
-  vim.keymap.set('n', 'R',     api.tree.reload,                       opts('Refresh'))
-  vim.keymap.set('n', 's',     api.node.run.system,                   opts('Run System'))
-  vim.keymap.set('n', 'S',     api.tree.search_node,                  opts('Search'))
-  vim.keymap.set('n', 'U',     api.tree.toggle_custom_filter,         opts('Toggle Hidden'))
-  vim.keymap.set('n', 'W',     api.tree.collapse_all,                 opts('Collapse'))
-  vim.keymap.set('n', 'x',     api.fs.cut,                            opts('Cut'))
-  vim.keymap.set('n', 'y',     api.fs.copy.filename,                  opts('Copy Name'))
-  vim.keymap.set('n', 'Y',     api.fs.copy.relative_path,             opts('Copy Relative Path'))
-  vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,           opts('Open'))
-  vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
-  -- END_DEFAULT_ON_ATTACH
-
-  -- Mappings migrated from view.mappings.list
-  --
-  -- You will need to insert "your code goes here" for any mappings with a custom action_cb
-  vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
-  vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
-  vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
-  vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
-  vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
-  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
-  vim.keymap.set("n", "<C-h>", api.tree.collapse_all, opts("Collapse All"))
-
-end
-
-
--- OR setup with some options
 require("nvim-tree").setup({
 	git = {
 		enable = false,
@@ -248,6 +168,66 @@ require("nvim-tree").setup({
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
 
+      -- Default mappings. Feel free to modify or remove as you wish.
+      --
+      -- BEGIN_DEFAULT_ON_ATTACH
+      vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node,          opts('CD'))
+      vim.keymap.set('n', '<C-e>', api.node.open.replace_tree_buffer,     opts('Open: In Place'))
+      vim.keymap.set('n', '<C-k>', api.node.show_info_popup,              opts('Info'))
+      vim.keymap.set('n', '<C-r>', api.fs.rename_sub,                     opts('Rename: Omit Filename'))
+      vim.keymap.set('n', '<C-t>', api.node.open.tab,                     opts('Open: New Tab'))
+      vim.keymap.set('n', '<C-v>', api.node.open.vertical,                opts('Open: Vertical Split'))
+      vim.keymap.set('n', '<C-x>', api.node.open.horizontal,              opts('Open: Horizontal Split'))
+      vim.keymap.set('n', '<BS>',  api.node.navigate.parent_close,        opts('Close Directory'))
+      vim.keymap.set('n', '<CR>',  api.node.open.edit,                    opts('Open'))
+      vim.keymap.set('n', '<Tab>', api.node.open.preview,                 opts('Open Preview'))
+      vim.keymap.set('n', '>',     api.node.navigate.sibling.next,        opts('Next Sibling'))
+      vim.keymap.set('n', '<',     api.node.navigate.sibling.prev,        opts('Previous Sibling'))
+      vim.keymap.set('n', '.',     api.node.run.cmd,                      opts('Run Command'))
+      vim.keymap.set('n', '-',     api.tree.change_root_to_parent,        opts('Up'))
+      vim.keymap.set('n', 'a',     api.fs.create,                         opts('Create'))
+      vim.keymap.set('n', 'bmv',   api.marks.bulk.move,                   opts('Move Bookmarked'))
+      vim.keymap.set('n', 'B',     api.tree.toggle_no_buffer_filter,      opts('Toggle No Buffer'))
+      vim.keymap.set('n', 'c',     api.fs.copy.node,                      opts('Copy'))
+      vim.keymap.set('n', 'C',     api.tree.toggle_git_clean_filter,      opts('Toggle Git Clean'))
+      vim.keymap.set('n', '[c',    api.node.navigate.git.prev,            opts('Prev Git'))
+      vim.keymap.set('n', ']c',    api.node.navigate.git.next,            opts('Next Git'))
+      vim.keymap.set('n', 'd',     api.fs.remove,                         opts('Delete'))
+      vim.keymap.set('n', 'D',     api.fs.trash,                          opts('Trash'))
+      vim.keymap.set('n', 'E',     api.tree.expand_all,                   opts('Expand All'))
+      vim.keymap.set('n', 'e',     api.fs.rename_basename,                opts('Rename: Basename'))
+      vim.keymap.set('n', ']e',    api.node.navigate.diagnostics.next,    opts('Next Diagnostic'))
+      vim.keymap.set('n', '[e',    api.node.navigate.diagnostics.prev,    opts('Prev Diagnostic'))
+      vim.keymap.set('n', 'F',     api.live_filter.clear,                 opts('Clean Filter'))
+      vim.keymap.set('n', 'f',     api.live_filter.start,                 opts('Filter'))
+      vim.keymap.set('n', 'g?',    api.tree.toggle_help,                  opts('Help'))
+      vim.keymap.set('n', 'gy',    api.fs.copy.absolute_path,             opts('Copy Absolute Path'))
+      vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,         opts('Toggle Dotfiles'))
+      vim.keymap.set('n', 'I',     api.tree.toggle_gitignore_filter,      opts('Toggle Git Ignore'))
+      vim.keymap.set('n', 'J',     api.node.navigate.sibling.last,        opts('Last Sibling'))
+      vim.keymap.set('n', 'K',     api.node.navigate.sibling.first,       opts('First Sibling'))
+      vim.keymap.set('n', 'm',     api.marks.toggle,                      opts('Toggle Bookmark'))
+      vim.keymap.set('n', 'o',     api.node.open.edit,                    opts('Open'))
+      vim.keymap.set('n', 'O',     api.node.open.no_window_picker,        opts('Open: No Window Picker'))
+      vim.keymap.set('n', 'p',     api.fs.paste,                          opts('Paste'))
+      vim.keymap.set('n', 'P',     api.node.navigate.parent,              opts('Parent Directory'))
+      vim.keymap.set('n', 'q',     api.tree.close,                        opts('Close'))
+      vim.keymap.set('n', 'r',     api.fs.rename,                         opts('Rename'))
+      vim.keymap.set('n', 'R',     api.tree.reload,                       opts('Refresh'))
+      vim.keymap.set('n', 's',     api.node.run.system,                   opts('Run System'))
+      vim.keymap.set('n', 'S',     api.tree.search_node,                  opts('Search'))
+      vim.keymap.set('n', 'U',     api.tree.toggle_custom_filter,         opts('Toggle Hidden'))
+      vim.keymap.set('n', 'W',     api.tree.collapse_all,                 opts('Collapse'))
+      vim.keymap.set('n', 'x',     api.fs.cut,                            opts('Cut'))
+      vim.keymap.set('n', 'y',     api.fs.copy.filename,                  opts('Copy Name'))
+      vim.keymap.set('n', 'Y',     api.fs.copy.relative_path,             opts('Copy Relative Path'))
+      vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,           opts('Open'))
+      vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
+      -- END_DEFAULT_ON_ATTACH
+
+      -- Mappings migrated from view.mappings.list
+      --
+      -- You will need to insert "your code goes here" for any mappings with a custom action_cb
       vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
       vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
       vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
@@ -320,18 +300,19 @@ require("telescope").load_extension("fzf")
 require("telescope").load_extension("ui-select")
 
 local auto_dark_mode = require("auto-dark-mode")
-
 auto_dark_mode.setup({
 	update_interval = 2000,
 	set_dark_mode = function()
 		vim.api.nvim_set_option("background", "dark")
 		vim.cmd("colorscheme tokyonight")
 		vim.cmd("AirlineTheme catppuccin")
+        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option("background", "light")
-		vim.cmd("colorscheme PaperColor")
+		vim.cmd("colorscheme catppuccin-latte")
 		vim.cmd("AirlineTheme atomic")
+        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
 })
 auto_dark_mode.init()
@@ -450,84 +431,84 @@ vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
 
 require("toggleterm").setup()
 
-require("chatgpt").setup({
-	welcome_message = WELCOME_MESSAGE,
-	loading_text = "loading",
-	question_sign = "", -- you can use emoji if you want e.g. 🙂
-	answer_sign = "ﮧ", -- 🤖
-	max_line_length = 120,
-	yank_register = "+",
-	chat_layout = {
-		relative = "editor",
-		position = "50%",
-		size = {
-			height = "80%",
-			width = "80%",
-		},
-	},
-	settings_window = {
-		border = {
-			style = "rounded",
-			text = {
-				top = " Settings ",
-			},
-		},
-	},
-	chat_window = {
-		filetype = "chatgpt",
-		border = {
-			highlight = "FloatBorder",
-			style = "rounded",
-			text = {
-				top = " ChatGPT ",
-			},
-		},
-	},
-	chat_input = {
-		prompt = "  ",
-		border = {
-			highlight = "FloatBorder",
-			style = "rounded",
-			text = {
-				top_align = "center",
-				top = " Prompt ",
-			},
-		},
-	},
-	openai_params = {
-		model = "gpt-3.5-turbo",
-		frequency_penalty = 0,
-		presence_penalty = 0,
-		max_tokens = 300,
-		temperature = 0,
-		top_p = 1,
-		n = 1,
-	},
-	openai_edit_params = {
-		model = "gpt-3.5-turbo",
-		frequency_penalty = 0,
-		presence_penalty = 0,
-		max_tokens = 300,
-		temperature = 0,
-		top_p = 1,
-		n = 1,
-	},
-	keymaps = {
-		close = { "<C-c>" },
-		submit = "<C-p>",
-		yank_last = "<C-y>",
-		yank_last_code = "<C-k>",
-		scroll_up = "<C-u>",
-		scroll_down = "<C-d>",
-		toggle_settings = "<C-o>",
-		new_session = "<C-n>",
-		cycle_windows = "<Tab>",
-		-- in the Sessions pane
-		select_session = "<Space>",
-		rename_session = "r",
-		delete_session = "d",
-	},
-})
+-- require("chatgpt").setup({
+-- 	welcome_message = WELCOME_MESSAGE,
+-- 	loading_text = "loading",
+-- 	question_sign = "", -- you can use emoji if you want e.g. 🙂
+-- 	answer_sign = "ﮧ", -- 🤖
+-- 	max_line_length = 120,
+-- 	yank_register = "+",
+-- 	chat_layout = {
+-- 		relative = "editor",
+-- 		position = "50%",
+-- 		size = {
+-- 			height = "80%",
+-- 			width = "80%",
+-- 		},
+-- 	},
+-- 	settings_window = {
+-- 		border = {
+-- 			style = "rounded",
+-- 			text = {
+-- 				top = " Settings ",
+-- 			},
+-- 		},
+-- 	},
+-- 	chat_window = {
+-- 		filetype = "chatgpt",
+-- 		border = {
+-- 			highlight = "FloatBorder",
+-- 			style = "rounded",
+-- 			text = {
+-- 				top = " ChatGPT ",
+-- 			},
+-- 		},
+-- 	},
+-- 	chat_input = {
+-- 		prompt = "  ",
+-- 		border = {
+-- 			highlight = "FloatBorder",
+-- 			style = "rounded",
+-- 			text = {
+-- 				top_align = "center",
+-- 				top = " Prompt ",
+-- 			},
+-- 		},
+-- 	},
+-- 	openai_params = {
+-- 		model = "gpt-3.5-turbo",
+-- 		frequency_penalty = 0,
+-- 		presence_penalty = 0,
+-- 		max_tokens = 300,
+-- 		temperature = 0,
+-- 		top_p = 1,
+-- 		n = 1,
+-- 	},
+-- 	openai_edit_params = {
+-- 		model = "gpt-3.5-turbo",
+-- 		frequency_penalty = 0,
+-- 		presence_penalty = 0,
+-- 		max_tokens = 300,
+-- 		temperature = 0,
+-- 		top_p = 1,
+-- 		n = 1,
+-- 	},
+-- 	keymaps = {
+-- 		close = { "<C-c>" },
+-- 		submit = "<C-p>",
+-- 		yank_last = "<C-y>",
+-- 		yank_last_code = "<C-k>",
+-- 		scroll_up = "<C-u>",
+-- 		scroll_down = "<C-d>",
+-- 		toggle_settings = "<C-o>",
+-- 		new_session = "<C-n>",
+-- 		cycle_windows = "<Tab>",
+-- 		-- in the Sessions pane
+-- 		select_session = "<Space>",
+-- 		rename_session = "r",
+-- 		delete_session = "d",
+-- 	},
+-- })
 
 require("lspsaga").setup({
 	symbol_in_winbar = {
@@ -565,3 +546,4 @@ require('dressing').setup({
 --     lsp_doc_border = false, -- add a border to hover docs and signature help
 --   },
 -- })
+

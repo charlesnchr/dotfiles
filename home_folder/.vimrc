@@ -182,7 +182,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'stevearc/aerial.nvim'
 " Plug 'nikvdp/neomux'
 Plug 'akinsho/toggleterm.nvim'
-Plug 'jackMort/ChatGPT.nvim'
+" Plug 'jackMort/ChatGPT.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'glepnir/lspsaga.nvim'
@@ -326,6 +326,7 @@ filetype plugin on
 " for vimwiki
 let g:vimwiki_list = [{
             \ 'path': '$HOME/0main/Syncthing/wiki',
+            \ 'syntax': 'markdown',
             \ 'template_path': '$HOME/0main/Syncthing/wiki/templates',
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
@@ -424,7 +425,7 @@ if has('mac')
     if v:shell_error != 0
         let g:airline_theme = 'atomic'
         set background=light
-        colorscheme PaperColor
+        colorscheme catppuccin-latte
     else
         let g:airline_theme = 'catppuccin'
         set background=dark
@@ -437,7 +438,7 @@ elseif has('unix')
     if output == 0
         let g:airline_theme = 'atomic'
         set background=light
-        colorscheme PaperColor
+        colorscheme catppuccin-latte
     else
         let g:airline_theme = 'catppuccin'
         set background=dark
@@ -616,10 +617,6 @@ nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>qf :copen<cr>
 
-
-hi VimwikiHeader1 guifg=#00FF03
-hi VimwikiHeader2 guifg=#83ebd3
-hi VimwikiHeader3 guifg=#83c8eb
 
 " Insert timestamp
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
@@ -899,7 +896,7 @@ command! -bang -nargs=* RgWiki
 nnoremap <localleader>fa :RgWiki<Cr>
 
 command! -bang -nargs=* RgThesis
-            \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/Github/phd-thesis'}), <bang>0)
+            \ call fzf#vim#grep("rg -g '*.{tex}' --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir':'~/1private/Github/phd-thesis'}), <bang>0)
 nnoremap <localleader>fs :RgThesis<Cr>
 
 " using vim-agriculture this would be equivalent
@@ -919,7 +916,7 @@ noremap <leader>gf :e <cfile><cr>
 augroup AutoHeader
     autocmd!
     autocmd bufnewfile *.c so ~/dotfiles/headers/c_header.txt
-    autocmd bufnewfile */diary/*.wiki so ~/dotfiles/headers/wiki_header.txt
+    autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
     autocmd bufnewfile *.cpp so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.h so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.py so ~/dotfiles/headers/py_header.txt
@@ -1076,7 +1073,7 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
 
 " highlight occurrences
 " Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
@@ -1241,7 +1238,7 @@ nmap <leader>e :AerialToggle<CR>
 " localleader tab
 "
 nmap <localleader>n :Neoformat<CR>
-nmap <localleader>xc :ChatGPT<CR>
+" nmap <localleader>xc :ChatGPT<CR>
 
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
@@ -1251,5 +1248,6 @@ nnoremap <leader>] :Lspsaga  peek_definition<CR>
 
 cnoremap <A-b> <C-Left>
 cnoremap <A-f> <C-Right>
-cnoremap <A-a> <Home>
 cnoremap <A-e> <End>
+
+autocmd ColorScheme * lua require('leap').init_highlight(true)

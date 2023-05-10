@@ -1,16 +1,16 @@
 :insert
 %% today's title
-= Daily entry =
+# %DATE%
 
-= Work =
+## Work
 - [ ]
 
-= Other =
+## Other
 - [ ]
 
-= Notes =
+## Notes
 
-= Daily routine =
+## Daily routine
 - [ ] Jogging
 - [ ] Read
 - [ ] Write
@@ -19,7 +19,7 @@
 - [ ] Anki flashcard
 - [ ] Played video game
 
-= Daily plan =
+## Daily plan
 | Hour | Activity |
 |------|----------|
 | 07   |          |
@@ -42,5 +42,4 @@
 
 
 
-
-= Summary =
+## Summary

@@ -122,13 +122,12 @@ alias vimdiff='nvim -d'
 alias ezsh="vi ~/.zshrc"
 alias ei3="vi ~/.config/i3/config"
 alias ei3s="vi ~/.config/i3status-rust/config.toml"
-alias tdy="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiMakeDiaryNote'"
-alias ydy="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiMakeYesterdayDiaryNote'"
-alias tmrw="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiMakeTomorrowDiaryNote'"
-# alias vw="vi . -c VimwikiIndex"
-alias vw="vi . -c 'hi Normal guibg=NONE ctermbg=NONE | VimwikiIndex'"
+alias tdy="vi -c VimwikiMakeDiaryNote"
+alias ydy="vi -c VimwikiMakeYesterdayDiaryNote"
+alias tmrw="vi -c VimwikiMakeTomorrowDiaryNote"
+alias vw="vi -c VimwikiIndex"
 alias ttd="tt -n 10 -notheme -showwpm -csv >> ~/wpm.csv"
-alias vc="vi . -c Calendar"
+alias vc="vi -c Calendar"
 alias mux=tmuxinator
 alias off="xset dpms force off"
 alias xclip="xclip -selection clipboard"
@@ -165,8 +164,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # bindkey "^[^[OB" down-line-or-beginning-search
 # bindkey "^[^[OC" forward-char
 # bindkey "^[^[OD" backward-char
-
-
 
 # antigen bundle MikeDacre/tmux-zsh-vim-titles
 # antigen apply

@@ -36,8 +36,6 @@ function toggle_lsp_document_highlight()
         lsp_document_highlight_enabled = true
     end
 end
--- Bind the toggle_lsp_document_highlight function to a key mapping
-vim.api.nvim_set_keymap('n', '<space>lv', ':lua toggle_lsp_document_highlight()<CR>', { noremap = true, silent = true })
 
 
 -- Change diagnostic signs.
@@ -124,6 +122,7 @@ local function config(_config)
 			vim.keymap.set("n", "<space>ld", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 			vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			vim.keymap.set("n", "<space>lh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+            vim.keymap.set('n', '<space>li', ":lua toggle_lsp_document_highlight()<CR>", opts)
 			vim.keymap.set("n", "<space>lw", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
 			vim.keymap.set("n", "<space>lq", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
 			vim.keymap.set(
