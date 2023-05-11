@@ -1078,7 +1078,8 @@ augroup mail_trailing_whitespace " {
     autocmd FileType mail SoftPencil
 augroup END " }
 
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+" autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
 
 " highlight occurrences
 " Put <enter> to work too! Otherwise <enter> moves to the next line, which we can
