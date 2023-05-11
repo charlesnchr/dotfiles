@@ -190,6 +190,9 @@ Plug 'ggandor/leap.nvim'
 Plug 'dstein64/vim-startuptime'
 Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap-python'
+
 
 call plug#end()
 
@@ -794,7 +797,9 @@ nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
 nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.lsp_document_symbols()<cr>
 nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
 nnoremap <localleader>ji <cmd>lua require'telescope.builtin'.commands()<cr>
-nnoremap <localleader>p <cmd>lua require'telescope.builtin'.commands()<cr>
+nnoremap <localleader>jn <cmd>lua require'telescope.builtin'.command_history()<cr>
+nnoremap <localleader>jv <cmd>lua require'telescope.builtin'.git_branches()<cr>
+nnoremap <localleader>p <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
 
 
 set undofile
