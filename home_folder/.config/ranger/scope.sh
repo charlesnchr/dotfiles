@@ -60,8 +60,17 @@ drop_bigarchive() {
 drop_bigtextfile() {
     # 51 == 0.05 MB * 1024
     # change this number for different sizes
-    if [[ `du "${FILE_PATH}" | cut -f1` -gt 50 ]]; then
+    if [[ `du "${FILE_PATH}" | cut -f1` -gt 2000 ]]; then
         echo '----- TOO BIG TEXT FILE -----'
+        exit 0
+    fi
+}
+
+drop_bignotebook() {
+    # 51 == 0.05 MB * 1024
+    # change this number for different sizes
+    if [[ `du "${FILE_PATH}" | cut -f1` -gt 5120 ]]; then
+        echo '----- TOO BIG NOTEBOOK FILE -----'
         exit 0
     fi
 }
@@ -107,7 +116,7 @@ handle_extension() {
 
         ## PDF
         pdf)
-            # too slow on macos and causes blinking border in ranger 
+            # too slow on macos and causes blinking border in ranger
             # drop_bigpdf
 
             # ## Preview as text conversion
@@ -165,6 +174,11 @@ handle_extension() {
             mediainfo "${FILE_PATH}" && exit 5
             exiftool "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
+
+        ipynb)
+            drop_bignotebook
+            jupyter nbconvert --stdout --to markdown -- "${FILE_PATH}" && exit 5
+            exit 1;;
     esac
 }
 
