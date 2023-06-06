@@ -343,3 +343,5 @@ export LS_COLORS="ca=0:so=1;38;5;168;48;5;254:sg=0:rs=0;38;5;246:st=0:pi=1;38;5;
 
 # alias ls="gls --color"
 
+
+source $HOME/dotfiles/.zshrc_local
