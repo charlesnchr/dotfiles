@@ -274,6 +274,16 @@ local actions = require("telescope.actions")
 
 require("telescope").setup({
 	defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '-g', '!*.pdf',   -- Ignore .pdf files
+        },
 		mappings = {
 			i = {
 				-- ["<esc>"] = actions.close,
@@ -283,7 +293,7 @@ require("telescope").setup({
 				["<C-f>"] = actions.send_to_qflist + actions.open_qflist,
 			},
 		},
-		file_ignore_patterns = { "node_modules", "tags" },
+		file_ignore_patterns = { "node_modules", "tags", "%.pdf" },
 	},
 	extensions = {
 		["ui-select"] = {

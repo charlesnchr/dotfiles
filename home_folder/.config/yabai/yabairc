@@ -39,11 +39,11 @@ yabai -m config insert_window_border_color   0xff$CINSE
 declare -A gaps
 declare -A color
 
-gaps["top"]="4"
-gaps["bottom"]="4"
-gaps["left"]="4"
-gaps["right"]="4"
-gaps["inner"]="4"
+gaps["top"]=4
+gaps["bottom"]=4
+gaps["left"]=4
+gaps["right"]=4
+gaps["inner"]=4
 
 color["focused"]="0xE0808080"
 color["normal"]="0x00010101"
@@ -56,11 +56,11 @@ yabai -m config --space 4 layout            bsp
 yabai -m config --space 6 layout            bsp
 yabai -m config --space 9 layout            bsp
 
-yabai -m config top_padding                 "${gaps["top"]}"
-yabai -m config bottom_padding              "${gaps["bottom"]}"
-yabai -m config left_padding                "${gaps["left"]}"
-yabai -m config right_padding               "${gaps["right"]}"
-yabai -m config window_gap                  "${gaps["inner"]}"
+yabai -m config top_padding                 ${gaps["top"]}
+yabai -m config bottom_padding              ${gaps["bottom"]}
+yabai -m config left_padding                ${gaps["left"]}
+yabai -m config right_padding               ${gaps["right"]}
+yabai -m config window_gap                  ${gaps["inner"]}
 
 yabai -m config mouse_follows_focus         off
 yabai -m config focus_follows_mouse         off
@@ -117,6 +117,7 @@ yabai -m rule --add label="Spotify" app="^Spotify$" space=6
 yabai -m rule --add label="Finder" app="^Finder$"
 # yabai -m rule --add label="OmniGraffle" app="^OmniGraffle$" manage=on space=3
 yabai -m rule --add label="JupyterLab" app="^JupyterLab.*$" manage=on space=3
+yabai -m rule --add label="Python" app="^python.*$" manage=off
 
 # ===== Signals ================================
 # spacebar
@@ -166,13 +167,13 @@ open "/Applications/WhatsApp.app"
 sleep 1;
 for wid in $(yabai -m query --windows | jq '.[] | select(.app == "WhatsApp") | .id'); do yabai -m window $wid --space 4; done
 
-open "/Applications/Messenger.app"
-sleep 1;
-for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Messenger") | .id'); do yabai -m window $wid --space 4; done
+# open "/Applications/Messenger.app"
+# sleep 1;
+# for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Messenger") | .id'); do yabai -m window $wid --space 4; done
 
-open "/Applications/Anki.app"
-sleep 1;
-for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Anki") | .id'); do yabai -m window $wid --space 4; done
+# open "/Applications/Anki.app"
+# sleep 1;
+# for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Anki") | .id'); do yabai -m window $wid --space 4; done
 
-sleep 1;
-~/bin/yabai_create_stack.sh
+# sleep 1;
+# ~/bin/yabai_create_stack.sh
