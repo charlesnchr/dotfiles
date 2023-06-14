@@ -854,7 +854,7 @@ xnoremap ; :
 " nnoremap <C-/> ;
 nnoremap q; q:
 
-autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%:t"))
+" autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%:t"))
 
 " Write all buffers before navigating from Vim to tmux pane
 " let g:tmux_navigator_save_on_switch = 2
