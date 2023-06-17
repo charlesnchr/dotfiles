@@ -8,6 +8,9 @@ PACKAGES=$(cat <<-END
     neovim
     zsh
     tmux
+    fzf
+    tree
+    fd
     nerd-fonts-source-code-pro
     tmuxinator
     playerctl
