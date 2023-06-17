@@ -111,7 +111,8 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 " Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+
 Plug 'neovim/nvim-lspconfig'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 " Plug 'L3MON4D3/LuaSnip'
@@ -203,7 +204,7 @@ set updatetime=100
 if has('mac')
     let g:python3_host_prog = expand('~/anaconda3/bin/python')
 elseif has('unix')
-    let g:python3_host_prog = expand('~/anaconda3/envs/oni310/bin/python')
+    let g:python3_host_prog = expand('~/anaconda3/envs/torch/bin/python')
 else
     let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
