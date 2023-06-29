@@ -557,8 +557,13 @@ require('dressing').setup({
 --   },
 -- })
 
-
-require('dap-python').setup(vim.env.PYTHON_LSP_HOME .. "python")
+local python_lsp_home = vim.env.PYTHON_LSP_HOME
+if python_lsp_home == nil then
+  -- Use a default value or abort with a meaningful error message
+  -- Here we will use an empty string as a default, but adjust as needed.
+  python_lsp_home = ""
+end
+require('dap-python').setup(python_lsp_home .. "python")
 
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
 vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
