@@ -2,49 +2,22 @@
 
 source ~/dotfiles/ask.sh
 
-sudo pacman --needed -Syu yay
-
+sudo pacman --needed -Syu yay base-devel
 
 PACKAGES=$(cat <<-END
-    firefox
     neovim
     zsh
     tmux
-    manjaro-pulse
-    pavucontrol
-    inkscape
-    i3status-rust
-    libinput-gestures
-    maim
-    discord
+    fzf
+    tree
+    fd
     nerd-fonts-source-code-pro
-    wmctrl
-    xdotool
-    rofi
-    rofimoji
     tmuxinator
-    texlive-core
-    thunar
-    dolphin
-    dolphin-plugins
-    ark
-    cheese
     playerctl
     yarn
     redshift
-    kcolorchooser
-    darktable
-    konsole
-    kolourpaint
     pacdep
-    discover
-    flatpak
-    packagekit-qt5
-    ttf-font-awesome
     dust
-    mpd
-    rofi-calc
-    qalculate-qt
     rclone
     stow
     handlr-bin
@@ -53,26 +26,15 @@ PACKAGES=$(cat <<-END
     font-manager
     ktorrent
     solaar
-    rofi-greenclip
-    zathura
-    zathura-pdf-mupdf
-    zathura-djvu
-    zathura-cb
     nomacs
-    okular
     cmatrix
     bat
     exa
     neofetch
     xorg-xev
-    krename
     btop
     kget
-    lutris
-    obs-studio
     the_silver_searcher
-    steam-manjaro
-    wine
     nodejs
     npm
     alacritty
@@ -81,19 +43,10 @@ PACKAGES=$(cat <<-END
     kmix
     copyq
     sshpass
-    xcape
-    audacity
     jq
-    unclutter
-    ueberzug
     autorandr
-    xfce4-settings
-    xfce4-settings-gtk3
-    neomutt
     syncthing
     urlscan
-    evince
-    nautilus
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -103,18 +56,9 @@ fi
 
 
 AUR_packages=$(cat <<-END
-    google-chrome
-    spotify
-    firefox-pwa
     imagej
     zoom
     betterlockscreen
-    logiops-git
-    alttab-git
-    notion-app
-    synology-drive
-    signal-desktop-beta-bin
-    orage
 END
 )
 echo -e "AUR packages: $AUR_packages"
@@ -146,19 +90,6 @@ if ask "Python packages" Y; then
     pip install ranger scikit-image numpy matplotlib opencv-python pandas
     # system and utility
     pip install pyudev i3-balance-workspace
-fi
-
-SNAP_packages="code --classic"
-if ask "Install snapd and link"; then
-    echo 'linking for snap -- assuming installed'
-    # pamac install snapd libpamac-snap-plugin
-    # sudo systemctl enable --now snapd.socket
-    # pamac install discover-snap
-    sudo ln -s /var/lib/snapd/snap /snap
-fi
-
-if ask "Install snap packages"; then
-    sudo snap install $SNAP_packages
 fi
 
 if ask "Set up Github cli" Y; then
