@@ -6,6 +6,6 @@
 * Github : github.com/charlesnchr
 ----------------------------------------'
 
-open -na /Applications/Firefox.app
+open -na "/Applications/Brave Browser.app"
 
 

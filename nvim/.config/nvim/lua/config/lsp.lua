@@ -146,9 +146,16 @@ local function config(_config)
 	}, _config or {})
 end
 
+
+local python_lsp_home = vim.env.PYTHON_LSP_HOME
+if python_lsp_home == nil then
+  -- Use a default value or abort with a meaningful error message
+  -- Here we will use an empty string as a default, but adjust as needed.
+  python_lsp_home = ""
+end
 require("lspconfig").pylsp.setup(config({
 	cmd_env = {
-		PATH = vim.env.PYTHON_LSP_HOME .. ":" .. vim.env.PATH,
+		PATH = python_lsp_home .. ":" .. vim.env.PATH,
 	},
 	settings = {
 		pylsp = {

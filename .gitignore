@@ -1,7 +1,13 @@
 *.DS_Store
 tags
+.antigenrc.zwc
 dotfiles_private
-home_folder/.config/qalculate/qalculate-qt.cfg
 *.pyc
-*.vim
+**/karabiner/automatic_backups/
+**/qalculate/qalculate-qt.cfg
+**/.vim/undo
+**/.vim/view
+**/.vim/spell/*.spl*
+**/.vim/.netrwhist
+
 .zshrc_local

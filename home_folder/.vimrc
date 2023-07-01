@@ -193,6 +193,7 @@ Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 
 call plug#end()
@@ -612,6 +613,11 @@ nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
+nnoremap <C-p> :wq<CR>
+imap <C-k> <Esc>:wq<CR>
+nnoremap <D-v> "+p
+inoremap <D-v> <C-r>+
+
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 " nicer to have pwd
