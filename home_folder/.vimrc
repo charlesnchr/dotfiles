@@ -153,7 +153,9 @@ Plug 'sedm0784/vim-you-autocorrect'
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
 " Plug 'justinmk/vim-sneak' " easier than easymotion
-Plug 'rhysd/vim-grammarous'
+
+" Java grammar checker -- used for thesis
+" Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
 
@@ -1060,13 +1062,13 @@ let g:sneak#label = 1
 let g:sneak#s_next = 1
 
 
-nmap <localleader>gi <Plug>(grammarous-open-info-window)
-nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
-nmap <localleader>gf <Plug>(grammarous-fixit)
-nmap <localleader>gp <Plug>(grammarous-move-to-previous-error)
-nmap <localleader>gw <Plug>(grammarous-close-info-window)
-map <localleader>gc :GrammarousCheck<cr>
-nmap <localleader>gg <Plug>(operator-grammarous)
+" nmap <localleader>gi <Plug>(grammarous-open-info-window)
+" nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
+" nmap <localleader>gf <Plug>(grammarous-fixit)
+" nmap <localleader>gp <Plug>(grammarous-move-to-previous-error)
+" nmap <localleader>gw <Plug>(grammarous-close-info-window)
+" map <localleader>gc :GrammarousCheck<cr>
+" nmap <localleader>gg <Plug>(operator-grammarous)
 
 
 " augroup autosave

@@ -285,8 +285,11 @@ alt - 0x2B : yabai -m window --toggle split
 # comman and dot
 # alt - 0x2B : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
 # alt - 0x2F : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
-alt - 0x2F : yabai -m window --focus stack.recent
-ctrl + alt - 0x2F : ~/bin/yabai_create_stack.sh
+
+# these actually worked, but did not get used to them
+# alt - 0x2F : yabai -m window --focus stack.recent
+# ctrl + alt - 0x2F : ~/bin/yabai_create_stack.sh
+alt - 0x2F: /Users/cc/anaconda3/bin/python ~/dotfiles/scripts/bin/date_output_typing.py
 
 # from github: https://github.com/koekeishiya/yabai/issues/113  --  doesn't work
 # cycle through all visible windows sorted by: coordinates -> display index
