@@ -11,7 +11,7 @@ PACKAGES=$(cat <<-END
     fzf
     tree
     fd
-    nerd-fonts-source-code-pro
+    ttf-sourcecodepro-nerd
     tmuxinator
     playerctl
     yarn

@@ -7,6 +7,8 @@
 ----------------------------------------'
 
 # open -n /Applications/Kitty.app
-open -n /Applications/Alacritty.app
+# open -n /Applications/iTerm.app
+# open -n /Applications/Alacritty.app
+open -n /Applications/$1.app
 
 

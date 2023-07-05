@@ -153,7 +153,9 @@ Plug 'sedm0784/vim-you-autocorrect'
 " Plug 'mfussenegger/nvim-lint'
 " Plug 'jose-elias-alvarez/null-ls.nvim'
 " Plug 'justinmk/vim-sneak' " easier than easymotion
-Plug 'rhysd/vim-grammarous'
+
+" Java grammar checker -- used for thesis
+" Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
 
@@ -193,6 +195,7 @@ Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 call plug#end()
 
@@ -612,6 +615,11 @@ nnoremap <localleader>vl :G pull<cr>
 nnoremap <localleader>vh :G push<cr>
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
+nnoremap <C-p> :wq<CR>
+imap <C-k> <Esc>:wq<CR>
+nnoremap <D-v> "+p
+inoremap <D-v> <C-r>+
+
 nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 " nicer to have pwd
@@ -1054,13 +1062,13 @@ let g:sneak#label = 1
 let g:sneak#s_next = 1
 
 
-nmap <localleader>gi <Plug>(grammarous-open-info-window)
-nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
-nmap <localleader>gf <Plug>(grammarous-fixit)
-nmap <localleader>gp <Plug>(grammarous-move-to-previous-error)
-nmap <localleader>gw <Plug>(grammarous-close-info-window)
-map <localleader>gc :GrammarousCheck<cr>
-nmap <localleader>gg <Plug>(operator-grammarous)
+" nmap <localleader>gi <Plug>(grammarous-open-info-window)
+" nmap <localleader>gn <Plug>(grammarous-move-to-next-error)
+" nmap <localleader>gf <Plug>(grammarous-fixit)
+" nmap <localleader>gp <Plug>(grammarous-move-to-previous-error)
+" nmap <localleader>gw <Plug>(grammarous-close-info-window)
+" map <localleader>gc :GrammarousCheck<cr>
+" nmap <localleader>gg <Plug>(operator-grammarous)
 
 
 " augroup autosave

@@ -69,7 +69,7 @@ font:
     style: Italic
 
   # Font size
-  size: 13.0
+  size: 15.0
 
   AppleFontSmoothing: true
 
