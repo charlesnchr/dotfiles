@@ -258,6 +258,11 @@ jog() {
         "
     }
 
+colo() {
+    file_path=~/dotfiles/is_dark_mode
+    [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
+}
+
 
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8

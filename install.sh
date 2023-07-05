@@ -3,7 +3,7 @@
 source ~/dotfiles/ask.sh
 
 if ask "Install conda" N; then
-    wget https://repo.aknaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
     bash ~/anaconda.sh -b -p $HOME/anaconda3
 fi
 

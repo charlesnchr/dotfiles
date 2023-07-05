@@ -9,6 +9,3 @@ if [ -n "$DISPLAY" ]; then
 else
     export BROWSER=links
 fi
-
-export PATH="$HOME/.poetry/bin:$PATH"
-. "$HOME/.cargo/env"

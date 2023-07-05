@@ -14,6 +14,7 @@ content_dirs=(
 fixed_dirs=(
     ~/1private
     ~/2work
+    ~/2work/onirepos/SIM/PhD-ccRestore
 )
 
 # Search for directories in all directories

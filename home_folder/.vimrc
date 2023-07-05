@@ -159,7 +159,7 @@ Plug 'kana/vim-operator-user'
 
 " Plug 'itchyny/calendar.vim'
 Plug 'jesseleite/vim-agriculture'
-Plug 'f-person/auto-dark-mode.nvim'
+Plug 'charlesnchr/auto-dark-mode.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
@@ -194,20 +194,20 @@ Plug 'stevearc/dressing.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 
-
 call plug#end()
 
 set updatetime=100
 
-
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/
 if has('mac')
-    let g:python3_host_prog = expand('~/anaconda3/bin/python')
+    let g:python3_host_prog = expand($PYTHON_LSP_HOME .. '/python')
 elseif has('unix')
-    let g:python3_host_prog = expand('~/anaconda3/envs/torch/bin/python')
+    let g:python3_host_prog = expand($PYTHON_LSP_HOME .. '/python')
 else
+    " On Windows, replace the path with your actual PYTHON_LSP_HOME path in Windows format
     let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
+
 
 lua require('lua-init')
 
@@ -1262,3 +1262,5 @@ cnoremap <A-f> <C-Right>
 cnoremap <A-e> <End>
 
 autocmd ColorScheme * lua require('leap').init_highlight(true)
+
+command! Colo silent !zsh -c 'source ~/.zshrc; colo'
