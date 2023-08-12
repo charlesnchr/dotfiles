@@ -261,6 +261,8 @@ jog() {
 colo() {
     # Define the file path
     file_path=~/dotfiles/is_dark_mode
+
+    # if option does not exist: xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "Adwaita"
     
     # Check the current theme
     current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
@@ -363,3 +365,4 @@ export LS_COLORS="ca=0:so=1;38;5;168;48;5;254:sg=0:rs=0;38;5;246:st=0:pi=1;38;5;
 
 
 source $HOME/dotfiles/.zshrc_local
+

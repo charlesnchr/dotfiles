@@ -69,8 +69,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   caps    a       s       d       f       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       rsft
-  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
-
+  lctl            lmet    lalt    spc                            prnt    rctrl           left    up      down    rght
   home    pgup    pgdn    end
 )
 
@@ -80,8 +79,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       f       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
-  @ctl2       lmet         @lalt    @spc2                             @rctl    @ctl2         left    up      down    rght
-
+  @ctl2       lmet         @lalt    @spc2                             lmet    @ctl2         left    up      down    rght
   home    pgup    pgdn    end
 )
 

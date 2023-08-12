@@ -162,6 +162,7 @@ Plug 'kana/vim-operator-user'
 " Plug 'itchyny/calendar.vim'
 Plug 'jesseleite/vim-agriculture'
 Plug 'charlesnchr/auto-dark-mode.nvim'
+" Plug 'f-person/auto-dark-mode.nvim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
@@ -428,7 +429,7 @@ set termguicolors
 
 if has('mac')
     " for mac: theme applied on startup, then synced via lua theme
-    let output =  system("defaults read -g AppleInterfaceStyle")
+    let output = system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
         let g:airline_theme = 'atomic'
         set background=light
@@ -439,19 +440,19 @@ if has('mac')
         colorscheme tokyonight
     endif
 elseif has('unix')
-
-    let output =  system("cat ~/dotfiles/is_dark_mode")
-
-    if output == 0
-        let g:airline_theme = 'atomic'
+    " for linux (assuming you're using XFCE)
+    let output = system("xfconf-query -c xsettings -p /Net/ThemeName")
+    if trim(output) == "Adwaita"
         set background=light
-        colorscheme catppuccin-latte
+        colorscheme tokyonight-day
+        let g:airline_theme = 'atomic'
     else
-        let g:airline_theme = 'catppuccin'
         set background=dark
         colorscheme tokyonight
+        let g:airline_theme = 'catppuccin'
     endif
 endif
+
 
 if has("win32")
     set shell=powershell

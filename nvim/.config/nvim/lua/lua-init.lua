@@ -320,7 +320,7 @@ auto_dark_mode.setup({
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option("background", "light")
-		vim.cmd("colorscheme catppuccin-latte")
+		vim.cmd("colorscheme tokyonight-day")
 		vim.cmd("AirlineTheme atomic")
         vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
