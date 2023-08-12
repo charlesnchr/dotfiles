@@ -259,9 +259,22 @@ jog() {
     }
 
 colo() {
+    # Define the file path
     file_path=~/dotfiles/is_dark_mode
-    [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
+    
+    # Check the current theme
+    current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
+    
+    # Toggle theme based on the current setting
+    if [[ $current_theme == "Adwaita-dark" ]]; then
+        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita"
+        echo 0 > "$file_path"
+    else
+        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
+        echo 1 > "$file_path"
+    fi
 }
+
 
 
 # for correct tmux rendering over ssh from Windows
