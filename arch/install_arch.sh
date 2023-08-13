@@ -35,7 +35,6 @@ PACKAGES=$(cat <<-END
     alacritty
     ripgrep
     github-cli
-    copyq
     sshpass
     jq
 END

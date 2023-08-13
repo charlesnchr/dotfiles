@@ -22,7 +22,7 @@ CommandAllWheel=Previous/Next Desktop
 
 [NightColor]
 Active=true
-NightTemperature=3300
+NightTemperature=2300
 
 [Plugins]
 last-Used-DesktopEnabled=true

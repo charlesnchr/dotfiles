@@ -53,6 +53,11 @@ conda activate base
 
 if ask "Install fzf, tmux plugin manager and antigen" N; then
 
+    # autojump
+    git clone git://github.com/wting/autojump.git
+    cd autojump
+    ./install.py
+
     # fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all

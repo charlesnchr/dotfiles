@@ -17,8 +17,12 @@ Recent Files[$e]=file:$HOME/Pictures/kjh,file:$HOME/Desktop/new.jpg,file:$HOME/D
 Recent URLs[$e]=file:$HOME/Desktop/
 detailViewIconSize=16
 
+[KPropertiesDialog]
+2 screens: Height=529
+2 screens: Width=410
+
 [PlasmaTransientsConfig]
-PreloadWeight=10
+PreloadWeight=0
 
 [PlasmaViews][Panel 3][Defaults]
 thickness=44

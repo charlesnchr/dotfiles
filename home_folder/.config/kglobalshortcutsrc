@@ -4,6 +4,7 @@ update_info=bismuth_shortcuts_category.upd:bismuth-shortcuts-category,bismuth_sh
 [ActivityManager]
 _k_friendly_name=Activity Manager
 switch-to-activity-14d50f10-a941-4ace-b672-50b5d7062a60=none,none,Switch to activity "Work"
+switch-to-activity-2e1707c7-083e-43ca-8664-4787f85ec7d4=none,none,Switch to activity "Default"
 switch-to-activity-be9ed939-d034-4424-8f81-1e6de134156a=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
@@ -48,9 +49,9 @@ toggle_three_column_layout=none,none,Toggle Three Column Layout
 toggle_tile_layout=Meta+7,Meta+T,Toggle Tile Layout
 toggle_window_floating=Meta+Esc,Meta+F,Toggle Active Window Floating
 
-[copyq.desktop]
-_k_friendly_name=copyq -e "toggle()"
-_launch=Meta+V,none,copyq -e "toggle()"
+[flatpak.desktop]
+_k_friendly_name=flatpak run com.github.hluk.copyq -e "toggle"
+_launch=Meta+V,none,flatpak run com.github.hluk.copyq -e "toggle"
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -105,10 +106,10 @@ MoveZoomDown=none,none,Move Zoomed Area Downwards
 MoveZoomLeft=none,none,Move Zoomed Area to Left
 MoveZoomRight=none,none,Move Zoomed Area to Right
 MoveZoomUp=none,none,Move Zoomed Area Upwards
-Overview=Meta+Tab,Meta+W,Toggle Overview
+Overview=Meta+E,Meta+W,Toggle Overview
 Setup Window Shortcut=none,,Setup Window Shortcut
 Show Desktop=Meta+R,Meta+D,Peek at Desktop
-ShowDesktopGrid=Meta+F8,Meta+F8,Show Desktop Grid
+ShowDesktopGrid=Meta+Tab\tMeta+F8,Meta+F8,Show Desktop Grid
 Suspend Compositing=Alt+Shift+F12,Alt+Shift+F12,Suspend Compositing
 Switch One Desktop Down=none,Meta+Ctrl+Down,Switch One Desktop Down
 Switch One Desktop Up=none,Meta+Ctrl+Up,Switch One Desktop Up
@@ -171,7 +172,7 @@ Walk Through Windows of Current Application Alternative=none,,Walk Through Windo
 Walk Through Windows of Current Application Alternative (Reverse)=none,,Walk Through Windows of Current Application Alternative (Reverse)
 Window Above Other Windows=none,,Keep Window Above Others
 Window Below Other Windows=none,,Keep Window Below Others
-Window Close=Alt+F4,Alt+F4,Close Window
+Window Close=Alt+F4\tCtrl+Alt+Q,Alt+F4,Close Window
 Window Fullscreen=none,,Make Window Fullscreen
 Window Grow Horizontal=none,,Expand Window Horizontally
 Window Grow Vertical=none,,Expand Window Vertically
@@ -260,7 +261,7 @@ stopmedia=Media Stop,Media Stop,Stop media playback
 
 [org.kde.dolphin.desktop]
 _k_friendly_name=Dolphin
-_launch=Meta+E,Meta+E,Dolphin
+_launch=none,Meta+E,Dolphin
 
 [org.kde.kcalc.desktop]
 _k_friendly_name=KCalc
@@ -275,7 +276,7 @@ _launch=Ctrl+Alt+T,Ctrl+Alt+T,Konsole
 [org.kde.krunner.desktop]
 RunClipboard=Alt+Shift+F2,Alt+Shift+F2,Run command on clipboard contents
 _k_friendly_name=KRunner
-_launch=Alt+F2\tAlt+Space\tCtrl+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner
+_launch=Alt+F2\tMeta+Space\tCtrl+Space\tSearch\t,Alt+Space\tAlt+F2\tSearch,KRunner
 
 [org.kde.plasma.emojier.desktop]
 _k_friendly_name=Emoji Selector
@@ -316,7 +317,7 @@ activate task manager entry 6=Meta+6,Meta+6,Activate Task Manager Entry 6
 activate task manager entry 7=none,Meta+7,Activate Task Manager Entry 7
 activate task manager entry 8=none,Meta+8,Activate Task Manager Entry 8
 activate task manager entry 9=none,Meta+9,Activate Task Manager Entry 9
-activate widget 4=Meta+Space,none,Activate Application Launcher Widget
+activate widget 4=Alt+Space,none,Activate Application Launcher Widget
 clear-history=none,,Clear Clipboard History
 clipboard_action=Meta+Ctrl+X,Meta+Ctrl+X,Automatic Action Popup Menu
 cycle-panels=Meta+Alt+P,Meta+Alt+P,Move keyboard focus between panels

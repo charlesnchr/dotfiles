@@ -259,21 +259,16 @@ jog() {
     }
 
 colo() {
-    # Define the file path
-    file_path=~/dotfiles/is_dark_mode
-
     # if option does not exist: xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "Adwaita"
-    
+
     # Check the current theme
     current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
-    
+
     # Toggle theme based on the current setting
     if [[ $current_theme == "Adwaita-dark" ]]; then
         xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita"
-        echo 0 > "$file_path"
     else
         xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-        echo 1 > "$file_path"
     fi
 }
 

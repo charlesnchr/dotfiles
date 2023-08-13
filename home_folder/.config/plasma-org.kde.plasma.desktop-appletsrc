@@ -5,31 +5,6 @@ wheel:Vertical;NoModifier=org.kde.switchdesktop
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
 
-[Containments][1]
-ItemGeometries-1536x864=
-ItemGeometries-2560x1440=
-ItemGeometriesHorizontal=
-activityId=be9ed939-d034-4424-8f81-1e6de134156a
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][1][ConfigDialog]
-DialogHeight=829
-DialogWidth=1101
-
-[Containments][1][General]
-ToolBoxButtonState=topcenter
-ToolBoxButtonX=764
-positions={"2560x1440":["1"\\,"23"\\,"desktop:/steam.desktop"\\,"0"\\,"4"\\,"desktop:/Hotline Miami.desktop"\\,"0"\\,"5"\\,"desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop"\\,"0"\\,"0"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"1"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"2"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"3"]\\,"1920x1080":["1"\\,"17"\\,"desktop:/steam.desktop"\\,"0"\\,"4"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"5"\\,"desktop:/Hotline Miami.desktop"\\,"0"\\,"0"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"1"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"2"\\,"desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop"\\,"0"\\,"3"]}
-sortMode=-1
-
-[Containments][1][Wallpaper][org.kde.image][General]
-SlidePaths=/usr/share/wallpapers/
-
 [Containments][10]
 activityId=
 formfactor=2
@@ -66,6 +41,9 @@ plugin=org.kde.plasma.keyboardlayout
 [Containments][10][Applets][14]
 immutability=1
 plugin=org.kde.plasma.notifications
+
+[Containments][10][Applets][14][Configuration]
+PreloadWeight=55
 
 [Containments][10][Applets][15]
 immutability=1
@@ -105,14 +83,14 @@ immutability=1
 plugin=org.kde.plasma.nightcolorcontrol
 
 [Containments][10][Applets][22][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][10][Applets][23]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][10][Applets][23][Configuration]
-PreloadWeight=65
+PreloadWeight=42
 
 [Containments][10][Applets][24]
 immutability=1
@@ -125,6 +103,9 @@ PreloadWeight=75
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][10][Applets][25][Configuration]
+PreloadWeight=34
+
 [Containments][10][Applets][28]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
@@ -135,48 +116,6 @@ PreloadWeight=100
 [Containments][10][General]
 extraItems=org.kde.plasma.bluetooth,org.kde.plasma.devicenotifier,org.kde.plasma.volume,org.kde.plasma.keyboardlayout,org.kde.plasma.battery,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.keyboardindicator,org.kde.plasma.manage-inputmethod,org.kde.plasma.nightcolorcontrol,org.kde.plasma.mediacontroller,org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.printmanager
 knownItems=org.kde.plasma.bluetooth,org.kde.plasma.devicenotifier,org.kde.plasma.volume,org.kde.plasma.keyboardlayout,org.kde.plasma.battery,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.keyboardindicator,org.kde.plasma.manage-inputmethod,org.kde.plasma.nightcolorcontrol,org.kde.plasma.mediacontroller,org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.printmanager
-
-[Containments][2]
-ItemGeometries-2560x1440=
-ItemGeometriesHorizontal=
-activityId=be9ed939-d034-4424-8f81-1e6de134156a
-formfactor=0
-immutability=1
-lastScreen=1
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][26]
-ItemGeometries-0x0=
-ItemGeometriesHorizontal=
-activityId=14d50f10-a941-4ace-b672-50b5d7062a60
-formfactor=0
-immutability=1
-lastScreen=1
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][27]
-ItemGeometries-0x0=
-ItemGeometriesHorizontal=
-activityId=14d50f10-a941-4ace-b672-50b5d7062a60
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][28]
-activityId=be9ed939-d034-4424-8f81-1e6de134156a
-formfactor=0
-immutability=1
-lastScreen=2
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
 
 [Containments][3]
 activityId=
@@ -231,7 +170,7 @@ plugin=org.kde.plasma.systemmonitor.cpu
 
 [Containments][3][Applets][31][Configuration]
 CurrentPreset=org.kde.plasma.systemmonitor
-PreloadWeight=60
+PreloadWeight=70
 
 [Containments][3][Applets][31][Configuration][Appearance]
 chartFace=org.kde.ksysguard.piechart
@@ -289,7 +228,33 @@ systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 global=Alt+F1
 
 [Containments][3][Applets][4][Shortcuts]
-global=Meta+Space
+global=Alt+Space
+
+[Containments][3][Applets][42]
+immutability=1
+plugin=org.kde.plasma.systemmonitor.diskusage
+
+[Containments][3][Applets][42][Configuration]
+CurrentPreset=org.kde.plasma.systemmonitor
+PreloadWeight=75
+
+[Containments][3][Applets][42][Configuration][Appearance]
+chartFace=org.kde.ksysguard.piechart
+title=Disk Usage
+updateRateLimit=1000
+
+[Containments][3][Applets][42][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][3][Applets][42][Configuration][SensorColors]
+disk/9aa37a77-3e2c-4318-8e8d-cf1e60a7579a/usedPercent=110,0,12
+disk/all/usedPercent=0,110,98
+
+[Containments][3][Applets][42][Configuration][Sensors]
+highPrioritySensorIds=["disk/all/usedPercent"]
+lowPrioritySensorIds=["disk/all/total"]
+totalSensors=["disk/all/usedPercent"]
 
 [Containments][3][Applets][5]
 immutability=1
@@ -332,19 +297,34 @@ DialogHeight=84
 DialogWidth=2560
 
 [Containments][3][General]
-AppletOrder=4;5;6;7;8;31;29;9;21
+AppletOrder=4;5;6;7;8;42;31;29;9;21
 
-[Containments][34]
-ItemGeometries-0x0=
+[Containments][38]
+ItemGeometries-2560x1440=
 ItemGeometriesHorizontal=
-activityId=14d50f10-a941-4ace-b672-50b5d7062a60
+activityId=2e1707c7-083e-43ca-8664-4787f85ec7d4
 formfactor=0
 immutability=1
-lastScreen=2
+lastScreen=0
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
+
+[Containments][38][General]
+ToolBoxButtonState=topcenter
+ToolBoxButtonX=764
+positions={"2560x1440":["1"\\,"23"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"8"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"5"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"4"\\,"desktop:/spotify.desktop"\\,"0"\\,"7"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"6"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"1"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"0"\\,"desktop:/steam.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"]}
+sortMode=-1
+
+[Containments][39]
+activityId=2e1707c7-083e-43ca-8664-4787f85ec7d4
+formfactor=0
+immutability=1
+lastScreen=1
 location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a
+screenMapping=desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Batman Arkham Knight.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/spotify.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Steam Linux Runtime - Sniper.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Proton Experimental.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/net.lutris.cyberpunk-2077-1.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/steam.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4

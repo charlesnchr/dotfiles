@@ -137,7 +137,7 @@ ForegroundVisited=155,89,182
 
 [General]
 BrowserApplication=brave-browser.desktop
-ColorSchemeHash=1126fb2c0c32955cd1bb2987f48b452b357a9515
+ColorSchemeHash=860ef24eb130a081b7092d6100fdc27e3f8e8451
 
 [KDE]
 LookAndFeelPackage=org.manjaro.breath-dark.desktop
