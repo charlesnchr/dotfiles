@@ -28,6 +28,13 @@ require('modules.quake-terminal')
 -- dofile('sliders.lua')
 hostname = io.popen("uname -n"):read()
 
+-- fix screen order on work pc -- otherwise west/east monitor is inversed
+if hostname == "alienware" then
+    if screen.count() == 3 then
+        screen[2]:swap(screen[3])
+    end
+end
+
 -- resize floating windows
 -- require("collision")()
 -- collision_resize_width = 0
@@ -266,14 +273,7 @@ month_calendar:attach(textclock)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t)
-                                            curtag = awful.screen.focused().selected_tag.index
-                                            if t.index == curtag then
-                                                awful.tag.history.restore()
-                                            else
-                                                t:view_only()
-                                            end
-                    end),
+                    awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ modkey }, 1, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
@@ -285,21 +285,8 @@ local taglist_buttons = gears.table.join(
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 5, function(t)
-                                              tag = awful.screen.focused().selected_tag.index
-                                              tags = awful.screen.focused().tags
-                                              len = #tags
-                                              if tag < len then
-                                                  awful.tag.viewnext(t.screen)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t)
-                                              tag = awful.screen.focused().selected_tag.index
-
-                                              if tag > 1 then
-                                                  awful.tag.viewprev(t.screen)
-                                              end
-                                          end)
+                    awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
+                    awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end)
                 )
 
 local tasklist_buttons = gears.table.join(
@@ -318,18 +305,10 @@ local tasklist_buttons = gears.table.join(
                                               awful.menu.client_list({ theme = { width = 250 } })
                                           end),
                      awful.button({ }, 5, function ()
-                                              tag = awful.screen.focused().selected_tag.index
-
-                                              if tag > 1 then
-                                                  awful.client.focus.byidx(1)
-                                              end
+                                              awful.client.focus.byidx(1)
                                           end),
                      awful.button({ }, 4, function ()
-                                              tag = awful.screen.focused().selected_tag.index
-
-                                              if tag > 1 then
-                                                  awful.client.focus.byidx(-1)
-                                              end
+                                              awful.client.focus.byidx(-1)
                                           end))
 
 local function set_wallpaper(s)
@@ -505,6 +484,7 @@ root.buttons(gears.table.join(
 
 
 
+
 local r_ajust = {
     left  = function(c, d) return { x      = c.x      - d, width = c.width   + d } end,
     right = function(c, d) return { width  = c.width  + d,                       } end,
@@ -666,35 +646,45 @@ globalkeys = gears.table.join(
     {modkey,altkey, 'Control'},
     'e',
     function()
-      awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        local count = screen.count()
+        local currentscreen = awful.screen.focused()
+        if count == 2 then
+            if currentscreen.index == 2 then
+                awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+            else
+                awful.spawn('rofi -dpi 1 -show drun -theme ~/.config/rofi/purple.rasi')
+            end
+        else
+            awful.spawn('rofi -show drun -theme ~/.config/rofi/purple.rasi')
+        end
     end,
     {description = 'Show rofi', group = 'LCAG layer'}
   ),
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'j',
+    'period',
     function () awful.client.focus.byidx(  1)    end,
     {description = 'focus next', group = 'LCAG layer'}
   ),
 
   awful.key(
     {modkey,altkey, 'Control'},
-    'k',
+    'comma',
     function () awful.client.focus.byidx( -1)    end,
     {description = 'focus prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'h',
+    {modkey,altkey, 'Shift', 'Control'},
+    'comma',
     function () awful.client.swap.byidx( -1)    end,
     {description = 'swap prev', group = 'LCAG layer'}
   ),
 
   awful.key(
-    {modkey,altkey, 'Control'},
-    'l',
+    {modkey,altkey, 'Shift', 'Control'},
+    'period',
     function () awful.client.swap.byidx( 1)    end,
     {description = 'swap next', group = 'LCAG layer'}
   ),

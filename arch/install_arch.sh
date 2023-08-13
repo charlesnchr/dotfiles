@@ -2,49 +2,22 @@
 
 source ~/dotfiles/ask.sh
 
-sudo pacman --needed -Syu yay
-
+sudo pacman --needed -Syu yay base-devel
 
 PACKAGES=$(cat <<-END
-    firefox
     neovim
     zsh
     tmux
-    manjaro-pulse
-    pavucontrol
-    inkscape
-    i3status-rust
-    libinput-gestures
-    maim
-    discord
-    nerd-fonts-source-code-pro
-    wmctrl
-    xdotool
-    rofi
-    rofimoji
+    fzf
+    tree
+    fd
+    ttf-sourcecodepro-nerd
     tmuxinator
-    texlive-core
-    thunar
-    dolphin
-    dolphin-plugins
-    ark
-    cheese
     playerctl
     yarn
     redshift
-    kcolorchooser
-    darktable
-    konsole
-    kolourpaint
     pacdep
-    discover
-    flatpak
-    packagekit-qt5
-    ttf-font-awesome
     dust
-    mpd
-    rofi-calc
-    qalculate-qt
     rclone
     stow
     handlr-bin
@@ -53,26 +26,15 @@ PACKAGES=$(cat <<-END
     font-manager
     ktorrent
     solaar
-    rofi-greenclip
-    zathura
-    zathura-pdf-mupdf
-    zathura-djvu
-    zathura-cb
     nomacs
-    okular
     cmatrix
     bat
     exa
     neofetch
     xorg-xev
-    krename
     btop
     kget
-    lutris
-    obs-studio
     the_silver_searcher
-    steam-manjaro
-    wine
     nodejs
     npm
     alacritty
@@ -81,19 +43,10 @@ PACKAGES=$(cat <<-END
     kmix
     copyq
     sshpass
-    xcape
-    audacity
     jq
-    unclutter
-    ueberzug
     autorandr
-    xfce4-settings
-    xfce4-settings-gtk3
-    neomutt
     syncthing
     urlscan
-    evince
-    nautilus
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -103,18 +56,9 @@ fi
 
 
 AUR_packages=$(cat <<-END
-    google-chrome
-    spotify
-    firefox-pwa
     imagej
     zoom
     betterlockscreen
-    logiops-git
-    alttab-git
-    notion-app
-    synology-drive
-    signal-desktop-beta-bin
-    orage
 END
 )
 echo -e "AUR packages: $AUR_packages"
@@ -148,19 +92,6 @@ if ask "Python packages" Y; then
     pip install pyudev i3-balance-workspace
 fi
 
-SNAP_packages="code --classic"
-if ask "Install snapd and link"; then
-    echo 'linking for snap -- assuming installed'
-    # pamac install snapd libpamac-snap-plugin
-    # sudo systemctl enable --now snapd.socket
-    # pamac install discover-snap
-    sudo ln -s /var/lib/snapd/snap /snap
-fi
-
-if ask "Install snap packages"; then
-    sudo snap install $SNAP_packages
-fi
-
 if ask "Set up Github cli" Y; then
     gh config set -h github.com git_protocol ssh
 fi
@@ -177,6 +108,9 @@ fi
 
 
 echo "Install e.g. Teams via Flathub/Discover"
+
+# for laptop
+echo "for laptop: fix the idle vs deep sleep kernel parameter, see arch wiki"
 
 
 if ask "Install ncspot from Github"; then
@@ -198,3 +132,24 @@ if ask "Install personal awesome fork"; then
     sudo make install
     sudo cp awesome.desktop /usr/share/xsessions
 fi
+
+
+if ask "Run general install script now?" Y; then
+    bash ~/dotfiles/install.sh
+fi
+
+if ask "Configure libinput-gestures" N; then
+    # extra
+    sudo gpasswd -a $USER input
+    echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh
+fi
+
+
+if ask "Configure redshift" N; then
+    echo "[redshift]
+    allowed=true
+    system=false
+    users=" | sudo tee -a /etc/geoclue/geoclue.conf
+fi
+
+

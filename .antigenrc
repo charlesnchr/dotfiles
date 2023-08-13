@@ -6,12 +6,16 @@ antigen bundle git
 antigen bundle pip
 # antigen bundle tmux
 antigen bundle command-not-found
+antigen bundle per-directory-history
 
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
-# antigen bundle larkery/zsh-histdb
+antigen bundle larkery/zsh-histdb
 antigen bundle charlesnchr/ranger-autojump
+# antigen bundle neovim/neovim
+
+# antigen bundle jeffreytse/zsh-vi-mode
 
 # Load the theme.
 antigen theme romkatv/powerlevel10k

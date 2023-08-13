@@ -1,4 +1,7 @@
 ;; See keymap/tutorial.kbd for a more complete tutorial
+;; The layout is made to satisfy the built-in keyboard and QMK keyboard where the KC_LCTL is
+;; mapped to KC_RCTL (right control below) such that Kmonad can then make both the internal
+;; keyboard's Fn and QMK's KC_RCTL (same physical position) into the @ctl_fn_a layer.
 
 (defcfg
   input (iokit-name)
@@ -10,7 +13,6 @@
   caps    (tap-hold-next-release 200 esc lctl)
   rsft    (tap-hold-next 200 M-r rsft)
   lalt    (tap-hold-next 200 M-r lalt)
-  rctl    (tap-hold-next 200 M-r rctl)
   cl      A-lft
   cr      A-rght
   cw      C-w
@@ -29,6 +31,8 @@
   cpgup      M-S-[
   cpgdn      M-S-]
   c5      C-5
+  A1      (tap-hold-next-release 200 A-1 (layer-toggle A1)) 
+  A4      (tap-hold-next-release 200 A-4 (layer-toggle A4)) 
   ws      M-S-tab
   wslft      A-C-h
   wsrght      A-C-l
@@ -52,7 +56,8 @@
 
 (defalias spc2 (tap-hold-next-release 200 spc (layer-toggle spc_fn)))
 (defalias spc_fn2 (tap-hold-next-release 200 spc (layer-toggle spc_fn2)))
-(defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
+(defalias ctl_fn_a (tap-hold-next-release 200 M-a (layer-toggle ctl_fn_a)))
+(defalias ctl_fn_b (tap-hold-next-release 200 M-a (layer-toggle ctl_fn_b)))
 (defalias i3layer (tap-hold-next-release 200 (layer-next i3layer) (layer-toggle i3layer)))
 (defalias i3layer_r (tap-hold-next-release 200 (layer-next i3layer_r) (layer-toggle i3layer_r)))
 (defalias i3layer_y (tap-hold-next-release 200 (layer-next i3layer_y) (layer-toggle i3layer_y)))
@@ -68,27 +73,26 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   caps a    s    d    f    g    h    j    k    l    ;    '   \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft  up
-  Fn lctl lalt lmet       spc        rmet ralt             lft down rght
+  Fn lctl lalt lmet       spc        rmet ralt             lft down rght rctl
 )
 
 
 (deflayer default
-  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   @caps a s   d    f    g    h    j    k    l    ;    '    \ ret
   lsft lsft z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       @spc2        rmet ralt            lft down rght
-)
+  @ctl_fn_a lctl lalt lmet       @spc2        rmet    lctl         lft down rght @ctl_fn_a
+  )
 
 (deflayer spc_fn
-  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
-  grv  S-1    S-2    S-3    S-4    S-5    S-6    S-7    S-8    S-9    S-0    S--    S-=    A-bspc
+  A-f5   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  A-C-ret  S-1    S-2    S-3    S-4    S-5    S-6    S-7    S-8    S-9    S-0    S--    S-=    A-bspc
   A-tab  M-q    M-w    M-A-C-e    @i3layer    M-t    @i3layer_y    M-A-C-u    M-A-C-i    C-6    M-A-C-p    S-[    S-]
-  @caps  A-1  A-2   A-3   A-4   A-5  lft   down    up    rght    @wslft       @wsrght    \  A-ret
-  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws
-  A-M-ret  up
-  @ctl2 lctl lalt lmet       @spc2        rmet ralt            lft down rght
+  @caps  @A1  A-2   A-3   @A4   @i3layer_ws  lft   down    up    rght    @wslft       @wsrght    del  A-ret
+  lsft  _  spc  @cpgup       @cpgdn       @alft       @arght       @cl       @cr       M-A-C-n       M-A-C-m       @i3layer_ws  A-M-ret  up
+  @ctl_fn_a lctl lalt lmet       @spc2        rmet ralt            lft down rght rctl
 )
 
 (deflayer spc_fn2
@@ -97,27 +101,36 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   @caps a s   d    f    g    h    j    k    l    ;    '    \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
-(deflayer ctrl_fn
-  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
+(deflayer ctl_fn_a
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12    bspc
   tab  q    w    e    r    t    y    u    i    o    p    A-a    ]
+  @caps a s   d    f    g    h    j    k    l    A-'    A-o    \ plps
+  @ctl_fn_b grv z    x    c    v    b    n    m    vold    volu    /    prvs   nxsg
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
+)
+
+(deflayer ctl_fn_b
+  esc   brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu
+  102d  brdn   brup   expa   sptl   kbdn   kbup   prvs   plps   nxsg   mute vold volu    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    A-a    ]
   @caps a s   d    f    g    h    j    k    l    A-'    A-o    \ ret
-  lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_b grv z    x    c    v    b    n    m    ,    .    /    rsft   up
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 (deflayer i3layer
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  102d  M-A-C-1    M-A-C-2    M-A-C-3    M-A-C-4    M-A-C-5    M-A-C-6    M-A-C-7    M-A-C-8    M-A-C-9    M-A-C-0    -
+  A-C-bspc  M-A-C-1    M-A-C-2    M-A-C-3    M-A-C-4    M-A-C-5    M-A-C-6    M-A-C-7    M-A-C-8    M-A-C-9    M-A-C-0    -
   =    M-A-bspc
   tab     @i3layer_shift2       @i3layer_shift       @i3layer_bring       M-A-C-r       t       y       pgup       pgdn
   @i3layer_move     M-A-C-1       home       end
   @caps M-A-C-a M-A-C-s   @i3layer_shift    M-A-C-f    M-A-C-g    A-h    A-j    A-k    A-l    A-M-h    A-M-l    \ M-A-C-f
   lsft grv z    x    c    v    M-A-C-b    M-A-C-n    M-A-C-m    M-A-C-,    M-A-C-.    M-A-C-/    rsft   A-C-up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            A-C-lft A-C-down A-C-rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            A-C-lft A-C-down A-C-rght rctl
 )
 
 (deflayer i3layer_r
@@ -126,7 +139,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   @caps a s   d    f    g    h    j    k    l    ;    '    \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 
@@ -139,16 +152,16 @@
   @caps M-A-C-S-a  M-A-C-S-s   M-A-C-S-d    M-A-C-S-f    M-A-C-S-g    M-A-C-S-h    M-A-C-S-j    M-A-C-S-k    M-A-C-S-l  ;    '    \  M-A-C-S-f
   lsft grv M-A-C-S-z    M-A-C-S-x    M-A-C-S-c    M-A-C-S-v    M-A-C-S-b    M-A-C-S-n    M-A-C-S-m    M-A-C-S-,
   M-A-C-S-.    M-A-C-S-/    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 (deflayer i3layer_shift
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps a s   d    f    g    A-S-h    A-S-j    A-S-k    A-S-l    A-C-;    A-C-'    \ S-A-M-f
+  @caps a s   d    f    g    A-S-h    A-S-j    A-S-k    A-S-l    M-A-C-h    M-A-C-l    \ S-A-M-f
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 (deflayer i3layer_shift2
@@ -157,35 +170,52 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
   @caps a s   d    f    g    A-S-n    A-S-m    A-S-,    A-S-.    ;    '    \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 (deflayer i3layer_ws
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    ;       '   \    ret
+  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    A-0       '   \    ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
+(deflayer A1
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]
+  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    A-0       '   \    ret
+  lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
+)
+
+(deflayer A4
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]
+  @caps  A-1  A-2   A-3   A-4    A-5   A-6       A-7       A-8       A-9    A-0       '   \    ret
+  lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
+)
 
 (deflayer i3layer_move
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps   A-S-1       A-S-2       A-S-3       A-S-4       A-S-5       A-S-6       A-S-7       A-S-8       A-S-9       0
+  @caps   A-S-1       A-S-2       A-S-3       A-S-4       A-S-5       A-S-6       A-S-7       A-S-8       A-S-9       A-S-0
   '       \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
 
 (deflayer i3layer_bring
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   102d  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]
-  @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       0
+  @caps   M-A-1       M-A-2       M-A-3       M-A-4       M-A-5       M-A-6       M-A-7       M-A-8       M-A-9       M-A-0
   '       \ ret
   lsft grv z    x    c    v    b    n    m    ,    .    /    rsft   up
-  @ctl2 lctl lalt lmet       spc        rmet ralt            lft down rght
+  @ctl_fn_a lctl lalt lmet       spc        rmet ralt            lft down rght rctl
 )
