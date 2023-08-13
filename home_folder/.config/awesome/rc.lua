@@ -266,7 +266,14 @@ month_calendar:attach(textclock)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
+                    awful.button({ }, 1, function(t)
+                                            curtag = awful.screen.focused().selected_tag.index
+                                            if t.index == curtag then
+                                                awful.tag.history.restore()
+                                            else
+                                                t:view_only()
+                                            end
+                    end),
                     awful.button({ modkey }, 1, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
@@ -278,8 +285,21 @@ local taglist_buttons = gears.table.join(
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end)
+                    awful.button({ }, 5, function(t)
+                                              tag = awful.screen.focused().selected_tag.index
+                                              tags = awful.screen.focused().tags
+                                              len = #tags
+                                              if tag < len then
+                                                  awful.tag.viewnext(t.screen)
+                                              end
+                                          end),
+                    awful.button({ }, 4, function(t)
+                                              tag = awful.screen.focused().selected_tag.index
+
+                                              if tag > 1 then
+                                                  awful.tag.viewprev(t.screen)
+                                              end
+                                          end)
                 )
 
 local tasklist_buttons = gears.table.join(
@@ -298,10 +318,18 @@ local tasklist_buttons = gears.table.join(
                                               awful.menu.client_list({ theme = { width = 250 } })
                                           end),
                      awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(1)
+                                              tag = awful.screen.focused().selected_tag.index
+
+                                              if tag > 1 then
+                                                  awful.client.focus.byidx(1)
+                                              end
                                           end),
                      awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(-1)
+                                              tag = awful.screen.focused().selected_tag.index
+
+                                              if tag > 1 then
+                                                  awful.client.focus.byidx(-1)
+                                              end
                                           end))
 
 local function set_wallpaper(s)
