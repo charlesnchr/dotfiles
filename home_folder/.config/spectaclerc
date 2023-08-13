@@ -1,0 +1,16 @@
+[$Version]
+update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
+
+[Annotations]
+annotationToolType=9
+
+[FileDialogSize]
+2 screens: Height=780
+2 screens: Width=1300
+
+[GuiConfig]
+captureMode=0
+includePointer=true
+
+[KFileDialog Settings]
+detailViewIconSize=16
