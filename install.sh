@@ -51,12 +51,7 @@ conda activate base
 # - node
 # - python
 
-if ask "Install autojump, fzf, tmux plugin manager, fd-find and antigen" N; then
-
-    # autojump
-    git clone https://github.com/wting/autojump.git ~/autojump
-    cd ~/autojump
-    ./install.py
+if ask "Install fzf, tmux plugin manager and antigen" N; then
 
     # fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -66,16 +61,11 @@ if ask "Install autojump, fzf, tmux plugin manager, fd-find and antigen" N; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     ~/.tmux/plugins/tpm/bin/install_plugins
 
-    # fd-find
-    npm install -g fd-find
-
     # antigen download
     mkdir -p $HOME/tools
     git clone https://github.com/zsh-users/antigen.git $HOME/tools/antigen
     zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/tools/antigen/bin/antigen.zsh && antigen update"
 fi
-
-
 
 
 
@@ -91,25 +81,22 @@ function move_if() {
     mv $1 $dirname
 }
 
-if ask "Move existing .profile, .zshrc, dunstrc, mimeapps.list, nvim to a folder named $dirname?" N; then
+if ask "Move existing .profile, .zshrc, nvim to a folder named $dirname?" N; then
     mkdir -p $dirname
     move_if ~/.profile
     move_if ~/.zshrc
-    move_if ~/.spacemacs
     move_if ~/.tmux.conf
     move_if ~/.vimrc
-    move_if ~/.config/dunst
-    move_if ~/.config/mimeapps.list
-    move_if ~/.config/libinput-gestures.conf
     move_if ~/.config/nvim
-    move_if ~/.config/rofi
     move_if ~/.config/alacritty
-    move_if ~/bin/i3exit
-    move_if ~/.screenlayout
-    move_if ~/.config/ranger/plugins/autojump.py
-    move_if ~/.config/ranger/rc.conf
-    move_if ~/.config/ranger/rifle.conf
-    move_if ~/.config/picom.conf
+    move_if ~/.config/ranger
+    move_if ~/.config/dolphinrc
+    move_if ~/.config/kdeglobals
+    move_if ~/.config/konsolerc
+    move_if ~/.config/kwinrc
+    move_if ~/.config/plasma-org.kde.plasma.desktop-appletsrc
+    move_if ~/.config/plasmarc
+    move_if ~/.config/plasmashellrc
 else
     echo "Not moving existing files"
 fi
@@ -140,11 +127,6 @@ if ask "Use stow to set up links" N; then
             ;;
       esac
     done
-
-
-    stow ricing
-    stow alacritty
-    stow mime-settings
 
 else
     if ask "Use reduced symlink setup instead" N; then
@@ -206,7 +188,7 @@ if ask "Install conda utilities (rclone, ripgrep, ctags)" N; then
     conda install -y -c conda-forge universal-ctags rclone ripgrep
 fi
 
-if ask "Install pip utilities (ranger, skimage, numpy)" N; then
-    pip install ranger-fm scikit-image numpy matplotlib opencv-python
+if ask "Install pip utilities (skimage, numpy)" N; then
+    pip install scikit-image numpy matplotlib opencv-python
 fi
 

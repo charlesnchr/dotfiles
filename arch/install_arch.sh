@@ -11,42 +11,33 @@ PACKAGES=$(cat <<-END
     fzf
     tree
     fd
+    ranger
+    ctags
     ttf-sourcecodepro-nerd
     tmuxinator
     playerctl
     yarn
-    redshift
-    pacdep
     dust
     rclone
     stow
     handlr-bin
     tig
-    noto-fonts-emoji
-    font-manager
     ktorrent
     solaar
     nomacs
-    cmatrix
     bat
     exa
     neofetch
     xorg-xev
     btop
-    kget
     the_silver_searcher
-    nodejs
-    npm
+    nvm
     alacritty
     ripgrep
     github-cli
-    kmix
     copyq
     sshpass
     jq
-    autorandr
-    syncthing
-    urlscan
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -56,9 +47,7 @@ fi
 
 
 AUR_packages=$(cat <<-END
-    imagej
     zoom
-    betterlockscreen
 END
 )
 echo -e "AUR packages: $AUR_packages"
@@ -85,11 +74,10 @@ if ask "Python packages" Y; then
     source ~/anaconda3/etc/profile.d/conda.sh
     conda activate base
 
-    conda install -y -c conda-forge universal-ctags
     # scientific packages
-    pip install ranger scikit-image numpy matplotlib opencv-python pandas
+    pip install scikit-image numpy matplotlib opencv-python pandas
     # system and utility
-    pip install pyudev i3-balance-workspace
+    pip install pyudev
 fi
 
 if ask "Set up Github cli" Y; then
@@ -111,28 +99,6 @@ echo "Install e.g. Teams via Flathub/Discover"
 
 # for laptop
 echo "for laptop: fix the idle vs deep sleep kernel parameter, see arch wiki"
-
-
-if ask "Install ncspot from Github"; then
-    yay --noconfirm -S ncspot-git
-    yay --noconfirm -R ncspot-git # keep dependencies
-    git clone https://github.com/hrkfdn/ncspot.git ~/ncspot
-    cd ~/ncspot
-    cargo build --release --features cover
-    cp target/release/ncspot ~/bin
-fi
-
-
-if ask "Install personal awesome fork"; then
-    yay --noconfirm -S awesome-git
-    yay --noconfirm -R awesome-git # keep dependencies
-    git clone https://github.com/charlesnchr/awesome ~/awesome
-    cd ~/awesome
-    make
-    sudo make install
-    sudo cp awesome.desktop /usr/share/xsessions
-fi
-
 
 if ask "Run general install script now?" Y; then
     bash ~/dotfiles/install.sh
