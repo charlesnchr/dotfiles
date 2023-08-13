@@ -3145,6 +3145,123 @@
                     "simple_modifications": [
                         {
                             "from": {
+                                "key_code": "keypad_1"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f1",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_2"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f2",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_3"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f3",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_4"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f4",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_5"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f5",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_6"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "5",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_7"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "i",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_8"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "f12",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_9"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "p",
+                                    "modifiers": [
+                                        "left_option"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
                                 "key_code": "left_command"
                             },
                             "to": [
@@ -3160,6 +3277,36 @@
                             "to": [
                                 {
                                     "key_code": "left_command"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "non_us_backslash"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_shift"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "right_option"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "right_command"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "right_control"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "right_option"
                                 }
                             ]
                         }
@@ -3362,6 +3509,34 @@
                         "is_pointing_device": true,
                         "product_id": 613,
                         "vendor_id": 76
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": false,
+                        "is_pointing_device": true,
+                        "product_id": 282,
+                        "vendor_id": 5426
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": false,
+                        "is_pointing_device": true,
+                        "product_id": 22,
+                        "vendor_id": 5426
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,

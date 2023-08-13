@@ -4,7 +4,7 @@ window:
   # Specified in number of columns/lines, not pixels.
   # If both are `0`, this setting is ignored.
   dimensions:
-    columns: 85
+    columns: 100
     lines: 30
 
   # Window position (changes require restart)
@@ -20,8 +20,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 0
-    y: 0
+    x: 10
+    y: 10
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -37,7 +37,7 @@ window:
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: buttonless
 # Feel free to use different font configuration family & face for each sections
-  opacity: 0.98
+  opacity: 1
 
 font:
   # Normal font face - Also used to draw glyphs on tmux & VIM
@@ -69,7 +69,7 @@ font:
     style: Italic
 
   # Font size
-  size: 15.0
+  size: 13.0
 
   AppleFontSmoothing: true
 
@@ -679,8 +679,8 @@ save_to_clipboard: true
 #   - (Windows) powershell
 shell:
   program: /bin/zsh
-#  args:
-#    - --login
+  args:
+   - --login
 
 # Startup directory
 #
