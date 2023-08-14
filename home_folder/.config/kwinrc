@@ -22,7 +22,7 @@ CommandAllWheel=Previous/Next Desktop
 
 [NightColor]
 Active=true
-NightTemperature=2300
+NightTemperature=3300
 
 [Plugins]
 last-Used-DesktopEnabled=true
@@ -59,6 +59,12 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 
 [Tiling][b51398de-818f-5725-ae50-2e4e9840dbcd]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.15},{"width":0.27460937500000016},{"width":0.5753906249999998}]}
+
+[Tiling][b6eeeb9c-8127-5061-baca-7e0ceece0d9d]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][cc0aca0b-48e3-5228-b5dc-11c97408196d]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][dc8a429a-3ed8-59c7-afe5-afa88380c5fc]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
