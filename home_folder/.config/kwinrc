@@ -71,8 +71,8 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 
 [Windows]
 ActiveMouseScreen=false
+DelayFocusInterval=100
 RollOverDesktops=true
-SeparateScreenFocus=true
 
 [Xwayland]
 Scale=1
