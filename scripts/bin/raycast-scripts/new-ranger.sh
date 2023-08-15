@@ -12,4 +12,4 @@
 # @raycast.description creates brave window
 # @raycast.author Charles
 
-open -a Alacritty --args -e zsh -ic "cd ~/0main && ranger"
+kitty zsh -ic "cd ~/0main && ranger"
