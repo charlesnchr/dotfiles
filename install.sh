@@ -7,7 +7,7 @@ if ask "Install conda" N; then
     bash ~/anaconda.sh -b -p $HOME/anaconda3
 fi
 
-if ask "Install node/nvim without sudo" N; then
+if ask "Install node/nvim without sudo (curl and conda)" N; then
     # Node
     conda install -c conda-forge nodejs
 
@@ -24,7 +24,13 @@ if ask "Install node/nvim without sudo" N; then
     conda install -c conda-forge ripgrep
 fi
 
-if ask "zsh, tmux, nvim, node and python must be install. Continue?" Y; then
+
+if ask "Install git without sudo (in this case just conda)" N; then
+    conda install -y git
+fi
+
+
+if ask "zsh, tmux, nvim, node, git and python must be install. Continue?" Y; then
     :
 else
     exit 1

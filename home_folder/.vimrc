@@ -39,7 +39,7 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Plug 'ycm-core/YouCompleteMe'
 " Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
@@ -102,19 +102,19 @@ Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
 Plug 'folke/which-key.nvim'
 
-" Plug 'hrsh7th/cmp-omni'
+Plug 'hrsh7th/cmp-omni'
 " Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/cmp-buffer'
-" Plug 'hrsh7th/cmp-path'
-" Plug 'hrsh7th/cmp-cmdline'
-" " Plug 'hrsh7th/cmp-calc'
-" Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-calc'
+Plug 'hrsh7th/nvim-cmp'
 " Plug 'williamboman/nvim-lsp-installer'
 " Plug 'neovim/nvim-lspconfig'
-" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-" " Plug 'L3MON4D3/LuaSnip'
-" " Plug 'saadparwaiz2/cmp_luasnip'
-" " Plug 'rafamadriz/friendly-snippets'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz2/cmp_luasnip'
+Plug 'rafamadriz/friendly-snippets'
 
 
 Plug 'folke/trouble.nvim'
@@ -184,7 +184,7 @@ set updatetime=100
 if has('mac')
     let g:python3_host_prog = expand('~/anaconda3/bin/python')
 elseif has('unix')
-    let g:python3_host_prog = expand('~/anaconda3/envs/oni310/bin/python')
+    let g:python3_host_prog = expand('~/anaconda3/bin/python')
 else
     let g:python3_host_prog = expand('C:/Users/charl/scoop/shims/python.exe')
 endif
@@ -315,7 +315,6 @@ let g:vimwiki_list = [{
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
             \'.wiki': 'markdown',
-            \'.md': 'markdown'
             \}
 " if I don't like markdown
 " let g:vimwiki_ext2syntax = {
@@ -618,7 +617,12 @@ let g:floaterm_height = 0.8
 "let g:taskwiki_sort_orders={"T": "end-"}
 " nmap <C-k> <Plug>VimwikiPrevLink
 " nmap <C-j> <Plug>VimwikiNextLink
+autocmd FileType vimwiki map <buffer> <C-k> <Plug>VimwikiGoToPrevHeader<CR>
+autocmd FileType vimwiki map <buffer> <C-j> <Plug>VimwikiGoToNextHeader<CR>
+autocmd FileType vimwiki map <buffer> <C-h> <Plug>VimwikiDiaryPrevDay<CR>
+autocmd FileType vimwiki map <buffer> <C-l> <Plug>VimwikiDiaryNextDay<CR>
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
+
 vnoremap <leader>y :OSCYank<CR>
 
 
@@ -893,6 +897,7 @@ noremap <leader>gf :e <cfile><cr>
 augroup AutoHeader
     autocmd!
     autocmd bufnewfile *.c so ~/dotfiles/headers/c_header.txt
+    autocmd bufnewfile */diary/*.wiki so ~/dotfiles/headers/wiki_header.txt
     autocmd bufnewfile *.cpp so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.h so ~/dotfiles/headers/c_header.txt
     autocmd bufnewfile *.py so ~/dotfiles/headers/py_header.txt
