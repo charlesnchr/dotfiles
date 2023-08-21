@@ -108,6 +108,9 @@ HIST_STAMPS="mm/dd/yyyy"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+AUTO_PUSHD="true"
+DIRSTACKSIZE=15
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
