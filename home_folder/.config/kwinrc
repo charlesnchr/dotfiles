@@ -4,28 +4,35 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 [Desktops]
 Id_1=1d54e500-63f3-4abd-94f0-87e8b417bd01
 Id_2=8cea1c14-55f2-47e5-b3bb-d457530e6d54
-Id_3=69c1f482-022f-4f14-bf10-e00644397777
-Id_4=0ea19952-94fe-46a0-87d5-81ad12a0ca87
-Id_5=898d7cbe-ffa9-4dd3-82a1-b9ea4e4b9510
-Id_6=81a48d7f-fc15-4b0a-81ed-cd0a9337f873
-Id_7=fbc9febf-d319-4431-af7c-f359839332b1
-Id_8=fc9ade65-45c3-4b1a-8684-8d94387cea0e
-Id_9=deb4e370-b194-4198-a1a5-a264db89f086
+Id_3=0182d643-9143-444f-9f91-ad939339a787
+Id_4=899357af-382a-4188-b462-e124995fd56a
+Id_5=1a883d9a-3cb9-414d-9f8f-b2c365ad6cd4
+Id_6=a548d395-affe-4ec2-a8ed-e2be603a3582
+Id_7=8438f30d-ac3f-4157-8cbb-76da2455986e
+Id_8=cf82787a-91ef-4f4f-9651-c66f934ef818
+Id_9=10a04b18-2365-4cce-980c-ed27b9e4b89f
 Number=9
 Rows=3
+
+[Effect-desktopgrid]
+ShowAddRemove=false
 
 [ModifierOnlyShortcuts]
 Meta=
 
 [MouseBindings]
-CommandAllWheel=Previous/Next Desktop
+CommandActiveTitlebar2=Minimize
 
 [NightColor]
 Active=true
 NightTemperature=3300
 
 [Plugins]
+alwaysopenonprimaryscreenEnabled=true
+forceblurEnabled=true
+kwin4_effect_squashEnabled=false
 last-Used-DesktopEnabled=true
+quarter-tilingEnabled=false
 slideEnabled=false
 
 [Script-bismuth]
@@ -39,8 +46,19 @@ tileLayoutGap=4
 [Script-desktopchangeosd]
 TextOnly=true
 
+[Script-forceblur]
+blurContent=true
+blurExceptMatching=true
+blurMatching=false
+patterns=Spotify\nspotify
+
+[TabBox]
+LayoutName=org.kde.breeze.desktop
+OrderMinimizedMode=1
+
 [TabBoxAlternative]
 DesktopMode=0
+OrderMinimizedMode=1
 
 [Tiling]
 padding=4
@@ -51,7 +69,19 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Tiling][06eabc8f-6f9f-5952-94f2-ab5cc63d8021]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
+[Tiling][0cc011a0-b979-5994-95a6-0a10dabff14a]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][0ce43d32-dbb8-56f9-a3c8-a9d096a9cdd5]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][1d0df3d4-3773-5fe3-a8be-971983d2fd0e]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][22867e10-93f6-513b-ba4e-4d6d005a7b77]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][58ca410b-ce44-58d6-82b9-fefe44aba0e3]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][9ffa154d-aaf3-5c8d-a50e-d158238c4ef9]
@@ -61,7 +91,7 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.15},{"width":0.27460937500000016},{"width":0.5753906249999998}]}
 
 [Tiling][b6eeeb9c-8127-5061-baca-7e0ceece0d9d]
-tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.644140625},{"layoutDirection":"vertical","tiles":[{"height":0.5},{"height":0.5}],"width":0.355859375}]}
 
 [Tiling][cc0aca0b-48e3-5228-b5dc-11c97408196d]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
@@ -73,6 +103,11 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 ActiveMouseScreen=false
 DelayFocusInterval=100
 RollOverDesktops=true
+SeparateScreenFocus=true
 
 [Xwayland]
 Scale=1
+
+[org.kde.kdecoration2]
+library=org.kde.breeze
+theme=Breeze

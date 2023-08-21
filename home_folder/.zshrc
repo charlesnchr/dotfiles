@@ -147,6 +147,8 @@ fi
 # source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 # autoload -Uz add-zsh-hook
 
+eval "$(zoxide init zsh)"
+
 
 # for ranger
 export VISUAL=nvim;
@@ -360,4 +362,5 @@ export LS_COLORS="ca=0:so=1;38;5;168;48;5;254:sg=0:rs=0;38;5;246:st=0:pi=1;38;5;
 
 
 source $HOME/dotfiles/.zshrc_local
+
 

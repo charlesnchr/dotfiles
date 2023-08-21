@@ -18,6 +18,11 @@ ScrollFactor=0.5
 TapDragLock=false
 TapToClick=true
 
+[Libinput][1452][613][Apple Inc. Magic Trackpad 2]
+NaturalScroll=true
+PointerAcceleration=0.200
+TapToClick=true
+
 [Mouse]
 X11LibInputXAccelProfileFlat=true
 

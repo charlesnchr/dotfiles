@@ -2,7 +2,9 @@
 update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
 
 [Annotations]
-annotationToolType=9
+annotationToolType=11
+arrowStrokeColor=34,107,0
+textFontColor=255,0,0
 
 [FileDialogSize]
 2 screens: Height=780
@@ -10,7 +12,6 @@ annotationToolType=9
 
 [GuiConfig]
 captureMode=0
-includePointer=true
 
 [KFileDialog Settings]
 detailViewIconSize=16

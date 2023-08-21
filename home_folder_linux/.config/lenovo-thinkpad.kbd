@@ -9,9 +9,9 @@
 
 (defalias
   caps    (tap-hold-next-release 200 esc lctl)
-  rsft    (tap-hold-next 200 M-r rsft)
-  lalt    (tap-hold-next 200 M-r lalt)
-  rctl    (tap-hold-next 200 M-r rctl)
+  rsft    (tap-hold-next 200 M-e rsft)
+  lalt    (tap-hold-next 200 M-e lalt)
+  rctl    (tap-hold-next 200 M-e rctl)
   cl      C-lft
   cr      C-rght
   cw      C-w
@@ -97,7 +97,7 @@
   `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       @cbspc
   tab     q       KeyVolumeUp       e       r       t       y       @spc_fn2       @endash       @emdash       p       @aa       ]       del
   lctl    KeyPreviousSong      KeyVolumeDown       KeyNextSong      _       g       lft   down    up    rght       @ae       @oe       KeyPlayPause
-  lsft    ins       menu       ralt       v       b       @cl   @cr       home       end      KeyPreviousSong       KeyNextSong
+  lsft    ins       menu       sys       v       b       @cl   @cr       home       end      KeyPreviousSong       KeyNextSong
   lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end
