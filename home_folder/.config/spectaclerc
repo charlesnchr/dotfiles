@@ -4,7 +4,9 @@ update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_remember
 [Annotations]
 annotationToolType=11
 arrowStrokeColor=34,107,0
-textFontColor=255,0,0
+numberFont=Noto Sans,14,-1,0,50,0,0,0,0,0
+textFont=Noto Sans,16,-1,0,50,0,0,0,0,0
+textFontColor=0,85,0
 
 [FileDialogSize]
 2 screens: Height=780

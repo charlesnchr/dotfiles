@@ -1,2 +1,30 @@
 [$Version]
 update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
+
+[0e0da548-862b-4674-ba30-1b409c7ac77a]
+Description=kodi on all desktops
+desktops=\\0
+desktopsrule=6
+wmclass=kodi
+wmclassmatch=2
+
+[1]
+Description=mplayer on all
+desktops=
+desktopsrule=4
+screenrule=2
+wmclass=mplayer
+wmclassmatch=1
+
+[697c5280-1b73-4f82-8b5b-2e48220861c2]
+Description=mplayer on all
+desktops=\\0
+desktopsrule=4
+screen=1
+screenrule=4
+wmclass=mplayer
+wmclassmatch=1
+
+[General]
+count=1
+rules=1

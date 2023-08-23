@@ -142,6 +142,8 @@ History Items[$e]=sftp://admin@192.168.1.192:4400/video/dokumentarer,file:$HOME
 [General]
 BrowserApplication=brave-browser.desktop
 ColorSchemeHash=1126fb2c0c32955cd1bb2987f48b452b357a9515
+TerminalApplication=kitty
+TerminalService=kitty.desktop
 
 [KDE]
 LookAndFeelPackage=org.manjaro.breath-dark.desktop
