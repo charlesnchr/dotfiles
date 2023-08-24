@@ -87,7 +87,7 @@ if ask "Python packages" Y; then
 
     conda install -y -c conda-forge universal-ctags
     # scientific packages
-    pip install ranger scikit-image numpy matplotlib opencv-python pandas
+    pip install scikit-image numpy matplotlib opencv-python pandas
     # system and utility
     pip install pyudev i3-balance-workspace
 fi
