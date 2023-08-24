@@ -10,12 +10,12 @@ local function run_once(cmd)
 end
 
 run_on_start_up = {
-    'picom -b --experimental-backends',
+    'picom -b',
     'nm-applet', -- wifi
     --'blueberry-tray', -- Bluetooth tray icon
     'numlockx on', -- enable numlock
-    '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1', -- credential manager
-    'xfce4-power-manager', -- Power manager
+    -- '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1', -- credential manager
+    -- 'xfce4-power-manager', -- Power manager
     -- Add applications that need to be killed between reloads
     -- to avoid multipled instances, inside the awspawn script
     '~/.config/awesome/awspawn', -- Spawn "dirty" apps that can linger between sessions

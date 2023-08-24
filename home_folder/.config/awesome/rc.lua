@@ -394,36 +394,49 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create a tasklist widget
+    -- s.mytasklist = awful.widget.tasklist {
+    --     screen  = s,
+    --     filter  = awful.widget.tasklist.filter.currenttags,
+    --     buttons = tasklist_buttons,
+    --     layout  = wibox.layout.fixed.horizontal(),
+    --     widget_template = {
+    --         {
+    --             {
+    --                 {
+    --                     {
+    --                         widget = awful.widget.clienticon,
+    --                     },
+    --                     margins = 3,
+    --                     widget  = wibox.container.margin,
+    --                 },
+    --                 {
+    --                     id     = "text_role",
+    --                     widget = wibox.widget.textbox,
+    --                 },
+    --                 layout = wibox.layout.fixed.horizontal,
+    --             },
+    --             left  = 10,
+    --             right = 10,
+    --             widget = wibox.container.margin
+    --         },
+    --         forced_width = 150,
+    --         id     = "background_role",
+    --         widget = wibox.container.background,
+    --     },
+    --     buttons = tasklist_buttons
+    -- }
+
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons,
-        layout  = wibox.layout.fixed.horizontal(),
-        widget_template = {
-            {
-                {
-                    {
-                        {
-                            widget = awful.widget.clienticon,
-                        },
-                        margins = 3,
-                        widget  = wibox.container.margin,
-                    },
-                    {
-                        id     = "text_role",
-                        widget = wibox.widget.textbox,
-                    },
-                    layout = wibox.layout.fixed.horizontal,
-                },
-                left  = 10,
-                right = 10,
-                widget = wibox.container.margin
-            },
-            forced_width = 150,
-            id     = "background_role",
-            widget = wibox.container.background,
-        },
-        buttons = tasklist_buttons
+        buttons = {
+            awful.button({ }, 1, function (c)
+                c:activate { context = "tasklist", action = "toggle_minimization" }
+            end),
+            awful.button({ }, 3, function() awful.menu.client_list { theme = { width = 250 } } end),
+            awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
+            awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
+        }
     }
 
 

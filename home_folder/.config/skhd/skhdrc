@@ -325,4 +325,4 @@ alt - v : yabai -m query --spaces --space \
 alt - 7 : yabai -m space --layout bsp
 alt - 8 : yabai -m space --layout stack
 alt - 9 : yabai -m space --layout float
-alt + ctrl + cmd - e : yabai -m space --focus $(if [ "$(yabai -m query --spaces --space | jq .index)" = 9 ]; then echo 'recent'; else echo 9; fi)
+alt + ctrl + cmd - e : yabai -m space --focus $(if [ "$(yabai -m query --spaces --space | jq .index)" = 8 ]; then echo 'recent'; else echo 8; fi)

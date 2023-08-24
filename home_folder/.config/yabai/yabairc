@@ -68,15 +68,14 @@ yabai -m rule --add label="Slack" app="^Slack$" space=4
 yabai -m rule --add label="Calendar" app="^Calendar$" space=4
 yabai -m rule --add app="Google Calendar" space=4
 yabai -m rule --add app="ChatGPT" space=3
-yabai -m rule --add app="Notion" space=9
+yabai -m rule --add app="Notion" space=8
 yabai -m rule --add label="WhatsApp" app="^WhatsApp$" space=4
 yabai -m rule --add label="(Fiji Is Just) ImageJ" app="^ImageJ$" space=7
 yabai -m rule --add label="MATLAB" app="^MATLAB.*" space=7
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
 yabai -m rule --add label="macfeh" app="^macfeh$"
 yabai -m rule --add label="System Preferences" app="^System Preferences$" title=".*" manage=off
-yabai -m rule --add label="App Store" app="^App Store$"
-yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$"
+yabai -m rule --add label="App Store" app="^App Store$" yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$"
 yabai -m rule --add label="KeePassXC" app="^KeePassXC$"
 yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off

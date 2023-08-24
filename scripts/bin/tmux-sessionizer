@@ -15,6 +15,9 @@ fixed_dirs=(
     ~/1private
     ~/2work
     ~/2work/onirepos/SIM/PhD-ccRestore
+    ~/qmk_firmware
+    ~/dotfiles
+    ~/0main
 )
 
 # Search for directories in all directories
