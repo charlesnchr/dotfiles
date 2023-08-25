@@ -13,8 +13,8 @@ ColumnState=AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYwAAAACAQAAAQAA
 Number of Actions=0
 
 [KFileDialog Settings]
-Recent Files[$e]=file:$HOME/Pictures/kjh,file:$HOME/Desktop/new.jpg,file:$HOME/Desktop/uh,file:$HOME/Desktop/new,file:$HOME/Pictures/kjh
-Recent URLs[$e]=file:$HOME/Desktop/
+Recent Files[$e]=wallpaper.avif,file:$HOME/SynologyDrive/3.Diverse/Wallpapers/KDE-dynamic/wallpaper.avif
+Recent URLs[$e]=file:$HOME/Desktop/,file:$HOME/Pictures/,file:$HOME/SynologyDrive/3.Diverse/Wallpapers/KDE-dynamic/,file:$HOME/
 detailViewIconSize=16
 
 [KPropertiesDialog]

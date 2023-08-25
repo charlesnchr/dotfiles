@@ -17,6 +17,12 @@ Rows=3
 [Effect-desktopgrid]
 ShowAddRemove=false
 
+[Effect-overview]
+BorderActivate=7
+
+[Effect-windowview]
+BorderActivateAll=9
+
 [ModifierOnlyShortcuts]
 Meta=
 
@@ -105,6 +111,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Windows]
 ActiveMouseScreen=false
 DelayFocusInterval=100
+ElectricBorderDelay=100
+ElectricBorders=1
+FocusStealingPreventionLevel=0
 RollOverDesktops=true
 SeparateScreenFocus=true
 

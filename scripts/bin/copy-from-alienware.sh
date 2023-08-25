@@ -13,6 +13,5 @@ while IFS= read -r line; do
     escaped_file_path=$(echo "$file_path" | sed 's/ /\\ /g')
     echo "$escaped_file_path"
     rsync -avz --progress alienware:"$escaped_file_path" /home/cc/Desktop
-done <<< "$(xclip -selection clipboard -o)"
+done <<< "$(wl-paste)"
 
-sleep 2;

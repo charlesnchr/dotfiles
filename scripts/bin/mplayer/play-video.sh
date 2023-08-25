@@ -11,7 +11,7 @@ if ! mountpoint -q /mount/video; then
 fi
 
 # Set video folder
-dir="/mount/video/AttenboroughComplete"
+dir="/mount/video/dokumentarer/5 Attenborough"
 
 # Get list of videos recursively into associative array
 declare -A videos
