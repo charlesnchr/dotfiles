@@ -143,10 +143,6 @@ require("bufferline").setup({
 	},
 })
 
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
-
 require("nvim-tree").setup({
 	git = {
 		enable = false,

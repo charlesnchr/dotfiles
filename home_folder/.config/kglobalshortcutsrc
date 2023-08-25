@@ -8,47 +8,20 @@ switch-to-activity-2e1707c7-083e-43ca-8664-4787f85ec7d4=none,none,Switch to acti
 switch-to-activity-bde2053c-334d-4c64-bd04-b88e17b82843=none,none,Switch to activity "Work"
 switch-to-activity-be9ed939-d034-4424-8f81-1e6de134156a=none,none,Switch to activity "Default"
 
+[Alacritty.desktop]
+New=Ctrl+Alt+T,none,New Terminal
+_k_friendly_name=Alacritty
+_launch=none,none,Alacritty
+
 [KDE Keyboard Layout Switcher]
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
-[bismuth]
-_k_friendly_name=Window Tiling
-decrease_master_size=none,none,Decrease Master Area Size
-decrease_master_win_count=Meta+Z,Meta+[,Decrease Master Area Window Count
-decrease_window_height=Meta+Ctrl+K,Meta+Ctrl+K,Decrease Window Height
-decrease_window_width=Meta+Ctrl+H,Meta+Ctrl+H,Decrease Window Width
-focus_bottom_window=none,Meta+J,Focus Bottom Window
-focus_left_window=none,Meta+H,Focus Left Window
-focus_next_window=none,none,Focus Next Window
-focus_prev_window=none,none,Focus Previous Window
-focus_right_window=none,Meta+L,Focus Right Window
-focus_upper_window=none,Meta+K,Focus Upper Window
-increase_master_size=none,none,Increase Master Area Size
-increase_master_win_count=Meta+X,Meta+],Increase Master Area Window Count
-increase_window_height=Meta+Ctrl+J,Meta+Ctrl+J,Increase Window Height
-increase_window_width=Meta+Ctrl+L,Meta+Ctrl+L,Increase Window Width
-move_window_to_bottom_pos=Meta+Shift+J,Meta+Shift+J,Move Window Down
-move_window_to_left_pos=Meta+Shift+H,Meta+Shift+H,Move Window Left
-move_window_to_next_pos=none,none,Move Window to the Next Position
-move_window_to_prev_pos=none,none,Move Window to the Previous Position
-move_window_to_right_pos=Meta+Shift+L,Meta+Shift+L,Move Window Right
-move_window_to_upper_pos=Meta+Shift+K,Meta+Shift+K,Move Window Up
-next_layout=none,Meta+\\\\,Switch to the Next Layout
-prev_layout=none,Meta+|,Switch to the Previous Layout
-push_window_to_master=Meta+/,Meta+Return,Push Active Window to Master Area
-rotate=none,Meta+R,Rotate
-rotate_part=none,Meta+Shift+R,Rotate Part
-rotate_reverse=none,none,Rotate (Reverse)
-toggle_float_layout=Meta+9,Meta+Shift+F,Toggle Floating Layout
-toggle_monocle_layout=Meta+8,Meta+M,Toggle Monocle Layout
-toggle_quarter_layout=none,none,Toggle Quarter Layout
-toggle_spiral_layout=none,none,Toggle Spiral Layout
-toggle_spread_layout=none,none,Toggle Spread Layout
-toggle_stair_layout=none,none,Toggle Stair Layout
-toggle_three_column_layout=none,none,Toggle Three Column Layout
-toggle_tile_layout=Meta+7,Meta+T,Toggle Tile Layout
-toggle_window_floating=none,Meta+F,Toggle Active Window Floating
+[brave-browser.desktop]
+_k_friendly_name=Brave
+_launch=Ctrl+Alt+B,none,Brave
+new-private-window=none,none,New Incognito window
+new-window=none,none,New Window
 
 [flatpak.desktop]
 _k_friendly_name=flatpak run com.github.hluk.copyq -e "toggle"
@@ -73,6 +46,14 @@ display=Meta+Ctrl+P\tDisplay,Display\tMeta+P,Switch Display
 _k_friendly_name=Custom Shortcuts Service
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none,none,Search
 
+[kitty-2.desktop]
+_k_friendly_name=kitty ranger
+_launch=Meta+Ctrl+Alt+Shift+R,none,kitty ranger
+
+[kitty-3.desktop]
+_k_friendly_name=kitty pulsemixer
+_launch=Meta+Ctrl+Alt+Shift+E,none,kitty pulsemixer
+
 [kmix]
 _k_friendly_name=Audio Volume
 decrease-volume-Mic@Full HD webcam=none,none,Decrease volume of Mic on Full HD webcam
@@ -83,7 +64,7 @@ increase-volume-Mic@Full HD webcam=none,none,Increase volume of Mic on Full HD w
 increase-volume-PCM@RØDE NT-USB Mini=none,none,Increase volume of PCM on RØDE NT-USB Mini
 increase_microphone_volume=Microphone Volume Up,Microphone Volume Up,Increase Microphone Volume
 increase_volume=Volume Up,Volume Up,Increase Volume
-mic_mute=Microphone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mute Microphone
+mic_mute=Meta+Volume Mute\tMeta+X\tMicrophone Mute,Microphone Mute\tMeta+Volume Mute,Mute Microphone
 mute=Volume Mute,Volume Mute,Mute
 toggle-mute-Mic@Full HD webcam=none,none,Mute Mic on Full HD webcam
 toggle-mute-PCM@RØDE NT-USB Mini=none,none,Mute PCM on RØDE NT-USB Mini
@@ -99,7 +80,7 @@ _k_friendly_name=Session Management
 [kwin]
 Activate Window Demanding Attention=Meta+Ctrl+A,Meta+Ctrl+A,Activate Window Demanding Attention
 Decrease Opacity=none,,Decrease Opacity of Active Window by 5%
-Edit Tiles=Meta+T,Meta+T,Toggle Tiles Editor
+Edit Tiles=Alt+Shift+T,Meta+T,Toggle Tiles Editor
 Expose=Ctrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
 ExposeAll=Launch (C)\tMeta+B\tCtrl+F10,Ctrl+F10\tLaunch (C),Toggle Present Windows (All desktops)
 ExposeClass=Meta+N\tCtrl+F7,Ctrl+F7,Toggle Present Windows (Window class)
@@ -271,8 +252,8 @@ view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
 _k_friendly_name=Media Controller
-mediavolumedown=none,,Media volume down
-mediavolumeup=none,,Media volume up
+mediavolumedown=Meta+Volume Down,,Media volume down
+mediavolumeup=Meta+Volume Up,,Media volume up
 nextmedia=Media Next,Media Next,Media playback next
 pausemedia=Media Pause,Media Pause,Pause media playback
 playmedia=none,,Play media playback
@@ -292,10 +273,10 @@ _launch=Launch (1),Launch (1),KCalc
 NewTab=none,none,Open a New Tab
 NewWindow=none,none,Open a New Window
 _k_friendly_name=Konsole
-_launch=Ctrl+Alt+T,Ctrl+Alt+T,Konsole
+_launch=none,Ctrl+Alt+T,Konsole
 
 [org.kde.krunner.desktop]
-RunClipboard=Alt+Shift+F2,Alt+Shift+F2,Run command on clipboard contents
+RunClipboard=Alt+Shift+F2\tShift+F2,Alt+Shift+F2,Run command on clipboard contents
 _k_friendly_name=KRunner
 _launch=Alt+F2\tMeta+Space\tCtrl+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner
 
@@ -308,10 +289,10 @@ ActiveWindowScreenShot=Meta+Print,Meta+Print,Capture Active Window
 CurrentMonitorScreenShot=none,none,Capture Current Monitor
 FullScreenScreenShot=Shift+Print,Shift+Print,Capture Entire Desktop
 OpenWithoutScreenshot=none,none,Launch Spectacle without capturing
-RectangularRegionScreenShot=Meta+Shift+Print,Meta+Shift+Print,Capture Rectangular Region
+RectangularRegionScreenShot=Print,Meta+Shift+Print,Capture Rectangular Region
 WindowUnderCursorScreenShot=Meta+Ctrl+Print,Meta+Ctrl+Print,Capture Window Under Cursor
 _k_friendly_name=Spectacle
-_launch=Print,Print,Launch Spectacle
+_launch=Meta+Ctrl+Alt+"\tMeta+Ctrl+Alt+Shift+D\tMeta+Shift+Print,Print,Launch Spectacle
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
@@ -368,3 +349,7 @@ kcm-lookandfeel=none,none,Global Theme
 kcm-users=none,none,Users
 powerdevilprofilesconfig=none,none,Energy Saving
 screenlocker=none,none,Screen Locking
+
+[yakuake]
+_k_friendly_name=Yakuake
+toggle-window-state=Meta+T,F12,Open/Retract Yakuake

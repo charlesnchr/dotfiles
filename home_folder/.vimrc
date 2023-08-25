@@ -1260,8 +1260,8 @@ nmap <leader>e :AerialToggle<CR>
 nmap <localleader>n :Neoformat<CR>
 " nmap <localleader>xc :ChatGPT<CR>
 
-nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+" nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+" inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>

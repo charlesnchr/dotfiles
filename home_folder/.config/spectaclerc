@@ -2,7 +2,7 @@
 update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
 
 [Annotations]
-annotationToolType=9
+annotationToolType=4
 arrowStrokeColor=255,85,0
 numberFont=Noto Sans,14,-1,0,50,0,0,0,0,0
 textFont=Noto Sans,16,-1,0,50,0,0,0,0,0
@@ -20,4 +20,4 @@ quitAfterSaveCopyExport=true
 detailViewIconSize=16
 
 [Save]
-lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230824_203918.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230825_211944.png
