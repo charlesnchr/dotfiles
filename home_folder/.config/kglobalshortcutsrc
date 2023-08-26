@@ -17,6 +17,14 @@ _launch=none,none,Alacritty
 Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
+[alacritty-2.desktop]
+_k_friendly_name=alacritty -e sh -c /home/cc/scripts/font_selector.sh
+_launch=Meta+Ctrl+Alt+Shift+F,none,alacritty -e sh -c /home/cc/scripts/font_selector.sh
+
+[alacritty.desktop]
+_k_friendly_name=alacritty -o "window.dimensions.lines=40" -o "window.dimensions.columns=160" -o "font.size=11" -o "window.decorations=none" -e zsh -c "source /home/cc/dotfiles/.zshrc_local; btop"
+_launch=Meta+Ctrl+Alt+Shift+Y,none,alacritty -o "window.dimensions.lines=40" -o "window.dimensions.columns=160" -o "font.size=11" -o "window.decorations=none" -e zsh -c "source /home/cc/dotfiles/.zshrc_local; btop"
+
 [brave-browser.desktop]
 _k_friendly_name=Brave
 _launch=Ctrl+Alt+B,none,Brave
@@ -52,7 +60,7 @@ _launch=Meta+Ctrl+Alt+Shift+R,none,kitty ranger
 
 [kitty-3.desktop]
 _k_friendly_name=kitty pulsemixer
-_launch=Meta+Ctrl+Alt+Shift+E,none,kitty pulsemixer
+_launch=Meta+Ctrl+Alt+?,none,kitty pulsemixer
 
 [kmix]
 _k_friendly_name=Audio Volume

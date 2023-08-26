@@ -70,9 +70,9 @@
 (deflayer spc_fn
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
   `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       @cbspc
-  M-tab       C-A-q       @cw       C-A-S-M-e       C-A-S-M-r       @ct       y       M-u       M-i       M-o       M-p       S-[       S-]       del
+  M-tab       C-A-q       @cw      M-spc       C-A-S-M-r       @ct       C-A-S-M-y       M-u       M-i       M-o       M-p       S-[       S-]       del
   lctl    M-a   M-s     M-d       M-f     M-g       lft   down    up    rght       C-A-S-M-;     C-A-S-M-'       M-ret
-  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       home       end    /       M-A-ret
+  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       home       end    C-A-S-M-/       M-A-ret
   lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
 
   home    pgup    pgdn    end

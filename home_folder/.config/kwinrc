@@ -121,5 +121,5 @@ SeparateScreenFocus=true
 Scale=1
 
 [org.kde.kdecoration2]
-library=org.kde.breeze
-theme=Breeze
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__Sweet-Dark-transparent
