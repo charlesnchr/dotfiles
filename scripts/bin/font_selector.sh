@@ -8,33 +8,25 @@
 # Path to the Alacritty configuration file
 CONFIG_FILE="$HOME/.config/alacritty/alacritty.yml"
 
+# Counter for the number of reruns
+rerun_counter=0
+
 # Function to replace the font family and size in the Alacritty config
 update_font() {
-    # Use sed to find and replace the font family
     sed -i -E "s/family: .+ Nerd Font/family: $1 Nerd Font/g" "$CONFIG_FILE"
-    # Use sed to find and replace the font size
     sed -i -E "s/size: [0-9]+(\.[0-9]+)?/size: $2/g" "$CONFIG_FILE"
     echo "Font updated to $1 Nerd Font with size $2."
 }
 
 # Function to increment or decrement the current font size
 update_font_size() {
-    # Extract the current font size using grep and awk, and trim extra characters
     current_size=$(grep -m1 "size:" "$CONFIG_FILE" | awk '{print $2}' | tr -d '\n')
-
-    # Convert the floating-point numbers to integers for arithmetic
     current_size_int=$(echo "$current_size * 10" | awk '{printf "%d", $0}')
     increment=$(echo "$1 * 10" | awk '{printf "%d", $0}')
-
-    # Perform integer arithmetic
     new_size_int=$((current_size_int + increment))
-
-    # Convert back to floating-point
     new_size=$(echo "$new_size_int * 0.1" | awk '{printf "%.1f", $0}')
 
-    # Check if new_size is set and not empty
     if [ -n "$new_size" ]; then
-        # Update the font size in the configuration file
         sed -i -E "s/size: $current_size/size: $new_size/" "$CONFIG_FILE"
         if [ $? -eq 0 ]; then
             echo "Font size updated to $new_size."
@@ -47,7 +39,7 @@ update_font_size() {
 }
 
 # Interactive menu
-while true; do
+while [ $rerun_counter -lt 100 ]; do
     echo "Select a font to set in Alacritty:"
     echo "1) FiraCode"
     echo "2) SourceCode"
@@ -74,5 +66,13 @@ while true; do
         q) echo "Exiting..."; break;;
         *) echo "Invalid choice. Please try again.";;
     esac
-done
 
+    # Increment the rerun counter
+    rerun_counter=$((rerun_counter + 1))
+
+    # Check if the rerun counter has reached 100
+    if [ $rerun_counter -ge 100 ]; then
+        echo "Maximum number of reruns reached. Exiting..."
+        break
+    fi
+done
