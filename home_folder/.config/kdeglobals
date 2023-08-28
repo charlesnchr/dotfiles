@@ -142,11 +142,15 @@ History Items[$e]=sftp://admin@192.168.1.192:4400/video/dokumentarer,file:$HOME
 [General]
 BrowserApplication=brave-browser.desktop
 ColorSchemeHash=1126fb2c0c32955cd1bb2987f48b452b357a9515
-TerminalApplication=kitty
-TerminalService=kitty.desktop
+TerminalApplication=alacritty
+TerminalService=Alacritty.desktop
+
+[Icons]
+Theme=breeze-dark
 
 [KDE]
 LookAndFeelPackage=org.manjaro.breath-dark.desktop
+ShowDeleteCommand=false
 
 [KFileDialog Settings]
 Allow Expansion=false
@@ -161,15 +165,18 @@ Show Inline Previews=true
 Show Preview=false
 Show Speedbar=true
 Show hidden files=false
-Sort by=Date
+Sort by=Name
 Sort directories first=true
 Sort hidden files last=false
-Sort reversed=true
+Sort reversed=false
 Speedbar Width=138
 View Style=DetailTree
 
 [KShortcutsDialog Settings]
 Dialog Size=600,480
+
+[PreviewSettings]
+MaximumRemoteSize=0
 
 [WM]
 activeBackground=40,46,51

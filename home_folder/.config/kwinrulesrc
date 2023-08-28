@@ -72,5 +72,12 @@ wmclass=Slack
 wmclassmatch=1
 
 [General]
-count=4
-rules=1,2,3,4
+count=5
+rules=1,2,3,4,adf99f2b-c3f1-41da-8d91-5954f69bc5c4
+
+[adf99f2b-c3f1-41da-8d91-5954f69bc5c4]
+Description=Settings for spotify
+desktops=a548d395-affe-4ec2-a8ed-e2be603a3582
+desktopsrule=3
+wmclass=spotify
+wmclassmatch=1

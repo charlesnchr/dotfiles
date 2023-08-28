@@ -118,7 +118,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][10][Applets][28][Configuration]
-PreloadWeight=100
+PreloadWeight=97
 
 [Containments][10][ConfigDialog]
 DialogHeight=540
@@ -358,8 +358,8 @@ AppletOrder=4;116;117;97;6;7;42;31;29;9;21
 
 [Containments][38]
 ItemGeometries-0x0=Applet-111:1520,144,560,384,0;Applet-112:1712,528,352,240,0;Applet-99:2096,96,336,336,0;Applet-109:2128,480,288,288,0;Applet-98:1856,800,384,128,0;
-ItemGeometries-2560x1440=Applet-111:1520,144,560,384,0;Applet-112:1712,528,352,240,0;Applet-99:2096,96,336,336,0;Applet-109:2128,480,288,288,0;Applet-98:1856,800,384,128,0;
-ItemGeometriesHorizontal=Applet-111:1520,144,560,384,0;Applet-112:1712,528,352,240,0;Applet-99:2096,96,336,336,0;Applet-109:2128,480,288,288,0;Applet-98:1856,800,384,128,0;
+ItemGeometries-2560x1440=Applet-112:1648,176,352,240,0;Applet-109:1663.9,447.693,288,288,0;Applet-111:1984,432,560,352,0;Applet-99:2096,96,336,336,0;Applet-98:1856,800,384,128,0;
+ItemGeometriesHorizontal=Applet-112:1648,176,352,240,0;Applet-109:1663.9,447.693,288,288,0;Applet-111:1984,432,560,352,0;Applet-99:2096,96,336,336,0;Applet-98:1856,800,384,128,0;
 activityId=2e1707c7-083e-43ca-8664-4787f85ec7d4
 formfactor=0
 immutability=1
@@ -449,8 +449,8 @@ DialogWidth=1289
 
 [Containments][38][General]
 ToolBoxButtonState=topcenter
-ToolBoxButtonX=697
-positions={"2560x1440":["1"\\,"23"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"8"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"]\\,"0x0":["1"\\,"21"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"9"\\,"desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf"\\,"0"\\,"8"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"]}
+ToolBoxButtonX=764
+positions={"2560x1440":["1"\\,"23"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"8"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"]\\,"0x0":["1"\\,"21"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"9"\\,"desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf"\\,"0"\\,"8"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"]}
 sortMode=-1
 
 [Containments][38][Wallpaper][com.github.zzag.dynamic][General]
@@ -491,6 +491,8 @@ DialogWidth=720
 [Containments][39][General]
 ToolBoxButtonState=top
 ToolBoxButtonX=840
+positions={"2560x1440":[]}
+sortMode=-1
 
 [Containments][39][Wallpaper][com.github.zzag.dynamic][General]
 Image=file:///home/cc/SynologyDrive/3.Diverse/Wallpapers/KDE-dynamic/wallpaper.avif
@@ -582,7 +584,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][56][Applets][68][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][56][Applets][69]
 immutability=1
@@ -777,7 +779,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][79][Applets][92][Configuration]
-PreloadWeight=42
+PreloadWeight=34
 
 [Containments][79][Applets][93]
 immutability=1
@@ -816,4 +818,4 @@ knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.keyboardindicat
 
 [ScreenMapping]
 itemsOnDisabledScreens=0,bde2053c-334d-4c64-bd04-b88e17b82843,27,file:///home/cc/change_theme.sh,file:///home/cc/anaconda.sh,file:///home/cc/tmp,file:///home/cc/Music,file:///home/cc/logid.cfg,file:///home/cc/tools,file:///home/cc/bitmap.png,file:///home/cc/Games,file:///home/cc/xpadneo,file:///home/cc/Templates,file:///home/cc/autojump,file:///home/cc/bitmap.svg,file:///home/cc/Desktop,file:///home/cc/home,file:///home/cc/Public,file:///home/cc/Downloads,file:///home/cc/etxkbmap us,file:///home/cc/dotfiles,file:///home/cc/tmp2,file:///home/cc/bin,file:///home/cc/winscp.rnd,file:///home/cc/Documents,file:///home/cc/qmk_firmware,file:///home/cc/Pictures,file:///home/cc/2023-08-19 12-25-14.mp4,file:///home/cc/be5a908f598d1abfc9c9d84f11c6d97b,file:///home/cc/anaconda3
-screenMapping=desktop:/steam.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Steam Linux Runtime - Sniper.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Batman Arkham Knight.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Documents.7z,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/spotify.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Proton Experimental.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/steam.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Proton Experimental.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/spotify.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Documents.7z,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Batman Arkham Knight.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/net.lutris.cyberpunk-2077-1.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/net.lutris.cyberpunk-2077-1.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Steam Linux Runtime - Sniper.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843
+screenMapping=desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Proton Experimental.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/steam.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Batman Arkham Knight.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Documents.7z,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Steam Linux Runtime - Sniper.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/net.lutris.cyberpunk-2077-1.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Proton Experimental.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Steam Linux Runtime - Sniper.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/steam.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/spotify.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Batman Arkham Knight.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/spotify.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/net.lutris.cyberpunk-2077-1.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Documents.7z,0,bde2053c-334d-4c64-bd04-b88e17b82843
