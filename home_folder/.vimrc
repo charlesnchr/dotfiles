@@ -632,7 +632,6 @@ nnoremap <localleader>0 :Startify<cr>
 nnoremap <localleader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>qf :copen<cr>
 
-
 " Insert timestamp
 "imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M %p")<CR>
 nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
@@ -1273,6 +1272,9 @@ let b:surround_{char2nr('e')} = "```\r```"
 " copy buffer content
 map <localleader>vx :1,$-1yank +<CR><Bar> :OSCYankRegister +<CR><Bar> :q!<CR>
 
+
+" no whitespace in terminal
 augroup vimrc
   autocmd TermOpen * :DisableWhitespace
 augroup END
+

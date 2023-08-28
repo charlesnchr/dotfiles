@@ -135,33 +135,129 @@ font:
 #     white:   '0xf8f8f8'
 #
 
-colors:
-  # Default colors
-  primary:
-    background: '0x24283b'
-    foreground: '0xa9b1d6'
+schemes:
+  # Tokyo Night theme, based on both:
+  #   https://github.com/ghifarit53/tokyonight-vim
+  #   https://github.com/enkia/tokyo-night-vscode-theme
+  tokyo-night: &tokyo-night
+    # Default colors
+    primary:
+      background: '#1a1b26'
+      foreground: '#a9b1d6'
 
-  # Normal colors
-  normal:
-    black:   '0x32344a'
-    red:     '0xf7768e'
-    green:   '0x9ece6a'
-    yellow:  '0xe0af68'
-    blue:    '0x7aa2f7'
-    magenta: '0xad8ee6'
-    cyan:    '0x449dab'
-    white:   '0x9699a8'
+    # Normal colors
+    normal:
+      black:   '#32344a'
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#ad8ee6'
+      cyan:    '#449dab'
+      white:   '#787c99'
 
-  # Bright colors
-  bright:
-    black:   '0x444b6a'
-    red:     '0xff7a93'
-    green:   '0xb9f27c'
-    yellow:  '0xff9e64'
-    blue:    '0x7da6ff'
-    magenta: '0xbb9af7'
-    cyan:    '0x0db9d7'
-    white:   '0xacb0d0'
+    # Bright colors
+    bright:
+      black:   '#444b6a'
+      red:     '#ff7a93'
+      green:   '#b9f27c'
+      yellow:  '#ff9e64'
+      blue:    '#7da6ff'
+      magenta: '#bb9af7'
+      cyan:    '#0db9d7'
+      white:   '#acb0d0'
+
+  tokyo-night-storm: &tokyo-night-storm
+    # Default colors
+    primary:
+      background: '#24283b'
+      foreground: '#a9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '#32344a'
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#ad8ee6'
+      cyan:    '#449dab'
+      white:   '#9699a8'
+
+    # Bright colors
+    bright:
+      black:   '#444b6a'
+      red:     '#ff7a93'
+      green:   '#b9f27c'
+      yellow:  '#ff9e64'
+      blue:    '#7da6ff'
+      magenta: '#bb9af7'
+      cyan:    '#0db9d7'
+      white:   '#acb0d0'
+
+  palenight: &palenight
+    # Default colors
+    primary:
+      background: '0x24283b'
+      foreground: '0xa9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '0x32344a'
+      red:     '0xf7768e'
+      green:   '0x9ece6a'
+      yellow:  '0xe0af68'
+      blue:    '0x7aa2f7'
+      magenta: '0xad8ee6'
+      cyan:    '0x449dab'
+      white:   '0x9699a8'
+
+    # Bright colors
+    bright:
+      black:   '0x444b6a'
+      red:     '0xff7a93'
+      green:   '0xb9f27c'
+      yellow:  '0xff9e64'
+      blue:    '0x7da6ff'
+      magenta: '0xbb9af7'
+      cyan:    '0x0db9d7'
+      white:   '0xacb0d0'
+
+  folke-tokyo-night: &folke-tokyo-night
+    colors:
+      # Default colors
+      primary:
+        background: '0x1b1f30'
+        foreground: '0xbbc2e0'
+
+      # Cursor colors
+      cursor:
+        text:   '0x28b9d2'
+        cursor: '0xc0caf5'
+
+      # Normal colors
+      normal:
+        black:   '0x414868'
+        red:     '0xf7768e'
+        green:   '0x41b59b'
+        yellow:  '0xe0af68'
+        blue:    '0x7ba2f3'
+        magenta: '0xbb9af7'
+        cyan:    '0x2ccde9'
+        white:   '0xc0caf5'
+
+      # Bright colors
+      bright:
+        black:   '0x414868'
+        red:     '0xf7768e'
+        green:   '0x41b59b'
+        yellow:  '0xe0af68'
+        blue:    '0x7ba2f3'
+        magenta: '0xbb9af7'
+        cyan:    '0x2ac4de'
+        white:   '0xc0caf5'
+
+colors: *tokyo-night-storm
 
 key_bindings:
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }
@@ -677,7 +773,7 @@ shell:
 # Offer IPC using `alacritty msg` (unix only)
 #ipc_socket: true
 
-#mouse:
+mouse:
   # Click settings
   #
   # The `double_click` and `triple_click` settings control the time
@@ -687,7 +783,7 @@ shell:
   #triple_click: { threshold: 300 }
 
   # If this is `true`, the cursor is temporarily hidden when typing.
-  #hide_when_typing: false
+  hide_when_typing: true
 
 # Regex hints
 #
