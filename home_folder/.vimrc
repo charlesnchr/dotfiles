@@ -196,7 +196,6 @@ Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 call plug#end()
 
@@ -609,11 +608,14 @@ nnoremap <localleader>ve :e ~/.vimrc<cr>
 nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
+
 nnoremap <localleader>vg :G<cr>
-nnoremap <localleader>vc :G commit -m "Small update"<cr>
-nnoremap <localleader>vn :G log --name-status<cr>
-nnoremap <localleader>vl :G pull<cr>
-nnoremap <localleader>vh :G push<cr>
+nnoremap <localleader>gj :G<cr>
+nnoremap <localleader>gc :G commit --verbose -m "Small update"<cr>
+nnoremap <localleader>gn :G log --name-status<cr>
+nnoremap <localleader>gl :G pull<cr>
+nnoremap <localleader>gp :G push<cr>
+
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
 nnoremap <C-p> :wq<CR>
@@ -1080,15 +1082,6 @@ let g:sneak#s_next = 1
 
 
 
-" Add format option 'w' to add trailing white space, indicating that paragraph
-" continues on next line. This is to be used with mutt's 'text_flowed' option.
-augroup mail_trailing_whitespace " {
-    autocmd!
-    " autocmd FileType mail setlocal formatoptions+=w
-    autocmd FileType mail SoftPencil
-augroup END " }
-
-
 if has('mac')
     autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
 elseif has('unix')
@@ -1260,8 +1253,8 @@ nmap <leader>e :AerialToggle<CR>
 nmap <localleader>n :Neoformat<CR>
 " nmap <localleader>xc :ChatGPT<CR>
 
-" nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-" inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>
@@ -1272,4 +1265,14 @@ cnoremap <A-e> <End>
 
 autocmd ColorScheme * lua require('leap').init_highlight(true)
 
-command! Colo silent !zsh -c 'source ~/.zshrc; colo'
+command! Colo silent !zsh -c 'source $HOME/.zshrc; colo'
+
+" triple backtick for code blocks using vim-surround
+let b:surround_{char2nr('e')} = "```\r```"
+
+" copy buffer content
+map <localleader>vx :1,$-1yank +<CR><Bar> :OSCYankRegister +<CR><Bar> :q!<CR>
+
+augroup vimrc
+  autocmd TermOpen * :DisableWhitespace
+augroup END
