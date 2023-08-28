@@ -13,6 +13,8 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle larkery/zsh-histdb
 antigen bundle charlesnchr/ranger-autojump
+
+antigen bundle chmln/handlr
 # antigen bundle neovim/neovim
 
 # antigen bundle jeffreytse/zsh-vi-mode
