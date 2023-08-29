@@ -5,13 +5,13 @@
 * Github : github.com/charlesnchr
 ----------------------------------------'
 
-# Mount Synology server if not already mounted
-if ! mountpoint -q /mount/video; then
-  sshfs radian-local:video /mount/video
+# mount Synology server if not already mounted
+if ! mountpoint -q /media/video; then
+  sshfs radian-local:video /media/video
 fi
 
 # Set video folder
-dir="/mount/video/AttenboroughComplete"
+dir="/media/video/dokumentarer/5 Attenborough"
 
 # Get list of videos recursively into associative array
 declare -A videos
@@ -25,7 +25,6 @@ done < <(find "$dir" -type f -iname "*.mp4" -or -iname "*.avi" -or -iname "*.mkv
 done=0
 exit_code=0
 
-# Mount Synology server if not mounted
 # Get list of videos into associative array
 # (same as previous script...)
 

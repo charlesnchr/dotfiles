@@ -9,13 +9,19 @@ Id_4=899357af-382a-4188-b462-e124995fd56a
 Id_5=1a883d9a-3cb9-414d-9f8f-b2c365ad6cd4
 Id_6=a548d395-affe-4ec2-a8ed-e2be603a3582
 Id_7=8438f30d-ac3f-4157-8cbb-76da2455986e
-Id_8=cf82787a-91ef-4f4f-9651-c66f934ef818
-Id_9=10a04b18-2365-4cce-980c-ed27b9e4b89f
+Id_8=10a04b18-2365-4cce-980c-ed27b9e4b89f
+Id_9=7962a118-f8cc-400f-b625-2ae897d3ff87
 Number=9
 Rows=3
 
 [Effect-desktopgrid]
 ShowAddRemove=false
+
+[Effect-overview]
+BorderActivate=7
+
+[Effect-windowview]
+BorderActivateAll=9
 
 [ModifierOnlyShortcuts]
 Meta=
@@ -105,6 +111,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Windows]
 ActiveMouseScreen=false
 DelayFocusInterval=100
+ElectricBorderDelay=100
+ElectricBorders=1
+FocusStealingPreventionLevel=0
 RollOverDesktops=true
 SeparateScreenFocus=true
 
@@ -112,5 +121,5 @@ SeparateScreenFocus=true
 Scale=1
 
 [org.kde.kdecoration2]
-library=org.kde.breeze
-theme=Breeze
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__Sweet-Dark-transparent

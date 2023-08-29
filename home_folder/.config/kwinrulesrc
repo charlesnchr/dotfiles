@@ -8,12 +8,44 @@ desktopsrule=6
 wmclass=kodi
 wmclassmatch=2
 
+[0e3633df-266b-4f81-a2e5-e8a3fd687b3c]
+Description=Settings for brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
+wmclassmatch=1
+
 [1]
 Description=mplayer on all
 desktops=
 desktopsrule=4
+fsplevel=4
+fsplevelrule=2
+position=0,0
+positionrule=3
 screenrule=2
 wmclass=mplayer
+wmclassmatch=1
+
+[2]
+Description=Settings for Slack
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=Slack
+wmclassmatch=1
+
+[3]
+Description=Settings for brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclassmatch=1
+
+[4]
+Description=Settings for brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
 wmclassmatch=1
 
 [697c5280-1b73-4f82-8b5b-2e48220861c2]
@@ -25,6 +57,27 @@ screenrule=4
 wmclass=mplayer
 wmclassmatch=1
 
+[854b3348-3266-4ef3-afcf-0a85b91e8ce5]
+Description=Settings for brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclassmatch=1
+
+[989bc47e-b13e-4bb3-936b-f082b493c20a]
+Description=Settings for Slack
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=Slack
+wmclassmatch=1
+
 [General]
-count=1
-rules=1
+count=5
+rules=1,2,3,4,adf99f2b-c3f1-41da-8d91-5954f69bc5c4
+
+[adf99f2b-c3f1-41da-8d91-5954f69bc5c4]
+Description=Settings for spotify
+desktops=a548d395-affe-4ec2-a8ed-e2be603a3582
+desktopsrule=3
+wmclass=spotify
+wmclassmatch=1
