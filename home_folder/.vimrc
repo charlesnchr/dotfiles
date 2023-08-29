@@ -1250,6 +1250,8 @@ let g:gutentags_ctags_extra_args = [
 
 " gh copy :GetCurrentBranchLink then: (a) :OscYankRegister + or (b) tty-copy <C-prefix ]> in tmux
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankRegister +<CR>:echo @+<CR>
+" link to current file in github, or just branch link if not in a file like startify
+map <localleader>gb :GBrowse!<CR>:echo @+<CR>
 
 nmap <leader>e :AerialToggle<CR>
 
