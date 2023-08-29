@@ -108,6 +108,9 @@ HIST_STAMPS="mm/dd/yyyy"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+AUTO_PUSHD="true"
+DIRSTACKSIZE=15
+
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -146,6 +149,8 @@ fi
 # ---  commented out in favour of antigen
 # source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 # autoload -Uz add-zsh-hook
+
+eval "$(zoxide init zsh)"
 
 
 # for ranger
@@ -259,21 +264,16 @@ jog() {
     }
 
 colo() {
-    # Define the file path
-    file_path=~/dotfiles/is_dark_mode
-
     # if option does not exist: xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "Adwaita"
-    
+
     # Check the current theme
     current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
-    
+
     # Toggle theme based on the current setting
     if [[ $current_theme == "Adwaita-dark" ]]; then
         xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita"
-        echo 0 > "$file_path"
     else
         xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-        echo 1 > "$file_path"
     fi
 }
 
@@ -366,3 +366,5 @@ export LS_COLORS="ca=0:so=1;38;5;168;48;5;254:sg=0:rs=0;38;5;246:st=0:pi=1;38;5;
 
 source $HOME/dotfiles/.zshrc_local
 
+
+export PATH=$PATH:/home/cc/.spicetify

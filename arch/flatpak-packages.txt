@@ -1,0 +1,8 @@
+com.github.hluk.copyq
+com.google.Chrome
+com.microsoft.Edge
+com.spotify.Client
+org.fedoraproject.MediaWriter
+org.gnome.Logs
+org.gnome.baobab
+org.kde.kamoso

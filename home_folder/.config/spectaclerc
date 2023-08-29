@@ -1,0 +1,26 @@
+[$Version]
+update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
+
+[Annotations]
+annotationToolType=5
+arrowStrokeColor=255,85,0
+numberFont=Noto Sans,14,-1,0,50,0,0,0,0,0
+rectangleFillColor=255,255,255
+rectangleShadow=false
+rectangleStrokeColor=0,0,0,0
+textFont=Noto Sans,16,-1,0,50,0,0,0,0,0
+textFontColor=255,85,0
+
+[FileDialogSize]
+2 screens: Height=780
+2 screens: Width=1300
+
+[GuiConfig]
+captureMode=0
+quitAfterSaveCopyExport=true
+
+[KFileDialog Settings]
+detailViewIconSize=16
+
+[Save]
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230825_211944.png

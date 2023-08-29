@@ -35,7 +35,6 @@ PACKAGES=$(cat <<-END
     alacritty
     ripgrep
     github-cli
-    copyq
     sshpass
     jq
 END
@@ -54,6 +53,10 @@ echo -e "AUR packages: $AUR_packages"
 
 if ask "Install AUR packages" N; then
     yay --needed --answerclean None -S $AUR_packages
+fi
+
+if ask "Install flatpak packages" N; then
+    cat arch/flatpak-packages.txt | xargs flatpak install -y
 fi
 
 if ask "kmonad" N; then
@@ -84,16 +87,13 @@ if ask "Set up Github cli" Y; then
     gh config set -h github.com git_protocol ssh
 fi
 
-
 if ask "Set up laptop power settings" N; then
     xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/logind-handle-lid-switch -s false
 fi
 
-
-if ask "Activate betterlockscreen" Y; then
-    xfconf-query -c xfce4-session -p /general/LockCommand -s "betterlockscreen -l" -n -t string
+if ask "Run general install script now?" Y; then
+    bash ~/dotfiles/install.sh
 fi
-
 
 echo "Install e.g. Teams via Flathub/Discover"
 

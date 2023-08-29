@@ -37,6 +37,17 @@ bottom_border = top_border + current['frame']['h']
 center_x = (left_border + right_border) / 2
 center_y = (top_border + bottom_border) / 2
 
+def is_in_desired_direction(window, dir):
+    w_left = window['frame']['x']
+    w_right = w_left + window['frame']['w']
+    w_top = window['frame']['y']
+    w_bottom = w_top + window['frame']['h']
+
+    if dir == 'x_dir':
+        return (w_right > left_border and direction_val == 0) or (w_left < right_border and direction_val == 1)
+    else:
+        return (w_bottom > top_border and direction_val == 0) or (w_top < bottom_border and direction_val == 1)
+
 def distance(window, dir):
     w_left = window['frame']['x']
     w_right = w_left + window['frame']['w']
@@ -55,8 +66,8 @@ def distance(window, dir):
     # We use a tuple to prioritize primary distance, but still consider secondary distance
     return (primary_distance if primary_distance > 0 else float('inf'), secondary_distance)
 
-# Exclude the current window from the windows list
-windows = [w for w in windows if w['id'] != current['id']]
+# Exclude the current window and ones not in the desired direction from the windows list
+windows = [w for w in windows if w['id'] != current['id'] and is_in_desired_direction(w, direction)]
 
 # Find the nearest window in the specified direction
 nearest = min(windows, key=lambda w: distance(w, direction), default=None)

@@ -53,6 +53,11 @@ conda activate base
 
 if ask "Install fzf, tmux plugin manager and antigen" N; then
 
+    # autojump
+    git clone git://github.com/wting/autojump.git
+    cd autojump
+    ./install.py
+
     # fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all
@@ -181,14 +186,14 @@ if ask "Set up nvim plugins etc." N; then
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     pip install -U pynvim
     nvim +'PlugInstall --sync' +qa
-    nvim +'MasonInstall vim-language-server python-lsp-server json-lsp rust-analyzer'
+    nvim +'MasonInstall vim-language-server json-lsp rust-analyzer'
 fi
 
 if ask "Install conda utilities (rclone, ripgrep, ctags)" N; then
     conda install -y -c conda-forge universal-ctags rclone ripgrep
 fi
 
-if ask "Install pip utilities (skimage, numpy)" N; then
-    pip install scikit-image numpy matplotlib opencv-python
+if ask "Install pylsp and scientific python packages (skimage, numpy)" N; then
+    pip install scikit-image numpy matplotlib opencv-python pynvim python-lsp-server[all] streamlit numba timm einops
 fi
 

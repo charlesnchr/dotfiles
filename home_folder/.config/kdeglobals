@@ -135,17 +135,27 @@ ForegroundNormal=222,222,222
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
+[DirSelect Dialog]
+DirSelectDialog Size=860,606
+History Items[$e]=sftp://admin@192.168.1.192:4400/video/dokumentarer,file:$HOME
+
 [General]
 BrowserApplication=brave-browser.desktop
 ColorSchemeHash=1126fb2c0c32955cd1bb2987f48b452b357a9515
+TerminalApplication=alacritty
+TerminalService=Alacritty.desktop
+
+[Icons]
+Theme=breeze-dark
 
 [KDE]
 LookAndFeelPackage=org.manjaro.breath-dark.desktop
+ShowDeleteCommand=false
 
 [KFileDialog Settings]
 Allow Expansion=false
 Automatically select filename extension=true
-Breadcrumb Navigation=true
+Breadcrumb Navigation=false
 Decoration position=2
 LocationCombo Completionmode=5
 PathCombo Completionmode=5
@@ -158,9 +168,15 @@ Show hidden files=false
 Sort by=Name
 Sort directories first=true
 Sort hidden files last=false
-Sort reversed=true
+Sort reversed=false
 Speedbar Width=138
 View Style=DetailTree
+
+[KShortcutsDialog Settings]
+Dialog Size=600,480
+
+[PreviewSettings]
+MaximumRemoteSize=0
 
 [WM]
 activeBackground=40,46,51
