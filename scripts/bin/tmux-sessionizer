@@ -15,6 +15,7 @@ fixed_dirs=(
     ~/1private
     ~/2work
     ~/2work/onirepos/SIM/PhD-ccRestore
+    /oni
 )
 
 # Search for directories in all directories
