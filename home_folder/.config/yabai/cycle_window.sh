@@ -6,75 +6,80 @@
 * Github : github.com/charlesnchr
 ----------------------------------------'
 
+#!/bin/bash
+
 # Arguments:
-## $1: 0/1 = next/prev
-## $2: x_dir/y_dir
-## $3: 0/1 = circular boundary
+# $1: 0/1 = next/prev (left/right for x_dir or up/down for y_dir)
+# $2: x_dir/y_dir
 
-if [ "$2" = "x_dir" ]; then
-    IDS=($(yabai -m query --spaces --space \
-      | jq -re ".index" \
-      | xargs -I{} yabai -m query --windows --space {} | jq 'sort_by(.frame.x) | .[] | .id'))
+# Get all windows for the current space
+windows=$(yabai -m query --windows --space)
 
-    # /usr/bin/env osascript <<< \
-    #     "display notification \"x dir\" with title \"Yabai\"";
-else
-    IDS=($(yabai -m query --spaces --space \
-      | jq -re ".index" \
-      | xargs -I{} yabai -m query --windows --space {} | jq 'sort_by(.frame.y) | .[] | .id'))
+# Get the currently focused window's data
+current=$(yabai -m query --windows --window)
 
-    # /usr/bin/env osascript <<< \
-    #     "display notification \"y dir\" with title \"Yabai\"";
+# Pipe the data into Python for processing
+target_id=$(python3 - <<END
+import json
+import sys
+
+windows = json.loads('''$windows''')
+current = json.loads('''$current''')
+
+direction = "$2"
+direction_val = int("$1")
+
+# Extract borders and center
+left_border = current['frame']['x']
+right_border = left_border + current['frame']['w']
+top_border = current['frame']['y']
+bottom_border = top_border + current['frame']['h']
+center_x = (left_border + right_border) / 2
+center_y = (top_border + bottom_border) / 2
+
+def is_in_desired_direction(window, dir):
+    w_left = window['frame']['x']
+    w_right = w_left + window['frame']['w']
+    w_top = window['frame']['y']
+    w_bottom = w_top + window['frame']['h']
+
+    if dir == 'x_dir':
+        return (w_right > left_border and direction_val == 0) or (w_left < right_border and direction_val == 1)
+    else:
+        return (w_bottom > top_border and direction_val == 0) or (w_top < bottom_border and direction_val == 1)
+
+def distance(window, dir):
+    w_left = window['frame']['x']
+    w_right = w_left + window['frame']['w']
+    w_top = window['frame']['y']
+    w_bottom = w_top + window['frame']['h']
+    w_center_x = (w_left + w_right) / 2
+    w_center_y = (w_top + w_bottom) / 2
+
+    if dir == 'x_dir':
+        primary_distance = w_left - right_border if direction_val == 0 else left_border - w_right
+        secondary_distance = abs(w_center_y - center_y)
+    else:
+        primary_distance = w_top - bottom_border if direction_val == 0 else top_border - w_bottom
+        secondary_distance = abs(w_center_x - center_x)
+
+    # We use a tuple to prioritize primary distance, but still consider secondary distance
+    return (primary_distance if primary_distance > 0 else float('inf'), secondary_distance)
+
+# Exclude the current window and ones not in the desired direction from the windows list
+windows = [w for w in windows if w['id'] != current['id'] and is_in_desired_direction(w, direction)]
+
+# Find the nearest window in the specified direction
+nearest = min(windows, key=lambda w: distance(w, direction), default=None)
+
+if nearest:
+    print(nearest['id'])
+else:
+    print("")
+END
+)
+
+# Focus the target window, if we found one
+if [[ -n "$target_id" ]]; then
+    yabai -m window --focus "$target_id"
 fi
-
-# IDS=($(yabai -m query --spaces --space \
-#   | jq -re ".index" \
-#   | xargs -I{} yabai -m query --windows --space {} | jq 'sort_by(.id) | .[] | .id'))
-
-# echo "${IDS[@]}"
-
-CUR_ID=$(yabai -m query --spaces --space \
-  | jq -re ".index" \
-  | xargs -I{} yabai -m query --windows --space {} \
-  | jq -sre 'add | map(select(."is-minimized"==false)) | . as $array | length as $array_length | map(select(."has-focus"==true)) | .[] | .id')
-
-# echo "cur idx " $CUR_ID
-
-NEW_IDX=0
-len=${#IDS[@]}
-
-for i in "${!IDS[@]}"; do
-   if [[ "${IDS[$i]}" = "$CUR_ID" ]]; then
-       if [ $1 -eq 0 ]; then
-           # echo "next "
-           NEW_IDX=$(( $i + 1 ))
-           if (( $NEW_IDX >= len )); then
-               if [ $3 -eq 0 ]; then
-                   NEW_IDX=0
-               else
-                   NEW_IDX = $len
-               fi
-           fi
-       else
-           # echo "prev "
-           NEW_IDX=$(( $i - 1 ))
-           if (( $NEW_IDX < 0 )); then
-               if [ $3 -eq 0 ]; then
-                   NEW_IDX=$(( $len-1 ))
-               else
-                   NEW_IDX = 0
-               fi
-           fi
-       fi
-       break;
-   fi
-done
-
-NEW_ID=${IDS[$NEW_IDX]}
-# echo "new id " $NEW_ID
-
-yabai -m window --focus $NEW_ID
-
-
-# different syntax
-# yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.subrole != \"AXUnknown\")) | reverse | nth(index(map(select(.focused == 1))) - 1).id")"

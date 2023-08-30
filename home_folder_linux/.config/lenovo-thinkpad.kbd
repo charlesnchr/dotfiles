@@ -1,0 +1,110 @@
+(defcfg
+  input   (device-file "/dev/input/by-path/pci-0000:00:14.0-usb-0:7.2.2:1.1-event-kbd")
+  output  (uinput-sink
+            "KMonad: Keychron")
+  fallthrough true
+)
+
+
+(defalias
+  caps    (tap-hold-next-release 200 esc lctl)
+  cl      C-lft
+  cr      C-rght
+  scl      S-C-lft
+  scr      S-C-rght
+  cw      C-w
+  mr      M-r
+  my      M-y
+  mret      M-ret
+  ct      C-t
+  cu      C-u
+  cd      C-d
+  c6      C-6
+  cdel    C-del
+  cbspc    C-bspc
+  alft      A-lft
+  arght      A-rght
+  cpgup      C-pgup
+  cpgdn      C-pgdn
+  c5      C-5
+  ws      M-S-tab
+  oe      (tap-macro RA-o /)
+  oes      (tap-macro RA-S-o /)
+  ae      (tap-macro RA-a e )
+  aes      (tap-macro RA-S-a S-e )
+  aa      (tap-macro RA-a a )
+  aas      (tap-macro RA-S-a S-a )
+  pnd      (tap-macro RA-l - )
+  eur      (tap-macro RA-= e )
+  endash      (tap-macro RA-- - . )
+  emdash      (tap-macro RA-- - - )
+)
+
+
+(defalias spc2 (tap-hold-next-release 200 spc (layer-toggle spc_fn)))
+(defalias f2 (tap-hold-next-release 200 f (layer-toggle ctrl_fn)))
+(defalias fn (layer-toggle fn))
+(defalias fn2 (layer-toggle fn2))
+(defalias ctl2 (tap-hold-next-release 200 M-spc (layer-toggle ctrl_fn)))
+
+(defsrc
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  caps    a       s       d       f       g       h       j       k       l       ;       '       ret
+  lsft    z       x       c       v       b       n       m       ,       .       /       rsft
+  lctl            lmet    lalt    spc                            ralt    rctrl           left    up      down    rght
+  home    pgup    pgdn    end
+)
+
+(deflayer default
+  esc     f1      f2      f3      f4     f5      f6      f7      f8      f9      f10     f11     f12     rmet     ins    del
+  `       1       2       3       4       5       6       7       8       9       0       -       =       bspc
+  tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
+  @caps   a       s       d       @f2       g       h       j       k       l       ;       '       ret
+  lsft    z       x       c       v       b       n       m       ,       .       /       rsft
+  @ctl2       lmet         lalt    @spc2                             lalt    rctrl         left    up      down    rght
+  home    pgup    pgdn    end
+)
+
+(deflayer spc_fn
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
+  `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       @cbspc
+  M-tab       C-A-q       @cw      M-spc       C-A-S-M-r       @ct       C-A-S-M-y       M-u       M-i       M-o       M-p       S-[       S-]       del
+  lctl    M-a   M-s     M-d       M-f     M-g       lft   down    up    rght       C-A-S-M-;     C-A-S-M-'       M-ret
+  lsft    spc       @cpgup       @cpgdn       @alft       @arght       @cl       @cr       home       end    C-A-S-M-/       M-A-ret
+  lmet            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+
+  home    pgup    pgdn    end
+)
+
+(deflayer fn
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
+  `       @oe       2       @pnd       @eur       5       6       7       8       9       0       -       =       bspc
+  tab     C-A-S-M-q       C-A-S-M-w       C-A-S-M-e       C-A-S-M-r       C-A-S-M-t       C-A-S-M-y       home       i       end       p       @aas       ]       \
+  caps    C-A-S-M-a   C-A-S-M-s     @fn2       C-A-S-M-f     C-A-S-M-g       S-lft   S-down    S-up    S-rght       @aes       @oes       ret
+  lsft    S-ins       x       S-sys       v       b       @scl       @scr       S-home       S-end       /       _
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+  home    pgup    pgdn    end
+)
+
+(deflayer fn2
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
+  `       @oe       2       @pnd       @eur       5       6       7       8       9       0       -       =       bspc
+  tab     C-A-S-M-q       C-A-S-M-w       C-A-S-M-e       C-A-S-M-r       C-A-S-M-t       C-A-S-M-y       C-A-S-M-u       C-A-S-M-i       C-A-S-M-o       C-A-S-M-p       @aas       ]       \
+  caps    C-A-S-M-a   C-A-S-M-s     _       C-A-S-M-f     C-A-S-M-g       C-A-S-M-h   C-A-S-M-j    C-A-S-M-k    C-A-S-M-l       @aes       @oes       ret
+  lsft    z       x       S-sys       v       b       @scl       @scr       S-home       S-end       /       _
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+  home    pgup    pgdn    end
+)
+
+(deflayer ctrl_fn
+  esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
+  `       f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12       @cbspc
+  tab     KeyPlayPause       KeyVolumeUp       e       r       t       y       @fn       @endash       @emdash       p       @aa       ]       del
+  lctl    KeyPreviousSong      KeyVolumeDown       KeyNextSong      _       g       lft   down    up    rght       @ae       @oe       KeyPlayPause
+  @fn    ins       menu       sys       ralt       b       @cl   @cr       home       end      KeyPreviousSong       KeyNextSong
+  lctl            lmet    lalt    spc                             ralt    rctrl           left    up      down    rght
+  home    pgup    pgdn    end
+)
+

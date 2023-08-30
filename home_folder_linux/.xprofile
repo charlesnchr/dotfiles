@@ -1,0 +1,22 @@
+#!/bin/bash
+# setxkbmap -layout us -option compose:ralt
+xset r rate 200 25
+
+
+trackpad_ids=$(xinput list | grep 'Apple Inc. Magic Trackpad' | awk -F'=' '{print $2}' | awk '{print $1}')
+
+for id in $trackpad_ids; do
+    xinput set-prop $id "libinput Accel Speed" 0.35
+    xinput set-prop $id "libinput Natural Scrolling Enabled" 1
+done
+
+
+# xmodmap ~/.xmodmap
+
+# killall xcapec
+# xcape -e 'Control_L=Escape'
+# xcape -e 'Alt_L=XF86_Tools'
+# xcape -e 'Super_L=XF86_Tools'
+# xcape -e 'Control_R=XF86_Tools'
+# xcape -e 'Shift_R=XF86_Tools'
+# xcape -e 'Mode_switch=XF86_Tools'

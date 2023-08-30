@@ -11,42 +11,32 @@ PACKAGES=$(cat <<-END
     fzf
     tree
     fd
+    ranger
+    ctags
     ttf-sourcecodepro-nerd
     tmuxinator
     playerctl
     yarn
-    redshift
-    pacdep
     dust
     rclone
     stow
     handlr-bin
     tig
-    noto-fonts-emoji
-    font-manager
     ktorrent
     solaar
     nomacs
-    cmatrix
     bat
     exa
     neofetch
     xorg-xev
     btop
-    kget
     the_silver_searcher
-    nodejs
-    npm
+    nvm
     alacritty
     ripgrep
     github-cli
-    kmix
-    copyq
     sshpass
     jq
-    autorandr
-    syncthing
-    urlscan
 END
 )
 echo -e "Official packages: $PACKAGES"
@@ -56,15 +46,17 @@ fi
 
 
 AUR_packages=$(cat <<-END
-    imagej
     zoom
-    betterlockscreen
 END
 )
 echo -e "AUR packages: $AUR_packages"
 
 if ask "Install AUR packages" N; then
     yay --needed --answerclean None -S $AUR_packages
+fi
+
+if ask "Install flatpak packages" N; then
+    cat arch/flatpak-packages.txt | xargs flatpak install -y
 fi
 
 if ask "kmonad" N; then
@@ -85,54 +77,28 @@ if ask "Python packages" Y; then
     source ~/anaconda3/etc/profile.d/conda.sh
     conda activate base
 
-    conda install -y -c conda-forge universal-ctags
     # scientific packages
-    pip install ranger scikit-image numpy matplotlib opencv-python pandas
+    pip install scikit-image numpy matplotlib opencv-python pandas
     # system and utility
-    pip install pyudev i3-balance-workspace
+    pip install pyudev
 fi
 
 if ask "Set up Github cli" Y; then
     gh config set -h github.com git_protocol ssh
 fi
 
-
 if ask "Set up laptop power settings" N; then
     xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/logind-handle-lid-switch -s false
 fi
 
-
-if ask "Activate betterlockscreen" Y; then
-    xfconf-query -c xfce4-session -p /general/LockCommand -s "betterlockscreen -l" -n -t string
+if ask "Run general install script now?" Y; then
+    bash ~/dotfiles/install.sh
 fi
-
 
 echo "Install e.g. Teams via Flathub/Discover"
 
 # for laptop
 echo "for laptop: fix the idle vs deep sleep kernel parameter, see arch wiki"
-
-
-if ask "Install ncspot from Github"; then
-    yay --noconfirm -S ncspot-git
-    yay --noconfirm -R ncspot-git # keep dependencies
-    git clone https://github.com/hrkfdn/ncspot.git ~/ncspot
-    cd ~/ncspot
-    cargo build --release --features cover
-    cp target/release/ncspot ~/bin
-fi
-
-
-if ask "Install personal awesome fork"; then
-    yay --noconfirm -S awesome-git
-    yay --noconfirm -R awesome-git # keep dependencies
-    git clone https://github.com/charlesnchr/awesome ~/awesome
-    cd ~/awesome
-    make
-    sudo make install
-    sudo cp awesome.desktop /usr/share/xsessions
-fi
-
 
 if ask "Run general install script now?" Y; then
     bash ~/dotfiles/install.sh
