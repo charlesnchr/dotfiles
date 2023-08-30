@@ -835,7 +835,7 @@ nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gr <cmd>TroubleToggle lsp_references<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
 
 
@@ -1273,3 +1273,5 @@ cnoremap <A-e> <End>
 autocmd ColorScheme * lua require('leap').init_highlight(true)
 
 command! Colo silent !zsh -c 'source ~/.zshrc; colo'
+
+nnoremap <leader>bb :call pymode#breakpoint#operate(line('.'))<CR>

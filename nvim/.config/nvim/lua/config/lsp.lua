@@ -132,7 +132,7 @@ local function config(_config)
 				opts
 			)
 			vim.keymap.set("n", "<space>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-			vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+			vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 			vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
 			vim.keymap.set("n", "<space>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
