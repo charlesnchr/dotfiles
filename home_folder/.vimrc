@@ -836,7 +836,7 @@ nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gr <cmd>TroubleToggle lsp_references<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
 
 
@@ -1242,6 +1242,8 @@ let g:gutentags_ctags_extra_args = [
 
 " gh copy :GetCurrentBranchLink then: (a) :OscYankRegister + or (b) tty-copy <C-prefix ]> in tmux
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankRegister +<CR>:echo @+<CR>
+" link to current file in github, or just branch link if not in a file like startify
+map <localleader>gb :GBrowse!<CR>:echo @+<CR>
 
 nmap <leader>e :AerialToggle<CR>
 
@@ -1265,6 +1267,7 @@ cnoremap <A-e> <End>
 autocmd ColorScheme * lua require('leap').init_highlight(true)
 
 command! Colo silent !zsh -c 'source $HOME/.zshrc; colo'
+nnoremap <leader>bb :call pymode#breakpoint#operate(line('.'))<CR>
 
 " triple backtick for code blocks using vim-surround
 let b:surround_{char2nr('e')} = "```\r```"

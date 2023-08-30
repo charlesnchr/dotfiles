@@ -308,7 +308,8 @@ function per-directory-history() {
 # }
 
 
-bindkey '^X^F' histdb-fzf-widget
+bindkey '^R' histdb-fzf-widget
+bindkey '^X^F' fzf-history-widget
 
 setopt menu_complete
 

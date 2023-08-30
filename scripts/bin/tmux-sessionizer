@@ -18,6 +18,7 @@ fixed_dirs=(
     ~/qmk_firmware
     ~/dotfiles
     ~/0main
+    /oni
 )
 
 # Search for directories in all directories
