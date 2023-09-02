@@ -78,15 +78,17 @@ toggle-mute-Mic@Full HD webcam=none,none,Mute Mic on Full HD webcam
 toggle-mute-PCM@RØDE NT-USB Mini=none,none,Mute PCM on RØDE NT-USB Mini
 
 [ksmserver]
-Halt Without Confirmation=none,none,Halt Without Confirmation
+Halt Without Confirmation=none,,Halt Without Confirmation
 Lock Session=Screensaver,Meta+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Log Out
-Log Out Without Confirmation=none,none,Log Out Without Confirmation
-Reboot Without Confirmation=none,none,Reboot Without Confirmation
-_k_friendly_name=KWin
+Log Out Without Confirmation=none,,Log Out Without Confirmation
+Reboot Without Confirmation=none,,Reboot Without Confirmation
+_k_friendly_name=Session Management
 
 [kwin]
 Activate Window Demanding Attention=Meta+Ctrl+A,Meta+Ctrl+A,Activate Window Demanding Attention
+ClearLastMouseMark=Meta+Shift+F12,Meta+Shift+F12,Clear Last Mouse Mark
+ClearMouseMarks=Meta+Shift+F11,Meta+Shift+F11,Clear Mouse Marks
 Decrease Opacity=none,,Decrease Opacity of Active Window by 5%
 Edit Tiles=Alt+Shift+T,Meta+T,Toggle Tiles Editor
 Expose=Ctrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
@@ -168,6 +170,7 @@ Switch to Screen to the Right=none,,Switch to Screen to the Right
 Switch to last used desktop=Meta+W,none,
 Toggle Night Color=none,none,Toggle Night Colour
 Toggle Window Raise/Lower=none,,Toggle Window Raise/Lower
+ToggleCurrentThumbnail=Meta+Ctrl+T,Meta+Ctrl+T,Toggle Thumbnail for Current Window
 Walk Through Desktop List=none,,Walk Through Desktop List
 Walk Through Desktop List (Reverse)=none,,Walk Through Desktop List (Reverse)
 Walk Through Desktops=none,,Walk Through Desktops

@@ -1,3 +1,22 @@
+local auto_dark_mode = require("auto-dark-mode")
+auto_dark_mode.setup({
+	update_interval = 2000,
+	set_dark_mode = function()
+		vim.api.nvim_set_option("background", "dark")
+		vim.cmd("colorscheme tokyonight")
+		vim.cmd("AirlineTheme catppuccin")
+        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+	end,
+	set_light_mode = function()
+		vim.api.nvim_set_option("background", "light")
+		vim.cmd("colorscheme tokyonight-day")
+		vim.cmd("AirlineTheme atomic")
+        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+	end,
+})
+auto_dark_mode.init()
+
+
 require("mason").setup({
 	automatic_installation = { exclude = { "pylsp" } },
 	ui = {
@@ -305,24 +324,6 @@ require("telescope").setup({
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("ui-select")
-
-local auto_dark_mode = require("auto-dark-mode")
-auto_dark_mode.setup({
-	update_interval = 2000,
-	set_dark_mode = function()
-		vim.api.nvim_set_option("background", "dark")
-		vim.cmd("colorscheme tokyonight")
-		vim.cmd("AirlineTheme catppuccin")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-	set_light_mode = function()
-		vim.api.nvim_set_option("background", "light")
-		vim.cmd("colorscheme tokyonight-day")
-		vim.cmd("AirlineTheme atomic")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-})
-auto_dark_mode.init()
 
 -- For color-picker.nvim
 local opts = { noremap = true, silent = true }

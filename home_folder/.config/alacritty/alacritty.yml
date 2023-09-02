@@ -73,69 +73,113 @@ font:
 
   # AppleFontSmoothing: true
 
-# # Colors (shades-of-purple)
-# colors:
-#   bright:
-#     black: '#686868'
-#     blue: '#6871ff'
-#     cyan: '#79e8fb'
-#     green: '#43d426'
-#     magenta: '#ff77ff'
-#     red: '#f92a1c'
-#     white: '#ffffff'
-#     yellow: '#f1d000'
-#   cursor:
-#     cursor: '#fad000'
-#     text: '#fefff4'
-#   normal:
-#     black: '#000000'
-#     blue: '#6943ff'
-#     cyan: '#00c5c7'
-#     green: '#3ad900'
-#     magenta: '#ff2c70'
-#     red: '#d90429'
-#     white: '#c7c7c7'
-#     yellow: '#ffe700'
-#   primary:
-#     background: '#1e1d40'
-#     foreground: '#ffffff'
-#   selection:
-#     background: '#b362ff'
-#     text: '#c2c2c2'
-
-# Used for a long time
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x1f2022'
-#     foreground: '0xa3a3a3'
-#   # Colors the cursor will use if `custom_cursor_colors` is true
-#   cursor:
-#     text: '0x1f2022'
-#     cursor: '0xa3a3a3'
-#   # Normal colors
-#   normal:
-#     black:   '0x1f2022'
-#     red:     '0xf2241f'
-#     green:   '0x67b11d'
-#     yellow:  '0xb1951d'
-#     blue:    '0x4f97d7'
-#     magenta: '0xa31db1'
-#     cyan:    '0x2d9574'
-#     white:   '0xa3a3a3'
-#   # Bright colors
-#   bright:
-#     black:   '0x585858'
-#     red:     '0xf2241f'
-#     green:   '0x67b11d'
-#     yellow:  '0xb1951d'
-#     blue:    '0x4f97d7'
-#     magenta: '0xa31db1'
-#     cyan:    '0x2d9574'
-#     white:   '0xf8f8f8'
-#
-
 schemes:
+
+     # Used for a long time
+  oldtheme: &oldtheme
+     colors:
+       # Default colors
+       primary:
+         background: '0x1f2022'
+         foreground: '0xa3a3a3'
+       # Colors the cursor will use if `custom_cursor_colors` is true
+       cursor:
+         text: '0x1f2022'
+         cursor: '0xa3a3a3'
+       # Normal colors
+       normal:
+         black:   '0x1f2022'
+         red:     '0xf2241f'
+         green:   '0x67b11d'
+         yellow:  '0xb1951d'
+         blue:    '0x4f97d7'
+         magenta: '0xa31db1'
+         cyan:    '0x2d9574'
+         white:   '0xa3a3a3'
+       # Bright colors
+       bright:
+         black:   '0x585858'
+         red:     '0xf2241f'
+         green:   '0x67b11d'
+         yellow:  '0xb1951d'
+         blue:    '0x4f97d7'
+         magenta: '0xa31db1'
+         cyan:    '0x2d9574'
+         white:   '0xf8f8f8'
+
+
+  shades-of-purple: &shades-of-purple
+    colors:
+      bright:
+        black: '#686868'
+        blue: '#6871ff'
+        cyan: '#79e8fb'
+        green: '#43d426'
+        magenta: '#ff77ff'
+        red: '#f92a1c'
+        white: '#ffffff'
+        yellow: '#f1d000'
+      cursor:
+        cursor: '#fad000'
+        text: '#fefff4'
+      normal:
+        black: '#000000'
+        blue: '#6943ff'
+        cyan: '#00c5c7'
+        green: '#3ad900'
+        magenta: '#ff2c70'
+        red: '#d90429'
+        white: '#c7c7c7'
+        yellow: '#ffe700'
+      primary:
+        background: '#1e1d40'
+        foreground: '#ffffff'
+      selection:
+        background: '#b362ff'
+        text: '#c2c2c2'
+
+  rose-pine-dawn: &rose-pine-dawn
+    primary:
+      background: "0xfaf4ed"
+      foreground: "0x575279"
+    cursor:
+      text: "0x575279"
+      cursor: "0xcecacd"
+    vi_mode_cursor:
+      text: "0x575279"
+      cursor: "0xcecacd"
+    line_indicator:
+      foreground: None
+      background: None
+    selection:
+      text: "0x575279"
+      background: "0xdfdad9"
+    normal:
+      black: "0xf2e9e1"
+      red: "0xb4637a"
+      green: "0x286983"
+      yellow: "0xea9d34"
+      blue: "0x56949f"
+      magenta: "0x907aa9"
+      cyan: "0xd7827e"
+      white: "0x575279"
+    bright:
+      black: "0x9893a5"
+      red: "0xb4637a"
+      green: "0x286983"
+      yellow: "0xea9d34"
+      blue: "0x56949f"
+      magenta: "0x907aa9"
+      cyan: "0xd7827e"
+      white: "0x575279"
+    hints:
+      start:
+        foreground: "#797593"
+        background: "#fffaf3"
+      end:
+        foreground: "#9893a5"
+        background: "#fffaf3"
+
   # Tokyo Night theme, based on both:
   #   https://github.com/ghifarit53/tokyonight-vim
   #   https://github.com/enkia/tokyo-night-vscode-theme
@@ -224,40 +268,118 @@ schemes:
       white:   '0xacb0d0'
 
   folke-tokyo-night: &folke-tokyo-night
-    colors:
-      # Default colors
-      primary:
-        background: '0x1b1f30'
-        foreground: '0xbbc2e0'
+    # Default colors
+    primary:
+      background: '0x1b1f30'
+      foreground: '0xbbc2e0'
 
-      # Cursor colors
-      cursor:
-        text:   '0x28b9d2'
-        cursor: '0xc0caf5'
+    # Cursor colors
+    cursor:
+      text:   '0x28b9d2'
+      cursor: '0xc0caf5'
 
-      # Normal colors
-      normal:
-        black:   '0x414868'
-        red:     '0xf7768e'
-        green:   '0x41b59b'
-        yellow:  '0xe0af68'
-        blue:    '0x7ba2f3'
-        magenta: '0xbb9af7'
-        cyan:    '0x2ccde9'
-        white:   '0xc0caf5'
+    # Normal colors
+    normal:
+      black:   '0x414868'
+      red:     '0xf7768e'
+      green:   '0x41b59b'
+      yellow:  '0xe0af68'
+      blue:    '0x7ba2f3'
+      magenta: '0xbb9af7'
+      cyan:    '0x2ccde9'
+      white:   '0xc0caf5'
 
-      # Bright colors
-      bright:
-        black:   '0x414868'
-        red:     '0xf7768e'
-        green:   '0x41b59b'
-        yellow:  '0xe0af68'
-        blue:    '0x7ba2f3'
-        magenta: '0xbb9af7'
-        cyan:    '0x2ac4de'
-        white:   '0xc0caf5'
+    # Bright colors
+    bright:
+      black:   '0x414868'
+      red:     '0xf7768e'
+      green:   '0x41b59b'
+      yellow:  '0xe0af68'
+      blue:    '0x7ba2f3'
+      magenta: '0xbb9af7'
+      cyan:    '0x2ac4de'
+      white:   '0xc0caf5'
 
-colors: *tokyo-night-storm
+  catppuccin-latte: &catppuccin-latte
+    primary:
+        background: "#EFF1F5" # base
+        foreground: "#4C4F69" # text
+        # Bright and dim foreground colors
+        dim_foreground: "#4C4F69" # text
+        bright_foreground: "#4C4F69" # text
+
+    # Cursor colors
+    cursor:
+        text: "#EFF1F5" # base
+        cursor: "#DC8A78" # rosewater
+    vi_mode_cursor:
+        text: "#EFF1F5" # base
+        cursor: "#7287FD" # lavender
+
+    # Search colors
+    search:
+        matches:
+            foreground: "#EFF1F5" # base
+            background: "#6C6F85" # subtext0
+        focused_match:
+            foreground: "#EFF1F5" # base
+            background: "#40A02B" # green
+        footer_bar:
+            foreground: "#EFF1F5" # base
+            background: "#6C6F85" # subtext0
+
+    # Keyboard regex hints
+    hints:
+        start:
+            foreground: "#EFF1F5" # base
+            background: "#DF8E1D" # yellow
+        end:
+            foreground: "#EFF1F5" # base
+            background: "#6C6F85" # subtext0
+
+    # Selection colors
+    selection:
+        text: "#EFF1F5" # base
+        background: "#DC8A78" # rosewater
+
+    # Normal colors
+    normal:
+        black: "#5C5F77" # subtext1
+        red: "#D20F39" # red
+        green: "#40A02B" # green
+        yellow: "#DF8E1D" # yellow
+        blue: "#1E66F5" # blue
+        magenta: "#EA76CB" # pink
+        cyan: "#179299" # teal
+        white: "#ACB0BE" # surface2
+
+    # Bright colors
+    bright:
+        black: "#6C6F85" # subtext0
+        red: "#D20F39" # red
+        green: "#40A02B" # green
+        yellow: "#DF8E1D" # yellow
+        blue: "#1E66F5" # blue
+        magenta: "#EA76CB" # pink
+        cyan: "#179299" # teal
+        white: "#BCC0CC" # surface1
+
+    # Dim colors
+    dim:
+        black: "#5C5F77" # subtext1
+        red: "#D20F39" # red
+        green: "#40A02B" # green
+        yellow: "#DF8E1D" # yellow
+        blue: "#1E66F5" # blue
+        magenta: "#EA76CB" # pink
+        cyan: "#179299" # teal
+        white: "#ACB0BE" # surface2
+
+    indexed_colors:
+        - { index: 16, color: "#FE640B" }
+        - { index: 17, color: "#DC8A78" }
+
+colors: *tokyo-night
 
 key_bindings:
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }

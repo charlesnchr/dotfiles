@@ -48,6 +48,13 @@ desktopsrule=3
 wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
 wmclassmatch=1
 
+[5]
+Description=Settings for spotify
+desktops=a548d395-affe-4ec2-a8ed-e2be603a3582
+desktopsrule=3
+wmclass=spotify
+wmclassmatch=1
+
 [697c5280-1b73-4f82-8b5b-2e48220861c2]
 Description=mplayer on all
 desktops=\\0
@@ -73,7 +80,7 @@ wmclassmatch=1
 
 [General]
 count=5
-rules=1,2,3,4,adf99f2b-c3f1-41da-8d91-5954f69bc5c4
+rules=1,2,3,4,5
 
 [adf99f2b-c3f1-41da-8d91-5954f69bc5c4]
 Description=Settings for spotify
