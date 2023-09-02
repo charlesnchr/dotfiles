@@ -580,8 +580,6 @@ nnoremap <silent> <F11> :FloatermNext<CR>
 tnoremap <silent> <F11> <C-\><C-n>:FloatermNext<CR>
 nnoremap <silent> <F12> :FloatermToggle<CR>
 tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <F7> :Ttoggle<CR>
-tnoremap <silent> <F7> <C-\><C-n>:Ttoggle<CR>
 
 " annoying when it is esc, messes with popup windows
 tnoremap <C-b> <C-\><C-n>
@@ -1256,6 +1254,9 @@ nmap <localleader>n :Neoformat<CR>
 
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+nnoremap <silent> <F4> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><F4> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+tnoremap <silent> <F4> <C-\><C-n><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>
