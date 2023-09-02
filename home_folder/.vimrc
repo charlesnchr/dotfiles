@@ -145,8 +145,6 @@ Plug 'vim-scripts/repeatable-motions.vim'
 Plug 'rcarriga/nvim-notify'
 
 " Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-Plug 'panozzaj/vim-autocorrect'
-Plug 'sedm0784/vim-you-autocorrect'
 
 " tested both for latex and they work with chktex, null-ls is buggy, both are
 " not ideal
@@ -428,27 +426,27 @@ set termguicolors
 
 if has('mac')
     " for mac: theme applied on startup, then synced via lua theme
-    let output = system("defaults read -g AppleInterfaceStyle")
+    let output =  system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
         let g:airline_theme = 'atomic'
         set background=light
-        colorscheme catppuccin-latte
+        colorscheme tokyonight-day
     else
         let g:airline_theme = 'catppuccin'
         set background=dark
         colorscheme tokyonight
     endif
 elseif has('unix')
-    " for linux (assuming you're using XFCE)
-    let output = system("xfconf-query -c xsettings -p /Net/ThemeName")
-    if trim(output) == "Adwaita"
+
+    let output =  system("cat ~/dotfiles/is_dark_mode")
+    if output == 0
+        let g:airline_theme = 'atomic'
         set background=light
         colorscheme tokyonight-day
-        let g:airline_theme = 'atomic'
     else
+        let g:airline_theme = 'catppuccin'
         set background=dark
         colorscheme tokyonight
-        let g:airline_theme = 'catppuccin'
     endif
 endif
 
@@ -834,7 +832,7 @@ nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gr <cmd>TroubleToggle lsp_references<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
 
 
@@ -1268,6 +1266,7 @@ cnoremap <A-e> <End>
 autocmd ColorScheme * lua require('leap').init_highlight(true)
 
 command! Colo silent !zsh -c 'source $HOME/.zshrc; colo'
+nnoremap <leader>bb :call pymode#breakpoint#operate(line('.'))<CR>
 
 " triple backtick for code blocks using vim-surround
 let b:surround_{char2nr('e')} = "```\r```"
@@ -1280,4 +1279,7 @@ map <localleader>vx :1,$-1yank +<CR><Bar> :OSCYankRegister +<CR><Bar> :q!<CR>
 augroup vimrc
   autocmd TermOpen * :DisableWhitespace
 augroup END
+
+set shada=!,'1000,<500,s100,h
+
 

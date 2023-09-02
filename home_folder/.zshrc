@@ -264,17 +264,8 @@ jog() {
     }
 
 colo() {
-    # if option does not exist: xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "Adwaita"
-
-    # Check the current theme
-    current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
-
-    # Toggle theme based on the current setting
-    if [[ $current_theme == "Adwaita-dark" ]]; then
-        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita"
-    else
-        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-    fi
+    file_path=~/dotfiles/is_dark_mode
+    [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
 }
 
 
@@ -308,7 +299,8 @@ function per-directory-history() {
 # }
 
 
-bindkey '^X^F' histdb-fzf-widget
+bindkey '^R' histdb-fzf-widget
+bindkey '^X^F' fzf-history-widget
 
 setopt menu_complete
 

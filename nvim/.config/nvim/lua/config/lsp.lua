@@ -132,7 +132,7 @@ local function config(_config)
 				opts
 			)
 			vim.keymap.set("n", "<space>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-			vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+			vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 			vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
 			vim.keymap.set("n", "<space>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
@@ -181,17 +181,17 @@ require("lspconfig").zls.setup(config())
 require("lspconfig").tsserver.setup(config())
 
 local lspconfig = require("lspconfig")
-lspconfig.ccls.setup({
-	init_options = {
-		compilationDatabaseDirectory = "build",
-		index = {
-			threads = 0,
-		},
-		clang = {
-			excludeArgs = { "-frounding-math" },
-		},
-	},
-})
+-- lspconfig.ccls.setup({
+-- 	init_options = {
+-- 		compilationDatabaseDirectory = "build",
+-- 		index = {
+-- 			threads = 0,
+-- 		},
+-- 		clang = {
+-- 			excludeArgs = { "-frounding-math" },
+-- 		},
+-- 	},
+-- })
 
 -- require("lspconfig").jedi_language_server.setup(config())
 
