@@ -11,8 +11,8 @@ Plug 'junegunn/fzf.vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Plug 'Raimondi/delimitMate'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-syntastic/syntastic'
 
 " got to be annoying with underline
@@ -57,7 +57,7 @@ Plug 'rbonvall/vim-textobj-latex'
 Plug 'jeetsukumaran/vim-pythonsense'
 
 Plug 'mhinz/vim-startify'
-Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+" Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -79,7 +79,6 @@ Plug 'romainl/vim-cool'
 Plug 'preservim/tagbar'
 
 Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
 
 Plug 'rupa/v'
 Plug 'ojroques/vim-oscyank'
@@ -112,6 +111,7 @@ Plug 'hrsh7th/cmp-cmdline'
 " Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
@@ -161,7 +161,6 @@ Plug 'kana/vim-operator-user'
 Plug 'jesseleite/vim-agriculture'
 Plug 'charlesnchr/auto-dark-mode.nvim'
 " Plug 'f-person/auto-dark-mode.nvim'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
 
@@ -178,7 +177,9 @@ Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
 Plug 'github/copilot.vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'folke/tokyonight.nvim'
+Plug 'rose-pine/neovim'
 Plug 'knsh14/vim-github-link'
 Plug 'tpope/vim-rhubarb'
 Plug 'stevearc/aerial.nvim'
@@ -190,10 +191,16 @@ Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'dstein64/vim-startuptime'
-Plug 'stevearc/dressing.nvim'
+
+" modern gui popups
+" Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
+
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'mbbill/undotree'
+Plug 'Eandrju/cellular-automaton.nvim'
+Plug 'VonHeikemen/lsp-zero.nvim'
 
 call plug#end()
 
@@ -234,33 +241,40 @@ nnoremap <localleader>fv :Buffers<cr>
 nnoremap <localleader>fc :Commands<cr>
 nnoremap <localleader>fb :Buffers<cr>
 nnoremap <localleader>fm :Marks<cr>
-
-" Bufferline bar
-nnoremap <silent><localleader>bp :BufferLinePick<cr>
-nnoremap <silent><localleader>bc :BufferLinePickClose<cr>
-nnoremap <silent><localleader>bd :bd<cr>
-nnoremap <silent><localleader>bg :BufferLineGoToBuffer<space>
-nnoremap <silent><localleader>bl :BufferLineMoveNext<CR>
-nnoremap <silent><localleader>bh :BufferLineMovePrev<CR>
-nnoremap <silent> [b :BufferLineCyclePrev<CR>
-nnoremap <silent> ]b :BufferLineCycleNext<CR>
-nnoremap <silent>    <A-x> :BufferLineCyclePrev<CR>
-nnoremap <silent>    <A-c> :BufferLineCycleNext<CR>
-nnoremap <silent>    <A-X> :BufferLineMovePrev<CR>
-nnoremap <silent>    <A-C> :BufferLineMoveNext<CR>
-nnoremap <silent>    <A-1> :BufferLineGoToBuffer 1<CR>
-nnoremap <silent>    <A-2> :BufferLineGoToBuffer 2<CR>
-nnoremap <silent>    <A-3> :BufferLineGoToBuffer 3<CR>
-nnoremap <silent>    <A-4> :BufferLineGoToBuffer 4<CR>
-nnoremap <silent>    <A-5> :BufferLineGoToBuffer 5<CR>
-nnoremap <silent>    <A-6> :BufferLineGoToBuffer 6<CR>
-nnoremap <silent>    <A-7> :BufferLineGoToBuffer 7<CR>
-nnoremap <silent>    <A-8> :BufferLineGoToBuffer 8<CR>
-
-
-
 nnoremap <localleader>fh :History<cr>
 nnoremap <localleader>fw :Windows<cr>
+
+
+" " " wrapper for bufferline goto
+" nnoremap <silent>gb :<C-u>call BufferGoto()<CR>
+" function! BufferGoto()
+"     exec ':BufferLineGoToBuffer' v:count1
+" endfunction
+
+" " Bufferline bar
+" nnoremap <silent><localleader>bp :BufferLinePick<cr>
+" nnoremap <silent><localleader>bc :BufferLinePickClose<cr>
+" nnoremap <silent><localleader>d :bd<cr>
+" nnoremap <silent><localleader>bg :BufferLineGoToBuffer<space>
+" nnoremap <silent><localleader>bl :BufferLineMoveNext<CR>
+" nnoremap <silent><localleader>bh :BufferLineMovePrev<CR>
+" nnoremap <silent> [b :BufferLineCyclePrev<CR>
+" nnoremap <silent> ]b :BufferLineCycleNext<CR>
+" nnoremap <silent>    <A-x> :BufferLineCyclePrev<CR>
+" nnoremap <silent>    <A-c> :BufferLineCycleNext<CR>
+" nnoremap <silent>    <A-X> :BufferLineMovePrev<CR>
+" nnoremap <silent>    <A-C> :BufferLineMoveNext<CR>
+" nnoremap <silent>    <localleader>1 :BufferLineGoToBuffer 1<CR>
+" nnoremap <silent>    <localleader>2 :BufferLineGoToBuffer 2<CR>
+" nnoremap <silent>    <localleader>3 :BufferLineGoToBuffer 3<CR>
+" nnoremap <silent>    <localleader>4 :BufferLineGoToBuffer 4<CR>
+" nnoremap <silent>    <localleader>5 :BufferLineGoToBuffer 5<CR>
+" nnoremap <silent>    <localleader>6 :BufferLineGoToBuffer 6<CR>
+" nnoremap <silent>    <localleader>7 :BufferLineGoToBuffer 7<CR>
+" nnoremap <silent>    <localleader>8 :BufferLineGoToBuffer 8<CR>
+
+
+
 " nnoremap <localleader>aj :CtrlPTag<cr>
 " nnoremap <localleader>aa :CtrlPBufTag<cr>
 " nnoremap <localleader>as :CtrlPBuffer<cr>
@@ -373,37 +387,37 @@ let g:startify_lists = [
 " set statusline+=%=
 " set statusline+=%{getcwd()}\ TIME:\ %{strftime('%c')}
 " let g:airline_theme = 'tomorrow'
-let g:airline#extensions#tabline#enabled = 0           " enable airline tabline
-let g:airline#extensions#branch#enabled = 0           " disable branch
-set statusline+=%{gutentags#statusline()}
+" let g:airline#extensions#tabline#enabled = 0           " enable airline tabline
+" let g:airline#extensions#branch#enabled = 0           " disable branch
+" set statusline+=%{gutentags#statusline()}
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+"     let g:airline_symbols = {}
+" endif
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+" " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
 
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '㏑'
-let g:airline_section_x = '%{PencilMode()}'
+" " airline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_symbols.linenr = '㏑'
+" let g:airline_section_x = '%{PencilMode()}'
 
 set laststatus=2
 " set showtabline=0
@@ -621,7 +635,6 @@ imap <C-k> <Esc>:wq<CR>
 nnoremap <D-v> "+p
 inoremap <D-v> <C-r>+
 
-nnoremap <localleader>c :close<cr>
 nnoremap <localleader>0 :Startify<cr>
 " nicer to have pwd
 " nnoremap <localleader>cd :cd %:h<cr>
@@ -794,6 +807,7 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
 nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
+nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
 nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
@@ -835,8 +849,6 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xr <cmd>TroubleRefresh<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
-nnoremap <localleader>d <cmd>lua require('config.lsp').show_line_diagnostics()<cr>
-
 
 let g:pymode_lint_on_write = 0
 
@@ -876,15 +888,14 @@ autocmd BufWinEnter *.py nmap <silent> <F5>:w<CR>:terminal python -m pdb '%:p'<C
 
 nnoremap <localleader>= <cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>
 nnoremap <localleader>- <cmd>lua require("harpoon.mark").add_file()<cr>
-nnoremap <localleader>1 <cmd>lua require("harpoon.ui").nav_file(1)<cr>
-nnoremap <localleader>2 <cmd>lua require("harpoon.ui").nav_file(2)<cr>
-nnoremap <localleader>3 <cmd>lua require("harpoon.ui").nav_file(3)<cr>
-nnoremap <localleader>4 <cmd>lua require("harpoon.ui").nav_file(4)<cr>
-nnoremap <localleader>5 <cmd>lua require("harpoon.ui").nav_file(5)<cr>
-nnoremap <localleader>6 <cmd>lua require("harpoon.ui").nav_file(6)<cr>
-nnoremap <localleader>7 <cmd>lua require("harpoon.ui").nav_file(7)<cr>
-nnoremap <localleader>8 <cmd>lua require("harpoon.ui").nav_file(8)<cr>
-nnoremap <localleader>9 <cmd>lua require("harpoon.ui").nav_file(9)<cr>
+nnoremap <A-1> <cmd>lua require("harpoon.ui").nav_file(1)<cr>
+nnoremap <A-2> <cmd>lua require("harpoon.ui").nav_file(2)<cr>
+nnoremap <A-3> <cmd>lua require("harpoon.ui").nav_file(3)<cr>
+nnoremap <A-4> <cmd>lua require("harpoon.ui").nav_file(4)<cr>
+nnoremap <A-5> <cmd>lua require("harpoon.ui").nav_file(5)<cr>
+nnoremap <A-6> <cmd>lua require("harpoon.ui").nav_file(6)<cr>
+nnoremap <A-7> <cmd>lua require("harpoon.ui").nav_file(7)<cr>
+nnoremap <A-8> <cmd>lua require("harpoon.ui").nav_file(8)<cr>
 nnoremap <localleader>t1 <cmd>lua require("harpoon.term").gotoTerminal(1)<cr>
 
 let g:peekaboo_prefix = '<localleader>'
@@ -895,12 +906,6 @@ let g:peekaboo_prefix = '<localleader>'
 " nnoremap <C-u> t
 
 
-
-" wrapper for bufferline goto
-nnoremap <silent>gb :<C-u>call BufferGoto()<CR>
-function! BufferGoto()
-    exec ':BufferLineGoToBuffer' v:count1
-endfunction
 
 " let g:NERDTreeHijackNetrw = 0
 " let g:ranger_replace_netrw = 1
@@ -1281,4 +1286,15 @@ augroup END
 
 set shada=!,'1000,<500,s100,h
 
+" keybinding for undo tree
+let g:undotree_SetFocusWhenToggle = 1
+nnoremap <localleader>ut :UndotreeToggle<CR>
+nnoremap <localleader>um :MundoShow<CR>
+
+" bindings from primagen
+nnoremap <localleader>s/ :%s/<C-r><C-w>//gI<Left><Left><Left>
+xnoremap <localleader>sp "_dP
+xnoremap <localleader>sd "_d
+nnoremap <localleader>sd "_d
+nnoremap <localleader>mr :CellularAutomaton make_it_rain<CR>
 

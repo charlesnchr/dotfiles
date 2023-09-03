@@ -10,12 +10,12 @@ current_mode=$(cat ~/dotfiles/is_dark_mode)
 
 if [[ "$current_mode" == "0" ]]; then
     # Currently in light mode, so switch to dark mode
-    sed -i 's/^colors:.*$/colors: \*tokyo-night/' ~/.config/alacritty/alacritty.yml
+    sed -i 's/^colors:.*$/colors: \*folke-tokyo-night/' ~/.config/alacritty/alacritty.yml
     lookandfeeltool -a org.manjaro.breath-dark.desktop
     echo "1" > ~/dotfiles/is_dark_mode  # Update the mode in the file
 else
     # Currently in dark mode, so switch to light mode
-    sed -i 's/^colors:.*$/colors: \*rose-pine-dawn/' ~/.config/alacritty/alacritty.yml
+    sed -i 's/^colors:.*$/colors: \*folke-tokyo-night-day/' ~/.config/alacritty/alacritty.yml
     lookandfeeltool -a org.manjaro.breath-light.desktop
     echo "0" > ~/dotfiles/is_dark_mode  # Update the mode in the file
 fi

@@ -4,13 +4,13 @@ auto_dark_mode.setup({
 	set_dark_mode = function()
 		vim.api.nvim_set_option("background", "dark")
 		vim.cmd("colorscheme tokyonight")
-		vim.cmd("AirlineTheme catppuccin")
+		-- vim.cmd("AirlineTheme catppuccin")
         vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
 	set_light_mode = function()
 		vim.api.nvim_set_option("background", "light")
 		vim.cmd("colorscheme tokyonight-day")
-		vim.cmd("AirlineTheme atomic")
+		-- vim.cmd("AirlineTheme atomic")
         vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
 })
@@ -28,141 +28,47 @@ require("mason").setup({
 	},
 })
 
--- Setup nvim-cmp.
-local cmp = require("cmp")
 
-local source_mapping = {
-	nvim_lsp = "(LSP)",
-	nvim_lua = "(Lua)",
-	emoji = "(Emoji)",
-	path = "(Path)",
-	calc = "(Calc)",
-	-- cmp_tabnine = "(Tabnine)",
-	ultisnips = "(Snippet)",
-	buffer = "(Buffer)",
-}
-
--- vim_item.kind = kind_icons[vim_item.kind]
--- -- vim_item.menu = source_names[entry.source.name]
--- vim_item.dup = duplicates[entry.source.name]
---  -- or cmp.formatting.duplicates_default
--- return vim_item
--- local duplicates = {
---    buffer = 1,
---    path = 1,
---    nvim_lsp = 0,
---    luasnip = 1,
---    ultisnips = 1,
--- };
-
-local lspkind = require("lspkind")
-
-cmp.setup({
-	window = {
-		completion = { -- rounded border; thin-style scrollbar
-			border = nil,
-			scrollbar = "",
-		},
-		documentation = { -- no border; native-style scrollbar
-			border = "rounded",
-			scrollbar = "",
-			-- other options
-		},
-	},
-	snippet = {
-		expand = function(args)
-			-- For `ultisnips` user.
-			vim.fn["UltiSnips#Anon"](args.body)
-		end,
-	},
-	mapping = {
-		["<C-e>"] = cmp.mapping.abort(),
-		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-t>"] = cmp.mapping.complete(),
-		["<C-u>"] = cmp.mapping.scroll_docs(-4),
-		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-n>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-			end
-		end, { "i", "s" }),
-		["<C-p>"] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_prev_item()
-			end
-		end, { "i", "s" }),
-	},
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "path" },
-		{ name = "luasnip" },
-		{ name = "ultisnips" }, -- For ultisnips user.
-		-- { name = "cmp_tabnine" },
-		{ name = "nvim_lua" },
-		{ name = "buffer" },
-		{ name = "calc" },
-		{ name = "emoji" },
-		{ name = "treesitter" },
-		{ name = "crates" },
-	},
-	completion = {
-		keyword_length = 1,
-		completeopt = "menu,noselect",
-	},
-	experimental = {
-		ghost_text = true,
-		native_menu = false,
-	},
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		source_names = {
-			nvim_lsp = "(LSP)",
-			emoji = "(Emoji)",
-			path = "(Path)",
-			calc = "(Calc)",
-			-- cmp_tabnine = "(Tabnine)",
-			ultisnips = "(Snippet)",
-			buffer = "(Buffer)",
-		},
-		duplicates = {
-			buffer = 1,
-			path = 1,
-			nvim_lsp = 0,
-			luasnip = 1,
-		},
-		duplicates_default = 0,
-		format = function(entry, vim_item)
-			vim_item.kind = lspkind.presets.default[vim_item.kind]
-			local menu = source_mapping[entry.source.name]
-			-- if entry.source.name == "cmp_tabnine" then
-			--     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-			--         menu = entry.completion_item.data.detail .. " " .. menu
-			--     end
-			--     vim_item.kind = ""
-			-- end
-			vim_item.menu = menu
-			return vim_item
-		end,
-	},
-})
-
---require("trouble").setup {
--- your configuration comes here
--- or leave it empty to use the default settings
--- refer to the configuration section below
---}
+local lsp = require('lsp-zero').preset({})
 
 require("config.lsp")
 
-require("bufferline").setup({
-	options = {
-		middle_mouse_command = "vertical sbuffer %d",
-	},
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+-- Setup nvim-cmp.
+local cmp = require("cmp")
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_mappings = lsp.defaults.cmp_mappings({
+  -- ["<C-Space>"] = cmp.mapping.complete(),
 })
 
+cmp_mappings['<Tab>'] = nil
+cmp_mappings['<S-Tab>'] = nil
+
+lsp.set_preferences({
+    suggest_lsp_servers = false,
+    sign_icons = {
+        error = 'E',
+        warn = 'W',
+        hint = 'H',
+        info = 'I'
+    }
+})
+
+
+lsp.setup()
+
+-- require("bufferline").setup({
+-- 	options = {
+-- 		middle_mouse_command = "vertical sbuffer %d",
+-- 	},
+-- })
+
 require("nvim-tree").setup({
+
 	git = {
 		enable = false,
 		ignore = false,
@@ -253,37 +159,6 @@ require("nvim-tree").setup({
 
     end
 })
-
--- no use for this currently, spell is annoying, chktex buggy
--- require("null-ls").setup({
---     sources = {
---         require("null-ls").builtins.formatting.stylua,
---         require("null-ls").builtins.diagnostics.eslint,
---         require("null-ls").builtins.completion.spell,
---         -- require("null-ls").builtins.diagnostics.chktex,
---         -- require("null-ls").builtins.formatting.latexindent,
---     },
--- })
-
--- vim.g.neoformat_lua_stylua = {
---     exe = "stylua",
---     args = { "--stdin-filepath", '"%:p"', "--config-path", '"C:\\Users\\Neel\\.stylua.toml"', "--", "-" },
---     stdin = 1,
--- }
--- vim.g.neoformat_tex_latexindent = {
---     exe = "latexindent",
---     args = { "-g /dev/stderr", "2>/dev/null", "-d" },
---     stdin = 1,
--- }
-
--- vim.g.neoformat_run_all_formatters = 1
--- vim.g.neoformat_enabled_python = { "isort", "black" }
--- vim.g.neoformat_enabled_lua = { "stylua" }
--- vim.g.neoformat_enabled_tex = { "latexindent" }
-
--- require('lint').linters_by_ft = {
---   tex = {'chktex','lacheck'}
--- }
 
 local actions = require("telescope.actions")
 
@@ -533,28 +408,6 @@ require("lspsaga").setup({
 
 require('leap').add_default_mappings()
 
-require('dressing').setup({
-})
-
--- require("noice").setup({
---   lsp = {
---     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
---     override = {
---       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
---       ["vim.lsp.util.stylize_markdown"] = true,
---       ["cmp.entry.get_documentation"] = true,
---     },
---   },
---   -- you can enable a preset for easier configuration
---   presets = {
---     bottom_search = true, -- use a classic bottom cmdline for search
---     command_palette = true, -- position the cmdline and popupmenu together
---     long_message_to_split = true, -- long messages will be sent to a split
---     inc_rename = false, -- enables an input dialog for inc-rename.nvim
---     lsp_doc_border = false, -- add a border to hover docs and signature help
---   },
--- })
-
 local python_lsp_home = vim.env.PYTHON_LSP_HOME
 if python_lsp_home == nil then
   -- Use a default value or abort with a meaningful error message
@@ -586,3 +439,5 @@ vim.keymap.set('n', '<Leader>ds', function()
   local widgets = require('dap.ui.widgets')
   widgets.centered_float(widgets.scopes)
 end)
+
+
