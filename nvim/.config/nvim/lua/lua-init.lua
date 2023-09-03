@@ -312,7 +312,11 @@ require("telescope").load_extension("aerial")
 -- You probably also want to set a keymap to toggle aerial
 vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
 
-require("toggleterm").setup()
+require("toggleterm").setup{
+  open_mapping = [[<F4>]],
+  insert_mappings = true, -- whether or not the open mapping applies in insert mode
+  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+}
 
 -- require("chatgpt").setup({
 -- 	welcome_message = WELCOME_MESSAGE,
