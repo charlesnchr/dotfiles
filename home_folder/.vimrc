@@ -1300,3 +1300,5 @@ xnoremap <localleader>sd "_d
 nnoremap <localleader>sd "_d
 nnoremap <localleader>mr :CellularAutomaton make_it_rain<CR>
 
+
+nnoremap <localleader>h :WhichKey<CR>
