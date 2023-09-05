@@ -794,6 +794,7 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
 nnoremap <localleader>js <cmd>lua require'telescope.builtin'.git_files()<cr>
+nnoremap <localleader>a <cmd>lua require'telescope.builtin'.git_files()<cr>
 nnoremap <localleader>jf <cmd>lua require'telescope.builtin'.find_files()<cr>
 nnoremap <localleader>jg <cmd>lua require'telescope.builtin'.live_grep()<cr>
 
@@ -804,9 +805,9 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 " with hidden files
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
-nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
-nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
-nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, ignore_current_buffer = true})<cr>
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
+nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
+nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
 nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>

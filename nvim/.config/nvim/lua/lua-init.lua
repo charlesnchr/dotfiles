@@ -179,8 +179,11 @@ require("telescope").setup({
 			i = {
 				-- ["<esc>"] = actions.close,
 				["<C-f>"] = actions.send_to_qflist + actions.open_qflist,
+                ['<C-b>'] = require('telescope.actions').delete_buffer,
+                ["<C-h>"] = "which_key",
 			},
 			n = {
+                ['<C-b>'] = require('telescope.actions').delete_buffer,
 				["<C-f>"] = actions.send_to_qflist + actions.open_qflist,
 			},
 		},
