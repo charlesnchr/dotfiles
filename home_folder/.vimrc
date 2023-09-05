@@ -794,7 +794,7 @@ let g:vimtex_quickfix_mode = 0
 " nnoremap <leader>ta <cmd>lua require'telescope.builtin'.current_buffer_tags(require('telescope.themes').get_ivy({}))<cr>
 
 nnoremap <localleader>js <cmd>lua require'telescope.builtin'.git_files()<cr>
-nnoremap <localleader>a <cmd>lua require'telescope.builtin'.git_files()<cr>
+nnoremap <localleader>s <cmd>lua require'telescope.builtin'.git_files()<cr>
 nnoremap <localleader>jf <cmd>lua require'telescope.builtin'.find_files()<cr>
 nnoremap <localleader>jg <cmd>lua require'telescope.builtin'.live_grep()<cr>
 
@@ -1294,10 +1294,10 @@ nnoremap <localleader>ut :UndotreeToggle<CR>
 nnoremap <localleader>um :MundoShow<CR>
 
 " bindings from primagen
-nnoremap <localleader>s/ :%s/<C-r><C-w>//gI<Left><Left><Left>
-xnoremap <localleader>sp "_dP
-xnoremap <localleader>sd "_d
-nnoremap <localleader>sd "_d
+nnoremap <localleader>a/ :%s/<C-r><C-w>//gI<Left><Left><Left>
+xnoremap <localleader>ap "_dP
+xnoremap <localleader>ad "_d
+nnoremap <localleader>ad "_d
 nnoremap <localleader>mr :CellularAutomaton make_it_rain<CR>
 
 
