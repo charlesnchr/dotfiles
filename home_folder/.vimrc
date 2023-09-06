@@ -110,13 +110,13 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 " Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" Plug 'L3MON4D3/LuaSnip'
+" Plug 'saadparwaiz2/cmp_luasnip'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'williamboman/mason-lspconfig.nvim'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-" Plug 'L3MON4D3/LuaSnip'
-" Plug 'saadparwaiz2/cmp_luasnip'
 " Plug 'rafamadriz/friendly-snippets'
 
 
@@ -201,6 +201,7 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
+Plug 'rafamadriz/friendly-snippets'
 
 call plug#end()
 
@@ -774,7 +775,6 @@ let g:php_folding = 1
 
 
 
-nnoremap gl :ls<cr>:b<space>
 set hidden
 let g:vimtex_quickfix_mode = 0
 
@@ -805,9 +805,9 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 " with hidden files
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
-nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
-nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
-nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index=2})<cr>
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
+nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
+nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
 nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>

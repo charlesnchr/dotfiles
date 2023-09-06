@@ -1,3 +1,5 @@
+require("config.lsp")
+
 local auto_dark_mode = require("auto-dark-mode")
 auto_dark_mode.setup({
 	update_interval = 2000,
@@ -15,51 +17,6 @@ auto_dark_mode.setup({
 	end,
 })
 auto_dark_mode.init()
-
-
-require("mason").setup({
-	automatic_installation = { exclude = { "pylsp" } },
-	ui = {
-		icons = {
-			server_installed = "✓",
-			server_pending = "➜",
-			server_uninstalled = "✗",
-		},
-	},
-})
-
-
-local lsp = require('lsp-zero').preset({})
-
-require("config.lsp")
-
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
--- Setup nvim-cmp.
-local cmp = require("cmp")
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  -- ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-
-lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-    }
-})
-
-
-lsp.setup()
 
 -- require("bufferline").setup({
 -- 	options = {
@@ -400,20 +357,8 @@ require("toggleterm").setup{
 -- 	},
 -- })
 
-require("lspsaga").setup({
-	symbol_in_winbar = {
-		enable = false,
-		separator = " ",
-		ignore_patterns = {},
-		hide_keyword = true,
-		show_file = true,
-		folder_level = 2,
-		respect_root = false,
-		color_mode = true,
-	},
-})
-
 require('leap').add_default_mappings()
+
 
 local python_lsp_home = vim.env.PYTHON_LSP_HOME
 if python_lsp_home == nil then

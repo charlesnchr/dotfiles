@@ -15,7 +15,7 @@ antigen bundle larkery/zsh-histdb
 antigen bundle charlesnchr/ranger-autojump
 
 antigen bundle chmln/handlr
-# antigen bundle neovim/neovim
+antigen bundle neovim/neovim
 
 # antigen bundle jeffreytse/zsh-vi-mode
 

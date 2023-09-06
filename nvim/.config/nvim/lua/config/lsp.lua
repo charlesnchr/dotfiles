@@ -1,9 +1,91 @@
 local api = vim.api
-local lsp = vim.lsp
 
 vim.notify = require("notify")
 
 local M = {}
+
+require("mason").setup({
+	automatic_installation = { exclude = { "pylsp" } },
+	ui = {
+		icons = {
+			server_installed = "✓",
+			server_pending = "➜",
+			server_uninstalled = "✗",
+		},
+	},
+})
+
+
+local lsp = require('lsp-zero').preset({})
+
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+-- Setup nvim-cmp.
+local cmp = require('cmp')
+local cmp_mappings = lsp.defaults.cmp_mappings({
+		["<C-n>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+			end
+		end, { "i", "s" }),
+		["<C-p>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_prev_item()
+			end
+		end, { "i", "s" }),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
+		["<C-t>"] = cmp.mapping.complete(),
+})
+
+cmp_mappings['<Tab>'] = nil
+cmp_mappings['<S-Tab>'] = nil
+
+lsp.set_preferences({
+    suggest_lsp_servers = true,
+    sign_icons = {
+        error = 'E',
+        warn = 'W',
+        hint = 'H',
+        info = 'I'
+    }
+})
+
+lsp.setup_nvim_cmp({
+  mapping = cmp_mappings,
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "path" },
+		{ name = "luasnip" },
+		{ name = "ultisnips" }, -- For ultisnips user.
+		-- { name = "cmp_tabnine" },
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+		{ name = "calc" },
+		{ name = "emoji" },
+		{ name = "treesitter" },
+		{ name = "crates" },
+	},
+})
+
+
+-- doesn't seem to work
+-- local python_lsp_home = vim.env.PYTHON_LSP_HOME
+-- require('lspconfig').pyright.setup({
+--     venvPath="/home/cc/anaconda3/envs/torch/bin",
+--     on_attach = function(client, bufnr)
+--         print('hello eslint')
+--       end
+-- })
+
+
+lsp.setup()
 
 
 -- Define a global variable to keep track of the LSP document highlight state
@@ -45,19 +127,6 @@ vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "Diagno
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
 
--- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
---   underline = false,
---   virtual_text = false,
---   signs = true,
---   update_in_insert = false,
--- })
-
--- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
-
-
 -- global config for diagnostic
 vim.diagnostic.config({
 	underline = false,
@@ -70,6 +139,7 @@ vim.diagnostic.config({
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 	underline = false,
 	border = "rounded",
+    float = { border = "rounded", scope = "line", source = "always" },
 })
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
@@ -78,7 +148,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 
-lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	underline = false,
 	virtual_text = false,
 	signs = true,
@@ -176,4 +246,19 @@ require("lspconfig").pylsp.setup(config({
 	capabilities = capabilities,
 }))
 
+require("lspsaga").setup({
+	symbol_in_winbar = {
+		enable = false,
+		separator = " ",
+		ignore_patterns = {},
+		hide_keyword = true,
+		show_file = true,
+		folder_level = 2,
+		respect_root = false,
+		color_mode = true,
+	},
+})
+
+
 return M
+
