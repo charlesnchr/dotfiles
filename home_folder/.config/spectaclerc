@@ -2,14 +2,14 @@
 update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
 
 [Annotations]
-annotationToolType=3
+annotationToolType=4
 arrowStrokeColor=255,85,0
 lineStrokeColor=0,170,127
 numberFont=Noto Sans,14,-1,0,50,0,0,0,0,0
 rectangleFillColor=73,255,119,0
 rectangleShadow=false
 rectangleStrokeColor=15,222,0
-textFont=Noto Sans,36,-1,0,50,0,0,0,0,0
+textFont=Noto Sans,26,-1,0,50,0,0,0,0,0
 textFontColor=255,85,0
 
 [FileDialogSize]
@@ -20,15 +20,15 @@ textFontColor=255,85,0
 rememberLastRectangularRegion=Always
 
 [GuiConfig]
-captureMode=0
-cropRegion=387,847,1144,219
+captureMode=5
+cropRegion=1154,50,1361,1233
 quitAfterSaveCopyExport=true
 
 [KFileDialog Settings]
-Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/Pictures/Screenshot_20230831_173415.png
-Recent URLs[$e]=file:$HOME/Pictures/
+Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/Desktop/Screenshot_20230908_185626.png,file:$HOME/0main/3.Diverse/Personlig/Accommodation/council-tax-discount-application-20230903.png
+Recent URLs[$e]=file:$HOME/Pictures/,file:$HOME/0main/3.Diverse/Personlig/Accommodation/,file:$HOME/Desktop/
 detailViewIconSize=16
 
 [Save]
-lastSaveAsLocation=file:///home/cc/Pictures/Screenshot_20230831_173415.png
-lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230902_100417.png
+lastSaveAsLocation=file:///home/cc/Desktop/Screenshot_20230908_185626.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230913_232140.png

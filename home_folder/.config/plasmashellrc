@@ -18,8 +18,8 @@ Recent URLs[$e]=file:$HOME/Desktop/,file:$HOME/Pictures/,file:$HOME/SynologyDriv
 detailViewIconSize=16
 
 [KPropertiesDialog]
-2 screens: Height=529
-2 screens: Width=410
+2 screens: Height=458
+2 screens: Width=417
 
 [PlasmaTransientsConfig]
 PreloadWeight=0
