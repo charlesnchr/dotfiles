@@ -141,7 +141,7 @@ History Items[$e]=sftp://admin@192.168.1.192:4400/video/dokumentarer,file:$HOME
 
 [General]
 BrowserApplication=brave-browser.desktop
-ColorSchemeHash=860ef24eb130a081b7092d6100fdc27e3f8e8451
+ColorSchemeHash=1126fb2c0c32955cd1bb2987f48b452b357a9515
 TerminalApplication=alacritty
 TerminalService=Alacritty.desktop
 

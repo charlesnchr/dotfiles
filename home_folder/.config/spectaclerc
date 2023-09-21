@@ -20,8 +20,8 @@ textFontColor=255,85,0
 rememberLastRectangularRegion=Always
 
 [GuiConfig]
-captureMode=5
-cropRegion=1154,50,1361,1233
+captureMode=4
+cropRegion=588,292,431,388
 quitAfterSaveCopyExport=true
 
 [KFileDialog Settings]
@@ -31,4 +31,4 @@ detailViewIconSize=16
 
 [Save]
 lastSaveAsLocation=file:///home/cc/Desktop/Screenshot_20230908_185626.png
-lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230913_232140.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230921_115804.png
