@@ -260,5 +260,16 @@ require("lspsaga").setup({
 })
 
 
-return M
 
+
+
+require("lspconfig").clangd.setup {
+  on_attach = on_attach,
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  cmd = {
+    "clangd",
+    "--offset-encoding=utf-16",
+  },
+}
+
+return M
