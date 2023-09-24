@@ -1,0 +1,6 @@
+[FileDialogSize]
+3 screens: Height=600
+3 screens: Width=980
+
+[KFileDialog Settings]
+detailViewIconSize=16
