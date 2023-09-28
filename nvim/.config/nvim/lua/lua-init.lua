@@ -394,3 +394,6 @@ vim.keymap.set('n', '<Leader>ds', function()
 end)
 
 
+require("fidget").setup {
+  -- options
+}
