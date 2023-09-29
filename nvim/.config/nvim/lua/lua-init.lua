@@ -131,6 +131,7 @@ require("telescope").setup({
           '--column',
           '--smart-case',
           '-g', '!*.pdf',   -- Ignore .pdf files
+          '-g', '!wandb',   -- Ignore wandb files
         },
 		mappings = {
 			i = {
@@ -393,3 +394,6 @@ vim.keymap.set('n', '<Leader>ds', function()
 end)
 
 
+require("fidget").setup {
+  -- options
+}

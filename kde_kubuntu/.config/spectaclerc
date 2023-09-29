@@ -20,9 +20,10 @@ textFontColor=255,85,0
 rememberLastRectangularRegion=Always
 
 [GuiConfig]
-captureMode=5
-cropRegion=1154,50,1361,1233
+captureMode=4
+cropRegion=588,292,431,388
 quitAfterSaveCopyExport=true
+window-position=0,0
 
 [KFileDialog Settings]
 Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/Desktop/Screenshot_20230908_185626.png,file:$HOME/0main/3.Diverse/Personlig/Accommodation/council-tax-discount-application-20230903.png
@@ -31,4 +32,4 @@ detailViewIconSize=16
 
 [Save]
 lastSaveAsLocation=file:///home/cc/Desktop/Screenshot_20230908_185626.png
-lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230913_232140.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20230921_115804.png
