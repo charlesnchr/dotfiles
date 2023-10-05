@@ -202,6 +202,7 @@ Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'rafamadriz/friendly-snippets'
+Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 
 call plug#end()
 

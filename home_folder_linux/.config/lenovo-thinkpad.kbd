@@ -1,5 +1,5 @@
 (defcfg
-  input   (device-file "/dev/input/by-path/pci-0000:00:14.0-usb-0:7.2.1.2:1.1-event-kbd")
+  input   (device-file "/dev/input/by-path/pci-0000:00:14.0-usb-0:7.2.1.2:1.0-event-kbd")
   output  (uinput-sink
             "KMonad: Keychron")
   fallthrough true
@@ -63,7 +63,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       @f2       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       rsft
-  @ctl2       lmet         lalt    @spc2                             lalt    rctrl         left    up      down    rght
+  @ctl2       lmet         lalt    @spc2                             ralt    rctrl         left    up      down    rght
   home    pgup    pgdn    end
 )
 

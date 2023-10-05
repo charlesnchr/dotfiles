@@ -150,8 +150,6 @@ fi
 # source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 # autoload -Uz add-zsh-hook
 
-eval "$(zoxide init zsh)"
-
 
 # for ranger
 export VISUAL=nvim;
@@ -160,6 +158,11 @@ export EDITOR=nvim;
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
+
+source $HOME/tools/antigen/antigen.zsh
+antigen init $HOME/dotfiles/.antigenrc
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
 # bindkey "^[^[OA" up-line-or-beginning-search
@@ -203,7 +206,7 @@ jf() {
     cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
 }
 
-t() {
+e() {
     [[ ! $(tmux a) ]] && tmuxinator Home
 }
 
@@ -270,11 +273,6 @@ colo() {
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
-
-source $HOME/tools/antigen/antigen.zsh
-antigen init $HOME/dotfiles/.antigenrc
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # User configuration
 # Author: Charles
@@ -346,3 +344,4 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 
 source $HOME/dotfiles/.zshrc_local
+autoload -Uz add-zsh-hook
