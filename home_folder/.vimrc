@@ -1191,6 +1191,7 @@ let g:gutentags_ctags_exclude = [
       \ 'example',
       \ 'bundle',
       \ 'vendor',
+      \ 'wandb',
       \ '*.md',
       \ '*-lock.json',
       \ '*.lock',

@@ -131,6 +131,7 @@ require("telescope").setup({
           '--column',
           '--smart-case',
           '-g', '!*.pdf',   -- Ignore .pdf files
+          '-g', '!wandb',   -- Ignore wandb files
         },
 		mappings = {
 			i = {
