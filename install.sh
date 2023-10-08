@@ -150,6 +150,7 @@ fi
 
 if ask "Set up submodule dotfiles_private and run dotfiles_private/install.sh?" N; then
     git submodule init dotfiles_private
+    git pull --recurse-submodules
     sh dotfiles_private/install.sh
 fi
 

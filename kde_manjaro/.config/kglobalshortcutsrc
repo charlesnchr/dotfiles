@@ -19,11 +19,11 @@ _k_friendly_name=Keyboard Layout Switcher
 
 [alacritty-2.desktop]
 _k_friendly_name=alacritty -e sh -c /home/cc/scripts/font_selector.sh
-_launch=Meta+Ctrl+Alt+Shift+F,none,alacritty -e sh -c /home/cc/scripts/font_selector.sh
+_launch=Meta+F2,none,alacritty -e sh -c /home/cc/scripts/font_selector.sh
 
 [alacritty.desktop]
 _k_friendly_name=alacritty -o "window.dimensions.lines=40" -o "window.dimensions.columns=160" -o "font.size=11" -o "window.decorations=none" -e zsh -c "source /home/cc/dotfiles/.zshrc_local; btop"
-_launch=Meta+Ctrl+Alt+B,none,alacritty -o "window.dimensions.lines=40" -o "window.dimensions.columns=160" -o "font.size=11" -o "window.decorations=none" -e zsh -c "source /home/cc/dotfiles/.zshrc_local; btop"
+_launch=Meta+F1,none,alacritty -o "window.dimensions.lines=40" -o "window.dimensions.columns=160" -o "font.size=11" -o "window.decorations=none" -e zsh -c "source /home/cc/dotfiles/.zshrc_local; btop"
 
 [brave-browser.desktop]
 _k_friendly_name=Brave
@@ -56,11 +56,11 @@ _k_friendly_name=Custom Shortcuts Service
 
 [kitty-2.desktop]
 _k_friendly_name=kitty ranger
-_launch=Meta+Ctrl+Alt+R,none,kitty ranger
+_launch=Meta+F3,none,kitty ranger
 
 [kitty-3.desktop]
 _k_friendly_name=kitty pulsemixer
-_launch=Meta+Ctrl+Alt+P,none,kitty pulsemixer
+_launch=Meta+F4,none,kitty pulsemixer
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -263,13 +263,13 @@ view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
 _k_friendly_name=Media Controller
-mediavolumedown=Meta+Ctrl+Alt+Shift+S,,Media volume down
-mediavolumeup=Meta+Ctrl+Alt+Shift+W,,Media volume up
-nextmedia=Media Next\tMeta+Ctrl+Alt+D,Media Next,Media playback next
+mediavolumedown=Shift+Volume Down,,Media volume down
+mediavolumeup=Shift+Volume Up,,Media volume up
+nextmedia=Media Next,Media Next,Media playback next
 pausemedia=Media Pause,Media Pause,Pause media playback
 playmedia=none,,Play media playback
-playpausemedia=Meta+Ctrl+Alt+Q\tMedia Play,Media Play,Play/Pause media playback
-previousmedia=Meta+Ctrl+Alt+A\tMedia Previous,Media Previous,Media playback previous
+playpausemedia=Media Play,Media Play,Play/Pause media playback
+previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
 
 [org.kde.dolphin.desktop]
@@ -289,7 +289,7 @@ _launch=none,Ctrl+Alt+T,Konsole
 [org.kde.krunner.desktop]
 RunClipboard=Alt+Shift+F2\tShift+F2,Alt+Shift+F2,Run command on clipboard contents
 _k_friendly_name=KRunner
-_launch=Ctrl+Space\tSearch\tAlt+F2\tMeta+Space,Alt+Space\tAlt+F2\tSearch,KRunner
+_launch=Alt+F2\tMeta+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner
 
 [org.kde.plasma.emojier.desktop]
 _k_friendly_name=Emoji Selector
@@ -315,7 +315,7 @@ PowerDown=Power Down,Power Down,Power Down
 PowerOff=Power Off,Power Off,Power Off
 Sleep=Ctrl+Shift+F4\tSleep,Sleep,Suspend
 Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,Toggle Keyboard Backlight
-Turn Off Screen=Ctrl+Shift+F3,none,Turn Off Screen
+Turn Off Screen=Ctrl+F6,none,Turn Off Screen
 _k_friendly_name=Power Management
 
 [plasmashell]

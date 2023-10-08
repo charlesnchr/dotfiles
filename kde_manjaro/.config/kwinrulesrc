@@ -27,6 +27,37 @@ screenrule=2
 wmclass=mplayer
 wmclassmatch=1
 
+[10]
+Description=Window settings for Brave
+desktops=8cea1c14-55f2-47e5-b3bb-d457530e6d54
+desktopsrule=3
+maximizehorizrule=3
+maximizevertrule=3
+title=Brave
+wmclass=brave-browser
+wmclassmatch=1
+
+[11]
+Description=Window settings for alacritty tmuxinator
+desktops=1d54e500-63f3-4abd-94f0-87e8b417bd01
+desktopsrule=3
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+title=tmuxinator
+titlematch=1
+wmclass=Alacritty
+wmclassmatch=1
+
+[1397f9d1-f944-4db0-989a-ff8145f59b53]
+Description=Window settings for Google Calendar - ONI – Calendar - Week of 24 September 2023
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Google Calendar - ONI – Calendar - Week of 24 September 2023
+wmclass=brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-Default
+wmclassmatch=1
+
 [2]
 Description=Settings for Slack
 desktops=899357af-382a-4188-b462-e124995fd56a
@@ -34,25 +65,54 @@ desktopsrule=3
 wmclass=Slack
 wmclassmatch=1
 
+[2c6ecbfe-6aaa-46d2-82f4-f12803e8e56f]
+Description=brave slack
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-eglaocpfjogoejfpopckmoohcfganjdd-Default
+wmclassmatch=1
+
 [3]
-Description=Settings for brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
-desktops=899357af-382a-4188-b462-e124995fd56a
-desktopsrule=3
-wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
-wmclassmatch=1
-
-[4]
-Description=Settings for brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
-desktops=899357af-382a-4188-b462-e124995fd56a
-desktopsrule=3
-wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
-wmclassmatch=1
-
-[5]
 Description=Settings for spotify
 desktops=1f2ad70d-4d3d-49cb-a6e4-0efe06099501
 desktopsrule=3
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
 wmclass=spotify
+wmclassmatch=1
+
+[4]
+Description=brave slack
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-eglaocpfjogoejfpopckmoohcfganjdd-Default
+wmclassmatch=1
+
+[5]
+Description=brave whatsapp
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+maximizehoriz=true
+maximizevert=true
+wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclassmatch=1
+
+[5078d60e-9574-4090-9ccc-034270642f51]
+Description=Window settings for Discord - • Discord | Friends
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Discord - • Discord | Friends
+wmclass=brave-magkoliahgffibhgfkmoealggombgknl-Default
+wmclassmatch=1
+
+[6]
+Description=Window settings for Outlook (PWA) - Email - Charles Nicklas Christensen - Outlook
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Outlook (PWA) - Email - Charles Nicklas Christensen - Outlook
+wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
 wmclassmatch=1
 
 [697c5280-1b73-4f82-8b5b-2e48220861c2]
@@ -64,11 +124,59 @@ screenrule=4
 wmclass=mplayer
 wmclassmatch=1
 
+[6d006217-9df2-499f-89fc-cc392d804ca7]
+Description=Settings for Alacritty
+desktops=1d54e500-63f3-4abd-94f0-87e8b417bd01
+desktopsrule=3
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+wmclass=Alacritty
+wmclassmatch=1
+
+[7]
+Description=Window settings for Discord - • Discord | Friends
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Discord - • Discord | Friends
+wmclass=brave-magkoliahgffibhgfkmoealggombgknl-Default
+wmclassmatch=1
+
+[8]
+Description=Window settings for Google Calendar - ONI – Calendar - Week of 24 September 2023
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Google Calendar - ONI – Calendar - Week of 24 September 2023
+wmclass=brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-Default
+wmclassmatch=1
+
 [854b3348-3266-4ef3-afcf-0a85b91e8ce5]
 Description=Settings for brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
 wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclassmatch=1
+
+[9]
+Description=Window settings for Notion - Home
+desktops=3a560b71-17f2-4a4a-a084-08017d8a42f6
+desktopsrule=3
+title=Notion - Home
+wmclass=brave-immdamkmkailjeehjeelcjmfgjmcihip-Default
+wmclassmatch=1
+
+[90823e61-f503-4d50-a0db-c6540b833620]
+Description=Window settings for alacritty tmuxinator
+desktops=1d54e500-63f3-4abd-94f0-87e8b417bd01
+desktopsrule=3
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+title=tmuxinator
+titlematch=1
+wmclass=Alacritty
 wmclassmatch=1
 
 [989bc47e-b13e-4bb3-936b-f082b493c20a]
@@ -79,12 +187,45 @@ wmclass=Slack
 wmclassmatch=1
 
 [General]
-count=5
-rules=1,2,3,4,5
+count=11
+rules=1,2,3,4,5,6,7,8,9,10,11
+
+[a3c77d5b-5a48-4fb8-844a-ec745efd23c8]
+Description=Window settings for Notion - Home
+desktops=3a560b71-17f2-4a4a-a084-08017d8a42f6
+desktopsrule=3
+title=Notion - Home
+wmclass=brave-immdamkmkailjeehjeelcjmfgjmcihip-Default
+wmclassmatch=1
 
 [adf99f2b-c3f1-41da-8d91-5954f69bc5c4]
 Description=Settings for spotify
 desktops=a548d395-affe-4ec2-a8ed-e2be603a3582
 desktopsrule=3
 wmclass=spotify
+wmclassmatch=1
+
+[c4ee9524-20c2-4d78-b831-5df6a7eaf71b]
+Description=brave whatsapp
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclassmatch=1
+
+[c6d77b15-9310-4ba8-be76-a94323042613]
+Description=Window settings for Outlook (PWA) - Email - Charles Nicklas Christensen - Outlook
+desktops=899357af-382a-4188-b462-e124995fd56a
+desktopsrule=3
+title=Outlook (PWA) - Email - Charles Nicklas Christensen - Outlook
+wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
+wmclassmatch=1
+
+[d264a412-bf61-4522-95db-338a6e2889d9]
+Description=Window settings for Brave
+desktops=8cea1c14-55f2-47e5-b3bb-d457530e6d54
+desktopsrule=3
+maximizehorizrule=3
+maximizevertrule=3
+title=Brave
+wmclass=brave-browser
 wmclassmatch=1

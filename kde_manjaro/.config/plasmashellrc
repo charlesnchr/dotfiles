@@ -22,7 +22,7 @@ detailViewIconSize=16
 2 screens: Width=417
 
 [PlasmaTransientsConfig]
-PreloadWeight=0
+PreloadWeight=42
 
 [PlasmaViews][Panel 3][Defaults]
 thickness=44
