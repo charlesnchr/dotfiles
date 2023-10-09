@@ -150,9 +150,6 @@ fi
 # source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
 # autoload -Uz add-zsh-hook
 
-eval "$(zoxide init zsh)"
-
-
 # for ranger
 export VISUAL=nvim;
 export EDITOR=nvim;

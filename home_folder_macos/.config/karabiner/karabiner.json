@@ -1245,6 +1245,13 @@
                                                 "is_pointing_device": false,
                                                 "product_id": 834,
                                                 "vendor_id": 1452
+                                            },
+                                            {
+                                                "description": "Corne keyboard",
+                                                "is_keyboard": true,
+                                                "is_pointing_device": false,
+                                                "product_id": 1,
+                                                "vendor_id": 18003
                                             }
                                         ],
                                         "type": "device_unless"
@@ -3292,21 +3299,21 @@
                         },
                         {
                             "from": {
-                                "key_code": "right_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "right_command"
-                                }
-                            ]
-                        },
-                        {
-                            "from": {
                                 "key_code": "right_control"
                             },
                             "to": [
                                 {
                                     "key_code": "right_option"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "right_option"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "right_command"
                                 }
                             ]
                         }
@@ -3397,6 +3404,16 @@
                             "to": [
                                 {
                                     "key_code": "right_command"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_period"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "down_arrow"
                                 }
                             ]
                         }
@@ -4029,6 +4046,13 @@
                                                 "is_pointing_device": false,
                                                 "product_id": 834,
                                                 "vendor_id": 1452
+                                            },
+                                            {
+                                                "description": "Corne keyboard",
+                                                "is_keyboard": true,
+                                                "is_pointing_device": false,
+                                                "product_id": 1,
+                                                "vendor_id": 18003
                                             }
                                         ],
                                         "type": "device_unless"

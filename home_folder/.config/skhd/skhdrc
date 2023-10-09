@@ -10,10 +10,10 @@ alt + cmd - return : $HOME/.config/yabai/open_firefox.sh
 # alt - f8 : yabai -m window --focus north
 # alt - f9 : yabai -m window --focus east
 
-alt - f6 : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
-alt - f9 : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-alt - f7 : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 0
-alt - f8 : sh /Users/cc/.config/yabai/cycle_window.sh 1 y_dir 0
+alt - h : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
+alt - j : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
+alt - k : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 0
+alt - l : sh /Users/cc/.config/yabai/cycle_window.sh 1 y_dir 0
 
 # Moving windows
 shift + alt - f6: yabai -m window --warp west
