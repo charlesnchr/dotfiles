@@ -3,3 +3,6 @@ FreeFloating=true
 
 [PlasmaRunnerManager]
 migrated=true
+
+[Plugins]
+browserhistoryEnabled=false

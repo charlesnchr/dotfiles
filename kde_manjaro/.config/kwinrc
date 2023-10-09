@@ -6,15 +6,16 @@ Id_1=1d54e500-63f3-4abd-94f0-87e8b417bd01
 Id_2=8cea1c14-55f2-47e5-b3bb-d457530e6d54
 Id_3=0182d643-9143-444f-9f91-ad939339a787
 Id_4=899357af-382a-4188-b462-e124995fd56a
-Id_5=1a883d9a-3cb9-414d-9f8f-b2c365ad6cd4
-Id_6=a548d395-affe-4ec2-a8ed-e2be603a3582
-Id_7=8438f30d-ac3f-4157-8cbb-76da2455986e
-Id_8=10a04b18-2365-4cce-980c-ed27b9e4b89f
-Id_9=7962a118-f8cc-400f-b625-2ae897d3ff87
+Id_5=937c8dbf-628e-4ccc-8390-534baff5328c
+Id_6=1f2ad70d-4d3d-49cb-a6e4-0efe06099501
+Id_7=7d650c40-2d8c-4a60-a3f4-560121f37a79
+Id_8=3a560b71-17f2-4a4a-a084-08017d8a42f6
+Id_9=ccbd273e-7c75-4571-9955-31322cd2ad56
 Number=9
 Rows=3
 
 [Effect-desktopgrid]
+CustomLayoutRows=3
 ShowAddRemove=false
 
 [Effect-overview]
@@ -34,12 +35,14 @@ Active=true
 NightTemperature=3300
 
 [Plugins]
-alwaysopenonprimaryscreenEnabled=true
+alwaysopenonprimaryscreenEnabled=false
 forceblurEnabled=true
-kwin4_effect_squashEnabled=false
 last-Used-DesktopEnabled=true
 quarter-tilingEnabled=false
 slideEnabled=false
+slidingpopupsEnabled=false
+thumbnailasideEnabled=true
+wobblywindowsEnabled=true
 
 [Script-bismuth]
 ignoreTitle=Emoji Selector
@@ -59,7 +62,6 @@ blurMatching=false
 patterns=Spotify\nspotify
 
 [TabBox]
-LayoutName=org.kde.breeze.desktop
 OrderMinimizedMode=1
 
 [TabBoxAlternative]
@@ -96,6 +98,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Tiling][a8799d2e-bce5-5c23-865a-4f993fbc3dca]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
+[Tiling][a8b128d9-fad7-5a60-ade8-4eefaef81c96]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][b51398de-818f-5725-ae50-2e4e9840dbcd]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.15},{"width":0.27460937500000016},{"width":0.5753906249999998}]}
 
@@ -112,14 +117,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 ActiveMouseScreen=false
 DelayFocusInterval=100
 ElectricBorderDelay=100
-ElectricBorders=1
 FocusStealingPreventionLevel=0
 RollOverDesktops=true
 SeparateScreenFocus=true
 
 [Xwayland]
 Scale=1
-
-[org.kde.kdecoration2]
-library=org.kde.kwin.aurorae
-theme=__aurorae__svg__Sweet-Dark-transparent

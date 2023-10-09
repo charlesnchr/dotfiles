@@ -158,8 +158,10 @@ export EDITOR=nvim;
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
 
+source $HOME/tools/antigen/antigen.zsh
+antigen init $HOME/dotfiles/.antigenrc
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
 # bindkey "^[^[OA" up-line-or-beginning-search
@@ -203,7 +205,7 @@ jf() {
     cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
 }
 
-t() {
+e() {
     [[ ! $(tmux a) ]] && tmuxinator Home
 }
 
@@ -261,17 +263,8 @@ jog() {
     }
 
 colo() {
-    # if option does not exist: xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "Adwaita"
-
-    # Check the current theme
-    current_theme=$(xfconf-query -c xsettings -p /Net/ThemeName)
-
-    # Toggle theme based on the current setting
-    if [[ $current_theme == "Adwaita-dark" ]]; then
-        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita"
-    else
-        xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-    fi
+    file_path=~/dotfiles/is_dark_mode
+    [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
 }
 
 
@@ -279,11 +272,6 @@ colo() {
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
-
-source $HOME/tools/antigen/antigen.zsh
-antigen init $HOME/dotfiles/.antigenrc
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # User configuration
 # Author: Charles
@@ -305,7 +293,8 @@ function per-directory-history() {
 # }
 
 
-bindkey '^X^F' histdb-fzf-widget
+bindkey '^R' histdb-fzf-widget
+bindkey '^X^F' fzf-history-widget
 
 setopt menu_complete
 
@@ -353,15 +342,5 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 
-# Below is equivalent to
-#   export LS_COLORS=$(vivid -m 8-bit generate solarized-dark)
-# Uses https://github.com/sharkdp/vivid
-export LS_COLORS="ca=0:so=1;38;5;168;48;5;254:sg=0:rs=0;38;5;246:st=0:pi=1;38;5;136;48;5;254:cd=1;38;5;136;48;5;254:su=0:*~=0;38;5;242:mi=1;38;5;167;48;5;254:ex=1;38;5;100:do=1;38;5;168;48;5;254:ow=0:tw=0:bd=1;38;5;136;48;5;254:mh=0:di=1;38;5;68:no=0;38;5;246:or=1;38;5;167;48;5;254:fi=0;38;5;246:ln=1;38;5;72:*.z=1;38;5;167:*.t=0;38;5;246:*.h=0;38;5;246:*.a=0;38;5;246:*.c=0;38;5;246:*.d=0;38;5;246:*.o=0;38;5;242:*.r=0;38;5;246:*.m=0;38;5;246:*.p=0;38;5;246:*.rs=0;38;5;246:*.gz=1;38;5;167:*.ps=0;38;5;166:*.nb=0;38;5;246:*.hs=0;38;5;246:*.bc=0;38;5;242:*.7z=1;38;5;167:*.jl=0;38;5;246:*.di=0;38;5;246:*.js=0;38;5;246:*.go=0;38;5;246:*.pp=0;38;5;246:*.ml=0;38;5;246:*.ui=0;38;5;246:*.cr=0;38;5;246:*.rb=0;38;5;246:*.lo=0;38;5;242:*.ll=0;38;5;246:*.pm=0;38;5;246:*.sh=0;38;5;246:*.rm=1;38;5;168:*.fs=0;38;5;246:*.cs=0;38;5;246:*css=0;38;5;246:*.wv=0;38;5;72:*.hi=0;38;5;242:*.cc=0;38;5;246:*.el=0;38;5;246:*.as=0;38;5;246:*.ko=0;38;5;246:*.gv=0;38;5;246:*.xz=1;38;5;167:*.md=0;38;5;246:*.ex=0;38;5;246:*.cp=0;38;5;246:*.kt=0;38;5;246:*.bz=1;38;5;167:*.td=0;38;5;246:*.hh=0;38;5;246:*.py=0;38;5;246:*.pl=0;38;5;246:*.la=0;38;5;242:*.vb=0;38;5;246:*.mn=0;38;5;246:*.so=0;38;5;246:*.ts=0;38;5;246:*.ico=0;38;5;168:*.nix=0;38;5;246:*.hpp=0;38;5;246:*.m4a=0;38;5;72:*.toc=0;38;5;242:*.dpr=0;38;5;246:*.tcl=0;38;5;246:*.csx=0;38;5;246:*.fls=0;38;5;242:*.blg=0;38;5;242:*.asa=0;38;5;246:*.rst=0;38;5;246:*.rar=1;38;5;167:*TODO=1;38;5;246:*.mov=1;38;5;168:*.ilg=0;38;5;242:*.sxw=0;38;5;166:*.pps=0;38;5;166:*.c++=0;38;5;246:*.ttf=0;38;5;62:*.png=0;38;5;168:*.swp=0;38;5;242:*.pyo=0;38;5;242:*.awk=0;38;5;246:*.git=0;38;5;242:*.kex=0;38;5;166:*.iso=1;38;5;167:*.sxi=0;38;5;166:*.tmp=0;38;5;242:*.dot=0;38;5;246:*.fsi=0;38;5;246:*.ppm=0;38;5;168:*.bz2=1;38;5;167:*.tif=0;38;5;168:*.sty=0;38;5;242:*.pyc=0;38;5;242:*.cpp=0;38;5;246:*.bbl=0;38;5;242:*.mli=0;38;5;246:*.ipp=0;38;5;246:*.svg=0;38;5;168:*.bak=0;38;5;242:*.cxx=0;38;5;246:*.def=0;38;5;246:*.pgm=0;38;5;168:*.dox=0;38;5;246:*.bag=1;38;5;167:*.elm=0;38;5;246:*.hxx=0;38;5;246:*.swf=1;38;5;168:*.aif=0;38;5;72:*.aux=0;38;5;242:*.htm=0;38;5;246:*.xls=0;38;5;166:*.tsx=0;38;5;246:*.pas=0;38;5;246:*.xcf=0;38;5;168:*.deb=1;38;5;167:*.exs=0;38;5;246:*.vcd=1;38;5;167:*.mpg=1;38;5;168:*.ppt=0;38;5;166:*.ogg=0;38;5;72:*.m4v=1;38;5;168:*.epp=0;38;5;246:*.pyd=0;38;5;242:*.bib=0;38;5;246:*.avi=1;38;5;168:*.bst=0;38;5;246:*.odp=0;38;5;166:*.jpg=0;38;5;168:*.eps=0;38;5;168:*.rpm=1;38;5;167:*.kts=0;38;5;246:*.yml=0;38;5;246:*.tar=1;38;5;167:*.inl=0;38;5;246:*.tex=0;38;5;246:*.bsh=0;38;5;246:*.com=0;38;5;246:*.php=0;38;5;246:*.mir=0;38;5;246:*.cfg=0;38;5;246:*.flv=1;38;5;168:*.mp3=0;38;5;72:*.fon=0;38;5;62:*.apk=1;38;5;167:*.img=1;38;5;167:*.htc=0;38;5;246:*.clj=0;38;5;246:*.fsx=0;38;5;246:*.jar=1;38;5;167:*.tgz=1;38;5;167:*.lua=0;38;5;246:*.sql=0;38;5;246:*.csv=0;38;5;246:*.wma=0;38;5;72:*.pid=0;38;5;242:*.bmp=0;38;5;168:*.zst=1;38;5;167:*.pbm=0;38;5;168:*.otf=0;38;5;62:*.bin=1;38;5;167:*.zip=1;38;5;167:*hgrc=0;38;5;246:*.h++=0;38;5;246:*.mkv=1;38;5;168:*.vob=1;38;5;168:*.xml=0;38;5;246:*.doc=0;38;5;166:*.dmg=1;38;5;167:*.ps1=0;38;5;246:*.exe=0;38;5;246:*.bat=0;38;5;246:*.ind=0;38;5;242:*.rtf=0;38;5;166:*.xmp=0;38;5;246:*.pro=0;38;5;246:*.mid=0;38;5;72:*.odt=0;38;5;166:*.tbz=1;38;5;167:*.psd=0;38;5;168:*.out=0;38;5;242:*.txt=0;38;5;246:*.mp4=1;38;5;168:*.zsh=0;38;5;246:*.inc=0;38;5;246:*.pod=0;38;5;246:*.ltx=0;38;5;246:*.bcf=0;38;5;242:*.dll=0;38;5;246:*.cgi=0;38;5;246:*.pkg=1;38;5;167:*.log=0;38;5;242:*.ods=0;38;5;166:*.wav=0;38;5;72:*.tml=0;38;5;246:*.pdf=0;38;5;166:*.idx=0;38;5;242:*.ini=0;38;5;246:*.arj=1;38;5;167:*.vim=0;38;5;246:*.xlr=0;38;5;166:*.gvy=0;38;5;246:*.wmv=1;38;5;168:*.ics=0;38;5;166:*.erl=0;38;5;246:*.sbt=0;38;5;246:*.fnt=0;38;5;62:*.gif=0;38;5;168:*.orig=0;38;5;242:*.h264=1;38;5;168:*.json=0;38;5;246:*.mpeg=1;38;5;168:*.conf=0;38;5;246:*.bash=0;38;5;246:*.tiff=0;38;5;168:*.webm=1;38;5;168:*.make=0;38;5;246:*.dart=0;38;5;246:*.java=0;38;5;246:*.opus=0;38;5;72:*.psm1=0;38;5;246:*.jpeg=0;38;5;168:*.psd1=0;38;5;246:*.hgrc=0;38;5;246:*.toml=0;38;5;246:*.rlib=0;38;5;242:*.epub=0;38;5;166:*.yaml=0;38;5;246:*.tbz2=1;38;5;167:*.lock=0;38;5;242:*.lisp=0;38;5;246:*.docx=0;38;5;166:*.purs=0;38;5;246:*.html=0;38;5;246:*.xlsx=0;38;5;166:*.fish=0;38;5;246:*.flac=0;38;5;72:*.diff=0;38;5;246:*.pptx=0;38;5;166:*.less=0;38;5;246:*README=0;38;5;246:*.xhtml=0;38;5;246:*.scala=0;38;5;246:*.patch=0;38;5;246:*.cmake=0;38;5;246:*shadow=0;38;5;246:*.class=0;38;5;242:*.toast=1;38;5;167:*.swift=0;38;5;246:*.mdown=0;38;5;246:*.dyn_o=0;38;5;242:*.cache=0;38;5;242:*.ipynb=0;38;5;246:*.cabal=0;38;5;246:*.shtml=0;38;5;246:*passwd=0;38;5;246:*.matlab=0;38;5;246:*.ignore=0;38;5;246:*.config=0;38;5;246:*INSTALL=0;38;5;246:*LICENSE=0;38;5;246:*.gradle=0;38;5;246:*.groovy=0;38;5;246:*COPYING=0;38;5;246:*.dyn_hi=0;38;5;242:*.flake8=0;38;5;246:*TODO.md=1;38;5;246:*Doxyfile=0;38;5;246:*Makefile=0;38;5;246:*TODO.txt=1;38;5;246:*setup.py=0;38;5;246:*.desktop=0;38;5;246:*.gemspec=0;38;5;246:*configure=0;38;5;246:*.kdevelop=0;38;5;246:*COPYRIGHT=0;38;5;246:*.cmake.in=0;38;5;246:*.DS_Store=0;38;5;242:*README.md=0;38;5;246:*.markdown=0;38;5;246:*.fdignore=0;38;5;246:*.rgignore=0;38;5;246:*CODEOWNERS=0;38;5;246:*.gitconfig=0;38;5;246:*.gitignore=0;38;5;246:*Dockerfile=0;38;5;246:*.scons_opt=0;38;5;242:*SConstruct=0;38;5;246:*.localized=0;38;5;242:*SConscript=0;38;5;246:*README.txt=0;38;5;246:*INSTALL.md=0;38;5;246:*Makefile.am=0;38;5;246:*.synctex.gz=0;38;5;242:*MANIFEST.in=0;38;5;246:*.travis.yml=0;38;5;246:*.gitmodules=0;38;5;246:*INSTALL.txt=0;38;5;246:*LICENSE-MIT=0;38;5;246:*Makefile.in=0;38;5;242:*.fdb_latexmk=0;38;5;242:*CONTRIBUTORS=0;38;5;246:*.applescript=0;38;5;246:*appveyor.yml=0;38;5;246:*configure.ac=0;38;5;246:*.clang-format=0;38;5;246:*CMakeLists.txt=0;38;5;246:*.gitattributes=0;38;5;246:*LICENSE-APACHE=0;38;5;246:*CMakeCache.txt=0;38;5;242:*CONTRIBUTORS.md=0;38;5;246:*requirements.txt=0;38;5;246:*.sconsign.dblite=0;38;5;242:*CONTRIBUTORS.txt=0;38;5;246:*package-lock.json=0;38;5;242:*.CFUserTextEncoding=0;38;5;242"
-
-# alias ls="gls --color"
-
-
 source $HOME/dotfiles/.zshrc_local
-
-
-export PATH=$PATH:/home/cc/.spicetify
+autoload -Uz add-zsh-hook

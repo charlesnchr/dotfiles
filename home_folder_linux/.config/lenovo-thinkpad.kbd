@@ -1,5 +1,5 @@
 (defcfg
-  input   (device-file "/dev/input/by-path/pci-0000:00:14.0-usb-0:7.2.2:1.1-event-kbd")
+  input   (device-file "/dev/input/by-path/pci-0000:00:14.0-usb-0:7.2.1.2:1.0-event-kbd")
   output  (uinput-sink
             "KMonad: Keychron")
   fallthrough true
@@ -45,7 +45,7 @@
 (defalias f2 (tap-hold-next-release 200 f (layer-toggle ctrl_fn)))
 (defalias fn (layer-toggle fn))
 (defalias fn2 (layer-toggle fn2))
-(defalias ctl2 (tap-hold-next-release 200 M-spc (layer-toggle ctrl_fn)))
+(defalias ctl2 (layer-toggle ctrl_fn))
 
 (defsrc
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
@@ -63,7 +63,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       @f2       g       h       j       k       l       ;       '       ret
   lsft    z       x       c       v       b       n       m       ,       .       /       rsft
-  @ctl2       lmet         lalt    @spc2                             lalt    rctrl         left    up      down    rght
+  @ctl2       lmet         lalt    @spc2                             ralt    rctrl         left    up      down    rght
   home    pgup    pgdn    end
 )
 

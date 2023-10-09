@@ -1,0 +1,36 @@
+[$Version]
+update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
+
+[Annotations]
+annotationToolType=5
+arrowStrokeColor=255,85,0
+ellipseStrokeColor=255,85,0
+freehandStrokeWidth=2
+lineStrokeColor=0,170,127
+numberFont=Noto Sans,14,-1,0,50,0,0,0,0,0
+rectangleFillColor=73,255,119,0
+rectangleShadow=false
+rectangleStrokeColor=15,222,0
+textFont=Noto Sans,26,-1,0,50,0,0,0,0,0
+textFontColor=255,85,0
+
+[FileDialogSize]
+2 screens: Height=780
+2 screens: Width=1300
+
+[General]
+rememberLastRectangularRegion=Always
+
+[GuiConfig]
+captureMode=4
+cropRegion=0,8,2535,1428
+quitAfterSaveCopyExport=true
+
+[KFileDialog Settings]
+Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/0main/0oni/Software hands Screenshot_20230929_160037.png,file:$HOME/0main/0oni/Foundation Screenshot_20230929_160015.png,file:$HOME/0main/0oni/Parameter free clustering OKR Screenshot_20230929_155939.png,file:$HOME/0main/5.Billeder/Screenshots/Screenshot_20230928_232623-linux server parallel sweep.png,file:$HOME/0main/3.Diverse/Personlig/Accommodation/council-tax-discount-application-20230903.png
+Recent URLs[$e]=file:$HOME/Pictures/,file:$HOME/0main/3.Diverse/Personlig/Accommodation/,file:$HOME/Desktop/,file:$HOME/0main/5.Billeder/Screenshots/,file:$HOME/0main/0oni/,file:$HOME/,file:$HOME/Documents/
+detailViewIconSize=16
+
+[Save]
+lastSaveAsLocation=file:///home/cc/0main/0oni/Software hands Screenshot_20230929_160037.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20231002_132521.png
