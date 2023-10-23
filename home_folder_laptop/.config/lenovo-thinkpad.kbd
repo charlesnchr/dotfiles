@@ -51,6 +51,7 @@
 (defalias f2 (tap-hold-next-release 200 f (layer-toggle ctrl_fn)))
 (defalias spc_fn2 (tap-hold-next-release 200 spc (layer-toggle spc_fn2)))
 (defalias ctl2 (tap-hold-next-release 200 M-a (layer-toggle ctrl_fn)))
+(defalias ctrl_fn (layer-toggle ctrl_fn))
 
 (defsrc
   esc     f1      f2      f3      f4      f5      f6      f7      f8      f9      f10     f11     f12     sys    ins     del
@@ -68,7 +69,7 @@
   tab     q       w       e       r       t       y       u       i       o       p       [       ]       \
   @caps   a       s       d       @f2       g       h       j       k       l       ;       '       ret
   lsft    lsft    z       x       c       v       b       n       m       ,       .       /       @rsft
-  lmet       lmet         @lalt    @spc2                             ralt    rctrl         left    up      down    rght
+  @ctrl_fn       lmet         @lalt    @spc2                             lalt    rctrl         left    up      down    rght
   home    pgup    pgdn    end
 )
 
