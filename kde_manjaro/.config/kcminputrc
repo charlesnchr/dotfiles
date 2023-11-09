@@ -40,6 +40,7 @@ TapToClick=true
 
 [Mouse]
 X11LibInputXAccelProfileFlat=true
+XLbInptPointerAcceleration=0.6
 
 [Tmp]
 update_info=delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize

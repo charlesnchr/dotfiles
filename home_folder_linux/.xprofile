@@ -6,9 +6,13 @@ xset r rate 200 25
 trackpad_ids=$(xinput list | grep 'Apple Inc. Magic Trackpad' | awk -F'=' '{print $2}' | awk '{print $1}')
 
 for id in $trackpad_ids; do
+    xinput disable $id
+    xinput enable $id
     xinput set-prop $id "libinput Accel Speed" 0.35
     xinput set-prop $id "libinput Natural Scrolling Enabled" 1
 done
+
+libinput-gestures-setup restart
 
 
 # xmodmap ~/.xmodmap

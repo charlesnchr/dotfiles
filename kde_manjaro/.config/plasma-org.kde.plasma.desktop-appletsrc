@@ -32,7 +32,7 @@ immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][10][Applets][12][Configuration]
-PreloadWeight=83
+PreloadWeight=93
 
 [Containments][10][Applets][12][Configuration][General]
 currentTab=streams
@@ -57,7 +57,7 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][10][Applets][15][Configuration]
-PreloadWeight=53
+PreloadWeight=63
 
 [Containments][10][Applets][16]
 immutability=1
@@ -78,7 +78,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][10][Applets][18][Configuration]
-PreloadWeight=78
+PreloadWeight=88
 
 [Containments][10][Applets][19]
 immutability=1
@@ -113,21 +113,21 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][10][Applets][24][Configuration]
-PreloadWeight=83
+PreloadWeight=100
 
 [Containments][10][Applets][25]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][10][Applets][25][Configuration]
-PreloadWeight=100
+PreloadWeight=91
 
 [Containments][10][Applets][28]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][10][Applets][28][Configuration]
-PreloadWeight=46
+PreloadWeight=77
 
 [Containments][10][ConfigDialog]
 DialogHeight=540
@@ -200,7 +200,7 @@ DialogWidth=880
 
 [Containments][3][Applets][116][Configuration][General]
 iconSpacing=3
-launchers=applications:Alacritty.desktop,applications:brave-browser.desktop,preferred://filemanager,applications:brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop
+launchers=applications:Alacritty.desktop,applications:brave-browser.desktop,preferred://filemanager
 showOnlyCurrentDesktop=false
 showOnlyCurrentScreen=true
 
@@ -220,7 +220,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][3][Applets][21][Configuration]
-PreloadWeight=98
+PreloadWeight=100
 popupHeight=550
 popupWidth=484
 
@@ -234,7 +234,7 @@ plugin=org.kde.plasma.systemmonitor.memory
 
 [Containments][3][Applets][29][Configuration]
 CurrentPreset=org.kde.plasma.systemmonitor
-PreloadWeight=73
+PreloadWeight=83
 
 [Containments][3][Applets][29][Configuration][Appearance]
 chartFace=org.kde.ksysguard.piechart
@@ -259,7 +259,7 @@ plugin=org.kde.plasma.systemmonitor.cpu
 
 [Containments][3][Applets][31][Configuration]
 CurrentPreset=org.kde.plasma.systemmonitor
-PreloadWeight=68
+PreloadWeight=78
 
 [Containments][3][Applets][31][Configuration][Appearance]
 chartFace=org.kde.ksysguard.piechart
@@ -301,8 +301,8 @@ plugin=org.kde.plasma.kickoff
 
 [Containments][3][Applets][4][Configuration]
 PreloadWeight=100
-popupHeight=514
-popupWidth=651
+popupHeight=574
+popupWidth=729
 
 [Containments][3][Applets][4][Configuration][ConfigDialog]
 DialogHeight=540
@@ -483,9 +483,9 @@ immutability=1
 plugin=org.kde.plasma.analogclock
 
 [Containments][38][Applets][99][Configuration]
-PreloadWeight=68
-popupHeight=484
-popupWidth=484
+PreloadWeight=73
+popupHeight=450
+popupWidth=350
 
 [Containments][38][ConfigDialog]
 DialogHeight=1076
@@ -497,7 +497,7 @@ PreloadWeight=18
 [Containments][38][General]
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=764
-positions={"2560x1440":["1"\\,"23"\\,"desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop"\\,"0"\\,"10"\\,"desktop:/20-07-46"\\,"0"\\,"9"\\,"desktop:/22-19-24"\\,"0"\\,"8"\\,"desktop:/22-14-29"\\,"0"\\,"7"\\,"desktop:/sample_training_0.png"\\,"0"\\,"6"\\,"desktop:/sample_training_unlabelled_0.png"\\,"0"\\,"5"\\,"desktop:/sample_training_9.png"\\,"0"\\,"4"\\,"desktop:/504012.pdf"\\,"0"\\,"3"\\,"desktop:/Apps"\\,"0"\\,"2"\\,"desktop:/Games"\\,"0"\\,"1"\\,"desktop:/204424"\\,"0"\\,"0"]\\,"0x0":["1"\\,"21"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"9"\\,"desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf"\\,"0"\\,"8"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"]}
+positions={"2560x1440":["1"\\,"21"\\,"desktop:/20-07-46"\\,"0"\\,"0"\\,"desktop:/22-19-24"\\,"0"\\,"3"\\,"desktop:/22-14-29"\\,"0"\\,"2"\\,"desktop:/Games"\\,"0"\\,"5"\\,"desktop:/Apps"\\,"0"\\,"4"\\,"desktop:/504012.pdf"\\,"0"\\,"7"\\,"desktop:/unRAIDServer-6.12.4-x86_64"\\,"0"\\,"6"\\,"desktop:/sample_training_9.png"\\,"0"\\,"9"\\,"desktop:/sample_training_0.png"\\,"0"\\,"8"\\,"desktop:/Screenshot_20231018_000920.png"\\,"0"\\,"11"\\,"desktop:/sample_training_unlabelled_0.png"\\,"0"\\,"10"\\,"desktop:/204424"\\,"0"\\,"1"]\\,"0x0":["1"\\,"21"\\,"desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop"\\,"0"\\,"3"\\,"desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop"\\,"0"\\,"2"\\,"desktop:/net.lutris.cyberpunk-2077-1.desktop"\\,"0"\\,"1"\\,"desktop:/Batman Arkham Knight.desktop"\\,"0"\\,"0"\\,"desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop"\\,"0"\\,"9"\\,"desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf"\\,"0"\\,"8"\\,"desktop:/Steam Linux Runtime - Sniper.desktop"\\,"0"\\,"7"\\,"desktop:/steam.desktop"\\,"0"\\,"6"\\,"desktop:/spotify.desktop"\\,"0"\\,"5"\\,"desktop:/Proton Experimental.desktop"\\,"0"\\,"4"]}
 sortMode=-1
 
 [Containments][38][Wallpaper][com.github.zzag.dynamic][General]
@@ -528,9 +528,9 @@ immutability=1
 plugin=org.kde.plasma.analogclock
 
 [Containments][39][Applets][100][Configuration]
-PreloadWeight=28
-popupHeight=396
-popupWidth=396
+PreloadWeight=48
+popupHeight=484
+popupWidth=484
 
 [Containments][39][Applets][100][Configuration][ConfigDialog]
 DialogHeight=660
@@ -894,5 +894,5 @@ extraItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.keyboardindicat
 knownItems=org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.keyboardindicator,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.manage-inputmethod,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.nightcolorcontrol,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager,org.kde.kdeconnect,org.kde.plasma.keyboardlayout
 
 [ScreenMapping]
-itemsOnDisabledScreens=0,bde2053c-334d-4c64-bd04-b88e17b82843,27,file:///home/cc/winscp.rnd,file:///home/cc/Public,file:///home/cc/2023-08-19 12-25-14.mp4,file:///home/cc/Desktop,file:///home/cc/home,file:///home/cc/Games,file:///home/cc/tmp2,file:///home/cc/tools,file:///home/cc/bin,file:///home/cc/logid.cfg,file:///home/cc/bitmap.svg,file:///home/cc/xpadneo,file:///home/cc/dotfiles,file:///home/cc/be5a908f598d1abfc9c9d84f11c6d97b,file:///home/cc/anaconda.sh,file:///home/cc/autojump,file:///home/cc/Downloads,file:///home/cc/etxkbmap us,file:///home/cc/tmp,file:///home/cc/qmk_firmware,file:///home/cc/Music,file:///home/cc/Pictures,file:///home/cc/bitmap.png,file:///home/cc/change_theme.sh,file:///home/cc/anaconda3,file:///home/cc/Documents,file:///home/cc/Templates
-screenMapping=desktop:/22-19-24,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/22-14-29,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_training_0.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_validation_unlabelled_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Apps,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/504012.pdf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Metadata_Country_API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_4.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_training_2.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_2.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Documents.7z,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_3.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Proton Experimental.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_0.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_training_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_training_4.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_9.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/bevan_real_data_d-upkpf_20230906,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_unlabelled_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Documents.7z,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/204424,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_training_3.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/204424,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Games,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Christensen_HughesHall-Cambridge.pdf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/20-07-46,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/20-07-46,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Christensen_CouncilTax.pdf,1,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_training_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_9.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Games,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/504012.pdf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/d-upkpfg1njc3numcolfp-cumulus_partition_0.tiff,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Metadata_Indicator_API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Apps,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/22-14-29,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/22-19-24,0,2e1707c7-083e-43ca-8664-4787f85ec7d4
+itemsOnDisabledScreens=0,bde2053c-334d-4c64-bd04-b88e17b82843,27,file:///home/cc/Downloads,file:///home/cc/Music,file:///home/cc/Documents,file:///home/cc/Desktop,file:///home/cc/tmp,file:///home/cc/Templates,file:///home/cc/winscp.rnd,file:///home/cc/home,file:///home/cc/Pictures,file:///home/cc/Public,file:///home/cc/Games,file:///home/cc/dotfiles,file:///home/cc/etxkbmap us,file:///home/cc/autojump,file:///home/cc/bitmap.svg,file:///home/cc/tmp2,file:///home/cc/logid.cfg,file:///home/cc/anaconda.sh,file:///home/cc/2023-08-19 12-25-14.mp4,file:///home/cc/qmk_firmware,file:///home/cc/anaconda3,file:///home/cc/change_theme.sh,file:///home/cc/bin,file:///home/cc/xpadneo,file:///home/cc/be5a908f598d1abfc9c9d84f11c6d97b,file:///home/cc/bitmap.png,file:///home/cc/tools
+screenMapping=desktop:/22-14-29,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_2.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/unRAIDServer-6.12.4-x86_64,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/steam.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/20-07-46,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/204424,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-lgnggepjiihbfdbedefdhcffnmhcahbm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/Hotline Miami.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_training_unlabelled_0.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_validation_unlabelled_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-immdamkmkailjeehjeelcjmfgjmcihip-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_validation_unlabelled_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_0.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Tpl_Application Form (Part B) (HE MSCA PF).rtf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Apps,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_3.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Proton Experimental.desktop,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/bevan_real_data_d-upkpf_20230906,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/22-19-24,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/20-07-46,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/sample_training_9.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Metadata_Country_API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Apps,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Documents.7z,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/204424,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Documents.7z,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Games,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/504012.pdf,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Metadata_Indicator_API_NY.GDP.MKTP.CD_DS2_en_csv_v2_5728855.csv,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_3.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_4.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_training_9.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_4.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/22-14-29,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default.desktop,0,be9ed939-d034-4424-8f81-1e6de134156a,desktop:/sample_training_2.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/d-upkpfg1njc3numcolfp-cumulus_partition_0.tiff,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Games,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Christensen_CouncilTax.pdf,1,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/Christensen_HughesHall-Cambridge.pdf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/Screenshot_20231018_000920.png,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/22-19-24,0,2e1707c7-083e-43ca-8664-4787f85ec7d4,desktop:/504012.pdf,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_unlabelled_1.png,0,bde2053c-334d-4c64-bd04-b88e17b82843,desktop:/sample_training_0.png,0,bde2053c-334d-4c64-bd04-b88e17b82843

@@ -19,8 +19,8 @@ Places Icons Auto-resize=false
 Places Icons Static Size=22
 
 [KPropertiesDialog]
-2 screens: Height=616
-2 screens: Width=479
+2 screens: Height=500
+2 screens: Width=434
 
 [MainWindow]
 MenuBar=Disabled
@@ -28,9 +28,6 @@ ToolBarsMovable=Disabled
 
 [PreviewSettings]
 Plugins=appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mltpreview,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail,textthumbnail,ffmpegthumbs
-
-[Search]
-Location=Everywhere
 
 [VersionControl]
 enabledPlugins=Git
