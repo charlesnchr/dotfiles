@@ -5,15 +5,15 @@ alt - 2 : $HOME/.config/yabai/open_term.sh Alacritty
 alt + cmd - return : $HOME/.config/yabai/open_firefox.sh
 
 # Navigation
-# alt - f6: yabai -m window --focus west
-# alt - f7 : yabai -m window --focus south
-# alt - f8 : yabai -m window --focus north
-# alt - f9 : yabai -m window --focus east
+alt - f6: yabai -m window --focus west
+alt - f7 : yabai -m window --focus south
+alt - f8 : yabai -m window --focus north
+alt - f9 : yabai -m window --focus east
 
-alt - h : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
-alt - j : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-alt - k : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 0
-alt - l : sh /Users/cc/.config/yabai/cycle_window.sh 1 y_dir 0
+# alt - h : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
+# alt - j : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
+# alt - k : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 0
+# alt - l : sh /Users/cc/.config/yabai/cycle_window.sh 1 y_dir 0
 
 # Moving windows
 shift + alt - f6: yabai -m window --warp west

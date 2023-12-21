@@ -45,7 +45,7 @@ yabai -m config                              \
     right_padding               0           \
     bottom_padding              0           \
     window_gap                  8           \
-    mouse_modifier              ctrl                      \
+    mouse_modifier              alt                      \
     mouse_action1               move                      \
     mouse_action2               resize                    \
     mouse_drop_action           swap
@@ -53,6 +53,8 @@ yabai -m config                              \
 yabai -m config layout                      float
 yabai -m config --space 1 layout            bsp
 yabai -m config --space 2 layout            bsp
+yabai -m config --space 4 layout            bsp
+yabai -m config --space 6 layout            bsp
 
 # yabai -m config external_bar all:23:0
 
@@ -78,6 +80,7 @@ yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
 yabai -m rule --add label="Software Update" title="Software Update" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+yabai -m rule --add app="^Microsoft Teams$" manage=off
 
 
 yabai -m rule --add label="Alacritty" app="^Alacritty$" manage=on
@@ -147,10 +150,6 @@ open "/Applications/Brave Browser.app"
 sleep 1;
 for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Brave Browser") | .id'); do yabai -m window $wid --space 2; done
 
-open "/Applications/WhatsApp.app"
-sleep 1;
-for wid in $(yabai -m query --windows | jq '.[] | select(.app == "WhatsApp") | .id'); do yabai -m window $wid --space 4; done
-
 # open "/Applications/Messenger.app"
 # sleep 1;
 # for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Messenger") | .id'); do yabai -m window $wid --space 4; done
@@ -162,3 +161,6 @@ for wid in $(yabai -m query --windows | jq '.[] | select(.app == "WhatsApp") | .
 # sleep 1;
 # ~/bin/yabai_create_stack.sh
 #
+yabai -m signal --add event=space_changed action='cur_msteams_wid=$(yabai -m query --windows --window | jq -r "if .app == \"Microsoft Teams\" and .title == \"Microsoft Teams Notification\" then .id else empty end"); if [ -n $cur_msteams_wid ]; then next_window_id=$(yabai -m query --windows --space | jq -r "map(select(.id != $cur_msteams_wid)) | first | .id // empty"); if [ -n $next_window_id ]; then yabai -m window $next_window_id --focus; fi ; fi'
+
+yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams"

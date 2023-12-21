@@ -5,7 +5,7 @@ content_dirs=(
     ~/1private
     ~/1private/Github
     ~/2work
-    ~/2work/onirepos
+    ~/2work/gitrepos
     ~/0main/Syncthing
     ~/0main/1.Projects
 )
@@ -14,11 +14,9 @@ content_dirs=(
 fixed_dirs=(
     ~/1private
     ~/2work
-    ~/2work/onirepos/SIM/PhD-ccRestore
     ~/qmk_firmware
     ~/dotfiles
     ~/0main
-    /oni
 )
 
 # Search for directories in all directories

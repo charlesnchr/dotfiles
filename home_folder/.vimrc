@@ -931,21 +931,6 @@ nmap <localleader>. :RgRaw -. ''<cr>
 " create file if does not exist
 noremap <leader>gf :e <cfile><cr>
 
-
-augroup AutoHeader
-    autocmd!
-    autocmd bufnewfile *.c so ~/dotfiles/headers/c_header.txt
-    autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
-    autocmd bufnewfile *.cpp so ~/dotfiles/headers/c_header.txt
-    autocmd bufnewfile *.h so ~/dotfiles/headers/c_header.txt
-    autocmd bufnewfile *.py so ~/dotfiles/headers/py_header.txt
-    autocmd bufnewfile *.sh so ~/dotfiles/headers/bash_header.txt
-    autocmd bufnewfile *.md so ~/dotfiles/headers/md_header.txt
-    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Author :.*/s//\* Author : Charles N. Christensen"
-    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Github :.*/s//\* Github : github.com\\/charlesnchr"
-    autocmd bufnewfile *.c,*.cpp,*.h,*.py,*.md,*.sh exe "g/\* Creation Date :.*/s//\* Creation Time : " .strftime("%c")
-augroup END
-
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
