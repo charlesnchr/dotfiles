@@ -21,8 +21,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'preservim/nerdtree'
 
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
 "Plug 'ervandew/supertab'
 " Plug 'kien/ctrlp.vim'
 " markdown syntax
