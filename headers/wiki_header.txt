@@ -1,0 +1,45 @@
+:insert
+%% today's title
+# %DATE%
+
+## Work
+- [ ]
+
+## Other
+- [ ]
+
+## Notes
+
+## Daily routine
+- [ ] Jogging
+- [ ] Read
+- [ ] Write
+- [ ] Piano
+- [ ] Push-ups
+- [ ] Anki flashcard
+- [ ] Played video game
+
+## Daily plan
+| Hour | Activity |
+|------|----------|
+| 07   |          |
+| 08   |          |
+| 09   |          |
+| 10   |          |
+| 11   |          |
+| 12   |          |
+| 13   |          |
+| 14   |          |
+| 15   |          |
+| 16   |          |
+| 17   |          |
+| 18   |          |
+| 19   |          |
+| 20   |          |
+| 21   |          |
+| 22   |          |
+| 23   |          |
+
+
+
+## Summary

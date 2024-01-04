@@ -1289,3 +1289,9 @@ nnoremap <localleader>mr :CellularAutomaton make_it_rain<CR>
 
 
 nnoremap <localleader>h :WhichKey<CR>
+
+augroup AutoWikiHeader
+    autocmd!
+    autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
+augroup END
+
