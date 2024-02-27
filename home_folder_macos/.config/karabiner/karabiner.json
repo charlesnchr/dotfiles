@@ -1252,7 +1252,12 @@
                                                 "is_pointing_device": false,
                                                 "product_id": 1,
                                                 "vendor_id": 18003
-                                            }
+                                            },
+                                            {
+                                                "product_id": 273,
+                                                "vendor_id": 13364
+                                            },
+
                                         ],
                                         "type": "device_unless"
                                     },
@@ -1291,6 +1296,33 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "description": "Apple Internal Keyboard",
+                                                "is_keyboard": true,
+                                                "is_pointing_device": false,
+                                                "product_id": 834,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_unless"
+                                    },
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.microsoft\\.rdc$",
+                                            "^com\\.microsoft\\.rdc\\.mac$",
+                                            "^com\\.microsoft\\.rdc\\.osx\\.beta$",
+                                            "^com\\.parallels\\.desktop$",
+                                            "^com\\.parallels\\.vm$",
+                                            "^com\\.parallels\\.desktop\\.console$",
+                                            "^org\\.virtualbox\\.app\\.VirtualBoxVM$",
+                                            "^com\\.parallels\\.winapp\\."
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": {

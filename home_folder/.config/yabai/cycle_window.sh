@@ -12,6 +12,7 @@
 # $1: 0/1 = next/prev (left/right for x_dir or up/down for y_dir)
 # $2: x_dir/y_dir
 
+
 # Get all windows for the current space
 windows=$(yabai -m query --windows --space)
 
@@ -23,11 +24,13 @@ target_id=$(python3 - <<END
 import json
 import sys
 
+open('/Users/cnc40853/Desktop/log.txt', 'a').write('\n\n')
+
 windows = json.loads('''$windows''')
 current = json.loads('''$current''')
 
-direction = "$2"
 direction_val = int("$1")
+dir = "$2"
 
 # Extract borders and center
 left_border = current['frame']['x']
@@ -37,18 +40,7 @@ bottom_border = top_border + current['frame']['h']
 center_x = (left_border + right_border) / 2
 center_y = (top_border + bottom_border) / 2
 
-def is_in_desired_direction(window, dir):
-    w_left = window['frame']['x']
-    w_right = w_left + window['frame']['w']
-    w_top = window['frame']['y']
-    w_bottom = w_top + window['frame']['h']
-
-    if dir == 'x_dir':
-        return (w_right > left_border and direction_val == 0) or (w_left < right_border and direction_val == 1)
-    else:
-        return (w_bottom > top_border and direction_val == 0) or (w_top < bottom_border and direction_val == 1)
-
-def distance(window, dir):
+def distance(window):
     w_left = window['frame']['x']
     w_right = w_left + window['frame']['w']
     w_top = window['frame']['y']
@@ -57,30 +49,43 @@ def distance(window, dir):
     w_center_y = (w_top + w_bottom) / 2
 
     if dir == 'x_dir':
-        if direction_val == 0:
-            primary_distance = (w_left - right_border)
+        if direction_val == 1:
+            primary_distance = left_border - w_left
         else:
-            primary_distance = (left_border - w_right)
-        secondary_distance = (w_center_y - center_y)
+            primary_distance = w_right - right_border
     else:
-        if direction_val == 0:
-            primary_distance = (w_top - bottom_border)
+        if direction_val == 1:
+            primary_distance = top_border - w_top
         else:
-            primary_distance = (top_border - w_bottom)
-        secondary_distance = (w_center_x - center_x)
+            primary_distance = w_bottom - bottom_border
 
-    # We use a tuple to prioritize primary distance, but still consider secondary distance
+
+    # print every single parameters with format PARAM: VALUE
+    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'w_left: {w_left} w_right: {w_right} w_top: {w_top} w_bottom: {w_bottom} w_center_x: {w_center_x} w_center_y: {w_center_y} primary_distance: {primary_distance}\n')
+    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'left_border: {left_border} right_border: {right_border} top_border: {top_border} bottom_border: {bottom_border} center_x: {center_x} center_y: {center_y}\n')
 
     if primary_distance > 0:
-        return (primary_distance, secondary_distance)
+        return primary_distance
     else:
-        return (None, None)
+        return 10000
 
 # Exclude the current window and ones not in the desired direction from the windows list
-windows = [w for w in windows if w['id'] != current['id'] and is_in_desired_direction(w, direction)]
+windows = [w for w in windows if w['id'] != current['id']]
 
 # Find the nearest window in the specified direction
-nearest = min(windows, key=lambda w: distance(w, direction), default=None)
+min_distance = 10000
+nearest = None
+for window in windows:
+    d = distance(window)
+    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'{d}\n')
+    if d is not None and d < min_distance and d > 0:
+        min_distance = d
+        nearest = window
+
+if nearest is not None:
+    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'{nearest["id"]}\n')
+else:
+    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'None\n')
 
 if nearest is not None:
     print(nearest['id'])

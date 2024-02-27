@@ -196,13 +196,14 @@ Plug 'dstein64/vim-startuptime'
 " Plug 'stevearc/dressing.nvim'
 " Plug 'folke/noice.nvim'
 
-Plug 'mfussenegger/nvim-dap'
-Plug 'mfussenegger/nvim-dap-python'
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'mfussenegger/nvim-dap-python'
 Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
+Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
 
 call plug#end()
 
@@ -1259,7 +1260,6 @@ cnoremap <A-e> <End>
 autocmd ColorScheme * lua require('leap').init_highlight(true)
 
 command! Colo silent !zsh -c 'source $HOME/.zshrc; colo'
-nnoremap <leader>bb :call pymode#breakpoint#operate(line('.'))<CR>
 
 " triple backtick for code blocks using vim-surround
 let b:surround_{char2nr('e')} = "```\r```"

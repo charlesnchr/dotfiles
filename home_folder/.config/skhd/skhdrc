@@ -5,15 +5,15 @@ alt - 2 : $HOME/.config/yabai/open_term.sh Alacritty
 alt + cmd - return : $HOME/.config/yabai/open_firefox.sh
 
 # Navigation
-alt - f6: yabai -m window --focus west
-alt - f7 : yabai -m window --focus south
-alt - f8 : yabai -m window --focus north
-alt - f9 : yabai -m window --focus east
+# alt - f6: yabai -m window --focus west
+# alt - f7 : yabai -m window --focus south
+# alt - f8 : yabai -m window --focus north
+# alt - f9 : yabai -m window --focus east
 
-# alt - h : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
-# alt - j : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-# alt - k : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 0
-# alt - l : sh /Users/cc/.config/yabai/cycle_window.sh 1 y_dir 0
+alt - f6 : /Users/cnc40853/.config/yabai/cycle_window.sh 1 x_dir
+alt - f7 : /Users/cnc40853/.config/yabai/cycle_window.sh 0 y_dir
+alt - f8 : /Users/cnc40853/.config/yabai/cycle_window.sh 1 y_dir
+alt - f9 : /Users/cnc40853/.config/yabai/cycle_window.sh 0 x_dir
 
 # Moving windows
 shift + alt - f6: yabai -m window --warp west
@@ -72,12 +72,12 @@ shift + alt - 0x2B : yabai -m window --insert north
 shift + alt - 0x2F : yabai -m window --insert east
 
 # Float / Unfloat window
-alt - escape : \
+alt + cmd - escape : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
-alt + cmd - escape : yabai -m window --toggle sticky ; \
-                 yabai -m window --toggle topmost ;
+# alt + cmd - escape : yabai -m window --toggle sticky ; \
+#                  yabai -m window --toggle topmost ;
 
 # Float / Unfloat space (does not seem to work)
 # shift + lctrl - space : \
@@ -288,13 +288,13 @@ alt - 0x2B : yabai -m window --toggle split
 #   | xargs -I{} yabai -m window --focus {}
 
 # comman and dot
-# alt - 0x2B : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 0
-# alt - 0x2F : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 0
+# alt - 0x2B : sh /Users/cnc40853/.config/yabai/cycle_window.sh 0 x_dir 0
+# alt - 0x2F : sh /Users/cnc40853/.config/yabai/cycle_window.sh 1 x_dir 0
 
 # these actually worked, but did not get used to them
 # alt - 0x2F : yabai -m window --focus stack.recent
 # ctrl + alt - 0x2F : ~/bin/yabai_create_stack.sh
-alt - 0x2F: /Users/cc/anaconda3/bin/python ~/dotfiles/scripts/bin/date_output_typing.py
+# alt - 0x2F: /Users/cnc40853/anaconda3/bin/python ~/dotfiles/scripts/bin/date_output_typing.py
 
 # from github: https://github.com/koekeishiya/yabai/issues/113  --  doesn't work
 # cycle through all visible windows sorted by: coordinates -> display index
@@ -304,13 +304,6 @@ alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(
 alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
 # alt - n : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 1
 # alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
-#
-# lctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
-
-# lctrl + alt - right : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
-# lctrl + alt - left : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 1
-# lctrl + alt - down : sh /Users/cc/.config/yabai/cycle_window.sh 0 y_dir 1
-# lctrl + alt - up : sh /Users/cc/.config/yabai/cycle_window.sh 1 _dir 1
 
 # move displays (not as good as Rectangle Pro -- rebinded same keys via Kmonad to use Rectangle Pro)
 alt + ctrl - 8 : yabai -m window --display west; yabai -m display --focus west

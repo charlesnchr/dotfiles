@@ -51,10 +51,10 @@ yabai -m config                              \
     mouse_drop_action           swap
 
 yabai -m config layout                      float
-yabai -m config --space 1 layout            bsp
-yabai -m config --space 2 layout            bsp
-yabai -m config --space 4 layout            bsp
-yabai -m config --space 6 layout            bsp
+# yabai -m config --space 1 layout            bsp
+# yabai -m config --space 2 layout            bsp
+# yabai -m config --space 4 layout            bsp
+# yabai -m config --space 6 layout            bsp
 
 # yabai -m config external_bar all:23:0
 
@@ -124,12 +124,14 @@ yabai -m rule --add label="Python" app="^python.*$" manage=off
 
 # ----------- signals
 # below signals are from the official yabairc, they make sure that focus has sensible fallbacks when destroying and minimizing
-yabai -m signal --add event=window_destroyed action="yabai -m window --focus \$(yabai -m query --windows --space | jq '.[0].id') &> /dev/null"
-yabai -m signal --add event=window_minimized action="yabai -m window --focus \$(yabai -m query --windows --space | jq '.[0].id') &> /dev/null"
+# # 20240206 trying to remove signals to avoid lags
+# yabai -m signal --add event=window_destroyed action="yabai -m window --focus \$(yabai -m query --windows --space | jq '.[0].id') &> /dev/null"
+# yabai -m signal --add event=window_minimized action="yabai -m window --focus \$(yabai -m query --windows --space | jq '.[0].id') &> /dev/null"
 
 
-yabai -m signal --add event=window_focused action="/Users/cc/bin/yabai-smart-gaps.sh"
-yabai -m signal --add event=window_destroyed action="/Users/cc/bin/yabai-smart-gaps.sh"
+# yabai -m signal --add event=window_focused action="/Users/cc/bin/yabai-smart-gaps.sh"
+# yabai -m signal --add event=window_destroyed action="/Users/cc/bin/yabai-smart-gaps.sh"
+#
 # yabai -m signal --add event=window_created action="/Users/cc/bin/yabai-smart-gaps.sh"
 # yabai -m signal --add event=window_moved action="/Users/cc/bin/yabai-smart-gaps.sh"
 # yabai -m signal --add event=window_minimized action="/Users/cc/bin/yabai-smart-gaps.sh"
@@ -161,6 +163,3 @@ for wid in $(yabai -m query --windows | jq '.[] | select(.app == "Brave Browser"
 # sleep 1;
 # ~/bin/yabai_create_stack.sh
 #
-yabai -m signal --add event=space_changed action='cur_msteams_wid=$(yabai -m query --windows --window | jq -r "if .app == \"Microsoft Teams\" and .title == \"Microsoft Teams Notification\" then .id else empty end"); if [ -n $cur_msteams_wid ]; then next_window_id=$(yabai -m query --windows --space | jq -r "map(select(.id != $cur_msteams_wid)) | first | .id // empty"); if [ -n $next_window_id ]; then yabai -m window $next_window_id --focus; fi ; fi'
-
-yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -e ".\"can-resize\"" || yabai -m window $YABAI_WINDOW_ID --toggle float' app="Microsoft Teams"
