@@ -33,9 +33,9 @@ _launch=Ctrl+Alt+B,none,Brave
 new-private-window=none,none,New Incognito window
 new-window=none,none,New Window
 
-[flatpak.desktop]
-_k_friendly_name=flatpak run com.github.hluk.copyq -e "toggle"
-_launch=Meta+V,none,flatpak run com.github.hluk.copyq -e "toggle"
+[copyq-3.desktop]
+_k_friendly_name=copyq -e "toggle"
+_launch=Meta+V,none,copyq -e "toggle"
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -260,16 +260,16 @@ Window to Screen 6=none,,Window to Screen 6
 Window to Screen 7=none,,Window to Screen 7
 _k_friendly_name=KWin
 view_actual_size=none,Meta+0,Zoom to Actual Size
-view_zoom_in=Meta++\tMeta+=,Meta++,Zoom In
+view_zoom_in=Meta++\tMeta+=,Meta++\tMeta+=,Zoom In
 view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
 _k_friendly_name=Media Controller
-mediavolumedown=Meta+Ctrl+Alt+Shift+S,none,Media volume down
-mediavolumeup=Meta+Ctrl+Alt+Shift+W,none,Media volume up
+mediavolumedown=Meta+Ctrl+Alt+Shift+S,,Media volume down
+mediavolumeup=Meta+Ctrl+Alt+Shift+W,,Media volume up
 nextmedia=Media Next\tMeta+Ctrl+Alt+D,Media Next,Media playback next
 pausemedia=Media Pause,Media Pause,Pause media playback
-playmedia=none,none,Play media playback
+playmedia=none,,Play media playback
 playpausemedia=Meta+Ctrl+Alt+Q\tMedia Play,Media Play,Play/Pause media playback
 previousmedia=Meta+Ctrl+Alt+A\tMedia Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback

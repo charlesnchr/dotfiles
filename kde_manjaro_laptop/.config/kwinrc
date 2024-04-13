@@ -32,6 +32,8 @@ CommandActiveTitlebar2=Minimize
 
 [NightColor]
 Active=true
+LatitudeAuto=54.5396
+LongitudeAuto=-5.975
 NightTemperature=3300
 
 [Plugins]
@@ -86,6 +88,9 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 [Tiling][1d0df3d4-3773-5fe3-a8be-971983d2fd0e]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
+[Tiling][1eaa9ed5-0e13-5c75-aa9e-945b8724de03]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][22867e10-93f6-513b-ba4e-4d6d005a7b77]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
@@ -106,6 +111,12 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.15},{"width":0.2746093
 
 [Tiling][b6eeeb9c-8127-5061-baca-7e0ceece0d9d]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.644140625},{"layoutDirection":"vertical","tiles":[{"height":0.5},{"height":0.5}],"width":0.355859375}]}
+
+[Tiling][bb108233-721f-563d-8eb3-2c111a1e7d1a]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][c0dbd820-8d86-5ae7-a271-05652fc41333]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][cc0aca0b-48e3-5228-b5dc-11c97408196d]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}

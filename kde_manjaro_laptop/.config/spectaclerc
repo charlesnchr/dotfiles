@@ -20,8 +20,8 @@ textFontColor=255,85,0
 rememberLastRectangularRegion=Always
 
 [GuiConfig]
-captureMode=4
-cropRegion=588,292,431,388
+captureMode=0
+cropRegion=607,78,695,817
 quitAfterSaveCopyExport=true
 
 [KFileDialog Settings]
