@@ -47,7 +47,7 @@ maximizevert=true
 maximizevertrule=3
 title=tmuxinator
 titlematch=1
-wmclass=Alacritty
+wmclass=alacritty
 wmclassmatch=1
 
 [1397f9d1-f944-4db0-989a-ff8145f59b53]
@@ -62,7 +62,7 @@ wmclassmatch=1
 Description=Settings for Slack
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
-wmclass=Slack
+wmclass=slack
 wmclassmatch=1
 
 [2c6ecbfe-6aaa-46d2-82f4-f12803e8e56f]
@@ -87,7 +87,7 @@ wmclassmatch=1
 Description=brave slack
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
-wmclass=brave-eglaocpfjogoejfpopckmoohcfganjdd-Default
+wmclass=brave-eglaocpfjogoejfpopckmoohcfganjdd-default
 wmclassmatch=1
 
 [5]
@@ -96,7 +96,7 @@ desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
 maximizehoriz=true
 maximizevert=true
-wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-Default
+wmclass=brave-hnpfjngllnobngcgfapefoaidbinmjnm-default
 wmclassmatch=1
 
 [5078d60e-9574-4090-9ccc-034270642f51]
@@ -112,7 +112,7 @@ Description=Window settings for Outlook (PWA) - Email - Charles Nicklas Christen
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
 title=Outlook (PWA) - Email - Charles Nicklas Christensen - Outlook
-wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-Default
+wmclass=brave-eigpmdhekjlgjgcppnanaanbdmnlnagl-default
 wmclassmatch=1
 
 [697c5280-1b73-4f82-8b5b-2e48220861c2]
@@ -140,7 +140,7 @@ Description=Window settings for Discord - • Discord | Friends
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
 title=Discord - • Discord | Friends
-wmclass=brave-magkoliahgffibhgfkmoealggombgknl-Default
+wmclass=brave-magkoliahgffibhgfkmoealggombgknl-default
 wmclassmatch=1
 
 [8]
@@ -148,7 +148,7 @@ Description=Window settings for Google Calendar - ONI – Calendar - Week of 24 
 desktops=899357af-382a-4188-b462-e124995fd56a
 desktopsrule=3
 title=Google Calendar - ONI – Calendar - Week of 24 September 2023
-wmclass=brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-Default
+wmclass=brave-kjbdgfilnfhdoflbpgamdcdgpehopbep-default
 wmclassmatch=1
 
 [854b3348-3266-4ef3-afcf-0a85b91e8ce5]
@@ -163,7 +163,7 @@ Description=Window settings for Notion - Home
 desktops=3a560b71-17f2-4a4a-a084-08017d8a42f6
 desktopsrule=3
 title=Notion - Home
-wmclass=brave-immdamkmkailjeehjeelcjmfgjmcihip-Default
+wmclass=brave-immdamkmkailjeehjeelcjmfgjmcihip-default
 wmclassmatch=1
 
 [90823e61-f503-4d50-a0db-c6540b833620]

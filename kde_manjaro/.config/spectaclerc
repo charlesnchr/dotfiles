@@ -23,14 +23,14 @@ rememberLastRectangularRegion=Always
 
 [GuiConfig]
 captureMode=4
-cropRegion=309,529,1582,821
+cropRegion=277,114,1841,1109
 quitAfterSaveCopyExport=true
 
 [KFileDialog Settings]
-Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/Desktop/Screenshot_20231018_000920.png,file:$HOME/0main/0oni/Software hands Screenshot_20230929_160037.png,file:$HOME/0main/0oni/Foundation Screenshot_20230929_160015.png,file:$HOME/0main/0oni/Parameter free clustering OKR Screenshot_20230929_155939.png,file:$HOME/0main/5.Billeder/Screenshots/Screenshot_20230928_232623-linux server parallel sweep.png,file:$HOME/0main/3.Diverse/Personlig/Accommodation/council-tax-discount-application-20230903.png
-Recent URLs[$e]=file:$HOME/Pictures/,file:$HOME/0main/3.Diverse/Personlig/Accommodation/,file:$HOME/Desktop/,file:$HOME/0main/5.Billeder/Screenshots/,file:$HOME/0main/0oni/,file:$HOME/,file:$HOME/Documents/
+Recent Files[$e]=file:$HOME/Pictures/Screenshot_20230831_173415.png,file:$HOME/Desktop/Screenshot_20231110_100844.png,file:$HOME/Desktop/Screenshot_20231018_000920.png
+Recent URLs[$e]=file:$HOME/Pictures/,file:$HOME/Desktop/,file:$HOME/,file:$HOME/Documents/
 detailViewIconSize=16
 
 [Save]
-lastSaveAsLocation=file:///home/cc/Desktop/Screenshot_20231018_000920.png
-lastSaveLocation=file:///home/cc/Desktop/Screenshot_20231018_000920.png
+lastSaveAsLocation=file:///home/cc/Desktop/Screenshot_20231110_100844.png
+lastSaveLocation=file:///home/cc/Pictures/Screenshot_20231127_004014.png

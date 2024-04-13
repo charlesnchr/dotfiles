@@ -8,8 +8,8 @@ PreviewSize=32
 GlobalViewProps=false
 ShowFullPath=true
 ShowFullPathInTitlebar=true
-Version=202
-ViewPropsTimestamp=2023,8,5,13,14,53.862
+Version=201
+ViewPropsTimestamp=2023,11,17,1,28,51.463
 
 [IconsMode]
 PreviewSize=128
@@ -21,8 +21,24 @@ Places Icons Static Size=22
 [KPropertiesDialog]
 2 screens: Height=500
 2 screens: Width=434
+DP-0 Height 2560x1440=650
+DP-0 Width 2560x1440=493
+DP-2.8 DP-0 Height 2560x1440=672
+DP-2.8 DP-0 Width 2560x1440=493
 
 [MainWindow]
+DP-0 DP-2 XPosition 1707x960=473
+DP-0 DP-2 YPosition 1707x960=155
+DP-0 Height 2560x1440=866
+DP-0 Width 2560x1440=1132
+DP-0 XPosition 2560x1440=177
+DP-0 YPosition 2560x1440=281
+DP-2.8 DP-0 Height 2560x1440=922
+DP-2.8 DP-0 Width 2560x1440=1005
+DP-2.8 DP-0 XPosition 2560x1440=2578
+DP-2.8 DP-0 YPosition 2560x1440=241
+HDMI-1 XPosition 2560x1440=900
+HDMI-1 YPosition 2560x1440=382
 MenuBar=Disabled
 ToolBarsMovable=Disabled
 

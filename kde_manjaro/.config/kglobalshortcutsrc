@@ -14,7 +14,7 @@ _k_friendly_name=Alacritty
 _launch=none,none,Alacritty
 
 [KDE Keyboard Layout Switcher]
-Switch to Next Keyboard Layout=Meta+Alt+K,Meta+Alt+K,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=Meta+Alt+K,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
 [alacritty-2.desktop]
@@ -53,6 +53,7 @@ display=Meta+Ctrl+P\tDisplay,Display\tMeta+P,Switch Display
 [khotkeys]
 _k_friendly_name=Custom Shortcuts Service
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none,none,Search
+{edd06532-1aec-430d-9041-4bca1778642a}=none,none,Launch Konsole
 
 [kitty-2.desktop]
 _k_friendly_name=kitty ranger
@@ -79,24 +80,25 @@ toggle-mute-PCM@RØDE NT-USB Mini=none,none,Mute PCM on RØDE NT-USB Mini
 
 [ksmserver]
 Halt Without Confirmation=none,,Halt Without Confirmation
-Lock Session=Screensaver,Meta+L\tScreensaver,Lock Session
+Lock Session=Screensaver,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Log Out
 Log Out Without Confirmation=none,,Log Out Without Confirmation
 Reboot Without Confirmation=none,,Reboot Without Confirmation
 _k_friendly_name=Session Management
 
 [kwin]
-Activate Window Demanding Attention=Meta+Ctrl+A,Meta+Ctrl+A,Activate Window Demanding Attention
+Activate Window Demanding Attention=Meta+Ctrl+A,Ctrl+Alt+A,Activate Window Demanding Attention
 ClearLastMouseMark=Meta+Shift+F12,Meta+Shift+F12,Clear Last Mouse Mark
 ClearMouseMarks=Meta+Shift+F11,Meta+Shift+F11,Clear Mouse Marks
-Decrease Opacity=none,,Decrease Opacity of Active Window by 5%
+Decrease Opacity=none,,Decrease Opacity of Active Window by 5 %
 Edit Tiles=Alt+Shift+T,Meta+T,Toggle Tiles Editor
 Expose=Ctrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
 ExposeAll=Launch (C)\tMeta+B\tCtrl+F10,Ctrl+F10\tLaunch (C),Toggle Present Windows (All desktops)
 ExposeClass=Meta+N\tCtrl+F7,Ctrl+F7,Toggle Present Windows (Window class)
 ExposeClassCurrentDesktop=none,none,Toggle Present Windows (Window class on current desktop)
-Increase Opacity=none,,Increase Opacity of Active Window by 5%
-Kill Window=Meta+Ctrl+Esc,Meta+Ctrl+Esc,Kill Window
+Increase Opacity=none,,Increase Opacity of Active Window by 5 %
+Invert Screen Colors=none,,Invert Screen Colours
+Kill Window=Meta+Ctrl+Esc,Ctrl+Alt+Esc,Kill Window
 Move Tablet to Next Output=none,none,Move the tablet to the next output
 MoveMouseToCenter=Meta+F6,Meta+F6,Move Mouse to Centre
 MoveMouseToFocus=Meta+F5,Meta+F5,Move Mouse to Focus
@@ -120,8 +122,8 @@ Quarter: Move to Previous Screen=none,none,Quarter: Move to Previous Screen
 Quarter: Reset Layout=none,none,Quarter: Reset Layout
 Quarter: Toggle Gaps On/Off=none,none,Quarter: Toggle Gaps On/Off
 Setup Window Shortcut=none,,Setup Window Shortcut
-Show Desktop=Meta+R,Meta+D,Peek at Desktop
-ShowDesktopGrid=Meta+F8\tMeta+Y,Meta+F8,Show Desktop Grid
+Show Desktop=Meta+R,Meta+D,Show Desktop
+ShowDesktopGrid=Meta+F8\tMeta+Y,Ctrl+F8,Show Desktop Grid
 Suspend Compositing=Alt+Shift+F12,Alt+Shift+F12,Suspend Compositing
 Switch One Desktop Down=none,Meta+Ctrl+Down,Switch One Desktop Down
 Switch One Desktop Up=none,Meta+Ctrl+Up,Switch One Desktop Up
@@ -163,10 +165,10 @@ Switch to Screen 4=none,,Switch to Screen 4
 Switch to Screen 5=none,,Switch to Screen 5
 Switch to Screen 6=none,,Switch to Screen 6
 Switch to Screen 7=none,,Switch to Screen 7
-Switch to Screen Above=none,,Switch to Screen Above
-Switch to Screen Below=none,,Switch to Screen Below
-Switch to Screen to the Left=none,,Switch to Screen to the Left
-Switch to Screen to the Right=none,,Switch to Screen to the Right
+Switch to Screen Above=none,none,Switch to Screen Above
+Switch to Screen Below=none,none,Switch to Screen Below
+Switch to Screen to the Left=none,none,Switch to Screen to the Left
+Switch to Screen to the Right=none,none,Switch to Screen to the Right
 Switch to last used desktop=Meta+W,none,
 Toggle Night Color=none,none,Toggle Night Colour
 Toggle Window Raise/Lower=none,,Toggle Window Raise/Lower
@@ -196,16 +198,16 @@ Window Maximize Vertical=none,,Maximise Window Vertically
 Window Minimize=Meta+M\tMeta+PgDown,Meta+PgDown,Minimise Window
 Window Move=none,,Move Window
 Window Move Center=none,,Move Window to the Centre
-Window No Border=none,,Toggle Window Titlebar and Frame
+Window No Border=none,,Hide Window Border
 Window On All Desktops=Meta+C,,Keep Window on All Desktops
 Window One Desktop Down=Meta+Ctrl+Shift+Down,Meta+Ctrl+Shift+Down,Window One Desktop Down
 Window One Desktop Up=Meta+Ctrl+Shift+Up,Meta+Ctrl+Shift+Up,Window One Desktop Up
 Window One Desktop to the Left=Meta+Ctrl+Shift+Left,Meta+Ctrl+Shift+Left,Window One Desktop to the Left
 Window One Desktop to the Right=Meta+Ctrl+Shift+Right,Meta+Ctrl+Shift+Right,Window One Desktop to the Right
-Window One Screen Down=none,,Window One Screen Down
-Window One Screen Up=none,,Window One Screen Up
-Window One Screen to the Left=none,,Window One Screen to the Left
-Window One Screen to the Right=none,,Window One Screen to the Right
+Window One Screen Down=none,none,Window One Screen Down
+Window One Screen Up=none,none,Window One Screen Up
+Window One Screen to the Left=none,none,Window One Screen to the Left
+Window One Screen to the Right=none,none,Window One Screen to the Right
 Window Operations Menu=Alt+F3,Alt+F3,Window Operations Menu
 Window Pack Down=none,,Move Window Down
 Window Pack Left=none,,Move Window Left
@@ -257,8 +259,8 @@ Window to Screen 5=none,,Window to Screen 5
 Window to Screen 6=none,,Window to Screen 6
 Window to Screen 7=none,,Window to Screen 7
 _k_friendly_name=KWin
-view_actual_size=none,Meta+0,Zoom to Actual Size
-view_zoom_in=Meta++\tMeta+=,Meta++,Zoom In
+view_actual_size=none,Meta+0,Actual Size
+view_zoom_in=Meta++\tMeta+=,Meta+=,Zoom In
 view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
@@ -331,11 +333,13 @@ activate task manager entry 7=none,Meta+7,Activate Task Manager Entry 7
 activate task manager entry 8=none,Meta+8,Activate Task Manager Entry 8
 activate task manager entry 9=none,Meta+9,Activate Task Manager Entry 9
 activate widget 116=none,none,Activate Icons-only Task Manager Widget
-activate widget 4=Alt+Space,none,Activate Application Launcher Widget
+activate widget 123=none,none,Activate Application Launcher Widget
+activate widget 149=none,none,Activate Application Launcher Widget
+activate widget 4=none,none,Activate Application Launcher Widget
 activate widget 50=Alt+F1,none,Activate Application Launcher Widget
 activate widget 74=none,none,Activate Application Launcher Widget
 clear-history=none,,Clear Clipboard History
-clipboard_action=Meta+Ctrl+X,Meta+Ctrl+X,Automatic Action Popup Menu
+clipboard_action=Meta+Ctrl+X,Ctrl+Alt+X,Enable Clipboard Actions
 cycle-panels=Meta+Alt+P,Meta+Alt+P,Move keyboard focus between panels
 cycleNextAction=none,,Next History Item
 cyclePrevAction=none,,Previous History Item
@@ -343,10 +347,10 @@ edit_clipboard=none,,Edit Contents…
 manage activities=Meta+Q,Meta+Q,Show Activity Switcher
 next activity=Meta+Esc,Meta+Tab,Walk through activities
 previous activity=Meta+Shift+Esc,Meta+Shift+Tab,Walk through activities (Reverse)
-repeat_action=Meta+Ctrl+R,Meta+Ctrl+R,Manually Invoke Action on Current Clipboard
+repeat_action=Meta+Ctrl+R,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
 show dashboard=Ctrl+F12,Ctrl+F12,Show Desktop
 show-barcode=none,,Show Barcode…
-show-on-mouse-pos=Meta+Shift+V,Meta+V,Show Items at Mouse Position
+show-on-mouse-pos=Meta+Shift+V,Meta+V,Open Klipper at Mouse Position
 stop current activity=none,Meta+S,Stop Current Activity
 switch to next activity=none,,Switch to Next Activity
 switch to previous activity=none,,Switch to Previous Activity
@@ -360,6 +364,17 @@ kcm-lookandfeel=none,none,Global Theme
 kcm-users=none,none,Users
 powerdevilprofilesconfig=none,none,Energy Saving
 screenlocker=none,none,Screen Locking
+
+[wacomtablet]
+Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Map to fullscreen
+Map to screen 1=Meta+Ctrl+1,Meta+Ctrl+1,Map to screen 1
+Map to screen 2=Meta+Ctrl+2,Meta+Ctrl+2,Map to screen 2
+Next Profile=Meta+Ctrl+N,Meta+Ctrl+N,Next profile
+Previous Profile=none,Meta+Ctrl+P,Previous Profile
+Toggle screen map selection=Meta+Ctrl+M,Meta+Ctrl+M,Toggle between all screens
+Toggle stylus mode=Meta+Ctrl+S,Meta+Ctrl+S,Toggle the Stylus Tool Relative/Absolute
+Toggle touch tool=none,Meta+Ctrl+T,Enable/Disable the Touch Tool
+_k_friendly_name=Wacom Tablet
 
 [yakuake]
 _k_friendly_name=Yakuake

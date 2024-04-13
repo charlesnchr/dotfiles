@@ -141,7 +141,7 @@ History Items[$e]=file:$HOME/bin,sftp://admin@192.168.1.192:4400/video/dokumenta
 
 [General]
 BrowserApplication=brave-browser.desktop
-ColorSchemeHash=d2f9f23c62b2c7529878a3b4c96c2902e98086db
+ColorSchemeHash=0d37ac7d257c7643ff5540889d5368b99875ad6b
 TerminalApplication=alacritty
 TerminalService=Alacritty.desktop
 
