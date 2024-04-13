@@ -2,11 +2,16 @@
 
 source ~/dotfiles/ask.sh
 
-if ask "Install conda" N; then
+if ask "Install conda x86" N; then
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
     bash ~/anaconda.sh -b -p $HOME/anaconda3
 fi
 
+if ask "Install conda ARM" N; then
+    curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -o /tmp/Miniconda3-latest-Linux-aarch64.sh
+    bash /tmp/Miniconda3-latest-Linux-aarch64.sh -b -p $HOME/anaconda3
+fi
+ 
 if ask "Install node/nvim without sudo (curl and conda)" N; then
     # Node
     conda install -c conda-forge nodejs
@@ -30,7 +35,13 @@ if ask "Install git without sudo (in this case just conda)" N; then
 fi
 
 
-if ask "zsh, tmux, nvim, node, git and python must be install. Continue?" Y; then
+# pv required compression and backup scripts, sqlite3 required for histdb
+if ask "Ubuntu: install essentials - zsh, tmux, nvim, node, git, ranger, pv, sqlite3?" N; then
+    sudo apt install zsh tmux neovim nodejs ranger pv sqlite3 -y
+fi
+
+
+if ask "zsh, tmux, nvim, node, git and python must be installed. Continue?" Y; then
     :
 else
     exit 1
@@ -51,8 +62,8 @@ conda activate base
 # - node
 # - python
 
-if ask "Install fzf, tmux plugin manager and antigen" N; then
 
+if ask "Install autojump and fzf from github" N; then
     # autojump
     git clone git://github.com/wting/autojump.git
     cd autojump
@@ -61,20 +72,14 @@ if ask "Install fzf, tmux plugin manager and antigen" N; then
     # fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all
-
-    # tmux plugin manager
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    ~/.tmux/plugins/tpm/bin/install_plugins
-
-    # antigen download
-    mkdir -p $HOME/tools
-    git clone https://github.com/zsh-users/antigen.git $HOME/tools/antigen
-    zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/tools/antigen/bin/antigen.zsh && antigen update"
 fi
 
 
-
 # Setting up symlinks with stow or ln
+
+if ask "stow is recommended in the following. Install on Ubuntu?" N; then
+    sudo apt install stow -y
+fi
 
 # alternative, less clean, syntax:
 # stow -R .config -t ~/.config
@@ -114,7 +119,7 @@ if ask "Use stow to set up links" N; then
     stow nvim
 
     echo "Select extra config"
-    select yn in "Desktop" "Laptop" "Server" "None"; do
+    select yn in "Desktop" "Laptop" "No"; do
       case $yn in
         Desktop )
             stow home_folder_desktop
@@ -124,15 +129,11 @@ if ask "Use stow to set up links" N; then
             stow home_folder_laptop
             break
             ;;
-        Server )
-            exit
-            ;;
-        None )
+        No )
             break
             ;;
       esac
     done
-
 else
     if ask "Use reduced symlink setup instead" N; then
         ln -sfn ~/dotfiles/home_folder/.profile ~/.profile
@@ -155,7 +156,7 @@ if ask "Set up submodule dotfiles_private and run dotfiles_private/install.sh?" 
 fi
 
 # Set up themes (for linux)
-if ask "Set up themes?" N; then
+if ask "Linux desktop: Set up themes?" N; then
 
     # KDE theme
     if ask "Install kde theme" N; then
@@ -190,11 +191,27 @@ if ask "Set up nvim plugins etc." N; then
     nvim +'MasonInstall vim-language-server json-lsp rust-analyzer'
 fi
 
-if ask "Install conda utilities (rclone, ripgrep, ctags)" N; then
-    conda install -y -c conda-forge universal-ctags rclone ripgrep
+
+
+if ask "Install tmux plugin manager and antigen" N; then
+    # tmux plugin manager
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ~/.tmux/plugins/tpm/bin/install_plugins
+
+    # antigen download
+    mkdir -p $HOME/tools
+    git clone https://github.com/zsh-users/antigen.git $HOME/tools/antigen
+    zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/tools/antigen/bin/antigen.zsh && antigen update"
 fi
 
-if ask "Install pylsp and scientific python packages (skimage, numpy)" N; then
-    pip install scikit-image numpy matplotlib opencv-python pynvim python-lsp-server[all] streamlit numba timm einops
+if ask "Ubuntu: Install rclone, ripgrep, ctags" N; then
+    sudo apt install universal-ctags rclone ripgrep -y
+else
+    if ask "Conda: Install rclone, ripgrep, ctags" N; then
+        conda install -y -c conda-forge universal-ctags rclone ripgrep
+    fi
 fi
 
+if ask "Install pylsp and scientific python packages (skimage, numpy, pylsp, streamlit)" N; then
+    pip install scikit-image numpy matplotlib python-lsp-server[all] streamlit
+fi

@@ -318,7 +318,7 @@ export BAT_THEME="Solarized (dark)"
 # used for while:
 # export FZF_DEFAULT_COMMAND='fd --type file -H'
 # trying this to improve :Rg in vim
-export FZF_DEFAULT_COMMAND='fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,tmp,tags} --type file -H'
+# export FZF_DEFAULT_COMMAND='fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,tmp,tags} --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 
@@ -344,3 +344,4 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 source $HOME/dotfiles/.zshrc_local
 autoload -Uz add-zsh-hook
+
