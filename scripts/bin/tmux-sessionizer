@@ -6,8 +6,7 @@ content_dirs=(
     ~/1private/Github
     ~/2work
     ~/2work/gitrepos
-    ~/0main/Syncthing
-    ~/0main/1.Projects
+    ~/0main/2.Projects
 )
 
 # Define the fixed directories to search
@@ -26,17 +25,21 @@ for dir in "${fixed_dirs[@]}"; do
         selected_dirs+=("$dir")
     fi
 done
+
 for dir in "${content_dirs[@]}"; do
     if [[ -d $dir ]]; then
-        selected_dirs+=($(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '*/.*'))
+        selected_dirs+=($(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*'))
     fi
 done
 
-# Use the filtered paths array in find command
+# Get a list of running tmux sessions
+tmux_sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+
+# Use the filtered paths array and tmux sessions in fzf
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf "%s\n" "${selected_dirs[@]}" | fzf --height=80% --margin=5%,5% --preview 'tree {}' --prompt="projects > ")
+    selected=$(printf "%s\n" "${tmux_sessions[@]}" "${selected_dirs[@]}" | fzf --height=80% --margin=5%,5% --preview 'tmux capture-pane -pt {} -S -500' --prompt="projects > ")
 fi
 
 if [[ -z $selected ]]; then
@@ -44,15 +47,27 @@ if [[ -z $selected ]]; then
 fi
 
 selected_name=$(basename "$selected" | tr . _)
+
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
+    if [[ -d $selected ]]; then
+        tmux new-session -s $selected_name -c $selected
+        tmux attach-session -t $selected
+    else
+        tmux attach-session -t $selected
+    fi
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2>/dev/null; then
-    tmux new-session -ds $selected_name -c $selected
+    if [[ -d $selected ]]; then
+        tmux new-session -ds $selected_name -c $selected
+        tmux attach-session -t $selected
+    else
+        tmux new-session -ds $selected_name
+        tmux attach-session -t $selected_name
+    fi
+else
+    tmux switch-client -t $selected_name
 fi
-
-tmux switch-client -t $selected_name

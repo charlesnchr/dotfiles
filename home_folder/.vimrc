@@ -202,7 +202,7 @@ Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'rafamadriz/friendly-snippets'
-Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
+" Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
 
 call plug#end()
@@ -347,9 +347,9 @@ filetype plugin on
 
 " for vimwiki
 let g:vimwiki_list = [{
-            \ 'path': '$HOME/0main/Syncthing/wiki',
+            \ 'path': '$HOME/0main/vimwiki',
             \ 'syntax': 'markdown',
-            \ 'template_path': '$HOME/0main/Syncthing/wiki/templates',
+            \ 'template_path': '$HOME/0main/vimwiki/templates',
             \ 'template_default': 'default',
             \ 'template_ext': '.html'}]
 let g:vimwiki_ext2syntax = {
@@ -657,8 +657,6 @@ let g:floaterm_height = 0.8
 "let g:taskwiki_sort_orders={"T": "end-"}
 " nmap <C-k> <Plug>VimwikiPrevLink
 " nmap <C-j> <Plug>VimwikiNextLink
-autocmd FileType vimwiki map <buffer> <C-k> <Plug>VimwikiGoToPrevHeader<CR>
-autocmd FileType vimwiki map <buffer> <C-j> <Plug>VimwikiGoToNextHeader<CR>
 autocmd FileType vimwiki map <buffer> <C-h> <Plug>VimwikiDiaryPrevDay<CR>
 autocmd FileType vimwiki map <buffer> <C-l> <Plug>VimwikiDiaryNextDay<CR>
 nnoremap <leader>tl <cmd>VimwikiToggleListItem<cr>
@@ -1287,11 +1285,9 @@ xnoremap <localleader>ad "_d
 nnoremap <localleader>ad "_d
 nnoremap <localleader>mr :CellularAutomaton make_it_rain<CR>
 
-
 nnoremap <localleader>h :WhichKey<CR>
 
 augroup AutoWikiHeader
     autocmd!
     autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
 augroup END
-

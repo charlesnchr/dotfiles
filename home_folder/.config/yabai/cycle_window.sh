@@ -6,12 +6,9 @@
 * Github : github.com/charlesnchr
 ----------------------------------------'
 
-#!/bin/bash
-
 # Arguments:
 # $1: 0/1 = next/prev (left/right for x_dir or up/down for y_dir)
 # $2: x_dir/y_dir
-
 
 # Get all windows for the current space
 windows=$(yabai -m query --windows --space)
@@ -23,8 +20,6 @@ current=$(yabai -m query --windows --window)
 target_id=$(python3 - <<END
 import json
 import sys
-
-open('/Users/cnc40853/Desktop/log.txt', 'a').write('\n\n')
 
 windows = json.loads('''$windows''')
 current = json.loads('''$current''')
@@ -59,11 +54,6 @@ def distance(window):
         else:
             primary_distance = w_bottom - bottom_border
 
-
-    # print every single parameters with format PARAM: VALUE
-    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'w_left: {w_left} w_right: {w_right} w_top: {w_top} w_bottom: {w_bottom} w_center_x: {w_center_x} w_center_y: {w_center_y} primary_distance: {primary_distance}\n')
-    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'left_border: {left_border} right_border: {right_border} top_border: {top_border} bottom_border: {bottom_border} center_x: {center_x} center_y: {center_y}\n')
-
     if primary_distance > 0:
         return primary_distance
     else:
@@ -77,20 +67,15 @@ min_distance = 10000
 nearest = None
 for window in windows:
     d = distance(window)
-    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'{d}\n')
     if d is not None and d < min_distance and d > 0:
         min_distance = d
         nearest = window
 
 if nearest is not None:
-    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'{nearest["id"]}\n')
-else:
-    open('/Users/cnc40853/Desktop/log.txt', 'a').write(f'None\n')
-
-if nearest is not None:
     print(nearest['id'])
 else:
     print("")
+
 END
 )
 

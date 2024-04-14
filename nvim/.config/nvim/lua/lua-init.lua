@@ -393,6 +393,6 @@ end
 -- end)
 
 
-require("fidget").setup {
-  -- options
-}
+-- require("fidget").setup {
+--   -- options
+-- }
