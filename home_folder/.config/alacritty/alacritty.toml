@@ -1,30 +1,5 @@
-[colors.bright]
-black = "0x414868"
-blue = "0x7ba2f3"
-cyan = "0x2ac4de"
-green = "0x41b59b"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xc0caf5"
-yellow = "0xe0af68"
-
-[colors.cursor]
-cursor = "0xc0caf5"
-text = "0x28b9d2"
-
-[colors.normal]
-black = "0x414868"
-blue = "0x7ba2f3"
-cyan = "0x2ccde9"
-green = "0x41b59b"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xc0caf5"
-yellow = "0xe0af68"
-
-[colors.primary]
-background = "0x1b1f30"
-foreground = "0xbbc2e0"
+# import = [ "~/.config/alacritty/themes/themes/alabaster.toml" ]
+import = [ "~/.config/alacritty/themes/themes/tokyo-night-storm.toml" ]
 
 [env]
 TERM = "xterm-256color"
@@ -466,7 +441,7 @@ hide_when_typing = true
 multiplier = 5
 
 [shell]
-args = ["--login"]
+args = ["-l"]
 program = "/bin/zsh"
 
 [window]

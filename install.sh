@@ -213,5 +213,5 @@ else
 fi
 
 if ask "Install pylsp and scientific python packages (skimage, numpy, pylsp, streamlit)" N; then
-    pip install scikit-image numpy matplotlib python-lsp-server[all] streamlit
+    pip install scikit-image numpy matplotlib python-lsp-server[all] ruff python-lsp-ruff streamlit
 fi
