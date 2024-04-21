@@ -76,8 +76,8 @@ alt + cmd - escape : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
-# alt + cmd - escape : yabai -m window --toggle sticky ; \
-#                  yabai -m window --toggle topmost ;
+alt + shift + cmd - p : yabai -m window --toggle sticky; \
+          yabai -m window --toggle topmost
 
 # Float / Unfloat space (does not seem to work)
 # shift + lctrl - space : \

@@ -25,7 +25,7 @@ yabai -m config                              \
     mouse_follows_focus         off          \
     focus_follows_mouse         off          \
     window_placement            second_child \
-    window_topmost              off          \
+    window_topmost              on          \
     window_shadow               float        \
     active_window_opacity       1.0          \
     normal_window_opacity       0.90         \

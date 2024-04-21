@@ -216,13 +216,15 @@ require("lspconfig").pylsp.setup(config({
 	settings = {
 		pylsp = {
 			plugins = {
-				pylint = { enabled = true },
-				pyflakes = { enabled = true },
-				flake8 = { enabled = true },
+				pylint = { enabled = false },
+				pyflakes = { enabled = false },
+				flake8 = { enabled = false },
 				pycodestyle = { enabled = false },
 				jedi_completion = { fuzzy = true },
 				pyls_isort = { enabled = true },
 				pylsp_mypy = { enabled = true },
+                pylsp_black = { enabled = true },
+                pylsp_ruff = { enabled = true },
 			},
 		},
 	},
@@ -232,18 +234,18 @@ require("lspconfig").pylsp.setup(config({
 	capabilities = capabilities,
 }))
 
-require("lspsaga").setup({
-	symbol_in_winbar = {
-		enable = false,
-		separator = " ",
-		ignore_patterns = {},
-		hide_keyword = true,
-		show_file = true,
-		folder_level = 2,
-		respect_root = false,
-		color_mode = true,
-	},
-})
+-- require("lspsaga").setup({
+-- 	symbol_in_winbar = {
+-- 		enable = false,
+-- 		separator = " ",
+-- 		ignore_patterns = {},
+-- 		hide_keyword = true,
+-- 		show_file = true,
+-- 		folder_level = 2,
+-- 		respect_root = false,
+-- 		color_mode = true,
+-- 	},
+-- })
 
 require("lspconfig").clangd.setup({
 	on_attach = on_attach,

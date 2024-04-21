@@ -135,7 +135,6 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " not completely sure why the below module is needed, but I get an error by
 " Ctrl+G in .zsh files if not, possibly from nvim-treesitter
-Plug 'kosayoda/nvim-lightbulb'
 " Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 
