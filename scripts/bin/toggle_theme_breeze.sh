@@ -10,12 +10,12 @@ current_mode=$(cat ~/dotfiles/is_dark_mode)
 
 if [[ "$current_mode" == "0" ]]; then
     # Currently in light mode, so switch to dark mode
-    sed -i 's/^colors:.*$/colors: \*folke-tokyo-night/' ~/.config/alacritty/alacritty.yml
+    sed -i 's|^import = .*|import = [ "~/.config/alacritty/themes/themes/tokyo-night-storm.toml" ]|' ~/.config/alacritty/alacritty.toml
     lookandfeeltool -a org.kde.breezedark.desktop
     echo "1" > ~/dotfiles/is_dark_mode  # Update the mode in the file
 else
     # Currently in dark mode, so switch to light mode
-    sed -i 's/^colors:.*$/colors: \*folke-tokyo-night-day/' ~/.config/alacritty/alacritty.yml
+    sed -i 's|^import = .*|import = [ "~/.config/alacritty/themes/themes/alabaster.toml" ]|' ~/.config/alacritty/alacritty.toml
     lookandfeeltool -a org.kde.breeze.desktop
     echo "0" > ~/dotfiles/is_dark_mode  # Update the mode in the file
 fi

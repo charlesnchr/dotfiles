@@ -32,22 +32,24 @@ case "$(uname -s)" in
         ;;
 esac
 
-# Get the selected file from Ranger
-SELECTED_FILE="$1"
+# Get the selected files from Ranger
+SELECTED_FILES=("$@")
 
-# Run the file manager with the selected file
+# Run the file manager with the selected files
 case "$FM" in
     tselect)
-        "$FM" "$SELECTED_FILE"
+        "$FM" "${SELECTED_FILES[@]}"
         ;;
     dolphin)
-        "$FM" --select "$SELECTED_FILE" > /dev/null 2>&1 &
+        "$FM" --select "${SELECTED_FILES[@]}" > /dev/null 2>&1 &
         ;;
     thunar|nautilus)
-        "$FM" "$SELECTED_FILE" > /dev/null 2>&1 &
+        "$FM" "${SELECTED_FILES[@]}" > /dev/null 2>&1 &
         ;;
     explorer.exe)
-        "$FM" /select,"$SELECTED_FILE" > /dev/null 2>&1 &
+        for file in "${SELECTED_FILES[@]}"; do
+            "$FM" /select,"$file" > /dev/null 2>&1 &
+        done
         ;;
     *)
         echo "Unknown file manager: $FM" >&2

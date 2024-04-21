@@ -121,18 +121,17 @@ DIRSTACKSIZE=15
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
+alias vg="nvim -c Git"
 alias vimdiff='nvim -d'
 alias ezsh="vi ~/.zshrc"
-alias ei3="vi ~/.config/i3/config"
-alias ei3s="vi ~/.config/i3status-rust/config.toml"
 alias tdy="vi -c VimwikiMakeDiaryNote"
 alias ydy="vi -c VimwikiMakeYesterdayDiaryNote"
 alias tmrw="vi -c VimwikiMakeTomorrowDiaryNote"
 alias vw="vi -c VimwikiIndex"
 alias ttd="tt -n 10 -notheme -showwpm -csv >> ~/wpm.csv"
-alias vc="vi -c Calendar"
+alias vcal="vi -c Calendar"
 alias mux=tmuxinator
-alias off="xset dpms force off"
+alias off="sleep 1; kscreen-doctor --dpms off"
 alias xclip="xclip -selection clipboard"
 
 # Preferred editor for local and remote sessions
@@ -344,4 +343,5 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 source $HOME/dotfiles/.zshrc_local
 autoload -Uz add-zsh-hook
+
 
