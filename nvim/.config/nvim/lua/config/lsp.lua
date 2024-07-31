@@ -216,9 +216,9 @@ require("lspconfig").pylsp.setup(config({
 	settings = {
 		pylsp = {
 			plugins = {
-				pylint = { enabled = false },
-				pyflakes = { enabled = false },
-				flake8 = { enabled = false },
+				pylint = { enabled = true },
+				pyflakes = { enabled = true },
+				flake8 = { enabled = true },
 				pycodestyle = { enabled = false },
 				jedi_completion = { fuzzy = true },
 				pyls_isort = { enabled = true },

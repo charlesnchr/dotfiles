@@ -26,6 +26,11 @@ auto_dark_mode.init()
 
 require("nvim-tree").setup({
 
+    actions = {
+        open_file = {
+            quit_on_open = true,
+        },
+    },
 	git = {
 		enable = false,
 		ignore = false,
@@ -146,14 +151,19 @@ require("telescope").setup({
 		},
 		file_ignore_patterns = { "node_modules", "tags", "%.pdf" },
 	},
-	extensions = {
-		["ui-select"] = {
-			require("telescope.themes").get_dropdown({
-				-- even more opts
-			}),
-		},
-	},
 })
+
+M = {}
+M.tags = function()
+	-- get pane width from tmux and use half the width for the fname_width
+	local fname_width = math.floor(vim.fn.system("tmux display -p '#{pane_width}'") / 4)
+	-- Maybe running outside of tmux
+	if fname_width == 0 then
+		fname_width = 30
+	end
+    -- echo
+	require('telescope.builtin').tags({fname_width = fname_width })
+end
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
@@ -396,3 +406,5 @@ end
 -- require("fidget").setup {
 --   -- options
 -- }
+
+return M

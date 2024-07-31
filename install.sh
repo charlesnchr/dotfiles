@@ -8,10 +8,15 @@ if ask "Install conda x86" N; then
 fi
 
 if ask "Install conda ARM" N; then
-    curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -o /tmp/Miniconda3-latest-Linux-aarch64.sh
-    bash /tmp/Miniconda3-latest-Linux-aarch64.sh -b -p $HOME/anaconda3
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -O ~/anaconda.sh
+    bash ~/anaconda.sh -b -p $HOME/anaconda3
 fi
- 
+
+if ask "Install conda MacOSX" N; then
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/anaconda.sh
+    bash ~/anaconda.sh -b -p $HOME/anaconda3
+fi
+
 if ask "Install node/nvim without sudo (curl and conda)" N; then
     # Node
     conda install -c conda-forge nodejs
@@ -65,7 +70,7 @@ conda activate base
 
 if ask "Install autojump and fzf from github" N; then
     # autojump
-    git clone git://github.com/wting/autojump.git
+    git clone --depth 1 https://github.com/wting/autojump.git
     cd autojump
     ./install.py
 

@@ -201,7 +201,7 @@ Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'rafamadriz/friendly-snippets'
-" Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
+Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
 
 call plug#end()
@@ -813,7 +813,8 @@ nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_c
 nnoremap <localleader>jd <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true,cwd_only=true})<cr>
 nnoremap <localleader>ja <cmd>lua require'telescope.builtin'.current_buffer_tags()<cr>
 nnoremap <localleader>jz <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
-nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags()<cr>
+" nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags({fname_width=40})<cr>
+nnoremap <localleader>jt <cmd>lua M.tags()<cr>
 nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
 nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.lsp_document_symbols()<cr>
 nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
@@ -1085,7 +1086,7 @@ nnoremap <BS> <C-^>
 " black on save (catch error E790 which is when saved right after undo)
 augroup prettier_on_save
   autocmd!
-  au BufWritePre *.py,*.jsx,*.tsx,*.js,*.ts try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
+  " au BufWritePre *.py,*.jsx,*.tsx,*.js,*.ts try | undojoin | Neoformat | catch /E790/ | Neoformat | endtry
 augroup end
 
 let g:neoformat_enabled_javascriptreact = ['prettier']
