@@ -266,6 +266,23 @@ colo() {
     [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
 }
 
+function conda_activate() {
+    # Activate the conda environment
+    conda activate "$1"
+
+    # Check if python-lsp-server[all] is installed, if not install it
+    if ! pip show python-lsp-server &> /dev/null; then
+        pip install 'python-lsp-server[all]'
+    fi
+
+    # Check if pynvim is installed, if not install it
+    if ! pip show pynvim &> /dev/null; then
+        pip install pynvim
+    fi
+
+    # Set PYTHON_LSP_HOME environment variable
+    export PYTHON_LSP_HOME=$(dirname $(which python))
+}
 
 
 # for correct tmux rendering over ssh from Windows
@@ -345,3 +362,6 @@ source $HOME/dotfiles/.zshrc_local
 autoload -Uz add-zsh-hook
 
 
+eval "$(pyenv init -)"
+
+. "$HOME/.cargo/env"
