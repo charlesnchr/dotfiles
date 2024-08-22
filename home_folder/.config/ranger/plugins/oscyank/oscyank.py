@@ -67,6 +67,11 @@ class oscyank(yank):
 
     def execute(self):
         # TODO: Any way to detect OSC 52 support from terminal?
+
+        if self.arg(1) == "relpath":
+            self.copy_relpath()
+            return
+
         copy_func = None
         if self.do_prefer_osc():
             copy_func = self.osc_copy
@@ -85,6 +90,21 @@ class oscyank(yank):
         content = "\n".join(selection)
 
         copy_func(content)
+
+    def copy_relpath(self):
+        """Copy the relative path with respect to the tmux session's working directory."""
+        try:
+            tmux_path = subprocess.check_output(
+                ["tmux", "display-message", "-p", "#{session_path}"]
+            ).strip().decode('utf-8')
+        except subprocess.CalledProcessError:
+            self.fm.notify("Failed to retrieve tmux session path", bad=True)
+            return
+
+        selection = self.get_selection_attr("path")
+        relpaths = [os.path.relpath(path, tmux_path) for path in selection]
+        content = "\n".join(relpaths)
+        self.osc_copy(content)
 
     def process_selection(self, mode, selection):
         if mode.startswith("basename") or self.quantifier is None:
