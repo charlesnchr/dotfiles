@@ -3,31 +3,19 @@ filetype off                  " required
 
 call plug#begin()
 
-" plugin on GitHub repo
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-" Plug 'Raimondi/delimitMate'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'vim-syntastic/syntastic'
 
-" got to be annoying with underline
-" Plug 'dense-analysis/ale'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'preservim/nerdtree'
 
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
-"Plug 'ervandew/supertab'
-" Plug 'kien/ctrlp.vim'
 " markdown syntax
 Plug 'godlygeek/tabular'
-" Plug 'Konfekt/FastFold'
 " writing
 Plug 'reedes/vim-pencil'
 Plug 'lervag/vimtex'
@@ -42,12 +30,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'enricobacis/vim-airline-clock'
 
 Plug 'SirVer/ultisnips'
-" Plug 'ycm-core/YouCompleteMe'
 Plug 'honza/vim-snippets'
 Plug 'vimwiki/vimwiki'
-
-" not very good imo
-" Plug 'preservim/vim-markdown'
 
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -57,7 +41,6 @@ Plug 'rbonvall/vim-textobj-latex'
 Plug 'jeetsukumaran/vim-pythonsense'
 
 Plug 'mhinz/vim-startify'
-" Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'voldikss/vim-floaterm'
@@ -68,14 +51,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'sillybun/vim-repl'
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } " slows down start-up
-" Plug 'jupyter-vim/jupyter-vim'
-" Plug 'klafyvel/vim-slime-cells'
 
-" highlighting occurrences, toggling hlsearch
-" Plug 'kevinhwang91/nvim-hlslens'
 Plug 'romainl/vim-cool'
 
-" Plug 'kassio/neoterm'
 Plug 'preservim/tagbar'
 
 Plug 'francoiscabrol/ranger.vim'
@@ -87,12 +65,10 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" Plug 'kevinhwang91/nvim-bqf'
 
 Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" " Have not added any parsers yet
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
@@ -108,58 +84,30 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-" Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-" Plug 'L3MON4D3/LuaSnip'
-" Plug 'saadparwaiz2/cmp_luasnip'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'williamboman/mason-lspconfig.nvim'
 
 Plug 'neovim/nvim-lspconfig'
-" Plug 'rafamadriz/friendly-snippets'
-
 
 Plug 'folke/trouble.nvim'
 
-"Plug 'liuchengxu/vim-which-key'
-"Plug 'glepnir/spaceline.vim'
-" Plug 'itchyny/lightline.vim'
-
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'trotter/autojump.vim', { 'on': 'J' }
 Plug 'arcticicestudio/nord-vim'
-" Plug 'christoomey/vim-tmux-navigator'
-" provides keybinding, strip
+
 Plug 'ntpeters/vim-better-whitespace'
 
-" not completely sure why the below module is needed, but I get an error by
-" Ctrl+G in .zsh files if not, possibly from nvim-treesitter
-" Plug 'puremourning/vimspector'
 Plug 'ThePrimeagen/harpoon'
 
-" for C-h, C-l to repeat after t,f,T,F
 Plug 'vim-scripts/repeatable-motions.vim'
 
 Plug 'rcarriga/nvim-notify'
 
-" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-
-" tested both for latex and they work with chktex, null-ls is buggy, both are
-" not ideal
-" Plug 'mfussenegger/nvim-lint'
-" Plug 'jose-elias-alvarez/null-ls.nvim'
-" Plug 'justinmk/vim-sneak' " easier than easymotion
-
-" Java grammar checker -- used for thesis
-" Plug 'rhysd/vim-grammarous'
 Plug 'kana/vim-operator-user'
 
-
-" Plug 'itchyny/calendar.vim'
 Plug 'jesseleite/vim-agriculture'
 Plug 'charlesnchr/auto-dark-mode.nvim'
-" Plug 'f-person/auto-dark-mode.nvim'
 Plug 'chrisbra/recover.vim'
 Plug 'ziontee113/color-picker.nvim'
 
@@ -171,7 +119,6 @@ endif
 
 Plug 'will133/vim-dirdiff'
 Plug 'Pocco81/auto-save.nvim'
-Plug 'liuchengxu/vista.vim'
 Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
@@ -182,21 +129,13 @@ Plug 'rose-pine/neovim'
 Plug 'knsh14/vim-github-link'
 Plug 'tpope/vim-rhubarb'
 Plug 'stevearc/aerial.nvim'
-" Plug 'nikvdp/neomux'
 Plug 'akinsho/toggleterm.nvim'
-" Plug 'jackMort/ChatGPT.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'ggandor/leap.nvim'
 Plug 'dstein64/vim-startuptime'
 
-" modern gui popups
-" Plug 'stevearc/dressing.nvim'
-" Plug 'folke/noice.nvim'
-
-" Plug 'mfussenegger/nvim-dap'
-" Plug 'mfussenegger/nvim-dap-python'
 Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'VonHeikemen/lsp-zero.nvim'
@@ -314,7 +253,7 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set tabstop=4 |
             \ set softtabstop=4 |
             \ set shiftwidth=4 |
-            \ set textwidth=120 |
+            \ set textwidth=89 |
             \ set expandtab |
             \ set autoindent |
             \ set fileformat=unix
@@ -630,7 +569,7 @@ nnoremap <localleader>gp :G push<cr>
 
 nnoremap <localleader>w :w<cr>
 nnoremap <localleader>q :quit<cr>
-nnoremap <C-p> :wq<CR>
+nnoremap <C-p> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
 imap <C-k> <Esc>:wq<CR>
 nnoremap <D-v> "+p
 inoremap <D-v> <C-r>+
@@ -804,9 +743,9 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 " with hidden files
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
-nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
-nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
-nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
+nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
+nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
 nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>
@@ -815,6 +754,7 @@ nnoremap <localleader>ja <cmd>lua require'telescope.builtin'.current_buffer_tags
 nnoremap <localleader>jz <cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
 " nnoremap <localleader>jt <cmd>lua require'telescope.builtin'.tags({fname_width=40})<cr>
 nnoremap <localleader>jt <cmd>lua M.tags()<cr>
+nnoremap <localleader>t <cmd>lua M.tags()<cr>
 nnoremap <localleader>jx <cmd>lua require'telescope.builtin'.treesitter()<cr>
 nnoremap <localleader>jl <cmd>lua require'telescope.builtin'.lsp_document_symbols()<cr>
 nnoremap <localleader>je <cmd>lua require("telescope").extensions.aerial.aerial()<cr>
@@ -895,7 +835,6 @@ nnoremap <A-5> <cmd>lua require("harpoon.ui").nav_file(5)<cr>
 nnoremap <A-6> <cmd>lua require("harpoon.ui").nav_file(6)<cr>
 nnoremap <A-7> <cmd>lua require("harpoon.ui").nav_file(7)<cr>
 nnoremap <A-8> <cmd>lua require("harpoon.ui").nav_file(8)<cr>
-nnoremap <localleader>t1 <cmd>lua require("harpoon.term").gotoTerminal(1)<cr>
 
 let g:peekaboo_prefix = '<localleader>'
 
@@ -1247,6 +1186,7 @@ inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 nnoremap <silent> <F4> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><F4> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 tnoremap <silent> <F4> <C-\><C-n><Cmd>exe v:count1 . "ToggleTerm"<CR>
+vnoremap <silent> <F4> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>
