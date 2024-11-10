@@ -176,7 +176,7 @@ alt - 0x2C : yabai -m window --swap largest
 # ctrl + shift - 6 : yabai -m window --space 6 && \
 #                   yabai -m space --focus 6
 
-alt - w : yabai -m space --focus recent
+# alt - w : yabai -m space --focus recent
 
 ctrl + shift + alt - l : yabai -m space --focus next
 ctrl + shift + alt - h : yabai -m space --focus prev
@@ -298,9 +298,12 @@ alt - 0x1E  : yabai -m display --focus east
 # from github: https://github.com/koekeishiya/yabai/issues/113  --  doesn't work
 # cycle through all visible windows sorted by: coordinates -> display index
 # ctrl + alt + cmd - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.visible == 1 and .subrole != \"AXUnknown\")) | reverse | nth(index(map(select(.focused == 1))) - 1).id")"
+
 # same github page but works well
-alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
-alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+# alt - n : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+# alt - m : yabai -m window --focus "$(yabai -m query --windows | jq -re "sort_by(.display, .frame.x, .frame.y, .id) | map(select(.\"is-visible\" == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.\"has-focus\" == true))) - 1).id")"
+
+# not as good as above
 # alt - n : sh /Users/cc/.config/yabai/cycle_window.sh 1 x_dir 1
 # alt - m : sh /Users/cc/.config/yabai/cycle_window.sh 0 x_dir 1
 
@@ -309,11 +312,11 @@ alt + ctrl - 8 : yabai -m window --display west; yabai -m display --focus west
 alt + ctrl - f12 : yabai -m window --display east; yabai -m display --focus east
 
 # most recent current screen
-alt - v : yabai -m query --spaces --space \
-  | jq -re ".index" \
-  | xargs -I{} yabai -m query --windows --space {} \
-  | jq -sre 'add | map(select(."is-minimized"==false)) | . as $array | length as $array_length | index(map(select(."has-focus"==true))) as $has_index | if $array_length - 1 > $has_index then nth($has_index + 1).id else nth(0).id end' \
-  | xargs -I{} yabai -m window --focus {}
+# alt - r : yabai -m query --spaces --space \
+#   | jq -re ".index" \
+#   | xargs -I{} yabai -m query --windows --space {} \
+#   | jq -sre 'add | map(select(."is-minimized"==false)) | . as $array | length as $array_length | index(map(select(."has-focus"==true))) as $has_index | if $array_length - 1 > $has_index then nth($has_index + 1).id else nth(0).id end' \
+#   | xargs -I{} yabai -m window --focus {}
 
 # cmd + shift - k : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ]; then (yabai -m window --focus stack.next || yabai -m window --focus stack.first); else yabai -m window --focus next || yabai -m window --focus first; fi
 # cmd + shift - j : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ]; then (yabai -m window --focus stack.prev || yabai -m window --focus stack.last); else yabai -m window --focus prev || yabai -m window --focus last; fi
@@ -323,5 +326,5 @@ alt - 7 : yabai -m space --layout bsp
 alt - 8 : yabai -m space --layout stack
 alt - 9 : yabai -m space --layout float
 
-alt + ctrl + cmd - e : yabai -m space --focus prev
-alt - r : yabai -m space --focus next
+# alt + ctrl + cmd - e : yabai -m space --focus prev
+# alt - r : yabai -m space --focus next

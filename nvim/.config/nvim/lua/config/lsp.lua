@@ -15,11 +15,6 @@ require("mason").setup({
 	},
 })
 
-local lsp = require("lsp-zero").preset({})
-
-lsp.on_attach(function(client, bufnr)
-	lsp.default_keymaps({ buffer = bufnr })
-end)
 
 -- Setup nvim-cmp.
 local cmp = require("cmp")
@@ -60,15 +55,6 @@ cmp.setup({
 	}),
 })
 
-lsp.set_preferences({
-	suggest_lsp_servers = true,
-	sign_icons = {
-		error = "E",
-		warn = "W",
-		hint = "H",
-		info = "I",
-	},
-})
 
 -- doesn't seem to work
 -- local python_lsp_home = vim.env.PYTHON_LSP_HOME
@@ -78,8 +64,6 @@ lsp.set_preferences({
 --         print('hello eslint')
 --       end
 -- })
-
-lsp.setup()
 
 -- Define a global variable to keep track of the LSP document highlight state
 lsp_document_highlight_enabled = false
@@ -116,7 +100,7 @@ end
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "~", texthl = "DiagnosticSignHint" })
 
 -- global config for diagnostic
 vim.diagnostic.config({
@@ -140,22 +124,14 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	underline = false,
-	virtual_text = false,
 	signs = true,
 	update_in_insert = false,
-	signs = {
-		severity_limit = "Hint",
-	},
-})
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	underline = false,
-	signs = {
-		severity_limit = "Hint",
-	},
-	virtual_text = {
-		severity_limit = "Error",
-	},
+    signs = {
+      severity = { min = vim.diagnostic.severity.HINT },
+    },
+    virtual_text = {
+      severity = { min = vim.diagnostic.severity.ERROR },
+    },
 })
 
 local function config(_config)
@@ -255,5 +231,29 @@ require("lspconfig").clangd.setup({
 		"--offset-encoding=utf-16",
 	},
 })
+
+
+require'lspconfig'.ts_ls.setup(config({
+    on_attach = on_attach,
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        "vue",
+        "svelte",
+        "astro"
+    }
+}))
+
+require'lspconfig'.jsonls.setup(config({
+    on_attach = on_attach,
+    filetypes = {
+        "json",
+        "jsonc",
+    },
+}))
 
 return M

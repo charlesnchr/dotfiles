@@ -77,7 +77,7 @@ Plug 'sbdchd/neoformat'
 Plug 'simnalamburt/vim-mundo'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
-Plug 'folke/which-key.nvim'
+" Plug 'folke/which-key.nvim'
 
 Plug 'hrsh7th/cmp-omni'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -122,7 +122,7 @@ Plug 'Pocco81/auto-save.nvim'
 Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'folke/tokyonight.nvim'
 Plug 'rose-pine/neovim'
@@ -138,10 +138,17 @@ Plug 'dstein64/vim-startuptime'
 
 Plug 'mbbill/undotree'
 Plug 'Eandrju/cellular-automaton.nvim'
-Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
+
+Plug 'zbirenbaum/copilot.lua'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+
+" Deps
+Plug 'stevearc/dressing.nvim'
+Plug 'HakonHarnes/img-clip.nvim'
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 call plug#end()
 
@@ -743,9 +750,9 @@ nnoremap <localleader>jc <cmd>lua require'telescope.builtin'.grep_string{ shorte
 " with hidden files
 nnoremap <localleader>j. <cmd>lua require'telescope.builtin'.grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }<cr>
 
-nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
-nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
-nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true, default_selection_index = 2})<cr>
+nnoremap <localleader>jb <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
+nnoremap <localleader>e <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
+nnoremap <localleader><tab> <cmd>lua require'telescope.builtin'.buffers({sort_mru = true})<cr>
 nnoremap <localleader>jh <cmd>lua require'telescope.builtin'.help_tags()<cr>
 nnoremap <localleader>jk <cmd>lua require'telescope.builtin'.keymaps()<cr>
 nnoremap <localleader>jo <cmd>lua require'telescope.builtin'.oldfiles({include_current_session=true})<cr>
@@ -1032,7 +1039,7 @@ let g:neoformat_enabled_javascriptreact = ['prettier']
 let g:neoformat_enabled_typescriptreact = ['prettier']
 let g:neoformat_enabled_typescript = ['prettier']
 let g:neoformat_enabled_javascript = ['prettier']
-let g:neoformat_enabled_python = ['black']
+let g:neoformat_enabled_python = ['ruff']
 
 let g:gutentags_define_advanced_commands=1
 
@@ -1181,12 +1188,10 @@ nmap <leader>e :AerialToggle<CR>
 nmap <localleader>n :Neoformat<CR>
 " nmap <localleader>xc :ChatGPT<CR>
 
-nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
-nnoremap <silent> <F4> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-inoremap <silent><F4> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
-tnoremap <silent> <F4> <C-\><C-n><Cmd>exe v:count1 . "ToggleTerm"<CR>
-vnoremap <silent> <F4> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+nnoremap <silent> <F4> <Cmd>exe "ToggleTerm"<CR>
+inoremap <silent><F4> <Esc><Cmd>exe "ToggleTerm"<CR>
+tnoremap <silent> <F4> <C-\><C-n><Cmd>exe "ToggleTerm"<CR>
+vnoremap <silent> <F4> <Cmd>exe "ToggleTerm"<CR>
 
 nnoremap <localleader>] :Lspsaga  goto_definition<CR>
 nnoremap <leader>] :Lspsaga  peek_definition<CR>
@@ -1218,7 +1223,7 @@ let g:undotree_SetFocusWhenToggle = 1
 nnoremap <localleader>ut :UndotreeToggle<CR>
 nnoremap <localleader>um :MundoShow<CR>
 
-" bindings from primagen
+" bindings from primeagen
 nnoremap <localleader>a/ :%s/<C-r><C-w>//gI<Left><Left><Left>
 xnoremap <localleader>ap "_dP
 xnoremap <localleader>ad "_d
@@ -1231,3 +1236,7 @@ augroup AutoWikiHeader
     autocmd!
     autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
 augroup END
+
+nnoremap <silent><c-t> :CopilotChatToggle<CR>
+
+highlight ColorColumn ctermbg=lightgrey guibg=#3C3C3C

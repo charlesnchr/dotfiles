@@ -5,6 +5,24 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# autoload -U compinit && compinit -u
+
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
+
+# autoload -Uz compinit
+# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+# 	compinit
+# else
+# 	compinit -C
+# fi
+
+
+
 # Auto-start Tmux (works better than omz plugin)
 # if [ "$TMUX" = "" ]; then tmux; fi
 
@@ -157,9 +175,20 @@ export EDITOR=nvim;
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
 
-source $HOME/tools/antigen/antigen.zsh
-antigen init $HOME/dotfiles/.antigenrc
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# source $HOME/tools/antigen/antigen.zsh
+# antigen init $HOME/dotfiles/.antigenrc
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# antidote
+source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
+# Lazy-load antidote and generate the static load file only when needed
+zsh_plugins=${ZDOTDIR:-$HOME}/dotfiles/.zsh_plugins
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  (
+    antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+  )
+fi
+source ${zsh_plugins}.zsh
 
 
 # avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
@@ -266,23 +295,6 @@ colo() {
     [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
 }
 
-function conda_activate() {
-    # Activate the conda environment
-    conda activate "$1"
-
-    # Check if python-lsp-server[all] is installed, if not install it
-    if ! pip show python-lsp-server &> /dev/null; then
-        pip install 'python-lsp-server[all]'
-    fi
-
-    # Check if pynvim is installed, if not install it
-    if ! pip show pynvim &> /dev/null; then
-        pip install pynvim
-    fi
-
-    # Set PYTHON_LSP_HOME environment variable
-    export PYTHON_LSP_HOME=$(dirname $(which python))
-}
 
 
 # for correct tmux rendering over ssh from Windows
@@ -358,10 +370,68 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 
+
+# eval "$(pyenv init -)"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+function init_cargo() {
+    export PATH="$HOME/.cargo/bin:$PATH"
+    . "$HOME/.cargo/env"
+}
+
+function init_node() {
+    # bun completions
+    [ -s "/Users/cnc40853/.bun/_bun" ] && source "/Users/cnc40853/.bun/_bun"
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+
+function penv() {
+    unalias python
+
+    if [ -n "$1" ]; then
+        # Conda activation
+        source ~/anaconda3/etc/profile.d/conda.sh
+        conda activate "$1"
+
+        if ! pip show python-lsp-server &> /dev/null; then
+            pip install 'python-lsp-server[all]'
+        fi
+
+        if ! pip show pynvim &> /dev/null; then
+            pip install pynvim
+        fi
+
+        export PYTHON_LSP_HOME=$(dirname $(which python))
+    else
+        source $(poetry env info --path)/bin/activate
+
+        # Poetry activation
+        if ! poetry env info &> /dev/null; then
+            poetry install
+        fi
+
+
+        if ! poetry show python-lsp-server &> /dev/null; then
+            poetry add 'python-lsp-server[all]' --group dev
+        fi
+
+        if ! poetry show pynvim &> /dev/null; then
+            poetry add pynvim --group dev
+        fi
+
+        export PYTHON_LSP_HOME=$(dirname $(which python))
+    fi
+}
+
+alias poenv=penv
+
 source $HOME/dotfiles/.zshrc_local
 autoload -Uz add-zsh-hook
 
-
-eval "$(pyenv init -)"
-
-. "$HOME/.cargo/env"
+init_cargo
