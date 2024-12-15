@@ -122,7 +122,7 @@ Plug 'Pocco81/auto-save.nvim'
 Plug 'smjonas/live-command.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'TimUntersberger/neogit'
-" Plug 'github/copilot.vim'
+Plug 'github/copilot.vim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'folke/tokyonight.nvim'
 Plug 'rose-pine/neovim'
@@ -142,14 +142,14 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
 
-Plug 'zbirenbaum/copilot.lua'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'm4xshen/smartcolumn.nvim'
 
 " Deps
-Plug 'stevearc/dressing.nvim'
-Plug 'HakonHarnes/img-clip.nvim'
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
-
+" Plug 'zbirenbaum/copilot.lua'
+" Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+" Plug 'stevearc/dressing.nvim'
+" Plug 'HakonHarnes/img-clip.nvim'
+" Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 call plug#end()
 
 set updatetime=100
@@ -265,9 +265,6 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
             \ set autoindent |
             \ set fileformat=unix
 
-
-au BufNewFile,BufRead *.tex
-            \ set textwidth=80
 
 au BufNewFile,BufRead *.wiki
             \ SoftPencil
@@ -1114,6 +1111,7 @@ let g:gutentags_ctags_exclude = [
       \ '*sites/*/files/*',
       \ 'bin',
       \ 'node_modules',
+      \ '.venv',
       \ 'bower_components',
       \ 'cache',
       \ 'compiled',
@@ -1178,6 +1176,7 @@ let g:gutentags_ctags_extra_args = [
 map <localleader>gh :GetCurrentBranchLink<CR><Bar> :OSCYankRegister +<CR>:echo @+<CR>
 " link to current file in github, or just branch link if not in a file like startify
 map <localleader>gb :GBrowse!<CR>:echo @+<CR>
+map <localleader>go :execute ':silent !cursor --goto ' . expand('%') . ':' . line('.')<CR>
 
 nmap <leader>e :AerialToggle<CR>
 
@@ -1239,4 +1238,3 @@ augroup END
 
 nnoremap <silent><c-t> :CopilotChatToggle<CR>
 
-highlight ColorColumn ctermbg=lightgrey guibg=#3C3C3C
