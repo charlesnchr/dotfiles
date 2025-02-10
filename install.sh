@@ -198,15 +198,15 @@ fi
 
 
 
-if ask "Install tmux plugin manager and antigen" N; then
+if ask "Install tmux plugin manager and antidote" N; then
     # tmux plugin manager
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     ~/.tmux/plugins/tpm/bin/install_plugins
 
-    # antigen download
-    mkdir -p $HOME/tools
-    git clone https://github.com/zsh-users/antigen.git $HOME/tools/antigen
-    zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/tools/antigen/bin/antigen.zsh && antigen update"
+    # antidote download
+    git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-$HOME}/.antidote
+
+    zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/.antidote/antidote.zsh && antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
 fi
 
 if ask "Ubuntu: Install rclone, ripgrep, ctags" N; then
