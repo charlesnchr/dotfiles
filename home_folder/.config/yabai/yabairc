@@ -47,8 +47,8 @@ yabai -m config                              \
     window_gap                  8           \
     mouse_action1               move                      \
     mouse_action2               resize                    \
-    mouse_drop_action           swap
-# mouse_modifier              alt                      \
+    mouse_drop_action           swap \
+    mouse_modifier              alt
 
 yabai -m config layout                      float
 # yabai -m config --space 1 layout            bsp

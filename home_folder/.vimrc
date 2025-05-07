@@ -85,7 +85,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'williamboman/mason-lspconfig.nvim'
 
@@ -142,14 +142,6 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
 
-Plug 'm4xshen/smartcolumn.nvim'
-
-" Deps
-" Plug 'zbirenbaum/copilot.lua'
-" Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
-" Plug 'stevearc/dressing.nvim'
-" Plug 'HakonHarnes/img-clip.nvim'
-" Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 call plug#end()
 
 set updatetime=100
@@ -1235,6 +1227,4 @@ augroup AutoWikiHeader
     autocmd!
     autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
 augroup END
-
-nnoremap <silent><c-t> :CopilotChatToggle<CR>
 

@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,14 +7,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# autoload -U compinit && compinit -u
+autoload -U compinit && compinit -u
 
-autoload -Uz compinit
-if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
-  compinit
-else
-  compinit -C
-fi
+# autoload -Uz compinit
+# if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+#   compinit
+# else
+#   compinit -C
+# fi
 
 # autoload -Uz compinit
 # if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
@@ -139,7 +141,7 @@ DIRSTACKSIZE=15
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
-alias vg="nvim -c Git"
+alias vg="nvim -c Git -c only"
 alias vimdiff='nvim -d'
 alias ezsh="vi ~/.zshrc"
 alias tdy="vi -c VimwikiMakeDiaryNote"
@@ -295,6 +297,14 @@ colo() {
     [ ! -f "$file_path" ] || [ "$(cat "$file_path")" != 1 ] && echo 1 > "$file_path" || echo 0 > "$file_path"
 }
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 
 # for correct tmux rendering over ssh from Windows
@@ -359,16 +369,19 @@ setopt BANG_HIST                 # Treat the '!' character specially during expa
 setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
-setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+unsetopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+unsetopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+unsetopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+unsetopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+unsetopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+unsetopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+unsetopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+unsetopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
+unsetopt HIST_IGNORE_DUPS
+unsetopt HIST_FIND_NO_DUPS
+unsetopt HIST_SAVE_NO_DUPS
+unsetopt HIST_EXPIRE_DUPS_FIRST
 
 
 # eval "$(pyenv init -)"
@@ -380,15 +393,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 function init_cargo() {
     export PATH="$HOME/.cargo/bin:$PATH"
     . "$HOME/.cargo/env"
-}
-
-function init_node() {
-    # bun completions
-    [ -s "/Users/cnc40853/.bun/_bun" ] && source "/Users/cnc40853/.bun/_bun"
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
 
 function penv() {
@@ -409,20 +413,14 @@ function penv() {
 
         export PYTHON_LSP_HOME=$(dirname $(which python))
     else
-        source $(poetry env info --path)/bin/activate
+        source .venv/bin/activate
 
-        # Poetry activation
-        if ! poetry env info &> /dev/null; then
-            poetry install
+        if ! uv pip show python-lsp-server &> /dev/null; then
+            uv pip install 'python-lsp-server[all]'
         fi
 
-
-        if ! poetry show python-lsp-server &> /dev/null; then
-            poetry add 'python-lsp-server[all]' --group dev
-        fi
-
-        if ! poetry show pynvim &> /dev/null; then
-            poetry add pynvim --group dev
+        if ! uv pip show pynvim &> /dev/null; then
+            uv pip install pynvim
         fi
 
         export PYTHON_LSP_HOME=$(dirname $(which python))
@@ -431,7 +429,22 @@ function penv() {
 
 alias poenv=penv
 
-source $HOME/dotfiles/.zshrc_local
-autoload -Uz add-zsh-hook
+#autoload -Uz add-zsh-hook
 
-init_cargo
+# init_cargo
+
+# Added by Windsurf
+export PATH="/Users/cnc40853/.codeium/windsurf/bin:$PATH"
+
+# zprof
+
+ZIM_HOME=~/.zim
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source /opt/homebrew/opt/zimfw/share/zimfw.zsh init
+fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+
+source $HOME/dotfiles/.zshrc_local
+

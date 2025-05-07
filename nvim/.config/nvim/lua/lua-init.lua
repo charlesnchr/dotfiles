@@ -31,11 +31,11 @@ require("nvim-tree").setup({
             quit_on_open = true,
         },
     },
-	git = {
-		enable = false,
-		ignore = false,
-		timeout = 200,
-	},
+	-- git = {
+	-- 	enable = false,
+	-- 	ignore = false,
+	-- 	timeout = 200,
+	-- },
 	view = {
 		width = 40,
 		side = "left",
@@ -407,75 +407,4 @@ end
 --   -- options
 -- }
 
-
--- require('copilot').setup({
---   panel = {
---     enabled = true,
---     auto_refresh = false,
---     keymap = {
---       jump_prev = "[[",
---       jump_next = "]]",
---       accept = "<CR>",
---       refresh = "gr",
---       open = "<M-CR>"
---     },
---     layout = {
---       position = "bottom", -- | top | left | right
---       ratio = 0.4
---     },
---   },
---   suggestion = {
---     enabled = true,
---     auto_trigger = true,
---     hide_during_completion = true,
---     debounce = 75,
---     keymap = {
---       accept = "<M-l>",
---       accept_word = false,
---       accept_line = false,
---       next = "<M-]>",
---       prev = "<M-[>",
---       dismiss = "<C-]>",
---     },
---   },
---   filetypes = {
---     yaml = false,
---     markdown = false,
---     help = false,
---     gitcommit = false,
---     gitrebase = false,
---     hgcommit = false,
---     svn = false,
---     cvs = false,
---     ["."] = false,
---   },
---   copilot_node_command = 'node', -- Node.js version must be > 18.x
---   server_opts_overrides = {},
--- })
-
--- require("CopilotChat").setup {
---   debug = true, -- Enable debugging
---   -- See Configuration section for rest
--- }
-
--- -- deps:
--- require('img-clip').setup ({
---   -- use recommended settings from above
--- })
--- require('avante_lib').load()
--- require('avante').setup ({
---   provider = "openai",
---   auto_suggestions_provider = "copilot",
---   mappings = {
---       ask = "<space>ua", -- ask
---       edit = "<space>ue", -- edit
---       refresh = "<space>ur", -- refresh
---   },
--- })
-
-require("smartcolumn").setup({
- scope = "line",
-})
-
-return M
 
