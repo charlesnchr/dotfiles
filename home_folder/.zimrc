@@ -1,12 +1,13 @@
-# zmodule ohmyzsh/ohmyzsh path:lib
-# zmodule ohmyzsh/ohmyzsh path:plugins/git
-# zmodule ohmyzsh/ohmyzsh path:plugins/pip
-# zmodule ohmyzsh/ohmyzsh path:plugins/tmux
-# zmodule ohmyzsh/ohmyzsh path:plugins/command-not-found
-# zmodule ohmyzsh/ohmyzsh path:plugins/per-directory-history
-# zmodule ohmyzsh/ohmyzsh path:plugins/common-aliases
-# zmodule ohmyzsh/ohmyzsh path:plugins/web-search
-# zmodule ohmyzsh/ohmyzsh path:plugins/autojump
+# zmodule ohmyzsh/ohmyzsh --root lib
+zmodule ohmyzsh/ohmyzsh --root plugins/git
+zmodule ohmyzsh/ohmyzsh --root plugins/pip
+zmodule ohmyzsh/ohmyzsh --root plugins/uv
+# zmodule ohmyzsh/ohmyzsh --root plugins/tmux
+# zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
+# zmodule ohmyzsh/ohmyzsh --root plugins/per-directory-history
+zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
+# zmodule ohmyzsh/ohmyzsh --root plugins/web-search
+# zmodule ohmyzsh/ohmyzsh --root plugins/autojump
 
 zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-syntax-highlighting
