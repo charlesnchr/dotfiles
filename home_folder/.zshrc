@@ -9,60 +9,8 @@ fi
 
 autoload -U compinit && compinit -u
 
-
-## Your commented-out blocks are manual strategies to avoid rebuilding the dump too often:
-	# •	Checking once per day (date +'%j' vs. ~/.zcompdump mod-time)
-	# •	Checking if the dump file exists or is newer than some threshold
-
-# In practice, you rarely need those. The built-in caching in compinit is usually fast enough, and it only rebuilds when the dump file is missing or you force it (by deleting it or passing -C/-u differently).
-
-# autoload -Uz compinit
-# if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
-#   compinit
-# else
-#   compinit -C
-# fi
-
-# autoload -Uz compinit
-# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-# 	compinit
-# else
-# 	compinit -C
-# fi
-
-
-
-# Auto-start Tmux (works better than omz plugin)
-# if [ "$TMUX" = "" ]; then tmux; fi
-
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-# ---  commented out in favour of antigen
-# export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-
-# ---  commented out in favour of antigen
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-#ZSH_THEME="agnoster"
-
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -85,7 +33,6 @@ autoload -U compinit && compinit -u
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
-
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -161,41 +108,8 @@ alias mux=tmuxinator
 alias off="sleep 1; kscreen-doctor --dpms off"
 alias xclip="xclip -selection clipboard"
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-
-# ---  commented out in favour of antigen
-# source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-# autoload -Uz add-zsh-hook
-
-# for ranger
-export VISUAL=nvim;
-export EDITOR=nvim;
-
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
-
-# source $HOME/tools/antigen/antigen.zsh
-# antigen init $HOME/dotfiles/.antigenrc
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# avoid spurious OA etc. https://superuser.com/questions/1265341/shell-sometimes-fails-to-output-esc-character-before-escape-sequence
-# bindkey "^[^[OA" up-line-or-beginning-search
-# bindkey "^[^[OB" down-line-or-beginning-search
-# bindkey "^[^[OC" forward-char
-# bindkey "^[^[OD" backward-char
-
-# antigen bundle MikeDacre/tmux-zsh-vim-titles
-# antigen apply
 
 # Functions
 # alias for ssh to make panel naming for tmux
@@ -420,16 +334,29 @@ function penv() {
     fi
 }
 
+
+# from ohmyzsh uv plugin (i don't want the plugin because it tries to manage generation of completions too)
+alias uv="noglob uv"
+
+alias uva='uv add'
+alias uvexp='uv export --format requirements-txt --no-hashes --output-file requirements.txt --quiet'
+alias uvl='uv lock'
+alias uvlr='uv lock --refresh'
+alias uvlu='uv lock --upgrade'
+alias uvp='uv pip'
+alias uvpy='uv python'
+alias uvr='uv run'
+alias uvrm='uv remove'
+alias uvs='uv sync'
+alias uvsr='uv sync --refresh'
+alias uvsu='uv sync --upgrade'
+alias uvup='uv self update'
+alias uvv='uv venv'
+
 # i forgt what i need the below for:
 #autoload -Uz add-zsh-hook
 # init_cargo
 # zprof
-
-
-# this is for oh-my-zsh uv plugin
-export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
-mkdir -p "$ZSH_CACHE_DIR/completions"
-
 
 ZIM_HOME=~/.zim
 # Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
