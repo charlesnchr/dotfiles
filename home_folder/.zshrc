@@ -9,11 +9,12 @@ fi
 
 autoload -U compinit && compinit -u
 
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="false"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -85,6 +86,7 @@ HIST_STAMPS="mm/dd/yyyy"
 AUTO_PUSHD="true"
 DIRSTACKSIZE=15
 
+zstyle ':completion:*' menu select
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -290,6 +292,8 @@ unsetopt HIST_FIND_NO_DUPS
 unsetopt HIST_SAVE_NO_DUPS
 unsetopt HIST_EXPIRE_DUPS_FIRST
 
+setopt autocd
+
 
 # eval "$(pyenv init -)"
 
@@ -352,6 +356,8 @@ alias uvsr='uv sync --refresh'
 alias uvsu='uv sync --upgrade'
 alias uvup='uv self update'
 alias uvv='uv venv'
+
+zmodload -i zsh/complist
 
 # i forgt what i need the below for:
 #autoload -Uz add-zsh-hook
