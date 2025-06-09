@@ -120,6 +120,7 @@ fi
 if ask "Use stow to set up links" N; then
 
     stow home_folder
+    mkdir -p ../bin
     stow scripts
     stow nvim
 

@@ -16,7 +16,10 @@ autoload -U compinit && compinit -u
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="false"
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' matcher-list \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|=*' \
+  'l:|=* r:|=*'
 zstyle ':completion:*' menu select
 
 # Uncomment the following line to use hyphen-insensitive completion.
@@ -245,8 +248,6 @@ function per-directory-history() {
 # }
 
 
-bindkey '^R' histdb-fzf-widget
-bindkey '^X^F' fzf-history-widget
 
 setopt menu_complete
 
@@ -300,8 +301,6 @@ setopt autocd
 export VISUAL=nvim
 export EDITOR=nvim
 set -o emacs
-
-# eval "$(pyenv init -)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -382,7 +381,8 @@ source $HOME/dotfiles/.zshrc_local
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M emacs '^X^E' edit-command-line
 
-
+bindkey '^X^E' edit-command-line
+bindkey '^R' histdb-fzf-widget
+bindkey '^X^F' fzf-history-widget
 

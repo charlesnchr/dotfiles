@@ -1,28 +1,28 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on  = "M"
 run = "plugin mount"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "F"
 run  = "plugin smart-filter"
 desc = "Smart filter"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = [ "'", ";" ]
 run = 'plugin custom-shell -- auto --interactive'
 desc = "custom-shell as default, interactive"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = [ "'", ";" ]
 run = 'plugin custom-shell -- auto --interactive'
 desc = "custom-shell as default, interactive"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = [ "'", ":" ]
 run = 'plugin custom-shell -- auto --interactive --block'
 desc = "custom-shell as default, interactive, block"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = [ "'", "h" ]
 run = "plugin custom-shell history"
 desc = "Show Custom-shell history"
