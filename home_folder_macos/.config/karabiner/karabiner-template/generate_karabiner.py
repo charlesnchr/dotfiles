@@ -98,6 +98,7 @@ PROFILES = [
             "Option keys for home row",
             "Map fn + number keys to their corresponding media control keys (rev 2)",
             "function keys with designated features",
+            "Fn to left control for gaming",
         ],
         "virtual_hid_keyboard": {"country_code": 0, "keyboard_type_v2": "ansi"},
     },

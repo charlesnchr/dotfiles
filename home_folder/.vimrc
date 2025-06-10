@@ -555,6 +555,7 @@ nnoremap <localleader>ve :e ~/.vimrc<cr>
 nnoremap <localleader>vt :tabe ~/.vimrc<cr>
 nnoremap <localleader>vs :source ~/.vimrc<cr>
 nnoremap <localleader>vp :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
+nnoremap <localleader>vk :!python ~/dotfiles/home_folder_macos/.config/karabiner/karabiner-template/generate_karabiner.py<cr>
 
 nnoremap <localleader>vg :G<cr>
 nnoremap <localleader>gj :G<cr>
@@ -1227,4 +1228,5 @@ augroup AutoWikiHeader
     autocmd!
     autocmd bufnewfile */diary/*.wiki execute "so ~/dotfiles/headers/wiki_header.txt" | execute "silent! %s/%DATE%/".escape(fnamemodify(bufname('%'), ':t:r'), '/')
 augroup END
+
 
