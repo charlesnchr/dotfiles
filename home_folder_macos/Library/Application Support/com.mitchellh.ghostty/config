@@ -53,3 +53,5 @@ keybind = global:opt+t=toggle_quick_terminal
 
 # theme = dark:catppuccin-frappe,light:catppuccin-latte
 theme = dark:tokyonight-storm,light:xcodelight
+
+macos-option-as-alt = right

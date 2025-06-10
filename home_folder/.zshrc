@@ -251,14 +251,6 @@ function per-directory-history() {
 
 setopt menu_complete
 
-# standard bash mapping (overrules delete whole line on macos)
-bindkey "^U" backward-kill-line
-
-# clash with tmux prefix
-# bindkey '^Q' beginning-of-line
-
-bindkey "\ea" beginning-of-line
-bindkey "\ee" end-of-line
 
 
 # export PATH="$HOME/.poetry/bin:$PATH"
@@ -386,3 +378,12 @@ bindkey '^X^E' edit-command-line
 bindkey '^R' histdb-fzf-widget
 bindkey '^X^F' fzf-history-widget
 
+
+# standard bash mapping (overrules delete whole line on macos)
+bindkey "^U" backward-kill-line
+
+# clash with tmux prefix
+# bindkey '^Q' beginning-of-line
+
+bindkey "\ea" beginning-of-line
+bindkey "\ee" end-of-line

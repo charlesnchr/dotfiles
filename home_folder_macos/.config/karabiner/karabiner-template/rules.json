@@ -1947,19 +1947,6 @@
       "manipulators": [
         {
           "conditions": [
-            {
-              "bundle_identifiers": [
-                "^com\\.microsoft\\.rdc$",
-                "^com\\.microsoft\\.rdc\\.mac$",
-                "^com\\.microsoft\\.rdc\\.osx\\.beta$",
-                "^com\\.parallels\\.desktop$",
-                "^com\\.parallels\\.vm$",
-                "^com\\.parallels\\.desktop\\.console$",
-                "^org\\.virtualbox\\.app\\.VirtualBoxVM$",
-                "^com\\.parallels\\.winapp\\."
-              ],
-              "type": "frontmost_application_unless"
-            }
           ],
           "from": {
             "key_code": "semicolon",
@@ -1986,19 +1973,6 @@
         },
         {
           "conditions": [
-            {
-              "bundle_identifiers": [
-                "^com\\.microsoft\\.rdc$",
-                "^com\\.microsoft\\.rdc\\.mac$",
-                "^com\\.microsoft\\.rdc\\.osx\\.beta$",
-                "^com\\.parallels\\.desktop$",
-                "^com\\.parallels\\.vm$",
-                "^com\\.parallels\\.desktop\\.console$",
-                "^org\\.virtualbox\\.app\\.VirtualBoxVM$",
-                "^com\\.parallels\\.winapp\\."
-              ],
-              "type": "frontmost_application_unless"
-            }
           ],
           "from": {
             "key_code": "quote",
@@ -2024,21 +1998,6 @@
           "type": "basic"
         },
         {
-          "conditions": [
-            {
-              "bundle_identifiers": [
-                "^com\\.microsoft\\.rdc$",
-                "^com\\.microsoft\\.rdc\\.mac$",
-                "^com\\.microsoft\\.rdc\\.osx\\.beta$",
-                "^com\\.parallels\\.desktop$",
-                "^com\\.parallels\\.vm$",
-                "^com\\.parallels\\.desktop\\.console$",
-                "^org\\.virtualbox\\.app\\.VirtualBoxVM$",
-                "^com\\.parallels\\.winapp\\."
-              ],
-              "type": "frontmost_application_unless"
-            }
-          ],
           "from": {
             "key_code": "open_bracket",
             "modifiers": {
@@ -2060,44 +2019,6 @@
               ]
             }
           ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "Disable Command-Shift-Option-Control-Period (.)",
-      "manipulators": [
-        {
-          "from": {
-            "key_code": "period",
-            "modifiers": {
-              "mandatory": [
-                "command",
-                "shift",
-                "option",
-                "control"
-              ]
-            }
-          },
-          "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "Disable Command-Shift-Option-Control-Comma (,)",
-      "manipulators": [
-        {
-          "from": {
-            "key_code": "comma",
-            "modifiers": {
-              "mandatory": [
-                "command",
-                "shift",
-                "option",
-                "control"
-              ]
-            }
-          },
           "type": "basic"
         }
       ]
