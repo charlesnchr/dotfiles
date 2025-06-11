@@ -1,12 +1,26 @@
-# zmodule ohmyzsh/ohmyzsh --root lib
+
+
+zmodule completion
+zmodule utility
+
+# messes up the zstyle menu select
+# zmodule ohmyzsh/ohmyzsh --source lib/completion.zsh
+# zmodule ohmyzsh/ohmyzsh --source lib/key-bindings.zsh
+
 zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule ohmyzsh/ohmyzsh --root plugins/pip
+
+# don't think i need
 # zmodule ohmyzsh/ohmyzsh --root plugins/tmux
 # zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
-# zmodule ohmyzsh/ohmyzsh --root plugins/per-directory-history
-zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
 # zmodule ohmyzsh/ohmyzsh --root plugins/web-search
 # zmodule ohmyzsh/ohmyzsh --root plugins/autojump
+
+# may need, but histdb is better
+# zmodule ohmyzsh/ohmyzsh --root plugins/per-directory-history
+
+
+zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
 
 zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-syntax-highlighting
@@ -20,3 +34,5 @@ zmodule so-fancy/diff-so-fancy
 zmodule mroth/evalcache
 zmodule davidparsson/zsh-pyenv-lazy
 zmodule romkatv/zsh-defer -d
+
+
