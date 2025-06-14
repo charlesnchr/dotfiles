@@ -11,8 +11,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 
-#zstyle ':completion:*' menuselect
-
 export VISUAL=nvim
 export EDITOR=nvim
 

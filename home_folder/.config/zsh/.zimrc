@@ -45,13 +45,13 @@ zmodule zsh-users/zsh-autosuggestions
 # PERSONAL
 
 # could include [[ ! -e $_zwc || ... ]] but zimfw does first time setup compile
-zmodule ~/.zfunctions --source personal_functions.zsh \
+zmodule "$ZDOTDIR/.zfunctions" --source personal_functions.zsh \
         --cmd '
           _zsrc={}/personal_functions.zsh
           _zwc={}/personal_functions.zsh.zwc
           [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
         '
-zmodule ~/.zfunctions --source personal_aliases.zsh \
+zmodule "$ZDOTDIR/.zfunctions" --source personal_aliases.zsh \
         --cmd '
           _zsrc={}/personal_aliases.zsh
           _zwc={}/personal_aliases.zsh.zwc
