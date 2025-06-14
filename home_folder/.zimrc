@@ -1,38 +1,59 @@
-
-
-zmodule completion
 zmodule utility
+zmodule fzf
+zmodule environment
 
-# messes up the zstyle menu select
-# zmodule ohmyzsh/ohmyzsh --source lib/completion.zsh
-# zmodule ohmyzsh/ohmyzsh --source lib/key-bindings.zsh
 
+### COMPLETIONS
+zmodule completion
+zmodule zsh-users/zsh-completions --fpath src
+
+### UTILITY
+zmodule zshzoo/macos --if-ostype 'darwin*'
+zmodule belak/zsh-utils --root utility
+zmodule larkery/zsh-histdb
+zmodule charlesnchr/ranger-autojump
+zmodule aloxaf/fzf-tab
+zmodule romkatv/zsh-bench --cmd 'path+=({})'
+# zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
+zmodule so-fancy/diff-so-fancy
+
+# ALIASES
+# (corresponding completions are generally built-in or in (see $FPATH):
+#   ~/.zim/modules/zsh-completions
+#  /opt/homebrew/Cellar/zsh/5.9/share/zsh/functions
+# )
+zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
 zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule ohmyzsh/ohmyzsh --root plugins/pip
 
-# don't think i need
-# zmodule ohmyzsh/ohmyzsh --root plugins/tmux
-# zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
-# zmodule ohmyzsh/ohmyzsh --root plugins/web-search
-# zmodule ohmyzsh/ohmyzsh --root plugins/autojump
-
-# may need, but histdb is better
-# zmodule ohmyzsh/ohmyzsh --root plugins/per-directory-history
-
-
-zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
-
-zmodule zsh-users/zsh-autosuggestions
-zmodule zsh-users/zsh-syntax-highlighting
-zmodule zsh-users/zsh-completions
-zmodule larkery/zsh-histdb
-zmodule charlesnchr/ranger-autojump
-
-zmodule romkatv/powerlevel10k --use degit
-zmodule so-fancy/diff-so-fancy
-
+# TERMINAL
 zmodule mroth/evalcache
 zmodule davidparsson/zsh-pyenv-lazy
 zmodule romkatv/zsh-defer -d
+zmodule romkatv/powerlevel10k --use degit
 
 
+# ZSH PACKAGES
+# should be sourced after completion
+zmodule zsh-users/zsh-syntax-highlighting
+# should be sourced after zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+# Fish-like autosuggestions for Zsh.
+zmodule zsh-users/zsh-autosuggestions
+
+
+# PERSONAL
+
+# could include [[ ! -e $_zwc || ... ]] but zimfw does first time setup compile
+zmodule ~/.zfunctions --source personal_functions.zsh \
+        --cmd '
+          _zsrc={}/personal_functions.zsh
+          _zwc={}/personal_functions.zsh.zwc
+          [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
+        '
+zmodule ~/.zfunctions --source personal_aliases.zsh \
+        --cmd '
+          _zsrc={}/personal_aliases.zsh
+          _zwc={}/personal_aliases.zsh.zwc
+          [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
+        '

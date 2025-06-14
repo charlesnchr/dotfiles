@@ -141,6 +141,8 @@ Plug 'Eandrju/cellular-automaton.nvim'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
+Plug 'tpope/vim-rhubarb'
+Plug 'aaronhallaert/advanced-git-search.nvim'
 
 call plug#end()
 
