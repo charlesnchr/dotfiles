@@ -150,8 +150,15 @@ require("telescope").setup({
 			},
 		},
 		file_ignore_patterns = { "node_modules", "tags", "%.pdf" },
+        extensions = {
+            advanced_git_search = {
+                    -- See Config
+                }
+        }
 	},
 })
+
+require("telescope").load_extension("advanced_git_search")
 
 M = {}
 M.tags = function()
