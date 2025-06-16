@@ -1,4 +1,3 @@
-
 # this gets rid of instant prompt warning when direnv does its thing
 # see https://github.com/romkatv/powerlevel10k/issues/702#issuecomment-626222730
 emulate zsh -c "$(direnv export zsh)"
@@ -9,7 +8,6 @@ emulate zsh -c "$(direnv export zsh)"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
 
 export VISUAL=nvim
 export EDITOR=nvim
@@ -29,7 +27,6 @@ HIST_STAMPS="mm/dd/yyyy"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
 
-
 # for correct tmux rendering over ssh from Windows
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -40,23 +37,30 @@ source $HOME/bin/histdb-fzf-widget.sh
 export BAT_THEME="Solarized (dark)"
 
 # fd is much faster
-# used for while:
-# export FZF_DEFAULT_COMMAND='fd --type file -H'
-# trying this to improve :Rg in vim
-# export FZF_DEFAULT_COMMAND='fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,tmp,tags} --type file -H'
+export FZF_DEFAULT_COMMAND='fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,tmp,tags} --type file -H'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt INTERACTIVE_COMMENTS
+setopt LONG_LIST_JOBS
+# Prevent background jobs being given a lower priority.
+setopt NO_BG_NICE
+# Prevent status report of jobs on shell exit.
+setopt NO_CHECK_JOBS
+# Prevent SIGHUP to jobs on shell exit.
+setopt NO_HUP
 
-# configuring history
+
 HISTORY_START_WITH_GLOBAL="true" # for per-directory-history plugin
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="$ZDOTDIR/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
-
-unsetopt HIST_FIND_NO_DUPS
-unsetopt HIST_SAVE_NO_DUPS
 
 setopt MENU_COMPLETE
 
@@ -99,8 +103,8 @@ zstyle ':completion:*:descriptions' format ''
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-
 _evalcache pyenv init -
 _evalcache fnm env
 _evalcache direnv hook zsh
 _evalcache zoxide init zsh
+_evalcache fzf --zsh

@@ -1,7 +1,4 @@
 zmodule utility
-zmodule fzf
-zmodule environment
-
 
 ### COMPLETIONS
 zmodule completion
@@ -14,7 +11,7 @@ zmodule larkery/zsh-histdb
 zmodule charlesnchr/ranger-autojump
 zmodule aloxaf/fzf-tab
 zmodule romkatv/zsh-bench --cmd 'path+=({})'
-# zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
+zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
 zmodule so-fancy/diff-so-fancy
 
 # ALIASES
@@ -28,7 +25,6 @@ zmodule ohmyzsh/ohmyzsh --root plugins/pip
 
 # TERMINAL
 zmodule mroth/evalcache
-zmodule davidparsson/zsh-pyenv-lazy
 zmodule romkatv/zsh-defer -d
 zmodule romkatv/powerlevel10k --use degit
 

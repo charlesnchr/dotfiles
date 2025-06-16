@@ -553,10 +553,10 @@ nnoremap <C-S-s> :w<cr>
 inoremap <C-S-s> <Esc>:w<cr>
 
 " quick edit
-nnoremap <localleader>ve :e ~/.vimrc<cr>
-nnoremap <localleader>vt :tabe ~/.vimrc<cr>
-nnoremap <localleader>vs :source ~/.vimrc<cr>
-nnoremap <localleader>vp :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
+nnoremap <localleader>ve :edit <C-r>=fnameescape(resolve(expand('~/.vimrc')))<CR><CR>
+nnoremap <localleader>vz :edit <C-r>=fnameescape(resolve(expand('$ZDOTDIR/.zshrc')))<CR><CR>
+nnoremap <localleader>vs :source <C-r>=fnameescape(resolve(expand('~/.vimrc')))<CR><CR>
+nnoremap <localleader>vp :PlugInstall<cr>
 nnoremap <localleader>vk :!python ~/dotfiles/home_folder_macos/.config/karabiner/karabiner-template/generate_karabiner.py<cr>
 
 nnoremap <localleader>vg :G<cr>
