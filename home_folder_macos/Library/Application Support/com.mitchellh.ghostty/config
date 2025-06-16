@@ -52,6 +52,10 @@ keybind = cmd+e=esc:e
 keybind = global:opt+t=toggle_quick_terminal
 
 # theme = dark:catppuccin-frappe,light:catppuccin-latte
-theme = dark:tokyonight-storm,light:xcodelight
+theme = dark:SpaceGray Bright,light:rose-pine-dawn
 
 macos-option-as-alt = right
+
+macos-titlebar-style = hidden
+
+confirm-close-surface=false
