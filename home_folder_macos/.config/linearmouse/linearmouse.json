@@ -1,11 +1,21 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
-      "pointer" : {
-        "speed" : 0.287,
-        "disableAcceleration" : true,
-        "acceleration" : 0.6016
+      "scrolling" : {
+        "reverse" : true,
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "type" : "alterOrientation"
+            },
+            "command" : {
+              "type" : "pinchZoom"
+            }
+          }
+        }
       },
       "if" : {
         "device" : {
@@ -16,40 +26,13 @@
           "serialNumber" : "No.161-0043-2"
         }
       },
-      "scrolling" : {
-        "modifiers" : {
-          "vertical" : {
-            "command" : {
-              "type" : "pinchZoom"
-            },
-            "shift" : {
-              "type" : "alterOrientation"
-            }
-          }
-        },
-        "reverse" : true,
-        "acceleration" : {
-          "vertical" : 1
-        }
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 0.4,
+        "speed" : 0.0479
       }
     },
     {
-      "pointer" : {
-        "speed" : 0.0298,
-        "acceleration" : 0.6598,
-        "disableAcceleration" : true
-      },
-      "buttons" : {
-        "universalBackForward" : true
-      },
-      "if" : {
-        "device" : {
-          "category" : "mouse",
-          "productID" : "0xb2",
-          "vendorID" : "0x1532",
-          "productName" : "Razer DeathAdder V3"
-        }
-      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
@@ -67,21 +50,57 @@
             }
           }
         }
-      }
-    },
-    {
-      "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 0.1816
       },
       "if" : {
         "device" : {
+          "productID" : "0xb2",
           "vendorID" : "0x1532",
-          "productID" : "0x16",
-          "productName" : "Razer DeathAdder",
+          "productName" : "Razer DeathAdder V3",
           "category" : "mouse"
         }
+      },
+      "pointer" : {
+        "speed" : 0.0298,
+        "acceleration" : 0.6598,
+        "disableAcceleration" : true
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x1532",
+          "productID" : "0x16",
+          "productName" : "Razer DeathAdder"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 0.1816,
+        "disableAcceleration" : true
+      }
+    },
+    {
+      "scrolling" : {
+        "reverse" : {
+          "horizontal" : true
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productID" : "0xb023",
+          "productName" : "MX Master 3",
+          "serialNumber" : "FBAAFE6005E27D8F",
+          "category" : "mouse"
+        }
+      },
+      "pointer" : {
+        "disableAcceleration" : true
       }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
 }

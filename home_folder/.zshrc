@@ -80,13 +80,19 @@ source $HOME/dotfiles/.zshrc_local
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# key bindings
+# key layout
 bindkey -e # emacs bindings - needs to be above custom
 
+_evalcache pyenv init -
+_evalcache fnm env
+_evalcache direnv hook zsh
+_evalcache zoxide init zsh
+_evalcache fzf --zsh
+
+# key bindings
 bindkey '^X^E' edit-command-line
 bindkey '^R' histdb-fzf-widget
 bindkey '^X^F' fzf-history-widget
-
 
 # standard bash mapping (overrules delete whole line on macos)
 bindkey "^U" backward-kill-line
@@ -102,9 +108,3 @@ zstyle ':completion:*:descriptions' format ''
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-_evalcache pyenv init -
-_evalcache fnm env
-_evalcache direnv hook zsh
-_evalcache zoxide init zsh
-_evalcache fzf --zsh
