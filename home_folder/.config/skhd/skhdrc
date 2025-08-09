@@ -84,10 +84,10 @@ alt + shift + cmd - p : yabai -m window --toggle sticky; \
 #     yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 # Restart Yabai
-shift + alt - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    yabai --restart-service
+#shift + alt - r : \
+#    /usr/bin/env osascript <<< \
+#        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+#    yabai --restart-service
 
 shift + alt - e : \
     /usr/bin/env osascript <<< \

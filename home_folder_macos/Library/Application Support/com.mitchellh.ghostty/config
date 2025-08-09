@@ -41,7 +41,7 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-
+ 
 keybind = ctrl+m=text:\r
 keybind = performable:ctrl+c=copy_to_clipboard
 keybind = cmd+b=esc:b
@@ -59,3 +59,23 @@ macos-option-as-alt = right
 macos-titlebar-style = hidden
 
 confirm-close-surface=false
+
+
+keybind = ctrl+space>v=new_split:right
+keybind = ctrl+space>s=new_split:down
+
+# Navigating between splits - use goto_split, not focus_split
+# Alternative: vim-style navigation
+keybind = cmd+h=goto_split:left
+keybind = cmd+l=goto_split:right
+keybind = cmd+k=goto_split:top
+keybind = cmd+j=goto_split:bottom
+
+# Equalize splits
+keybind = ctrl+space>equal=equalize_splits
+
+# Resize splits (hold down for repeated resizing)
+keybind = cmd+u=resize_split:left,20
+keybind = cmd+i=resize_split:up,20
+keybind = cmd+o=resize_split:down,20
+keybind = cmd+p=resize_split:right,20
