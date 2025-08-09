@@ -11,7 +11,7 @@ zmodule larkery/zsh-histdb
 zmodule charlesnchr/ranger-autojump
 zmodule aloxaf/fzf-tab
 zmodule romkatv/zsh-bench --cmd 'path+=({})'
-# zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
+zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
 zmodule so-fancy/diff-so-fancy
 
 # ALIASES

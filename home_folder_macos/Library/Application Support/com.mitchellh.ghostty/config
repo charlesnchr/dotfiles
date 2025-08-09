@@ -79,3 +79,6 @@ keybind = cmd+u=resize_split:left,20
 keybind = cmd+i=resize_split:up,20
 keybind = cmd+o=resize_split:down,20
 keybind = cmd+p=resize_split:right,20
+
+# For claude code
+keybind = shift+enter=text:\n
