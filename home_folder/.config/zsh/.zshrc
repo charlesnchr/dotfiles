@@ -57,7 +57,7 @@ HISTORY_START_WITH_GLOBAL="true" # for per-directory-history plugin
 HISTFILE="$ZDOTDIR/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
-setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt NO_BANG_HIST
 setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
@@ -83,9 +83,6 @@ zle -N edit-command-line
 # key bindings
 bindkey -e # emacs bindings - needs to be above custom
 
-bindkey '^X^E' edit-command-line
-bindkey '^R' histdb-fzf-widget
-bindkey '^X^F' fzf-history-widget
 
 
 # standard bash mapping (overrules delete whole line on macos)
@@ -108,3 +105,7 @@ _evalcache fnm env
 _evalcache direnv hook zsh
 _evalcache zoxide init zsh
 _evalcache fzf --zsh
+
+bindkey '^X^E' edit-command-line
+bindkey '^X^F' fzf-history-widget
+bindkey '^R' histdb-fzf-widget

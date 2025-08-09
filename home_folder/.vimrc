@@ -63,6 +63,8 @@ Plug 'ojroques/vim-oscyank'
 Plug 'junegunn/vim-peekaboo'
 
 Plug 'nvim-lua/plenary.nvim'
+Plug 'greggh/claude-code.nvim'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 

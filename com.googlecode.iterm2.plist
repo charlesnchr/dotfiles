@@ -3305,6 +3305,17 @@
 					<key>Text</key>
 					<string>9</string>
 				</dict>
+				<key>0x49-0x160000-0x22</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>b</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x61-0x100000-0x0</key>
 				<dict>
 					<key>Action</key>
