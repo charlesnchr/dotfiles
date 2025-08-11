@@ -25,11 +25,20 @@ auto_dark_mode.init()
 -- })
 
 require("nvim-tree").setup({
-
+    sync_root_with_cwd = false,  -- Don't sync root with cwd
+    respect_buf_cwd = false,     -- Don't change cwd based on buffer
     actions = {
         open_file = {
             quit_on_open = true,
         },
+        change_dir = {
+            enable = false,    -- Disable change directory action
+            global = false,    -- Don't change global directory
+        },
+    },
+    update_focused_file = {
+        enable = false,      -- Don't update root when focusing files
+        update_root = false, -- Don't update root directory
     },
 	-- git = {
 	-- 	enable = false,
