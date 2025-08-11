@@ -79,3 +79,10 @@ keybind = cmd+u=resize_split:left,20
 keybind = cmd+i=resize_split:up,20
 keybind = cmd+o=resize_split:down,20
 keybind = cmd+p=resize_split:right,20
+
+# Tmux window shortcuts - send prefix+number
+keybind = cmd+1=text:\x01\x31
+keybind = cmd+2=text:\x01\x32
+keybind = cmd+3=text:\x01\x33
+keybind = cmd+4=text:\x01\x34
+keybind = cmd+5=text:\x01\x35
