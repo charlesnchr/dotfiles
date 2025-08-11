@@ -86,3 +86,6 @@ keybind = cmd+2=text:\x01\x32
 keybind = cmd+3=text:\x01\x33
 keybind = cmd+4=text:\x01\x34
 keybind = cmd+5=text:\x01\x35
+
+# For claude code
+keybind = shift+enter=text:\n

@@ -81,7 +81,6 @@ PROFILES = [
             "Map fn + number keys to their corresponding media control keys (rev 2)",
             "function keys with designated features",
             "Extra right control for macbook keyboard",
-            "Extra right command for macbook keyboard",
             "Extra hyper key for macbook keyboard",
             "Corne capslock",
         ],

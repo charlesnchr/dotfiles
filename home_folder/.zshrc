@@ -80,7 +80,7 @@ source $HOME/dotfiles/.zshrc_local
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# key bindings
+# key layout
 bindkey -e # emacs bindings - needs to be above custom
 
 
