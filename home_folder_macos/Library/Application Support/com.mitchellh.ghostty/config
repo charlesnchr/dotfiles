@@ -86,6 +86,13 @@ keybind = cmd+2=text:\x01\x32
 keybind = cmd+3=text:\x01\x33
 keybind = cmd+4=text:\x01\x34
 keybind = cmd+5=text:\x01\x35
+keybind = cmd+6=text:\x01\x36
+keybind = cmd+7=text:\x01\x37
+keybind = cmd+8=text:\x01\x38
+keybind = cmd+9=text:\x01\x6c
+
+# Tmux sessionizer shortcut - send prefix+o
+keybind = cmd+o=text:\x01\x6f
 
 # For claude code
 keybind = shift+enter=text:\n
