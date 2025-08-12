@@ -89,7 +89,11 @@ keybind = cmd+5=text:\x01\x35
 keybind = cmd+6=text:\x01\x36
 keybind = cmd+7=text:\x01\x37
 keybind = cmd+8=text:\x01\x38
-keybind = cmd+9=text:\x01\x6c
+keybind = cmd+9=text:\x01\x39
+
+# Tmux window navigation
+keybind = cmd+left_bracket=text:\x01\x70
+keybind = cmd+right_bracket=text:\x01\x6e
 
 # Tmux sessionizer shortcut - send prefix+o
 keybind = cmd+o=text:\x01\x6f
