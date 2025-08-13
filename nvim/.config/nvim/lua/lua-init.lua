@@ -1,22 +1,45 @@
+-- Load LSP configuration
 require("config.lsp")
 
-local auto_dark_mode = require("auto-dark-mode")
-auto_dark_mode.setup({
-	update_interval = 2000,
-	set_dark_mode = function()
-		vim.api.nvim_set_option("background", "dark")
-		vim.cmd("colorscheme tokyonight")
-		-- vim.cmd("AirlineTheme catppuccin")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-	set_light_mode = function()
-		vim.api.nvim_set_option("background", "light")
-		vim.cmd("colorscheme tokyonight-day")
-		-- vim.cmd("AirlineTheme atomic")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-})
-auto_dark_mode.init()
+-- Auto dark mode setup (only on macOS)
+local auto_dark_mode
+if vim.fn.has("mac") == 1 then
+  auto_dark_mode = require("auto-dark-mode")
+end
+if auto_dark_mode then
+  auto_dark_mode.setup({
+    update_interval = 2000,
+    set_dark_mode = function()
+      vim.api.nvim_set_option("background", "dark")
+      pcall(vim.cmd, "colorscheme tokyonight")
+      -- vim.cmd("AirlineTheme catppuccin")
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+    end,
+    set_light_mode = function()
+      vim.api.nvim_set_option("background", "light")
+      pcall(vim.cmd, "colorscheme tokyonight-day")
+      -- vim.cmd("AirlineTheme atomic")
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+    end,
+  })
+  auto_dark_mode.init()
+else
+  -- Fallback colorscheme setup for non-macOS systems
+  if vim.fn.has("unix") == 1 and vim.fn.has("mac") == 0 then
+    local output = vim.fn.system("cat ~/dotfiles/is_dark_mode")
+    if tonumber(output) == 0 then
+      vim.opt.background = "light"
+      pcall(vim.cmd, "colorscheme tokyonight-day")
+    else
+      vim.opt.background = "dark"
+      pcall(vim.cmd, "colorscheme tokyonight")
+    end
+  else
+    -- Default colorscheme
+    vim.opt.background = "dark"
+    pcall(vim.cmd, "colorscheme tokyonight")
+  end
+end
 
 -- require("bufferline").setup({
 -- 	options = {

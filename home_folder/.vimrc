@@ -1,152 +1,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-call plug#begin()
-
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
-
-Plug 'ryanoasis/vim-devicons'
-Plug 'rafi/awesome-vim-colorschemes'
-
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-tree/nvim-tree.lua'
-" markdown syntax
-Plug 'godlygeek/tabular'
-" writing
-Plug 'reedes/vim-pencil'
-Plug 'lervag/vimtex'
-Plug 'xolox/vim-colorscheme-switcher'
-Plug 'xolox/vim-misc'
-" styling
-Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
-" misc
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'junegunn/goyo.vim'
-Plug 'enricobacis/vim-airline-clock'
-
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'vimwiki/vimwiki'
-
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
-Plug 'kana/vim-textobj-user'
-Plug 'rbonvall/vim-textobj-latex'
-Plug 'jeetsukumaran/vim-pythonsense'
-
-Plug 'mhinz/vim-startify'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'junegunn/gv.vim'
-Plug 'voldikss/vim-floaterm'
-Plug 'mg979/vim-visual-multi'
-Plug 'mattn/calendar-vim'
-Plug 'python-mode/python-mode', { 'for': 'python' }
-Plug 'tpope/vim-unimpaired'
-Plug 'sillybun/vim-repl'
-Plug 'jpalardy/vim-slime', { 'for': 'python' }
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } " slows down start-up
-
-Plug 'romainl/vim-cool'
-
-Plug 'preservim/tagbar'
-
-Plug 'francoiscabrol/ranger.vim'
-
-Plug 'rupa/v'
-Plug 'ojroques/vim-oscyank'
-Plug 'junegunn/vim-peekaboo'
-
-Plug 'nvim-lua/plenary.nvim'
-Plug 'greggh/claude-code.nvim'
-
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-
-Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'sbdchd/neoformat'
-Plug 'simnalamburt/vim-mundo'
-Plug 'liuchengxu/vista.vim'
-Plug 'tpope/vim-commentary'
-" Plug 'folke/which-key.nvim'
-
-Plug 'hrsh7th/cmp-omni'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-" Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-Plug 'williamboman/mason-lspconfig.nvim'
-
-Plug 'neovim/nvim-lspconfig'
-
-Plug 'folke/trouble.nvim'
-
-Plug 'trotter/autojump.vim', { 'on': 'J' }
-Plug 'arcticicestudio/nord-vim'
-
-Plug 'ntpeters/vim-better-whitespace'
-
-Plug 'ThePrimeagen/harpoon'
-
-Plug 'vim-scripts/repeatable-motions.vim'
-
-Plug 'rcarriga/nvim-notify'
-
-Plug 'kana/vim-operator-user'
-
-Plug 'jesseleite/vim-agriculture'
-Plug 'charlesnchr/auto-dark-mode.nvim'
-Plug 'chrisbra/recover.vim'
-Plug 'ziontee113/color-picker.nvim'
-
-if has("win32")
-    Plug 'ptzz/lf.vim'
-else
-    Plug 'charlesnchr/ranger-floaterm.vim'
-endif
-
-Plug 'will133/vim-dirdiff'
-Plug 'Pocco81/auto-save.nvim'
-Plug 'smjonas/live-command.nvim'
-Plug 'simrat39/symbols-outline.nvim'
-Plug 'TimUntersberger/neogit'
-Plug 'github/copilot.vim'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'folke/tokyonight.nvim'
-Plug 'rose-pine/neovim'
-Plug 'knsh14/vim-github-link'
-Plug 'tpope/vim-rhubarb'
-Plug 'stevearc/aerial.nvim'
-Plug 'akinsho/toggleterm.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-telescope/telescope-ui-select.nvim'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'ggandor/leap.nvim'
-Plug 'dstein64/vim-startuptime'
-
-Plug 'mbbill/undotree'
-Plug 'Eandrju/cellular-automaton.nvim'
-Plug 'rafamadriz/friendly-snippets'
-Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
-Plug 'chipsenkbeil/distant.nvim', { 'branch': 'v0.3'}
-Plug 'tpope/vim-rhubarb'
-Plug 'aaronhallaert/advanced-git-search.nvim'
-
-call plug#end()
+" Plugin management now handled by lazy.nvim in init.lua
 
 set updatetime=100
 
@@ -161,7 +16,7 @@ else
 endif
 
 
-lua require('lua-init')
+" Lua initialization is now handled by init.lua
 
 let mapleader = ","
 let maplocalleader = " " " used to be \\
@@ -380,28 +235,24 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 set termguicolors
 
 if has('mac')
-    " for mac: theme applied on startup, then synced via lua theme
+    " Set initial theme to prevent blinking, auto-dark-mode will sync it later
     let output =  system("defaults read -g AppleInterfaceStyle")
     if v:shell_error != 0
-        let g:airline_theme = 'atomic'
         set background=light
-        colorscheme tokyonight-day
+        silent! colorscheme tokyonight-day
     else
-        let g:airline_theme = 'catppuccin'
         set background=dark
-        colorscheme tokyonight
+        silent! colorscheme tokyonight
     endif
 elseif has('unix')
-
+    " Set initial theme to prevent blinking
     let output =  system("cat ~/dotfiles/is_dark_mode")
     if output == 0
-        let g:airline_theme = 'atomic'
         set background=light
-        colorscheme tokyonight-day
+        silent! colorscheme tokyonight-day
     else
-        let g:airline_theme = 'catppuccin'
         set background=dark
-        colorscheme tokyonight
+        silent! colorscheme tokyonight
     endif
 endif
 
