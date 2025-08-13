@@ -61,12 +61,15 @@ macos-titlebar-style = hidden
 confirm-close-surface=false
 
 
-keybind = ctrl+space>v=new_split:right
-keybind = ctrl+space>s=new_split:down
+keybind = cmd+s=new_split:right
+keybind = cmd+shift+apostrophe=new_split:down
 
 # Navigating between splits - use goto_split, not focus_split
 # Alternative: vim-style navigation
 keybind = cmd+h=goto_split:left
+
+# Hide window alternative since cmd+h is used for split navigation
+keybind = cmd+shift+h=toggle_visibility
 keybind = cmd+l=goto_split:right
 keybind = cmd+k=goto_split:top
 keybind = cmd+j=goto_split:bottom
