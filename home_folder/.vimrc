@@ -234,29 +234,6 @@ nnoremap <leader><F8> :PrevColorScheme<CR>
 " for mac: theme applied via auto theme plugin
 set termguicolors
 
-if has('mac')
-    " Set initial theme to prevent blinking, auto-dark-mode will sync it later
-    let output =  system("defaults read -g AppleInterfaceStyle")
-    if v:shell_error != 0
-        set background=light
-        silent! colorscheme tokyonight-day
-    else
-        set background=dark
-        silent! colorscheme tokyonight
-    endif
-elseif has('unix')
-    " Set initial theme to prevent blinking
-    let output =  system("cat ~/dotfiles/is_dark_mode")
-    if output == 0
-        set background=light
-        silent! colorscheme tokyonight-day
-    else
-        set background=dark
-        silent! colorscheme tokyonight
-    endif
-endif
-
-
 if has("win32")
     set shell=powershell
     set shellcmdflag=-command

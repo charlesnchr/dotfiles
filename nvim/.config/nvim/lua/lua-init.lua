@@ -1,12 +1,32 @@
+-- Set initial colorscheme early to prevent flashing
+-- This mirrors the logic from .vimrc but in Lua
+if vim.fn.has("mac") == 1 then
+  local output = vim.fn.system("defaults read -g AppleInterfaceStyle")
+  if vim.v.shell_error ~= 0 then
+    vim.opt.background = "light"
+    pcall(vim.cmd, "silent! colorscheme tokyonight-day")
+  else
+    vim.opt.background = "dark"
+    pcall(vim.cmd, "silent! colorscheme tokyonight")
+  end
+elseif vim.fn.has("unix") == 1 then
+  local output = vim.fn.system("cat ~/dotfiles/is_dark_mode")
+  if tonumber(output) == 0 then
+    vim.opt.background = "light"
+    pcall(vim.cmd, "silent! colorscheme tokyonight-day")
+  else
+    vim.opt.background = "dark"
+    pcall(vim.cmd, "silent! colorscheme tokyonight")
+  end
+end
+
 -- Load LSP configuration
 require("config.lsp")
 
--- Auto dark mode setup (only on macOS)
+-- Auto dark mode setup (only on macOS) - for dynamic switching only
 local auto_dark_mode
 if vim.fn.has("mac") == 1 then
   auto_dark_mode = require("auto-dark-mode")
-end
-if auto_dark_mode then
   auto_dark_mode.setup({
     update_interval = 2000,
     set_dark_mode = function()
@@ -22,23 +42,8 @@ if auto_dark_mode then
       vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
     end,
   })
-  auto_dark_mode.init()
-else
-  -- Fallback colorscheme setup for non-macOS systems
-  if vim.fn.has("unix") == 1 and vim.fn.has("mac") == 0 then
-    local output = vim.fn.system("cat ~/dotfiles/is_dark_mode")
-    if tonumber(output) == 0 then
-      vim.opt.background = "light"
-      pcall(vim.cmd, "colorscheme tokyonight-day")
-    else
-      vim.opt.background = "dark"
-      pcall(vim.cmd, "colorscheme tokyonight")
-    end
-  else
-    -- Default colorscheme
-    vim.opt.background = "dark"
-    pcall(vim.cmd, "colorscheme tokyonight")
-  end
+  -- Note: Removed auto_dark_mode.init() to prevent initial flash
+  -- It will still monitor for changes but won't immediately set theme
 end
 
 -- require("bufferline").setup({
