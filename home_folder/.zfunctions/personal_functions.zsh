@@ -121,17 +121,23 @@ function penv() {
 
         export PYTHON_LSP_HOME=$(dirname $(which python))
     else
-        source .venv/bin/activate
+        # Check if .venv exists before trying to activate
+        if [ -f ".venv/bin/activate" ]; then
+            source .venv/bin/activate
 
-        if ! uv pip show python-lsp-server &> /dev/null; then
-            uv pip install 'python-lsp-server[all]'
+            if ! uv pip show python-lsp-server &> /dev/null; then
+                uv pip install 'python-lsp-server[all]'
+            fi
+
+            if ! uv pip show pynvim &> /dev/null; then
+                uv pip install pynvim
+            fi
+
+            export PYTHON_LSP_HOME=$(dirname $(which python))
+        else
+            echo "No .venv directory found in current directory. Skipping Python environment setup."
+            return 0
         fi
-
-        if ! uv pip show pynvim &> /dev/null; then
-            uv pip install pynvim
-        fi
-
-        export PYTHON_LSP_HOME=$(dirname $(which python))
     fi
 }
 
