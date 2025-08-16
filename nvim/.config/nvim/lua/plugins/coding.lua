@@ -192,10 +192,34 @@ return {
     cmd = { "Distant", "DistantOpen", "DistantConnect" },
   },
 
-  -- GitHub Copilot
+  -- GitHub Copilot (disabled in favor of Supermaven)
   {
     "github/copilot.vim",
     event = "InsertEnter",
+    enabled = false,
+  },
+
+  -- Supermaven AI completion
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    config = function()
+      require("supermaven-nvim").setup({
+        keymaps = {
+          accept_suggestion = "<C-f>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-l>",
+        },
+        ignore_filetypes = { "cpp", "c" }, -- Adjust as needed
+        color = {
+          suggestion_color = "#ffffff",
+          cterm = 244,
+        },
+        log_level = "info", -- set to "off" to disable logging completely
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+      })
+    end,
   },
 
   -- Claude Code integration

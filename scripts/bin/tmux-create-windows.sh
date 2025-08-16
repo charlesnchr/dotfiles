@@ -12,7 +12,8 @@ fi
 
 # Check for nvim window
 if ! tmux list-windows -F "#{window_name}" | grep -qi "nvim"; then
-    tmux new-window -n nvim 'nvim'
+    tmux new-window -n nvim
+    tmux send-keys -t nvim 'nvim' Enter
 fi
 
 # Check for claude window

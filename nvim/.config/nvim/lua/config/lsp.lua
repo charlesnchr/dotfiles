@@ -136,7 +136,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		--
 		on_attach = function(client, bufnr)
 			local opts = { noremap = true, silent = true }
@@ -207,7 +207,6 @@ require("lspconfig").pylsp.setup(config({
 	flags = {
 		debounce_text_changes = 200,
 	},
-	capabilities = capabilities,
 }))
 
 -- require("lspsaga").setup({
@@ -223,18 +222,15 @@ require("lspconfig").pylsp.setup(config({
 -- 	},
 -- })
 
-require("lspconfig").clangd.setup({
-	on_attach = on_attach,
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+require("lspconfig").clangd.setup(config({
 	cmd = {
 		"clangd",
 		"--offset-encoding=utf-16",
 	},
-})
+}))
 
 
 require'lspconfig'.ts_ls.setup(config({
-    on_attach = on_attach,
     filetypes = {
         "javascript",
         "javascriptreact",
@@ -249,7 +245,6 @@ require'lspconfig'.ts_ls.setup(config({
 }))
 
 require'lspconfig'.jsonls.setup(config({
-    on_attach = on_attach,
     filetypes = {
         "json",
         "jsonc",

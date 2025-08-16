@@ -80,7 +80,7 @@ return {
   {
     "knsh14/vim-github-link",
     keys = {
-      { "<localleader>gh", "<cmd>GetCurrentBranchLink<CR><Bar> :OSCYankRegister +<CR>:echo @+<CR>", desc = "GitHub link" },
+      { "<localleader>gh", "<cmd>GetCurrentBranchLink<CR><Bar> :OSCYankReg +<CR>:echo @+<CR>", mode = { "n", "v" }, desc = "GitHub link" },
     },
   },
 
@@ -89,5 +89,12 @@ return {
     "TimUntersberger/neogit",
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = "Neogit",
+  },
+
+  -- Merginal for Git branch management
+  {
+    "idanarye/vim-merginal",
+    dependencies = { "tpope/vim-fugitive" },
+    cmd = { "Merginal", "MerginalToggle" },
   },
 }

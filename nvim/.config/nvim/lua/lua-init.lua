@@ -473,10 +473,10 @@ require("claude-code").setup({
   },
   -- File refresh settings
   refresh = {
-    enable = true,           -- Enable file change detection
+    enable = false,          -- Enable file change detection
     updatetime = 100,        -- updatetime when Claude Code is active (milliseconds)
-    timer_interval = 1000,   -- How often to check for file changes (milliseconds)
-    show_notifications = true, -- Show notification when files are reloaded
+    timer_interval = 2000,   -- How often to check for file changes (milliseconds)
+    show_notifications = false, -- Show notification when files are reloaded
   },
   -- Git project settings
   git = {

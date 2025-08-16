@@ -2,14 +2,15 @@
 return {
   -- File managers
   {
-    "francoiscabrol/ranger.vim",
-    cmd = { "Ranger", "RangerCurrentFile", "RangerWorkingDirectory" },
   },
 
+  -- Ranger in floaterm
   {
     "charlesnchr/ranger-floaterm.vim",
-    cond = not vim.fn.has("win32"),
-    cmd = { "Ranger", "RangerCurrentFile" },
+    dependencies = { "voldikss/vim-floaterm" },
+    keys = {
+      { "<leader>f", "<cmd>RangerFloaterm<CR>", desc = "Ranger in floaterm" },
+    },
   },
 
   {

@@ -11,6 +11,8 @@ return {
       { "<localleader>gn", "<cmd>G log --name-status<cr>", desc = "Git log with names" },
       { "<localleader>gl", "<cmd>G pull<cr>", desc = "Git pull" },
       { "<localleader>gp", "<cmd>G push<cr>", desc = "Git push" },
+      { "<localleader>gB", "<cmd>G branch --sort=-committerdate<cr>", desc = "Git branches (local)" },
+      { "<localleader>gr", "<cmd>G branch -r --sort=-committerdate<cr>", desc = "Git branches (remote)" },
     },
   },
 
