@@ -149,6 +149,7 @@ return {
     "ludovicchabant/vim-gutentags",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
+      -- vim.g.gutentags_trace = 1  -- Enable debugging (disabled)
       vim.g.gutentags_define_advanced_commands = 1
       vim.g.gutentags_cache_dir = vim.fn.expand("~/.cache/vim/ctags/")
       vim.g.gutentags_generate_on_new = 1

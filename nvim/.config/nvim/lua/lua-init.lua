@@ -163,6 +163,7 @@ local actions = require("telescope.actions")
 require("telescope").setup({
 	defaults = {
         layout_strategy = "vertical",
+        path_display = { "truncate" },
         vimgrep_arguments = {
           'rg',
           '--color=never',
@@ -193,20 +194,33 @@ require("telescope").setup({
                 }
         }
 	},
+	pickers = {
+		tags = {
+			fname_width = 60,  -- Increase filename width from default 30
+			show_line = true,
+			show_kind = true,
+			layout_config = {
+				width = 0.95,
+				height = 0.85,
+			}
+		}
+	},
 })
 
 require("telescope").load_extension("advanced_git_search")
 
 M = {}
 M.tags = function()
-	-- get pane width from tmux and use half the width for the fname_width
-	local fname_width = math.floor(vim.fn.system("tmux display -p '#{pane_width}'") / 4)
-	-- Maybe running outside of tmux
-	if fname_width == 0 then
-		fname_width = 30
-	end
-    -- echo
-	require('telescope.builtin').tags({fname_width = fname_width })
+	require('telescope.builtin').tags({
+		path_display = function(opts, path)
+			-- Show relative path from project root
+			local cwd = vim.fn.getcwd()
+			if path:sub(1, #cwd) == cwd then
+				return path:sub(#cwd + 2)  -- Remove cwd + leading slash
+			end
+			return path
+		end,
+	})
 end
 
 -- To get fzf loaded and working with telescope, you need to call
@@ -229,8 +243,6 @@ require("color-picker").setup({
 	-- ["icons"] = { "", "" },
 	-- ["icons"] = { "", "" },
 })
-
-vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.
 
 require("auto-save").setup({
 	enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)

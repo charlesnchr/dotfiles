@@ -262,7 +262,7 @@ noremap <leader>gf :e <cfile><cr>
 
 " No whitespace in terminal
 augroup vimrc
-  autocmd TermOpen * :DisableWhitespace
+  autocmd TermOpen * silent! DisableWhitespace
 augroup END
 
 set shada=!,'1000,<500,s100,h

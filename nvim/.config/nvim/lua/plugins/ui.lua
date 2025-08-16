@@ -109,7 +109,16 @@ return {
       { "<localleader>fw", "<cmd>Windows<cr>", desc = "Windows" },
       
       -- Telescope specific
-      { "<localleader>js", function() require('telescope.builtin').git_files() end, desc = "Git files" },
+      { "<localleader>js", function() require('telescope.builtin').git_files({
+        previewer = false,
+        layout_strategy = "center",
+        layout_config = { 
+          height = 20,
+          width = 80,
+          prompt_position = "bottom",
+          anchor = "SW"
+        }
+      }) end, desc = "Git files" },
       { "<localleader>s", function() require('telescope.builtin').git_files() end, desc = "Git files" },
       { "<localleader>jf", function() require('telescope.builtin').find_files() end, desc = "Find files" },
       { "<localleader>jg", function() require('telescope.builtin').live_grep() end, desc = "Live grep" },
@@ -117,7 +126,17 @@ return {
       { "<localleader>jc", function() require('telescope.builtin').grep_string{ shorten_path = true, word_match = "-w", only_sort_text = true, search = '' } end, desc = "Grep string clean" },
       { "<localleader>j.", function() require('telescope.builtin').grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' } end, desc = "Grep with hidden" },
       { "<localleader>jb", function() require('telescope.builtin').buffers({sort_mru = true}) end, desc = "Buffers" },
-      { "<localleader>e", function() require('telescope.builtin').buffers({sort_mru = true}) end, desc = "Buffers" },
+      { "<localleader>e", function() require('telescope.builtin').buffers({
+        sort_mru = true,
+        previewer = false,
+        layout_strategy = "center",
+        layout_config = { 
+          height = 20,
+          width = 80,
+          prompt_position = "bottom",
+          anchor = "SW"
+        }
+      }) end, desc = "Buffers" },
       { "<localleader><tab>", function() require('telescope.builtin').buffers({sort_mru = true}) end, desc = "Buffers" },
       { "<localleader>jh", function() require('telescope.builtin').help_tags() end, desc = "Help tags" },
       { "<localleader>jk", function() require('telescope.builtin').keymaps() end, desc = "Keymaps" },
@@ -134,7 +153,18 @@ return {
       { "<localleader>jn", function() require('telescope.builtin').command_history() end, desc = "Command history" },
       { "<localleader>jv", function() require('telescope.builtin').git_branches() end, desc = "Git branches" },
       { "<localleader>p", function() require("telescope").extensions.aerial.aerial() end, desc = "Aerial" },
-      { "<C-p>", function() require('telescope.builtin').buffers({sort_mru = true, default_selection_index = 2}) end, desc = "Buffers" },
+      { "<C-p>", function() require('telescope.builtin').buffers({
+        sort_mru = true, 
+        default_selection_index = 2,
+        previewer = false,
+        layout_strategy = "center",
+        layout_config = { 
+          height = 20,
+          width = 80,
+          prompt_position = "bottom",
+          anchor = "SW"
+        }
+      }) end, desc = "Buffers" },
     },
     config = function()
       -- Configuration will be loaded from lua-init.lua

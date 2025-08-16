@@ -104,7 +104,7 @@ function timezsh() {
 }
 
 function penv() {
-    unalias python
+    unalias python 2>/dev/null || true
 
     if [ -n "$1" ]; then
         # Conda activation
