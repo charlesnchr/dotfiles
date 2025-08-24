@@ -7,7 +7,7 @@ current_window_name=$(tmux display-message -p "#{window_name}")
 
 # Check for ranger window
 if ! tmux list-windows -F "#{window_name}" | grep -qi "ranger"; then
-    tmux new-window -n ranger 'ranger'
+    tmux new-window -n ranger 'zsh -i -c "ranger"'
 fi
 
 # Check for nvim window
