@@ -15,6 +15,11 @@ jcd() {
 	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
 }
 
+function markdown-show() {
+    # Accepts stdin, formats as JSON using fabric, then opens in nvim with Markdown preview
+    fabric -p explain_charles -v '#format:json' --stream | nvim -c "set ft=markdown | MarkdownPreview" -
+}
+
 jf() {
     cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
 }
@@ -169,17 +174,17 @@ function ccv() {
 
 function ts() {
     local selected
-    
+
     if [[ $# -eq 0 ]]; then
         selected=$(pwd)
     else
         selected=$1
     fi
-    
+
     # Expand path properly
     selected=${selected/#\~/$HOME}
     selected=$(realpath "$selected" 2>/dev/null) || selected=$(cd "$selected" 2>/dev/null && pwd)
-    
+
     if [[ ! -d $selected ]]; then
         echo "Directory does not exist: $selected"
         return 1
@@ -204,3 +209,5 @@ function ts() {
         tmux switch-client -t $selected_name
     fi
 }
+
+

@@ -15,4 +15,5 @@ alias vcal="vi -c Calendar"
 alias mux=tmuxinator
 alias off="sleep 1; kscreen-doctor --dpms off"
 alias xclip="xclip -selection clipboard"
+alias fabric='fabric-ai'
 

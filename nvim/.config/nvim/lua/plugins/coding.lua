@@ -56,7 +56,7 @@ return {
     "jpalardy/vim-slime",
     ft = "python",
     keys = {
-      { "<leader>s", "<Plug>SlimeSendCell", desc = "Send cell" },
+      { "<leader>ss", "<Plug>SlimeSendCell", desc = "Send cell" },
       { "<c-c>v", "<Plug>SlimeConfig", desc = "Slime config" },
       { "<localleader>r", "<cmd>SlimeSend1 %run test.py<CR>", desc = "Run test.py" },
     },
@@ -148,34 +148,148 @@ return {
   {
     "ludovicchabant/vim-gutentags",
     event = { "BufReadPost", "BufNewFile" },
+    init = function()
+      -- Function to control when gutentags is enabled
+      function GutEntagsEnabledForProject()
+        local current_dir = vim.fn.getcwd()
+        local excluded_dirs = {
+          '/Users/cc/dotfiles',
+          '/Users/cc',  -- Also exclude home directory
+        }
+
+        -- Check if current directory should be excluded
+        for _, dir in ipairs(excluded_dirs) do
+          if current_dir:find('^' .. vim.pesc(dir)) then
+            return 0
+          end
+        end
+
+        -- Enable for programming and web development file types
+        local allowed_filetypes = {
+          -- Core languages
+          'c', 'cpp', 'python', 'lua', 'vim', 'go', 'rust', 'java',
+
+          -- Web development
+          'javascript', 'typescript', 'jsx', 'tsx', 'javascriptreact', 'typescriptreact',
+          'html', 'css', 'scss', 'sass', 'less',
+
+          -- Other useful types
+          'json', 'yaml', 'toml', 'xml', 'markdown',
+        }
+
+        local current_filetype = vim.bo.filetype
+        for _, ft in ipairs(allowed_filetypes) do
+          if current_filetype == ft then
+            return 1
+          end
+        end
+
+        return 0
+      end
+    end,
     config = function()
       -- vim.g.gutentags_trace = 1  -- Enable debugging (disabled)
       vim.g.gutentags_define_advanced_commands = 1
       vim.g.gutentags_cache_dir = vim.fn.expand("~/.cache/vim/ctags/")
-      vim.g.gutentags_generate_on_new = 1
-      vim.g.gutentags_generate_on_missing = 1
-      vim.g.gutentags_generate_on_write = 1
+
+      -- Project root markers - include package.json for JS/TS projects
+      vim.g.gutentags_project_root = { '.git', '.root', '.svn', '.hg', '.project', 'package.json', 'Cargo.toml', 'go.mod' }
+
+      -- Essential tag generation settings
+      vim.g.gutentags_generate_on_new = 1      -- Generate on new files
+      vim.g.gutentags_generate_on_missing = 1  -- Auto-generate missing tags
+      vim.g.gutentags_generate_on_write = 1    -- Generate on every write
       vim.g.gutentags_generate_on_empty_buffer = 0
-      
-      -- Extensive exclude list from original config
-      vim.g.gutentags_ctags_exclude = {
-        "*.git", "*.svg", "*.hg", ".next", "*/tests/*", "build", "dist",
-        "*sites/*/files/*", "bin", "node_modules", ".venv", "bower_components",
-        "cache", "compiled", "docs", "example", "bundle", "vendor", "wandb",
-        "*.md", "*-lock.json", "*.lock", "*bundle*.js", "*build*.js", ".*rc*",
-        "*.json", "*.min.*", "*.map", "*.bak", "*.zip", "*.pyc", "*.class",
-        "*.sln", "*.Master", "*.csproj", "*.tmp", "*.csproj.user", "*.cache",
-        "*.pdb", "tags*", "cscope.*", "*.css", "*.less", "*.scss", "*.exe",
-        "*.dll", "*.mp3", "*.ogg", "*.flac", "*.swp", "*.swo", "*.bmp",
-        "*.gif", "*.ico", "*.jpg", "*.png", "*.rar", "*.zip", "*.tar",
-        "*.tar.gz", "*.tar.xz", "*.tar.bz2", "*.pdf", "*.doc", "*.docx",
-        "*.ppt", "*.pptx",
+
+      -- Use git ls-files for better performance in git repos
+      -- This automatically excludes untracked data files and respects .gitignore
+      vim.g.gutentags_file_list_command = {
+        ['.git'] = 'git ls-files',
       }
-      
+
+      -- Alternative for non-git projects: use find with exclusions
+      -- vim.g.gutentags_file_list_command = {
+      --   ['.root'] = 'find . -type f -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.c" -o -name "*.cpp" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.lua" -o -name "*.vim" -o -name "*.html" -o -name "*.css" | grep -v node_modules | grep -v .venv',
+      -- }
+
+      -- Only generate tags for specific file types
+      vim.g.gutentags_enabled_user_func = 'GutEntagsEnabledForProject'
+
+      -- Comprehensive exclude list based on best practices
+      vim.g.gutentags_ctags_exclude = {
+        -- Version control and git
+        ".git/*", "*.git", "*.hg", "*.svn",
+
+        -- Package managers and dependencies (CRITICAL) - handles nested too
+        "node_modules", "*/node_modules", "*/*/node_modules", "*/*/*/node_modules",
+        "bower_components", "*/bower_components",
+        ".venv", "*/.venv", "venv", "*/venv",
+        "__pycache__", "*/__pycache__", "*/*/__pycache__",
+        "vendor", "*/vendor", "deps", "*/deps",
+        "target", "*/target", ".cargo", "*/.cargo",
+
+        -- Build outputs and dist
+        "build/*", "dist/*", ".next/*", "out/*", ".output/*", "_site/*",
+        ".nuxt/*", ".cache/*", "cache/*", ".parcel-cache/*", ".webpack/*",
+
+        -- Temporary and cache files
+        "*.tmp", "*.cache", "*.swp", "*.swo", "*~", ".DS_Store",
+
+        -- Lock files and configs
+        "*-lock.json", "*.lock", "yarn.lock", "package-lock.json",
+        ".*rc*", ".env*", ".gitignore",
+
+        -- Minified and built assets
+        "*.min.*", "*.map", "*bundle*.js", "*build*.js", "*.min.js", "*.min.css",
+
+        -- Data files (CSV, Excel, NumPy, etc.)
+        "*.csv", "*.tsv", "*.xlsx", "*.xls", "*.ods",
+        "*.npy", "*.npz", "*.pkl", "*.pickle", "*.h5", "*.hdf5",
+        "*.parquet", "*.feather", "*.mat", "*.rds", "*.rdata",
+        "*.db", "*.sqlite", "*.sqlite3", "*.mdb",
+
+        -- Binary files
+        "*.exe", "*.dll", "*.so", "*.dylib", "*.class", "*.pyc", "*.pyo",
+        "*.zip", "*.tar", "*.tar.gz", "*.tar.xz", "*.tar.bz2", "*.rar", "*.7z",
+
+        -- Media files
+        "*.mp3", "*.mp4", "*.avi", "*.mov", "*.wav", "*.ogg", "*.flac",
+        "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.ico", "*.svg", "*.webp",
+
+        -- Documents
+        "*.pdf", "*.doc", "*.docx", "*.ppt", "*.pptx", "*.xls", "*.xlsx",
+
+        -- IDE and editor files
+        ".vscode/*", ".idea/*", "*.sln", "*.csproj", "*.Master", "*.csproj.user",
+        "tags*", "cscope.*", ".tags",
+
+        -- Test and documentation directories
+        "*/tests/*", "*/test/*", "docs/*", "documentation/*", "example/*", "examples/*",
+
+        -- Other common excludes
+        "bin/*", "tmp/*", "log/*", "logs/*", "*sites/*/files/*", "wandb/*",
+      }
+
       vim.g.gutentags_ctags_extra_args = {
         "--tag-relative=yes",
         "--fields=+ailmnS",
-        "--langmap=TypeScript:+.tsx -R",
+        "--extra=+q",
+
+        -- Language mappings for modern web development
+        "--langmap=JavaScript:+.jsx",         -- JSX support
+        "--langmap=TypeScript:+.tsx",         -- TSX support
+        "--langmap=HTML:+.html.htm",          -- HTML support
+        "--langmap=CSS:+.css.scss.sass.less", -- CSS and preprocessors
+
+        -- Additional language support
+        "--langmap=Python:+.py.pyx",
+        "--langmap=Vim:+.vim.vimrc",
+
+        -- Universal ctags specific options
+        "--kinds-JavaScript=+f,c,m,p,v",      -- Functions, classes, methods, properties, variables
+        "--kinds-TypeScript=+f,c,m,p,v,i,e",  -- Include interfaces and enums
+        "--kinds-HTML=+f,i",                  -- HTML functions and IDs
+        "--kinds-CSS=+c,s,i",                 -- CSS classes, selectors, IDs
       }
     end,
   },
@@ -250,19 +364,19 @@ return {
     end,
   },
 
-  -- Claude Code integration
-  {
-    "greggh/claude-code.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-      { "<C-,>", desc = "Claude Code" },
-      { "<leader>cC", desc = "Claude Code continue" },
-      { "<leader>cV", desc = "Claude Code verbose" },
-    },
-    config = function()
-      -- Configuration will be loaded from lua-init.lua
-    end,
-  },
+  -- Claude Code integration, not liking as much
+  -- {
+  --   "greggh/claude-code.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   keys = {
+  --     { "<C-,>", desc = "Claude Code" },
+  --     { "<leader>cC", desc = "Claude Code continue" },
+  --     { "<leader>cV", desc = "Claude Code verbose" },
+  --   },
+  --   config = function()
+  --     -- Configuration will be loaded from lua-init.lua
+  --   end,
+  -- },
 
   -- Claude Code
 {
@@ -392,7 +506,7 @@ return {
     picker = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true },
-    scroll = { enabled = true },
+    scroll = { enabled = false },
     statuscolumn = { enabled = true },
     words = { enabled = true },
     styles = {

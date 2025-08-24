@@ -84,6 +84,43 @@ return {
     },
   },
 
+  -- Gitsigns for Git integration in buffers
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "]h", function() require('gitsigns').nav_hunk('next') end, desc = "Next hunk" },
+      { "[h", function() require('gitsigns').nav_hunk('prev') end, desc = "Prev hunk" },
+      { "<leader>hs", function() require('gitsigns').stage_hunk() end, desc = "Stage hunk" },
+      { "<leader>hr", function() require('gitsigns').reset_hunk() end, desc = "Reset hunk" },
+      { "<leader>hp", function() require('gitsigns').preview_hunk() end, desc = "Preview hunk" },
+      { "<leader>hb", function() require('gitsigns').blame_line({full = true}) end, desc = "Blame line" },
+      { "<leader>tb", function() require('gitsigns').toggle_current_line_blame() end, desc = "Toggle blame" },
+    },
+    config = function()
+      require('gitsigns').setup {
+        signs = {
+          add = { text = '┃' },
+          change = { text = '┃' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked = { text = '┆' },
+        },
+        signcolumn = true,
+        numhl = false,
+        linehl = false,
+        word_diff = false,
+        current_line_blame = false,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol',
+          delay = 1000,
+        },
+      }
+    end,
+  },
+
   -- Neogit for better Git interface
   {
     "TimUntersberger/neogit",
