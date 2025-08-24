@@ -11,7 +11,7 @@ zmodule larkery/zsh-histdb
 zmodule charlesnchr/ranger-autojump
 zmodule aloxaf/fzf-tab
 zmodule romkatv/zsh-bench --cmd 'path+=({})'
-zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
+# zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better
 zmodule so-fancy/diff-so-fancy
 
 # ALIASES
@@ -22,6 +22,7 @@ zmodule so-fancy/diff-so-fancy
 zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
 zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule ohmyzsh/ohmyzsh --root plugins/pip
+zmodule ohmyzsh/ohmyzsh --root plugins/uv
 
 # TERMINAL
 zmodule mroth/evalcache
@@ -40,16 +41,15 @@ zmodule zsh-users/zsh-autosuggestions
 
 # PERSONAL
 
-# could include [[ ! -e $_zwc || ... ]] but zimfw does first time setup compile
-zmodule "$ZDOTDIR/.zfunctions" --source personal_functions.zsh \
-        --cmd '
-          _zsrc={}/personal_functions.zsh
-          _zwc={}/personal_functions.zsh.zwc
-          [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
-        '
 zmodule "$ZDOTDIR/.zfunctions" --source personal_aliases.zsh \
         --cmd '
           _zsrc={}/personal_aliases.zsh
           _zwc={}/personal_aliases.zsh.zwc
+          [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
+        '
+zmodule "$ZDOTDIR/.zfunctions" --source personal_functions.zsh \
+        --cmd '
+          _zsrc={}/personal_functions.zsh
+          _zwc={}/personal_functions.zsh.zwc
           [[ $_zwc -ot $_zsrc ]] && zcompile -U $_zwc $_zsrc
         '

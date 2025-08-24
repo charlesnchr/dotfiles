@@ -22,9 +22,6 @@ cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "path" },
-		{ name = "luasnip" },
-		{ name = "ultisnips" }, -- For ultisnips user.
-		-- { name = "cmp_tabnine" },
 		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "calc" },
@@ -50,8 +47,6 @@ cmp.setup({
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
 		["<C-t>"] = cmp.mapping.complete(),
-        ['<Tab>'] = nil,
-        ['<S-Tab>'] = nil,
 	}),
 })
 
@@ -97,16 +92,19 @@ function toggle_lsp_document_highlight()
 end
 
 -- Change diagnostic signs.
-vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "~", texthl = "DiagnosticSignHint" })
 
 -- global config for diagnostic
 vim.diagnostic.config({
 	underline = false,
 	virtual_text = false,
-	signs = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "✗",
+			[vim.diagnostic.severity.WARN] = "!",
+			[vim.diagnostic.severity.INFO] = "",
+			[vim.diagnostic.severity.HINT] = "~",
+		}
+	},
 	severity_sort = true,
 	float = { border = "rounded", scope = "line", source = "always" },
 })
@@ -136,7 +134,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		--
 		on_attach = function(client, bufnr)
 			local opts = { noremap = true, silent = true }
@@ -207,7 +205,6 @@ require("lspconfig").pylsp.setup(config({
 	flags = {
 		debounce_text_changes = 200,
 	},
-	capabilities = capabilities,
 }))
 
 -- require("lspsaga").setup({
@@ -223,18 +220,15 @@ require("lspconfig").pylsp.setup(config({
 -- 	},
 -- })
 
-require("lspconfig").clangd.setup({
-	on_attach = on_attach,
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+require("lspconfig").clangd.setup(config({
 	cmd = {
 		"clangd",
 		"--offset-encoding=utf-16",
 	},
-})
+}))
 
 
 require'lspconfig'.ts_ls.setup(config({
-    on_attach = on_attach,
     filetypes = {
         "javascript",
         "javascriptreact",
@@ -249,7 +243,6 @@ require'lspconfig'.ts_ls.setup(config({
 }))
 
 require'lspconfig'.jsonls.setup(config({
-    on_attach = on_attach,
     filetypes = {
         "json",
         "jsonc",

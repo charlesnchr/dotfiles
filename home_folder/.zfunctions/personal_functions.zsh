@@ -15,6 +15,11 @@ jcd() {
 	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
 }
 
+function markdown-show() {
+    # Accepts stdin, formats as JSON using fabric, then opens in nvim with Markdown preview
+    fabric -p explain_charles -v '#format:json' --stream | nvim -c "set ft=markdown | MarkdownPreview" -
+}
+
 jf() {
     cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
 }
@@ -104,7 +109,7 @@ function timezsh() {
 }
 
 function penv() {
-    unalias python
+    unalias python 2>/dev/null || true
 
     if [ -n "$1" ]; then
         # Conda activation
@@ -121,17 +126,23 @@ function penv() {
 
         export PYTHON_LSP_HOME=$(dirname $(which python))
     else
-        source .venv/bin/activate
+        # Check if .venv exists before trying to activate
+        if [ -f ".venv/bin/activate" ]; then
+            source .venv/bin/activate
 
-        if ! uv pip show python-lsp-server &> /dev/null; then
-            uv pip install 'python-lsp-server[all]'
+            if ! uv pip show python-lsp-server &> /dev/null; then
+                uv pip install 'python-lsp-server[all]'
+            fi
+
+            if ! uv pip show pynvim &> /dev/null; then
+                uv pip install pynvim
+            fi
+
+            export PYTHON_LSP_HOME=$(dirname $(which python))
+        else
+            echo "No .venv directory found in current directory. Skipping Python environment setup."
+            return 0
         fi
-
-        if ! uv pip show pynvim &> /dev/null; then
-            uv pip install pynvim
-        fi
-
-        export PYTHON_LSP_HOME=$(dirname $(which python))
     fi
 }
 
@@ -160,3 +171,43 @@ function ccv() {
 
   env "${env_vars[@]}" claude "${claude_args[@]}"
 }
+
+function ts() {
+    local selected
+
+    if [[ $# -eq 0 ]]; then
+        selected=$(pwd)
+    else
+        selected=$1
+    fi
+
+    # Expand path properly
+    selected=${selected/#\~/$HOME}
+    selected=$(realpath "$selected" 2>/dev/null) || selected=$(cd "$selected" 2>/dev/null && pwd)
+
+    if [[ ! -d $selected ]]; then
+        echo "Directory does not exist: $selected"
+        return 1
+    fi
+
+    local selected_name=$(basename "$selected" | tr . _)
+    local tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        if [[ -d $selected ]]; then
+            tmux new-session -s $selected_name -c "$selected"
+        fi
+        return 0
+    fi
+
+    if ! tmux has-session -t=$selected_name 2>/dev/null; then
+        if [[ -d $selected ]]; then
+            tmux new-session -ds $selected_name -c "$selected"
+            tmux switch-client -t $selected_name
+        fi
+    else
+        tmux switch-client -t $selected_name
+    fi
+}
+
+
