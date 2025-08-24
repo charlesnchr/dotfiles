@@ -166,3 +166,41 @@ function ccv() {
 
   env "${env_vars[@]}" claude "${claude_args[@]}"
 }
+
+function ts() {
+    local selected
+    
+    if [[ $# -eq 0 ]]; then
+        selected=$(pwd)
+    else
+        selected=$1
+    fi
+    
+    # Expand path properly
+    selected=${selected/#\~/$HOME}
+    selected=$(realpath "$selected" 2>/dev/null) || selected=$(cd "$selected" 2>/dev/null && pwd)
+    
+    if [[ ! -d $selected ]]; then
+        echo "Directory does not exist: $selected"
+        return 1
+    fi
+
+    local selected_name=$(basename "$selected" | tr . _)
+    local tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        if [[ -d $selected ]]; then
+            tmux new-session -s $selected_name -c "$selected"
+        fi
+        return 0
+    fi
+
+    if ! tmux has-session -t=$selected_name 2>/dev/null; then
+        if [[ -d $selected ]]; then
+            tmux new-session -ds $selected_name -c "$selected"
+            tmux switch-client -t $selected_name
+        fi
+    else
+        tmux switch-client -t $selected_name
+    fi
+}

@@ -1,3 +1,61 @@
+-- Basic vim options
+vim.opt.autoread = true
+vim.opt.updatetime = 1000
+vim.api.nvim_create_autocmd({ "FocusGained","BufEnter","TermClose","TermLeave" }, {
+  callback = function() if vim.fn.getcmdwintype()=='' then vim.cmd('checktime') end end,
+})
+
+-- Timer for automatic file checking without cursor movement (only when focused)
+local timer = vim.loop.new_timer()
+local timer_active = false
+
+local function start_timer()
+  if not timer_active then
+    timer:start(1000, 1000, vim.schedule_wrap(function()
+      if vim.fn.getcmdwintype() == '' then
+        vim.cmd('checktime')
+      end
+    end))
+    timer_active = true
+  end
+end
+
+local function stop_timer()
+  if timer_active then
+    timer:stop()
+    timer_active = false
+  end
+end
+
+vim.api.nvim_create_autocmd({ "FocusGained", "WinEnter", "BufEnter" }, {
+  callback = start_timer,
+})
+
+vim.api.nvim_create_autocmd("FocusLost", {
+  callback = stop_timer,
+})
+
+-- Terminal mode keymaps
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      "t",
+      "<C-k>",
+      "<C-\\><C-n><C-w>k",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      "t",
+      "<C-h>",
+      "<C-\\><C-n><C-w>h",
+      { noremap = true, silent = true }
+    )
+  end
+})
+
 -- Set initial colorscheme early to prevent flashing
 -- This mirrors the logic from .vimrc but in Lua
 if vim.fn.has("mac") == 1 then

@@ -66,20 +66,6 @@ return {
     keys = { "gS", "gJ" },
   },
 
-  -- Repeat operations
-  {
-    "vim-scripts/repeatable-motions.vim",
-    keys = {
-      { "<A-h>", "<Plug>RepeatMotionLeft", mode = { "n", "x" } },
-      { "<A-k>", "<Plug>RepeatMotionUp", mode = { "n", "x" } },
-      { "<A-j>", "<Plug>RepeatMotionDown", mode = { "n", "x" } },
-      { "<A-l>", "<Plug>RepeatMotionRight", mode = { "n", "x" } },
-      { "<localleader>rh", "<Plug>RepeatMotionLeft", mode = { "n", "x" } },
-      { "<localleader>rk", "<Plug>RepeatMotionUp", mode = { "n", "x" } },
-      { "<localleader>rj", "<Plug>RepeatMotionDown", mode = { "n", "x" } },
-      { "<localleader>rl", "<Plug>RepeatMotionRight", mode = { "n", "x" } },
-    },
-  },
 
   -- Cool search highlighting
   "romainl/vim-cool",
