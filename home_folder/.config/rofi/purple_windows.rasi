@@ -1,5 +1,0 @@
-@theme "purple"
-
-listview {
-    lines: 10;
-}

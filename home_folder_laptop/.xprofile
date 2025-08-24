@@ -1,7 +1,0 @@
-xset r rate 200 25
-setxkbmap -layout us -option compose:ralt -option caps:none
-xmodmap -e 'keycode 94 = Shift_L' -e 'keysym XF86MenuKB = Menu'
-xinput set-prop "SYNA2393:00 06CB:7A13 Touchpad" "libinput Accel Speed" 0.35
-xinput set-prop "SYNA2393:00 06CB:7A13 Touchpad" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Accel Speed" 0.35
-xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Natural Scrolling Enabled" 1
