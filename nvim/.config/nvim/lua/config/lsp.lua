@@ -22,9 +22,6 @@ cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "path" },
-		{ name = "luasnip" },
-		{ name = "ultisnips" }, -- For ultisnips user.
-		-- { name = "cmp_tabnine" },
 		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "calc" },
@@ -50,8 +47,6 @@ cmp.setup({
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
 		["<C-t>"] = cmp.mapping.complete(),
-        ['<Tab>'] = nil,
-        ['<S-Tab>'] = nil,
 	}),
 })
 
