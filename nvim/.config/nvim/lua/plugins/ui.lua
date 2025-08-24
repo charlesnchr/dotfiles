@@ -124,7 +124,7 @@ return {
       { "<localleader>jg", function() require('telescope.builtin').live_grep() end, desc = "Live grep" },
       { "<localleader>jr", function() require('telescope.builtin').grep_string{ search = '' } end, desc = "Grep string" },
       { "<localleader>jc", function() require('telescope.builtin').grep_string{ shorten_path = true, word_match = "-w", only_sort_text = true, search = '' } end, desc = "Grep string clean" },
-      { "<localleader>j.", function() require('telescope.builtin').grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' } end, desc = "Grep with hidden" },
+      { "<localleader>j.", function() require('telescope.builtin').grep_string{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-.', '-g', '!.git/*', '-g', '!node_modules/*', '-g', '!*.pdf', '-g', '!wandb/*', '-g', '!tags' }, shorten_path = true, word_match = "-w", only_sort_text = true, search = '' } end, desc = "Grep with hidden" },
       { "<localleader>jb", function() require('telescope.builtin').buffers({sort_mru = true}) end, desc = "Buffers" },
       { "<localleader>e", function() require('telescope.builtin').buffers({
         sort_mru = true,

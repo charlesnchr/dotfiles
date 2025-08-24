@@ -148,47 +148,8 @@ return {
   {
     "ludovicchabant/vim-gutentags",
     event = { "BufReadPost", "BufNewFile" },
-    init = function()
-      -- Function to control when gutentags is enabled
-      function GutEntagsEnabledForProject()
-        local current_dir = vim.fn.getcwd()
-        local excluded_dirs = {
-          '/Users/cc/dotfiles',
-          '/Users/cc',  -- Also exclude home directory
-        }
-
-        -- Check if current directory should be excluded
-        for _, dir in ipairs(excluded_dirs) do
-          if current_dir:find('^' .. vim.pesc(dir)) then
-            return 0
-          end
-        end
-
-        -- Enable for programming and web development file types
-        local allowed_filetypes = {
-          -- Core languages
-          'c', 'cpp', 'python', 'lua', 'vim', 'go', 'rust', 'java',
-
-          -- Web development
-          'javascript', 'typescript', 'jsx', 'tsx', 'javascriptreact', 'typescriptreact',
-          'html', 'css', 'scss', 'sass', 'less',
-
-          -- Other useful types
-          'json', 'yaml', 'toml', 'xml', 'markdown',
-        }
-
-        local current_filetype = vim.bo.filetype
-        for _, ft in ipairs(allowed_filetypes) do
-          if current_filetype == ft then
-            return 1
-          end
-        end
-
-        return 0
-      end
-    end,
     config = function()
-      -- vim.g.gutentags_trace = 1  -- Enable debugging (disabled)
+      vim.g.gutentags_trace = 0  -- Enable debugging
       vim.g.gutentags_define_advanced_commands = 1
       vim.g.gutentags_cache_dir = vim.fn.expand("~/.cache/vim/ctags/")
 
@@ -206,14 +167,6 @@ return {
       vim.g.gutentags_file_list_command = {
         ['.git'] = 'git ls-files',
       }
-
-      -- Alternative for non-git projects: use find with exclusions
-      -- vim.g.gutentags_file_list_command = {
-      --   ['.root'] = 'find . -type f -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.c" -o -name "*.cpp" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.lua" -o -name "*.vim" -o -name "*.html" -o -name "*.css" | grep -v node_modules | grep -v .venv',
-      -- }
-
-      -- Only generate tags for specific file types
-      vim.g.gutentags_enabled_user_func = 'GutEntagsEnabledForProject'
 
       -- Comprehensive exclude list based on best practices
       vim.g.gutentags_ctags_exclude = {
@@ -246,7 +199,7 @@ return {
         "*.csv", "*.tsv", "*.xlsx", "*.xls", "*.ods",
         "*.npy", "*.npz", "*.pkl", "*.pickle", "*.h5", "*.hdf5",
         "*.parquet", "*.feather", "*.mat", "*.rds", "*.rdata",
-        "*.db", "*.sqlite", "*.sqlite3", "*.mdb",
+        "*.db", "*.sqlite", "*.sqlite3", "*.mdb", "*.json", "*.plist", ".vim",
 
         -- Binary files
         "*.exe", "*.dll", "*.so", "*.dylib", "*.class", "*.pyc", "*.pyo",
@@ -284,6 +237,7 @@ return {
         -- Additional language support
         "--langmap=Python:+.py.pyx",
         "--langmap=Vim:+.vim.vimrc",
+        "--langmap=Markdown:+.md.markdown",
 
         -- Universal ctags specific options
         "--kinds-JavaScript=+f,c,m,p,v",      -- Functions, classes, methods, properties, variables
