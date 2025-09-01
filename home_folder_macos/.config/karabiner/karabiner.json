@@ -2981,6 +2981,55 @@
       },
       "devices": [
         {
+          "fn_function_keys": [
+            {
+              "from": {
+                "key_code": "f1"
+              },
+              "to": [
+                {
+                  "key_code": "c"
+                }
+              ]
+            }
+          ],
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "6"
+              },
+              "to": [
+                {
+                  "key_code": "f20"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "identifiers": {
             "is_keyboard": true,
             "product_id": 834,
@@ -5687,6 +5736,55 @@
       },
       "devices": [
         {
+          "fn_function_keys": [
+            {
+              "from": {
+                "key_code": "f1"
+              },
+              "to": [
+                {
+                  "key_code": "c"
+                }
+              ]
+            }
+          ],
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "6"
+              },
+              "to": [
+                {
+                  "key_code": "f20"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "identifiers": {
             "is_keyboard": true,
             "product_id": 834,
@@ -7608,6 +7706,55 @@
         ]
       },
       "devices": [
+        {
+          "fn_function_keys": [
+            {
+              "from": {
+                "key_code": "f1"
+              },
+              "to": [
+                {
+                  "key_code": "c"
+                }
+              ]
+            }
+          ],
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "6"
+              },
+              "to": [
+                {
+                  "key_code": "f20"
+                }
+              ]
+            }
+          ]
+        },
         {
           "identifiers": {
             "is_keyboard": true,
