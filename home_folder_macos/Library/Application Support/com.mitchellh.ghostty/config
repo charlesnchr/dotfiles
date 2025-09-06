@@ -103,3 +103,6 @@ keybind = cmd+o=text:\x01\x6f
 
 # For claude code
 keybind = shift+enter=text:\n
+
+# Toggle pane zoom (prefix + z)
+keybind = cmd+z=text:\x01\x7a

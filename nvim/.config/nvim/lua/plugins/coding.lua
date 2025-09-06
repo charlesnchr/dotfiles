@@ -66,7 +66,7 @@ return {
       vim.g.slime_cell_delimiter = "# %%"
       vim.g.slime_default_config = {
         socket_name = vim.split(vim.env.TMUX or "", ",")[1],
-        target_pane = ":.1",
+        target_pane = ":.2",
       }
       vim.g.slime_dont_ask_default = 1
     end,
@@ -262,11 +262,11 @@ return {
   },
 
   -- GitHub Copilot (disabled in favor of Supermaven)
-  -- {
-  --   "github/copilot.vim",
-  --   event = "InsertEnter",
-  --   enabled = true,
-  -- },
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+    enabled = true
+  },
 
   -- CopilotChat for AI conversations
   {
@@ -295,28 +295,75 @@ return {
     },
   },
 
-  -- Supermaven AI completion
-  {
-    "supermaven-inc/supermaven-nvim",
-    event = "InsertEnter",
-    config = function()
-      require("supermaven-nvim").setup({
-        keymaps = {
-          accept_suggestion = "<Tab>",
-          clear_suggestion = "<C-]>",
-          accept_word = "<C-l>",
-        },
-        ignore_filetypes = { "cpp", "c" }, -- Adjust as needed
-        color = {
-          suggestion_color = "#ffffff",
-          cterm = 244,
-        },
-        log_level = "info", -- set to "off" to disable logging completely
-        disable_inline_completion = false, -- disables inline completion for use with cmp
-        disable_keymaps = false, -- disables built in keymaps for more manual control
-      })
-    end,
-  },
+  -- Minuet AI - Code completion from multiple LLM providers (disabled for now)
+  -- {
+  --   "milanglacier/minuet-ai.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   event = "InsertEnter", 
+  --   config = function()
+  --     require("minuet").setup({
+  --       provider = "gemini",
+  --       provider_options = {
+  --         openai = {
+  --           model = "gpt-4o-mini",
+  --           api_key = "OPENAI_API_KEY",
+  --         },
+  --         -- Groq - chat-based (no native FIM support)
+  --         openai_compatible = {
+  --           model = "llama-3.3-70b-versatile",
+  --           api_key = "GROQ_API_KEY", 
+  --           end_point = "https://api.groq.com/openai/v1/chat/completions",
+  --           name = "Groq",
+  --         },
+  --         -- Gemini 2.0 Flash - recommended for code completion
+  --         gemini = {
+  --           model = "gemini-2.0-flash",
+  --           api_key = "GEMINI_API_KEY",
+  --           system = {
+  --             template = '{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}\n{{{repo_context}}}',
+  --             repo_context = [[9. Additional context from other files in the repository will be enclosed in <repo_context> tags.]]
+  --           },
+  --           chat_input = {
+  --             template = '{{{repo_context}}}\n{{{language}}}\n{{{tab}}}\n<contextBeforeCursor>\n{{{context_before_cursor}}}<cursorPosition>\n<contextAfterCursor>\n{{{context_after_cursor}}}',
+  --           },
+  --           optional = {
+  --             generationConfig = {
+  --               maxOutputTokens = 256,
+  --               topP = 0.9,
+  --             },
+  --           },
+  --         },
+  --         -- DeepSeek with FIM support
+  --         openai_fim_compatible = {
+  --           model = "deepseek-coder",
+  --           api_key = "DEEPSEEK_API_KEY",
+  --           end_point = "https://api.deepseek.com/v1/completions",
+  --           name = "DeepSeek",
+  --           optional = {
+  --             max_tokens = 256,
+  --             top_p = 0.9,
+  --           },
+  --         },
+  --       },
+  --       virtualtext = {
+  --         auto_trigger_ft = { "python", "lua", "javascript", "typescript", "go", "rust" },
+  --         keymap = {
+  --           accept = "<Tab>",
+  --           accept_line = "<C-l>", 
+  --           accept_n_lines = "<C-j>",
+  --           prev = "<M-[>", -- Changed from C-[ to avoid hijacking ESC
+  --           next = "<M-]>", -- Changed to match
+  --           dismiss = "<C-x>",
+  --         },
+  --       },
+  --     })
+  --     
+  --     -- Enable virtual text by default
+  --     vim.cmd("Minuet virtualtext enable")
+  --   end,
+  -- },
 
   -- Claude Code integration, not liking as much
   -- {
@@ -353,13 +400,13 @@ return {
     terminal = {
       split_side = "right", -- "left" or "right"
       split_width_percentage = 0.30,
-      provider = "auto", -- "auto", "snacks", "native", "external", or custom provider table
+      provider = "external", -- "auto", "snacks", "native", "external", or custom provider table
       auto_close = true,
       snacks_win_opts = {}, -- Opts to pass to `Snacks.terminal.open()` - see Floating Window section below
 
       -- Provider-specific options
       provider_opts = {
-        external_terminal_cmd = nil, -- Command template for external terminal provider (e.g., "alacritty -e %s")
+        external_terminal_cmd = "tmux split-window -h -p 30 '%s'", -- Command template for external terminal provider (e.g., "alacritty -e %s")
       },
     },
 
@@ -405,7 +452,13 @@ return {
         groq = {
           __inherited_from = "openai",
           endpoint = "https://api.groq.com/openai/v1",
-          model = "moonshotai/kimi-k2-instruct",
+          model = "openai/gpt-oss-120b",
+          models_list = function()
+              return {
+              { name = "Groq • kimi-k2-instruct",      id = "moonshotai/kimi-k2-instruct" },
+              { name = "Groq • gpt-oss-120b",     id = "openai/gpt-oss-120b" },
+              }
+          end,
           api_key_name = "GROQ_API_KEY",
           disable_tools = true, -- disable tools!
         },

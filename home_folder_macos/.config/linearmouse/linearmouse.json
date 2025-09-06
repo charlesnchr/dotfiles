@@ -1,11 +1,17 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
+      "pointer" : {
+        "speed" : 0.0479,
+        "acceleration" : 0.4,
+        "disableAcceleration" : true
+      },
       "scrolling" : {
-        "reverse" : true,
         "acceleration" : {
           "vertical" : 1
         },
+        "reverse" : true,
         "modifiers" : {
           "vertical" : {
             "shift" : {
@@ -19,70 +25,68 @@
       },
       "if" : {
         "device" : {
-          "vendorID" : "0x2b89",
           "productID" : "0x43",
+          "vendorID" : "0x2b89",
           "productName" : "UGREEN Mouse",
           "category" : "mouse",
           "serialNumber" : "No.161-0043-2"
         }
-      },
-      "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 0.4,
-        "speed" : 0.0479
       }
     },
     {
+      "pointer" : {
+        "disableAcceleration" : true,
+        "speed" : 0.0298,
+        "acceleration" : 0.4
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      },
       "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "type" : "alterOrientation"
+            },
+            "command" : {
+              "type" : "pinchZoom"
+            }
+          }
+        },
         "reverse" : {
           "vertical" : true
         },
         "acceleration" : {
           "vertical" : 1
-        },
-        "modifiers" : {
-          "vertical" : {
-            "command" : {
-              "type" : "pinchZoom"
-            },
-            "shift" : {
-              "type" : "alterOrientation"
-            }
-          }
         }
       },
       "if" : {
         "device" : {
           "productID" : "0xb2",
-          "vendorID" : "0x1532",
           "productName" : "Razer DeathAdder V3",
+          "vendorID" : "0x1532",
           "category" : "mouse"
         }
-      },
-      "pointer" : {
-        "speed" : 0.0298,
-        "acceleration" : 0.6598,
-        "disableAcceleration" : true
-      },
-      "buttons" : {
-        "universalBackForward" : true
       }
     },
     {
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 0.1816
+      },
       "if" : {
         "device" : {
-          "category" : "mouse",
-          "vendorID" : "0x1532",
           "productID" : "0x16",
-          "productName" : "Razer DeathAdder"
+          "vendorID" : "0x1532",
+          "productName" : "Razer DeathAdder",
+          "category" : "mouse"
         }
-      },
-      "pointer" : {
-        "acceleration" : 0.1816,
-        "disableAcceleration" : true
       }
     },
     {
+      "pointer" : {
+        "disableAcceleration" : true
+      },
       "scrolling" : {
         "reverse" : {
           "horizontal" : true
@@ -90,17 +94,29 @@
       },
       "if" : {
         "device" : {
-          "vendorID" : "0x46d",
+          "serialNumber" : "FBAAFE6005E27D8F",
           "productID" : "0xb023",
           "productName" : "MX Master 3",
-          "serialNumber" : "FBAAFE6005E27D8F",
-          "category" : "mouse"
+          "category" : "mouse",
+          "vendorID" : "0x46d"
+        }
+      }
+    },
+    {
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
         }
       },
-      "pointer" : {
-        "disableAcceleration" : true
+      "if" : {
+        "device" : {
+          "serialNumber" : "E6647C74035AA3220000000000000000",
+          "productID" : "0x1212",
+          "vendorID" : "0xfeed",
+          "productName" : "silakka54",
+          "category" : "mouse"
+        }
       }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }

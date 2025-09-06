@@ -93,28 +93,8 @@ return {
     end,
   },
 
-  -- Snippets
-  {
-    "SirVer/ultisnips",
-    dependencies = { "honza/vim-snippets" },
-    event = "InsertEnter",
-    config = function()
-      vim.g.UltiSnipsExpandTrigger = "<c-j>"
-      vim.g.UltiSnipsJumpForwardTrigger = "<c-b>"
-      vim.g.UltiSnipsJumpBackwardTrigger = "<c-z>"
-      vim.g.UltiSnipsSnippetDirectories = { "~/.local/share/nvim/plugged/ultisnips" }
-    end,
-  },
-
-  {
-    "honza/vim-snippets",
-    lazy = true,
-  },
-
-  {
-    "rafamadriz/friendly-snippets",
-    lazy = true,
-  },
+  -- Snippets (removed - not used)
+  -- UltiSnips, vim-snippets, and friendly-snippets removed
 
   -- Formatting
   {

@@ -138,6 +138,7 @@ inoremap <C-S-s> <Esc>:w<cr>
 " Quick edit
 nnoremap <localleader>ve :edit <C-r>=fnameescape(resolve(expand('~/.vimrc')))<CR><CR>
 nnoremap <localleader>vz :edit <C-r>=fnameescape(resolve(expand('$ZDOTDIR/.zshrc')))<CR><CR>
+nnoremap <localleader>vl :edit <C-r>=fnameescape(resolve(expand('$ZDOTDIR/dotfiles/.zshrc_local')))<CR><CR>
 nnoremap <localleader>vs :source <C-r>=fnameescape(resolve(expand('~/.vimrc')))<CR><CR>
 nnoremap <localleader>vp :PlugInstall<cr>
 nnoremap <localleader>vk :!python ~/dotfiles/home_folder_macos/.config/karabiner/karabiner-template/generate_karabiner.py<cr>
