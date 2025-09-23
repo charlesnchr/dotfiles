@@ -41,9 +41,10 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
+
+keybind = cmd+p=toggle_command_palette
  
 keybind = ctrl+m=text:\r
-keybind = performable:ctrl+c=copy_to_clipboard
 keybind = cmd+b=esc:b
 keybind = cmd+f=esc:f
 keybind = cmd+d=esc:d
@@ -60,7 +61,7 @@ macos-titlebar-style = hidden
 
 confirm-close-surface=false
 
-
+# Split management
 keybind = cmd+s=new_split:right
 keybind = cmd+shift+apostrophe=new_split:down
 
@@ -71,8 +72,8 @@ keybind = cmd+h=goto_split:left
 # Hide window alternative since cmd+h is used for split navigation
 keybind = cmd+shift+h=toggle_visibility
 keybind = cmd+l=goto_split:right
-keybind = cmd+k=goto_split:top
-keybind = cmd+j=goto_split:bottom
+keybind = cmd+k=goto_split:up
+keybind = cmd+j=goto_split:down
 
 # Equalize splits
 keybind = ctrl+space>equal=equalize_splits
@@ -80,19 +81,19 @@ keybind = ctrl+space>equal=equalize_splits
 # Resize splits (hold down for repeated resizing)
 keybind = cmd+u=resize_split:left,20
 keybind = cmd+i=resize_split:up,20
-keybind = cmd+o=resize_split:down,20
-keybind = cmd+p=resize_split:right,20
+keybind = cmd+shift+o=resize_split:down,20
+keybind = cmd+shift+p=resize_split:right,20
 
-# Tmux window shortcuts - send prefix+number
-keybind = cmd+1=text:\x01\x31
-keybind = cmd+2=text:\x01\x32
-keybind = cmd+3=text:\x01\x33
-keybind = cmd+4=text:\x01\x34
-keybind = cmd+5=text:\x01\x35
-keybind = cmd+6=text:\x01\x36
-keybind = cmd+7=text:\x01\x37
-keybind = cmd+8=text:\x01\x38
-keybind = cmd+9=text:\x01\x39
+# Tmux window shortcuts - using digit_ syntax to override defaults
+keybind = cmd+digit_1=text:\x01\x31
+keybind = cmd+digit_2=text:\x01\x32
+keybind = cmd+digit_3=text:\x01\x33
+keybind = cmd+digit_4=text:\x01\x34
+keybind = cmd+digit_5=text:\x01\x35
+keybind = cmd+digit_6=text:\x01\x36
+keybind = cmd+digit_7=text:\x01\x37
+keybind = cmd+digit_8=text:\x01\x38
+keybind = cmd+digit_9=text:\x01\x39
 
 # Tmux window navigation
 keybind = cmd+left_bracket=text:\x01\x70
@@ -105,4 +106,4 @@ keybind = cmd+o=text:\x01\x6f
 keybind = shift+enter=text:\n
 
 # Toggle pane zoom (prefix + z)
-keybind = cmd+z=text:\x01\x7a
+# keybind = cmd+z=text:\x01\x7a
