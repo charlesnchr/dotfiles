@@ -109,3 +109,6 @@ _evalcache fzf --zsh
 bindkey '^X^E' edit-command-line
 bindkey '^X^F' fzf-history-widget
 bindkey '^R' histdb-fzf-widget
+
+. "$HOME/.local/share/../bin/env"
+_evalcache gh copilot alias -- zsh

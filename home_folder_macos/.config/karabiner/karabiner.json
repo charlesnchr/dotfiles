@@ -2982,6 +2982,33 @@
       "devices": [
         {
           "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "identifiers": {
             "is_keyboard": true,
             "product_id": 834,
             "vendor_id": 1452
@@ -5688,6 +5715,33 @@
       "devices": [
         {
           "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "identifiers": {
             "is_keyboard": true,
             "product_id": 834,
             "vendor_id": 1452
@@ -7608,6 +7662,33 @@
         ]
       },
       "devices": [
+        {
+          "identifiers": {
+            "is_keyboard": true
+          },
+          "simple_modifications": [
+            {
+              "from": {
+                "key_code": "grave_accent_and_tilde"
+              },
+              "to": [
+                {
+                  "key_code": "left_shift"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "non_us_backslash"
+              },
+              "to": [
+                {
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
+            }
+          ]
+        },
         {
           "identifiers": {
             "is_keyboard": true,
