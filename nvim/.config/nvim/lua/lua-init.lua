@@ -1,22 +1,108 @@
+-- Basic vim options
+vim.opt.autoread = true
+vim.opt.updatetime = 1000
+vim.api.nvim_create_autocmd({ "FocusGained","BufEnter","TermClose","TermLeave" }, {
+  callback = function() if vim.fn.getcmdwintype()=='' then vim.cmd('checktime') end end,
+})
+
+-- Timer for automatic file checking without cursor movement (only when focused)
+local timer = vim.loop.new_timer()
+local timer_active = false
+
+local function start_timer()
+  if not timer_active then
+    timer:start(1000, 1000, vim.schedule_wrap(function()
+      if vim.fn.getcmdwintype() == '' then
+        vim.cmd('checktime')
+      end
+    end))
+    timer_active = true
+  end
+end
+
+local function stop_timer()
+  if timer_active then
+    timer:stop()
+    timer_active = false
+  end
+end
+
+vim.api.nvim_create_autocmd({ "FocusGained", "WinEnter", "BufEnter" }, {
+  callback = start_timer,
+})
+
+vim.api.nvim_create_autocmd("FocusLost", {
+  callback = stop_timer,
+})
+
+-- Terminal mode keymaps
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      "t",
+      "<C-k>",
+      "<C-\\><C-n><C-w>k",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      "t",
+      "<C-h>",
+      "<C-\\><C-n><C-w>h",
+      { noremap = true, silent = true }
+    )
+  end
+})
+
+-- Set initial colorscheme early to prevent flashing
+-- This mirrors the logic from .vimrc but in Lua
+if vim.fn.has("mac") == 1 then
+  local output = vim.fn.system("defaults read -g AppleInterfaceStyle")
+  if vim.v.shell_error ~= 0 then
+    vim.opt.background = "light"
+    pcall(vim.cmd, "silent! colorscheme tokyonight-day")
+  else
+    vim.opt.background = "dark"
+    pcall(vim.cmd, "silent! colorscheme tokyonight")
+  end
+elseif vim.fn.has("unix") == 1 then
+  local output = vim.fn.system("cat ~/dotfiles/is_dark_mode")
+  if tonumber(output) == 0 then
+    vim.opt.background = "light"
+    pcall(vim.cmd, "silent! colorscheme tokyonight-day")
+  else
+    vim.opt.background = "dark"
+    pcall(vim.cmd, "silent! colorscheme tokyonight")
+  end
+end
+
+-- Load LSP configuration
 require("config.lsp")
 
-local auto_dark_mode = require("auto-dark-mode")
-auto_dark_mode.setup({
-	update_interval = 2000,
-	set_dark_mode = function()
-		vim.api.nvim_set_option("background", "dark")
-		vim.cmd("colorscheme tokyonight")
-		-- vim.cmd("AirlineTheme catppuccin")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-	set_light_mode = function()
-		vim.api.nvim_set_option("background", "light")
-		vim.cmd("colorscheme tokyonight-day")
-		-- vim.cmd("AirlineTheme atomic")
-        vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-	end,
-})
-auto_dark_mode.init()
+-- Auto dark mode setup (only on macOS) - for dynamic switching only
+local auto_dark_mode
+if vim.fn.has("mac") == 1 then
+  auto_dark_mode = require("auto-dark-mode")
+  auto_dark_mode.setup({
+    update_interval = 2000,
+    set_dark_mode = function()
+      vim.api.nvim_set_option("background", "dark")
+      pcall(vim.cmd, "colorscheme tokyonight")
+      -- vim.cmd("AirlineTheme catppuccin")
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+    end,
+    set_light_mode = function()
+      vim.api.nvim_set_option("background", "light")
+      pcall(vim.cmd, "colorscheme tokyonight-day")
+      -- vim.cmd("AirlineTheme atomic")
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+    end,
+  })
+  -- Note: Removed auto_dark_mode.init() to prevent initial flash
+  -- It will still monitor for changes but won't immediately set theme
+end
 
 -- require("bufferline").setup({
 -- 	options = {
@@ -135,6 +221,7 @@ local actions = require("telescope.actions")
 require("telescope").setup({
 	defaults = {
         layout_strategy = "vertical",
+        path_display = { "truncate" },
         vimgrep_arguments = {
           'rg',
           '--color=never',
@@ -165,20 +252,33 @@ require("telescope").setup({
                 }
         }
 	},
+	pickers = {
+		tags = {
+			fname_width = 60,  -- Increase filename width from default 30
+			show_line = true,
+			show_kind = true,
+			layout_config = {
+				width = 0.95,
+				height = 0.85,
+			}
+		}
+	},
 })
 
 require("telescope").load_extension("advanced_git_search")
 
 M = {}
 M.tags = function()
-	-- get pane width from tmux and use half the width for the fname_width
-	local fname_width = math.floor(vim.fn.system("tmux display -p '#{pane_width}'") / 4)
-	-- Maybe running outside of tmux
-	if fname_width == 0 then
-		fname_width = 30
-	end
-    -- echo
-	require('telescope.builtin').tags({fname_width = fname_width })
+	require('telescope.builtin').tags({
+		path_display = function(opts, path)
+			-- Show relative path from project root
+			local cwd = vim.fn.getcwd()
+			if path:sub(1, #cwd) == cwd then
+				return path:sub(#cwd + 2)  -- Remove cwd + leading slash
+			end
+			return path
+		end,
+	})
 end
 
 -- To get fzf loaded and working with telescope, you need to call
@@ -201,8 +301,6 @@ require("color-picker").setup({
 	-- ["icons"] = { "", "" },
 	-- ["icons"] = { "", "" },
 })
-
-vim.cmd([[hi FloatBorder guibg=NONE]]) -- if you don't want wierd border background colors around the popup.
 
 require("auto-save").setup({
 	enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
@@ -296,7 +394,7 @@ require("aerial").setup({
 require("telescope").load_extension("aerial")
 
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+vim.keymap.set("n", "<leader>sy", "<cmd>AerialToggle!<CR>")
 
 require("toggleterm").setup{
   open_mapping = [[<F4>]],
@@ -424,65 +522,6 @@ end
 -- }
 
 
-require("claude-code").setup({
-  -- Terminal window settings
-  window = {
-    split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
-    position = "botright",  -- Position of the window: "botright", "topleft", "vertical", "float", etc.
-    enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
-    hide_numbers = true,    -- Hide line numbers in the terminal window
-    hide_signcolumn = true, -- Hide the sign column in the terminal window
-    
-    -- Floating window configuration (only applies when position = "float")
-    float = {
-      width = "80%",        -- Width: number of columns or percentage string
-      height = "80%",       -- Height: number of rows or percentage string
-      row = "center",       -- Row position: number, "center", or percentage string
-      col = "center",       -- Column position: number, "center", or percentage string
-      relative = "editor",  -- Relative to: "editor" or "cursor"
-      border = "rounded",   -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
-    },
-  },
-  -- File refresh settings
-  refresh = {
-    enable = true,           -- Enable file change detection
-    updatetime = 100,        -- updatetime when Claude Code is active (milliseconds)
-    timer_interval = 1000,   -- How often to check for file changes (milliseconds)
-    show_notifications = true, -- Show notification when files are reloaded
-  },
-  -- Git project settings
-  git = {
-    use_git_root = true,     -- Set CWD to git root when opening Claude Code (if in git project)
-  },
-  -- Shell-specific settings
-  shell = {
-    separator = '&&',        -- Command separator used in shell commands
-    pushd_cmd = 'pushd',     -- Command to push directory onto stack (e.g., 'pushd' for bash/zsh, 'enter' for nushell)
-    popd_cmd = 'popd',       -- Command to pop directory from stack (e.g., 'popd' for bash/zsh, 'exit' for nushell)
-  },
-  -- Command settings
-  command = "claude",        -- Command used to launch Claude Code
-  -- Command variants
-  command_variants = {
-    -- Conversation management
-    continue = "--continue", -- Resume the most recent conversation
-    resume = "--resume",     -- Display an interactive conversation picker
 
-    -- Output options
-    verbose = "--verbose",   -- Enable verbose logging with full turn-by-turn output
-  },
-  -- Keymaps
-  keymaps = {
-    toggle = {
-      normal = "<C-,>",       -- Normal mode keymap for toggling Claude Code, false to disable
-      terminal = "<C-,>",     -- Terminal mode keymap for toggling Claude Code, false to disable
-      variants = {
-        continue = "<leader>cC", -- Normal mode keymap for Claude Code with continue flag
-        verbose = "<leader>cV",  -- Normal mode keymap for Claude Code with verbose flag
-      },
-    },
-    window_navigation = true, -- Enable window navigation keymaps (<C-h/j/k/l>)
-    scrolling = true,         -- Enable scrolling keymaps (<C-f/b>) for page up/down
-  }
-})
+
 
