@@ -43,7 +43,6 @@
 # resize-overlay-duration = 4s 200ms
 
 keybind = cmd+p=toggle_command_palette
- 
 keybind = ctrl+m=text:\r
 keybind = cmd+b=esc:b
 keybind = cmd+f=esc:f
@@ -52,8 +51,8 @@ keybind = cmd+a=esc:a
 keybind = cmd+e=esc:e
 keybind = global:opt+t=toggle_quick_terminal
 
-# theme = dark:catppuccin-frappe,light:catppuccin-latte
-theme = dark:SpaceGray Bright,light:rose-pine-dawn
+# theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+theme = dark:Spacegray Bright,light:Rose Pine Dawn
 
 macos-option-as-alt = right
 
