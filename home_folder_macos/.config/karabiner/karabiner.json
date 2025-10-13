@@ -1855,7 +1855,7 @@
                   "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -1880,7 +1880,7 @@
                   "key_code": "quote",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -1904,7 +1904,7 @@
                   "key_code": "open_bracket",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -3593,6 +3593,26 @@
                   "key_code": "left_command"
                 }
               ]
+            },
+            {
+              "from": {
+                "key_code": "right_command"
+              },
+              "to": [
+                {
+                  "key_code": "right_option"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_option"
+              },
+              "to": [
+                {
+                  "key_code": "right_command"
+                }
+              ]
             }
           ]
         },
@@ -4675,7 +4695,7 @@
                   "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -4700,7 +4720,7 @@
                   "key_code": "quote",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -4724,7 +4744,7 @@
                   "key_code": "open_bracket",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -6326,6 +6346,26 @@
                   "key_code": "left_command"
                 }
               ]
+            },
+            {
+              "from": {
+                "key_code": "right_command"
+              },
+              "to": [
+                {
+                  "key_code": "right_option"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_option"
+              },
+              "to": [
+                {
+                  "key_code": "right_command"
+                }
+              ]
             }
           ]
         },
@@ -7118,7 +7158,7 @@
                   "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -7143,7 +7183,7 @@
                   "key_code": "quote",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -7167,7 +7207,7 @@
                   "key_code": "open_bracket",
                   "modifiers": {
                     "mandatory": [
-                      "right_command",
+                      "right_option",
                       "right_control",
                       "right_shift"
                     ],
@@ -8273,6 +8313,26 @@
               "to": [
                 {
                   "key_code": "left_command"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_command"
+              },
+              "to": [
+                {
+                  "key_code": "right_option"
+                }
+              ]
+            },
+            {
+              "from": {
+                "key_code": "right_option"
+              },
+              "to": [
+                {
+                  "key_code": "right_command"
                 }
               ]
             }

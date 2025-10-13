@@ -1951,7 +1951,7 @@
             "key_code": "semicolon",
             "modifiers": {
               "mandatory": [
-                "right_command",
+                "right_option",
                 "right_control",
                 "right_shift"
               ],
@@ -1976,7 +1976,7 @@
             "key_code": "quote",
             "modifiers": {
               "mandatory": [
-                "right_command",
+                "right_option",
                 "right_control",
                 "right_shift"
               ],
@@ -2000,7 +2000,7 @@
             "key_code": "open_bracket",
             "modifiers": {
               "mandatory": [
-                "right_command",
+                "right_option",
                 "right_control",
                 "right_shift"
               ],
