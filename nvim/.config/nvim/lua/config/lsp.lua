@@ -96,7 +96,17 @@ end
 -- global config for diagnostic
 vim.diagnostic.config({
 	underline = false,
-	virtual_text = false,
+	virtual_text = {
+		severity = { min = vim.diagnostic.severity.WARN },
+		source = "if_many",
+		format = function(diagnostic)
+			-- Hide TypeScript implicit any errors
+			if diagnostic.code == 7006 then
+				return nil
+			end
+			return diagnostic.message
+		end,
+	},
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = "✗",
@@ -239,6 +249,35 @@ require'lspconfig'.ts_ls.setup(config({
         "vue",
         "svelte",
         "astro"
+    },
+    init_options = {
+        preferences = {
+            disableSuggestions = true,
+        }
+    },
+    settings = {
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'none',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayEnumMemberValueHints = false,
+            }
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'none',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayEnumMemberValueHints = false,
+            }
+        }
     }
 }))
 
@@ -247,6 +286,22 @@ require'lspconfig'.jsonls.setup(config({
         "json",
         "jsonc",
     },
+}))
+
+-- ESLint LSP for linting
+require'lspconfig'.eslint.setup(config({
+    root_dir = require('lspconfig').util.root_pattern(
+        '.eslintrc.js',
+        '.eslintrc.json',
+        '.eslintrc',
+        'package.json'
+    ),
+    on_attach = function(client, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+        })
+    end,
 }))
 
 return M
