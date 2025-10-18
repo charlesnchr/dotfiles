@@ -66,6 +66,7 @@ return {
       vim.g.slime_cell_delimiter = "# %%"
       vim.g.slime_default_config = {
         socket_name = vim.split(vim.env.TMUX or "", ",")[1],
+        target_pane = ":.1",
         target_pane = ":.2",
       }
       vim.g.slime_dont_ask_default = 1
