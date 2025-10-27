@@ -1,51 +1,13 @@
 #!/opt/homebrew/bin/bash
 
-# Define the paths to search
-content_dirs=(
-    ~/1private
-    ~/1private/Github
-    ~/2work
-    ~/2work/gitrepos
-    ~/0main/2.Projects
-    ~/onedrive
-)
-
-# Define the fixed directories to search
-fixed_dirs=(
-    ~/1private
-    ~/2work
-    ~/qmk_firmware
-    ~/dotfiles
-    ~/0main
-)
-
-# Search for directories in all directories
+# Load all directories from cache - no find commands!
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 selected_dirs=()
-for dir in "${fixed_dirs[@]}"; do
-    if [[ -d $dir ]]; then
-        selected_dirs+=("$(basename "$dir")    $dir")
-    fi
-done
 
-for dir in "${content_dirs[@]}"; do
-    if [[ -d $dir ]]; then
-        while IFS= read -r subdir; do
-            selected_dirs+=("$(basename "$subdir")    $subdir")
-        done < <(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
-    fi
-done
-
-# Load pre-formatted git branch cache and prepend to selected_dirs
-sessionizer_cache="$HOME/.cache/tmux-sessionizer-formatted"
-if [[ -f $sessionizer_cache ]]; then
-    # Read formatted cache entries and prepend them
-    git_dirs=()
+if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
-        git_dirs+=("$line")
-    done < "$sessionizer_cache"
-
-    # Combine: git repos first (with branches), then other dirs
-    selected_dirs=("${git_dirs[@]}" "${selected_dirs[@]}")
+        selected_dirs+=("$line")
+    done < "$all_dirs_cache"
 fi
 
 # Get a list of running tmux sessions
