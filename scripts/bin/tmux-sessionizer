@@ -4,6 +4,14 @@
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
 
+# Pre-load branch lookup cache into associative array
+declare -A branch_map
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
 # Get a list of running tmux sessions and mark them
 tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
 tmux_sessions=()
@@ -11,11 +19,9 @@ declare -A active_sessions
 while IFS= read -r session; do
     if [[ -n $session ]]; then
         active_sessions["$session"]=1
-        # Look up branch from pre-built lookup cache
-        branch=$(grep "^${session}=" "$branch_lookup_cache" 2>/dev/null | cut -d= -f2)
-
-        if [[ -n $branch ]]; then
-            tmux_sessions+=("session: $session  $branch")
+        # Look up branch from pre-loaded map
+        if [[ -n ${branch_map[$session]} ]]; then
+            tmux_sessions+=("session: $session  ${branch_map[$session]}")
         else
             tmux_sessions+=("session: $session")
         fi
@@ -26,10 +32,9 @@ done <<< "$tmux_sessions_raw"
 selected_dirs=()
 if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
-        # Extract folder name (first field)
-        folder=$(echo "$line" | awk '{print $1}')
-        # Convert to session name format
-        session_name=$(echo "$folder" | tr . _)
+        # Extract folder name and session name in one go
+        folder=${line%% *}
+        session_name=${folder//./_}
 
         # Skip if session exists (O(1) lookup)
         [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
