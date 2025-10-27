@@ -19,17 +19,40 @@ fixed_dirs=(
     ~/0main
 )
 
+# Load git branch cache into associative array
+declare -A git_branches
+cache_file="$HOME/.cache/git-branches-cache"
+if [[ -f $cache_file ]]; then
+    while IFS=' ' read -r folder branch; do
+        git_branches["$folder"]="$branch"
+    done < "$cache_file"
+fi
+
 # Search for directories in all directories
 selected_dirs=()
 for dir in "${fixed_dirs[@]}"; do
     if [[ -d $dir ]]; then
-        selected_dirs+=("$dir")
+        folder_name=$(basename "$dir")
+        if [[ -n ${git_branches[$folder_name]} ]]; then
+            # Format: folder-name  branch  /full/path
+            selected_dirs+=("$folder_name  ${git_branches[$folder_name]}  $dir")
+        else
+            selected_dirs+=("$folder_name    $dir")
+        fi
     fi
 done
 
 for dir in "${content_dirs[@]}"; do
     if [[ -d $dir ]]; then
-        selected_dirs+=($(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*'))
+        while IFS= read -r subdir; do
+            folder_name=$(basename "$subdir")
+            if [[ -n ${git_branches[$folder_name]} ]]; then
+                # Format: folder-name  branch  /full/path
+                selected_dirs+=("$folder_name  ${git_branches[$folder_name]}  $subdir")
+            else
+                selected_dirs+=("$folder_name    $subdir")
+            fi
+        done < <(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
     fi
 done
 
@@ -40,29 +63,47 @@ tmux_sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf "%s\n" "${tmux_sessions[@]}" "${selected_dirs[@]}" | fzf --height=80% --margin=5%,5% --preview 'tmux capture-pane -pt {} -S -500' --prompt="projects > ")
+    selected=$(printf "%s\n" "${tmux_sessions[@]}" "${selected_dirs[@]}" | fzf \
+        --height=80% \
+        --margin=5%,5% \
+        --preview 'path=$(echo {} | awk "{print \$NF}"); tmux capture-pane -pt "$path" -S -500 2>/dev/null || ls -la "$path"' \
+        --prompt="projects > " \
+        --delimiter='  ' \
+        --with-nth=1,2 \
+        --ansi \
+        --color='fg:white,fg+:white,hl:cyan,hl+:cyan,gutter:-1' \
+        --header='[name]  [branch]'
+    )
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
+# Extract the actual path (last field)
+selected_path=$(echo "$selected" | awk '{print $NF}')
+
+# If it's just a session name (no path), use it as-is
+if [[ ! -d $selected_path ]]; then
+    selected_path=$selected
+fi
+
+selected_name=$(basename "$selected_path" | tr . _)
 
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    if [[ -d $selected ]]; then
-        tmux new-session -s $selected_name -c $selected
+    if [[ -d $selected_path ]]; then
+        tmux new-session -s $selected_name -c $selected_path
     else
-        tmux attach-session -t $selected
+        tmux attach-session -t $selected_path
     fi
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2>/dev/null; then
-    if [[ -d $selected ]]; then
-        tmux new-session -ds $selected_name -c $selected
+    if [[ -d $selected_path ]]; then
+        tmux new-session -ds $selected_name -c $selected_path
         tmux switch-client -t $selected_name
     else
         tmux new-session -ds $selected_name
