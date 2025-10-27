@@ -10,8 +10,12 @@ if [[ -f $all_dirs_cache ]]; then
     done < "$all_dirs_cache"
 fi
 
-# Get a list of running tmux sessions
-tmux_sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+# Get a list of running tmux sessions and mark them
+tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+tmux_sessions=()
+while IFS= read -r session; do
+    [[ -n $session ]] && tmux_sessions+=("$session  [session]")
+done <<< "$tmux_sessions_raw"
 
 # Use the filtered paths array and tmux sessions in fzf
 if [[ $# -eq 1 ]]; then
@@ -25,8 +29,8 @@ else
         --delimiter='  ' \
         --with-nth=1,2 \
         --ansi \
-        --color='fg:white,fg+:white,hl:cyan,hl+:cyan,gutter:-1' \
-        --header='[name]  [branch]'
+        --color='fg:white,fg+:black,bg+:yellow,hl:cyan,hl+:blue,gutter:-1' \
+        --header='[name]  [branch/type]'
     )
 fi
 
