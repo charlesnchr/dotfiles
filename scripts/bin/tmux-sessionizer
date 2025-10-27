@@ -21,9 +21,9 @@ while IFS= read -r session; do
         active_sessions["$session"]=1
         # Look up branch from pre-loaded map
         if [[ -n ${branch_map[$session]} ]]; then
-            tmux_sessions+=("session: $session  ${branch_map[$session]}")
+            tmux_sessions+=("▶️ $session  ${branch_map[$session]}")
         else
-            tmux_sessions+=("session: $session")
+            tmux_sessions+=("▶️ $session")
         fi
     fi
 done <<< "$tmux_sessions_raw"
@@ -63,8 +63,8 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-# Check if this is a session selection
-if [[ $selected == session:* ]]; then
+# Check if this is a session selection (starts with emoji)
+if [[ $selected == ▶️* ]]; then
     # Extract session name (second field)
     selected_name=$(echo "$selected" | awk '{print $2}')
     selected_path=$selected_name
