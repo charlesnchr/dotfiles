@@ -37,9 +37,9 @@ else
         --delimiter='  ' \
         --with-nth=1,2 \
         --ansi \
-        --color='bg+:cyan,fg+:black' \
+        --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
         --header='[name]  [branch/type]  (ctrl-r: refresh)' \
-        --bind='ctrl-r:reload(~/bin/update-sessionizer-cache >/dev/null 2>&1 && cat ~/.cache/tmux-sessionizer-all-dirs)'
+        --bind='ctrl-r:reload(~/bin/tmux-sessionizer-list)'
     )
 fi
 
