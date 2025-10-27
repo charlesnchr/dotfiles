@@ -68,7 +68,7 @@ else
     selected=$(printf "%s\n" "${tmux_sessions[@]}" "${selected_dirs[@]}" | fzf \
         --height=80% \
         --margin=5%,5% \
-        --preview 'path=$(echo {} | awk "{print \$NF}"); tmux capture-pane -pt "$path" -S -500 2>/dev/null || ls -la "$path"' \
+        --preview 'path=$(echo {} | awk "{print \$NF}"); tmux capture-pane -pt "$path" -S -500 2>/dev/null || /bin/ls -la "$path"' \
         --prompt="projects > " \
         --delimiter='  ' \
         --with-nth=1,2 \
