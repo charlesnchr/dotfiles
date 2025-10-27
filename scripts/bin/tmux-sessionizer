@@ -19,44 +19,34 @@ fixed_dirs=(
     ~/0main
 )
 
-# Load git branch cache into associative array
-declare -A git_branches
-cache_file="$HOME/.cache/git-branches-cache"
-if [[ -f $cache_file ]]; then
-    while read -r line; do
-        folder=$(echo "$line" | awk '{print $1}')
-        branch=$(echo "$line" | awk '{print $2}')
-        [[ -n $folder ]] && git_branches["$folder"]="$branch"
-    done < "$cache_file"
-fi
-
 # Search for directories in all directories
 selected_dirs=()
 for dir in "${fixed_dirs[@]}"; do
     if [[ -d $dir ]]; then
-        folder_name=$(basename "$dir")
-        if [[ -n ${git_branches[$folder_name]} ]]; then
-            # Format: folder-name  branch  /full/path
-            selected_dirs+=("$folder_name  ${git_branches[$folder_name]}  $dir")
-        else
-            selected_dirs+=("$folder_name    $dir")
-        fi
+        selected_dirs+=("$(basename "$dir")    $dir")
     fi
 done
 
 for dir in "${content_dirs[@]}"; do
     if [[ -d $dir ]]; then
         while IFS= read -r subdir; do
-            folder_name=$(basename "$subdir")
-            if [[ -n ${git_branches[$folder_name]} ]]; then
-                # Format: folder-name  branch  /full/path
-                selected_dirs+=("$folder_name  ${git_branches[$folder_name]}  $subdir")
-            else
-                selected_dirs+=("$folder_name    $subdir")
-            fi
+            selected_dirs+=("$(basename "$subdir")    $subdir")
         done < <(find -L "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
     fi
 done
+
+# Load pre-formatted git branch cache and prepend to selected_dirs
+sessionizer_cache="$HOME/.cache/tmux-sessionizer-formatted"
+if [[ -f $sessionizer_cache ]]; then
+    # Read formatted cache entries and prepend them
+    git_dirs=()
+    while IFS= read -r line; do
+        git_dirs+=("$line")
+    done < "$sessionizer_cache"
+
+    # Combine: git repos first (with branches), then other dirs
+    selected_dirs=("${git_dirs[@]}" "${selected_dirs[@]}")
+fi
 
 # Get a list of running tmux sessions
 tmux_sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
