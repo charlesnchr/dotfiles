@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/opt/homebrew/bin/bash
 
 # Define the paths to search
 content_dirs=(
@@ -23,8 +23,10 @@ fixed_dirs=(
 declare -A git_branches
 cache_file="$HOME/.cache/git-branches-cache"
 if [[ -f $cache_file ]]; then
-    while IFS=' ' read -r folder branch; do
-        git_branches["$folder"]="$branch"
+    while read -r line; do
+        folder=$(echo "$line" | awk '{print $1}')
+        branch=$(echo "$line" | awk '{print $2}')
+        [[ -n $folder ]] && git_branches["$folder"]="$branch"
     done < "$cache_file"
 fi
 
