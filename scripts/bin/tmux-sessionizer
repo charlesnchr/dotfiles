@@ -7,10 +7,10 @@ branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
 # Get a list of running tmux sessions and mark them
 tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
 tmux_sessions=()
-session_names=()
+declare -A active_sessions
 while IFS= read -r session; do
     if [[ -n $session ]]; then
-        session_names+=("$session")
+        active_sessions["$session"]=1
         # Look up branch from pre-built lookup cache
         branch=$(grep "^${session}=" "$branch_lookup_cache" 2>/dev/null | cut -d= -f2)
 
@@ -31,16 +31,8 @@ if [[ -f $all_dirs_cache ]]; then
         # Convert to session name format
         session_name=$(echo "$folder" | tr . _)
 
-        # Skip if session exists
-        skip=false
-        for existing_session in "${session_names[@]}"; do
-            if [[ "$existing_session" == "$session_name" ]]; then
-                skip=true
-                break
-            fi
-        done
-
-        [[ $skip == false ]] && selected_dirs+=("$line")
+        # Skip if session exists (O(1) lookup)
+        [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
     done < "$all_dirs_cache"
 fi
 
