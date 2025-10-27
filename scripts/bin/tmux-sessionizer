@@ -12,6 +12,9 @@ if [[ -f $branch_lookup_cache ]]; then
     done < "$branch_lookup_cache"
 fi
 
+# Get current session to exclude it
+current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
+
 # Get a list of running tmux sessions sorted by last activity
 tmux_sessions_raw=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
 tmux_sessions=()
@@ -19,6 +22,9 @@ declare -A active_sessions
 while IFS= read -r session; do
     if [[ -n $session ]]; then
         active_sessions["$session"]=1
+        # Skip current session
+        [[ "$session" == "$current_session" ]] && continue
+
         # Look up branch from pre-loaded map
         if [[ -n ${branch_map[$session]} ]]; then
             tmux_sessions+=("▶️ $session  ${branch_map[$session]}")
