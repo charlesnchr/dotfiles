@@ -101,6 +101,9 @@ keybind = cmd+right_bracket=text:\x01\x6e
 # Tmux sessionizer shortcut - send prefix+o
 keybind = cmd+o=text:\x01\x6f
 
+# Tmux git branch switcher - send prefix+g
+keybind = cmd+g=text:\x01\x67
+
 # For claude code
 keybind = shift+enter=text:\n
 
