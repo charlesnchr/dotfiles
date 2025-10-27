@@ -4,9 +4,20 @@
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 selected_dirs=()
 
+# Build a map of folder names to branches
+declare -A folder_to_branch
 if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
         selected_dirs+=("$line")
+        # Extract folder name and branch
+        folder=$(echo "$line" | awk '{print $1}')
+        branch=$(echo "$line" | awk '{print $2}')
+        # Only store if it looks like a branch (has brackets)
+        if [[ $branch == \[*\] ]]; then
+            # Normalize folder name like session names (tr . _)
+            normalized=$(echo "$folder" | tr . _)
+            folder_to_branch["$normalized"]="$branch"
+        fi
     done < "$all_dirs_cache"
 fi
 
@@ -14,7 +25,14 @@ fi
 tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
 tmux_sessions=()
 while IFS= read -r session; do
-    [[ -n $session ]] && tmux_sessions+=("$session  [session]")
+    if [[ -n $session ]]; then
+        # Check if session matches a repo
+        if [[ -n ${folder_to_branch[$session]} ]]; then
+            tmux_sessions+=("session: $session  ${folder_to_branch[$session]}")
+        else
+            tmux_sessions+=("session: $session")
+        fi
+    fi
 done <<< "$tmux_sessions_raw"
 
 # Use the filtered paths array and tmux sessions in fzf
@@ -38,15 +56,22 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-# Extract the actual path (last field)
-selected_path=$(echo "$selected" | awk '{print $NF}')
+# Check if this is a session selection
+if [[ $selected == session:* ]]; then
+    # Extract session name (second field)
+    selected_name=$(echo "$selected" | awk '{print $2}')
+    selected_path=$selected_name
+else
+    # Extract the actual path (last field)
+    selected_path=$(echo "$selected" | awk '{print $NF}')
 
-# If it's just a session name (no path), use it as-is
-if [[ ! -d $selected_path ]]; then
-    selected_path=$selected
+    # If it's not a directory, treat as session name
+    if [[ ! -d $selected_path ]]; then
+        selected_path=$selected
+    fi
+
+    selected_name=$(basename "$selected_path" | tr . _)
 fi
-
-selected_name=$(basename "$selected_path" | tr . _)
 
 tmux_running=$(pgrep tmux)
 
