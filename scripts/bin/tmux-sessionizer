@@ -12,8 +12,8 @@ if [[ -f $branch_lookup_cache ]]; then
     done < "$branch_lookup_cache"
 fi
 
-# Get a list of running tmux sessions and mark them
-tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+# Get a list of running tmux sessions sorted by last activity
+tmux_sessions_raw=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
 tmux_sessions=()
 declare -A active_sessions
 while IFS= read -r session; do
