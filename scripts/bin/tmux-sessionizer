@@ -3,17 +3,14 @@
 # Load all directories from cache - no find commands!
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
-selected_dirs=()
-
-if [[ -f $all_dirs_cache ]]; then
-    mapfile -t selected_dirs < "$all_dirs_cache"
-fi
 
 # Get a list of running tmux sessions and mark them
 tmux_sessions_raw=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
 tmux_sessions=()
+session_names=()
 while IFS= read -r session; do
     if [[ -n $session ]]; then
+        session_names+=("$session")
         # Look up branch from pre-built lookup cache
         branch=$(grep "^${session}=" "$branch_lookup_cache" 2>/dev/null | cut -d= -f2)
 
@@ -24,6 +21,28 @@ while IFS= read -r session; do
         fi
     fi
 done <<< "$tmux_sessions_raw"
+
+# Load directories from cache, filtering out ones with active sessions
+selected_dirs=()
+if [[ -f $all_dirs_cache ]]; then
+    while IFS= read -r line; do
+        # Extract folder name (first field)
+        folder=$(echo "$line" | awk '{print $1}')
+        # Convert to session name format
+        session_name=$(echo "$folder" | tr . _)
+
+        # Skip if session exists
+        skip=false
+        for existing_session in "${session_names[@]}"; do
+            if [[ "$existing_session" == "$session_name" ]]; then
+                skip=true
+                break
+            fi
+        done
+
+        [[ $skip == false ]] && selected_dirs+=("$line")
+    done < "$all_dirs_cache"
+fi
 
 # Use the filtered paths array and tmux sessions in fzf
 if [[ $# -eq 1 ]]; then
