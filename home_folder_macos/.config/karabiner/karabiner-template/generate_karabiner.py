@@ -66,21 +66,23 @@ def devices() -> List[dict]:
 # ---------------------------------------------------------------------------
 # Profiles – adjust as needed
 # ---------------------------------------------------------------------------
+# currently deactivated:
+# "Yabai meta", "Option keys for symbols", "Option keys for home row",
+
 PROFILES = [
     {
         "name": "Default profile",
         "selected": True,
         "rules": [
             "Vi Mode [S as Trigger Key]",
-            "Yabai meta",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Fixing ae oe aa",
             "Option keys for symbols",
-            "Option keys for home row",
             "Extra right control for macbook keyboard",
             "Extra hyper key for macbook keyboard",
             "Corne capslock",
+            "Left option + keys to hyper + keys",
             "Map fn + number keys to function keys",
             "real f keys to designated features",
         ],
@@ -89,12 +91,11 @@ PROFILES = [
     {
         "name": "Gaming",
         "rules": [
-            "Yabai meta",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Fixing ae oe aa",
             "Option keys for symbols",
-            "Option keys for home row",
+            "Left option + keys to hyper + keys",
             "Map fn + number keys to their corresponding media control keys",
             "function keys with designated features",
             "Fn to left control for gaming",
