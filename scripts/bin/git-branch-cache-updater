@@ -1,0 +1,56 @@
+#!/bin/bash
+# This script updates the git branch cache for tmux-git-branch-switcher
+
+cache_file="$HOME/.cache/git-branches-cache"
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+repos_dir="$HOME/2work/gitrepos"
+
+# Get the repo we're in
+current_repo=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ -z $current_repo ]]; then
+    exit 0
+fi
+
+# Get folder name (not repo name from git)
+folder_name=$(basename "$current_repo")
+session_name=$(echo "$folder_name" | tr . _)
+
+# Check if this repo is in our watched directory
+if [[ ! $current_repo =~ ^$repos_dir ]]; then
+    exit 0
+fi
+
+# Get current branch
+current_branch=$(git branch --show-current 2>/dev/null)
+
+if [[ -z $current_branch ]]; then
+    exit 0
+fi
+
+# Update git branches cache
+mkdir -p "$(dirname "$cache_file")"
+touch "$cache_file"
+
+# Remove old entry for this folder and add new one
+grep -v "^${folder_name} " "$cache_file" > "${cache_file}.tmp" 2>/dev/null || true
+echo "$folder_name  $current_branch" >> "${cache_file}.tmp"
+mv "${cache_file}.tmp" "$cache_file"
+
+# Update all-dirs cache with new branch
+mkdir -p "$(dirname "$all_dirs_cache")"
+touch "$all_dirs_cache"
+
+# Remove old entry and add new formatted entry with square brackets
+grep -v "^${folder_name} " "$all_dirs_cache" > "${all_dirs_cache}.tmp" 2>/dev/null || true
+echo "$folder_name  [$current_branch]  $current_repo" >> "${all_dirs_cache}.tmp"
+mv "${all_dirs_cache}.tmp" "$all_dirs_cache"
+
+# Update branch lookup cache
+mkdir -p "$(dirname "$branch_lookup_cache")"
+touch "$branch_lookup_cache"
+
+# Remove old entry and add new lookup entry
+grep -v "^${session_name}=" "$branch_lookup_cache" > "${branch_lookup_cache}.tmp" 2>/dev/null || true
+echo "$session_name=[$current_branch]" >> "${branch_lookup_cache}.tmp"
+mv "${branch_lookup_cache}.tmp" "$branch_lookup_cache"

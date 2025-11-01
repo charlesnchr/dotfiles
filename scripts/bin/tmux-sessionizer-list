@@ -1,0 +1,48 @@
+#!/opt/homebrew/bin/bash
+
+# This script outputs the full sessionizer list (for fzf reload)
+
+# Update cache first
+~/bin/update-sessionizer-cache >/dev/null 2>&1
+
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+
+# Pre-load branch lookup cache into associative array
+declare -A branch_map
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Get current session to exclude it
+current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
+
+# Get tmux sessions sorted by last activity
+tmux_sessions_raw=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
+declare -A active_sessions
+while IFS= read -r session; do
+    if [[ -n $session ]]; then
+        active_sessions["$session"]=1
+        # Skip current session
+        [[ "$session" == "$current_session" ]] && continue
+
+        if [[ -n ${branch_map[$session]} ]]; then
+            echo "▶️ $session  ${branch_map[$session]}"
+        else
+            echo "▶️ $session"
+        fi
+    fi
+done <<< "$tmux_sessions_raw"
+
+# Output directories, filtering out ones with active sessions
+if [[ -f $all_dirs_cache ]]; then
+    while IFS= read -r line; do
+        folder=${line%% *}
+        session_name=${folder//./_}
+
+        # Skip if session exists (O(1) lookup)
+        [[ -z ${active_sessions[$session_name]} ]] && echo "$line"
+    done < "$all_dirs_cache"
+fi
