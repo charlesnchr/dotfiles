@@ -152,6 +152,14 @@ inoremap <D-v> <C-r>+
 nnoremap <localleader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <leader>qf :copen<cr>
 
+" Colorcolumn off by default, toggle with <localleader>cc
+set colorcolumn=
+augroup colorcolumn_default_off
+    autocmd!
+    autocmd BufEnter,FileType * set colorcolumn=
+augroup END
+nnoremap <localleader>cc :execute "set colorcolumn=" . (&colorcolumn == "" ? "90" : "")<CR>
+
 " Insert timestamp
 nmap <F3> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d")<CR>
@@ -169,9 +177,12 @@ let g:slime_default_config = {
             \ 'target_pane': ':.2' }
 let g:slime_dont_ask_default = 1
 
-" IPython configuration
-autocmd FileType python map <buffer> [g :IPythonCellPrevCell<CR>
-autocmd FileType python map <buffer> ]g :IPythonCellNextCell<CR>
+" forward: next cell header; wrap; then center
+autocmd FileType python nnoremap <silent><buffer> ]g :call search('^\s*#\s*%%', 'w')<Bar>normal! zz<CR>
+" backward: previous cell header; wrap; then center
+autocmd FileType python nnoremap <silent><buffer> [g :call search('^\s*#\s*%%', 'bw')<Bar>normal! zz<CR>
+" execute cell and jump to next
+autocmd FileType python nmap <silent><buffer> <CR> <Plug>SlimeSendCell]g
 
 " Folding settings for various languages
 let g:markdown_folding = 1

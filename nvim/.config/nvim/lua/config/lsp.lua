@@ -97,7 +97,7 @@ end
 vim.diagnostic.config({
 	underline = false,
 	virtual_text = {
-		severity = { min = vim.diagnostic.severity.WARN },
+		severity = { min = vim.diagnostic.severity.ERROR },
 		source = "if_many",
 		format = function(diagnostic)
 			-- Hide TypeScript implicit any errors
