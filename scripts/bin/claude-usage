@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+set -e  # Exit on error
+
+# Cache configuration
+CACHE_FILE="$HOME/.cache/claude_usage_cache.json"
+RAW_CACHE_FILE="$HOME/.cache/claude_usage_cache_raw.txt"
+CACHE_MAX_AGE=300  # 5 minutes in seconds
+
+# Parse arguments
+SHOW_RAW=false
+if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Fetch Claude Code usage statistics with intelligent caching.
+
+OPTIONS:
+    --raw       Show raw tmux output instead of JSON
+    --help, -h  Show this help message
+
+CACHING:
+    Results are cached for 5 minutes in:
+      JSON: $CACHE_FILE
+      Raw:  $RAW_CACHE_FILE
+
+OUTPUT:
+    Default: Structured JSON with usage percentages and reset times
+    --raw:   Raw terminal output from Claude Code TUI
+
+EXAMPLES:
+    # Get JSON output (default)
+    $(basename "$0")
+
+    # Get raw terminal output
+    $(basename "$0") --raw
+
+    # Parse JSON with jq
+    $(basename "$0") | jq '.current_session.percentage'
+EOF
+    exit 0
+fi
+
+if [[ "$1" == "--raw" ]]; then
+    SHOW_RAW=true
+fi
+
+# Ensure cache directory exists
+mkdir -p "$(dirname "$CACHE_FILE")" 2>/dev/null
+
+# Check if cache exists and is fresh
+if [ -f "$CACHE_FILE" ]; then
+    # Get file age in seconds (macOS compatible)
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        file_age=$(( $(date +%s) - $(stat -f %m "$CACHE_FILE") ))
+    else
+        # Linux
+        file_age=$(( $(date +%s) - $(stat -c %Y "$CACHE_FILE") ))
+    fi
+
+    if [ $file_age -lt $CACHE_MAX_AGE ]; then
+        # Cache is fresh, return it
+        if [ "$SHOW_RAW" = true ]; then
+            cat "$RAW_CACHE_FILE"
+        else
+            cat "$CACHE_FILE"
+        fi
+        exit 0
+    fi
+fi
+
+# Cache is stale or doesn't exist, fetch new data
+echo "Fetching fresh usage data..." >&2
+
+# Create a unique session name
+SESSION_NAME="claude-usage-$$"
+
+# Create a new detached tmux session
+tmux new-session -d -s "$SESSION_NAME" -x 120 -y 40 "zsh" 2>/dev/null || {
+    echo "Error: Failed to create tmux session" >&2
+    exit 1
+}
+
+# Wait for session to initialize
+sleep 0.5
+
+# Send the claude command
+tmux send-keys -t "$SESSION_NAME" 'claude "/usage"' C-m 2>/dev/null
+
+# Intelligent polling: wait for output to stabilize
+echo "Waiting for Claude to render usage screen..." >&2
+max_wait=15
+poll_interval=0.5
+elapsed=0
+prev_output=""
+stable_count=0
+usage_found=false
+
+while (( $(echo "$elapsed < $max_wait" | bc -l) )); do
+    sleep "$poll_interval"
+    elapsed=$(echo "$elapsed + $poll_interval" | bc -l)
+
+    # Capture current output
+    current_output=$(tmux capture-pane -t "$SESSION_NAME" -p 2>/dev/null || echo "")
+
+    # Check if usage content has appeared
+    if echo "$current_output" | grep -q "Current session"; then
+        usage_found=true
+    fi
+
+    # Only check for stability after usage content appears
+    if [ "$usage_found" = true ]; then
+        if [ "$current_output" = "$prev_output" ] && [ -n "$current_output" ]; then
+            stable_count=$((stable_count + 1))
+            if [ $stable_count -ge 2 ]; then
+                echo "Output stabilized after ${elapsed}s" >&2
+                break
+            fi
+        else
+            stable_count=0
+        fi
+    fi
+
+    prev_output="$current_output"
+done
+
+if [ "$usage_found" = false ]; then
+    echo "Warning: Usage screen did not appear within ${max_wait}s" >&2
+fi
+
+# Final capture
+raw_output=$(tmux capture-pane -t "$SESSION_NAME" -p 2>/dev/null)
+
+# Kill the session
+tmux kill-session -t "$SESSION_NAME" 2>/dev/null || true
+
+# Parse the output into JSON
+parse_usage_to_json() {
+    local input="$1"
+
+    # Extract percentages and reset times using grep and sed
+    session_pct=$(echo "$input" | grep -A1 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    session_reset=$(echo "$input" | grep -A2 "Current session" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+
+    week_all_pct=$(echo "$input" | grep -A1 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    week_all_reset=$(echo "$input" | grep -A2 "Current week (all models)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+
+    opus_pct=$(echo "$input" | grep -A1 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    opus_reset=$(echo "$input" | grep -A2 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+
+    # Get timestamp
+    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+    # Build JSON
+    cat <<EOF
+{
+  "timestamp": "$timestamp",
+  "current_session": {
+    "percentage": $session_pct,
+    "resets": "$session_reset"
+  },
+  "current_week_all_models": {
+    "percentage": $week_all_pct,
+    "resets": "$week_all_reset"
+  },
+  "current_week_opus": {
+    "percentage": $opus_pct,
+    "resets": ${opus_reset:+\"$opus_reset\"}${opus_reset:-null}
+  }
+}
+EOF
+}
+
+# Parse and save JSON
+json_output=$(parse_usage_to_json "$raw_output")
+
+# Save both raw and JSON to cache
+echo "$raw_output" > "$RAW_CACHE_FILE"
+echo "$json_output" > "$CACHE_FILE"
+
+# Output the result
+if [ "$SHOW_RAW" = true ]; then
+    cat "$RAW_CACHE_FILE"
+else
+    cat "$CACHE_FILE"
+fi
