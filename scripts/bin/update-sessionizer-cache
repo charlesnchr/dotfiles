@@ -6,6 +6,14 @@ cache_file="$HOME/.cache/git-branches-cache"
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
 
+# Ensure git template is configured for auto-installing hooks
+template_dir="$HOME/.config/git/template"
+if [[ $(git config --global init.templateDir) != "$template_dir" ]]; then
+    mkdir -p "$template_dir/hooks"
+    ln -sf "$HOME/bin/git-branch-cache-updater" "$template_dir/hooks/post-checkout"
+    git config --global init.templateDir "$template_dir"
+fi
+
 # Define the paths to search
 content_dirs=(
     ~/1private
