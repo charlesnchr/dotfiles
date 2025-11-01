@@ -1,0 +1,17 @@
+#!/bin/bash
+# One-time setup: configure git to auto-install hooks for new repos
+
+template_dir="$HOME/.config/git/template"
+hook_script="$HOME/bin/git-branch-cache-updater"
+
+# Create template hooks directory
+mkdir -p "$template_dir/hooks"
+
+# Symlink the post-checkout hook
+ln -sf "$hook_script" "$template_dir/hooks/post-checkout"
+
+# Configure git to use this template
+git config --global init.templateDir "$template_dir"
+
+echo "Git template configured successfully!"
+echo "New repos will auto-install the branch cache hook."
