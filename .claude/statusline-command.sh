@@ -15,43 +15,41 @@ session_cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
 # Powerline separator character (right-pointing triangle - Unicode E0B0)
 SEP=$(printf '\xee\x82\xb0')
 
-# Muted Color Palette (ANSI 256-color codes)
-# Professional, muted aesthetic with gentle colors
-# Line 1: Warm earthy flow - mustard → taupe → olive → smoky taupe
-COLOR_BG_1="\033[48;5;179m"    # Muted Mustard #D8B06C (user@host)
-COLOR_FG_1="\033[38;5;179m"    # Muted Mustard foreground (for separators)
-COLOR_TEXT_1="\033[38;5;16m"   # Black text on mustard
+# Blue/Purple Cyberpunk Color Palette (ANSI 256-color codes)
+# Line 1: lightPurple → purpleBlue → lightBlue → turquoise
+COLOR_BG_1="\033[48;5;140m"    # Light Purple #8b6fc9 (user@host)
+COLOR_FG_1="\033[38;5;140m"    # Light Purple foreground (for separators)
+COLOR_TEXT_1="\033[38;5;16m"   # Black text on purple
 
-COLOR_BG_2="\033[48;5;66m"     # Gentle Teal #6B8E8C (In tokens - Line 2)
-COLOR_FG_2="\033[38;5;66m"     # Gentle Teal foreground
-COLOR_TEXT_2="\033[38;5;16m"   # Black text on teal
+COLOR_BG_2="\033[48;5;75m"     # Blue #6e8fd6 (In tokens - Line 2)
+COLOR_FG_2="\033[38;5;75m"     # Blue foreground
+COLOR_TEXT_2="\033[38;5;16m"   # Black text on blue
 
-COLOR_BG_3="\033[48;5;181m"    # Smoky Taupe #BFA6A0 (model)
-COLOR_FG_3="\033[38;5;181m"    # Smoky Taupe foreground
-COLOR_TEXT_3="\033[38;5;16m"   # Black text on taupe
+COLOR_BG_3="\033[48;5;80m"     # Dark Turquoise #6db3cf (model)
+COLOR_FG_3="\033[38;5;80m"     # Dark Turquoise foreground
+COLOR_TEXT_3="\033[38;5;16m"   # Black text on turquoise
 
-COLOR_BG_4="\033[48;5;101m"    # Muted Olive #8F9779 (git)
-COLOR_FG_4="\033[38;5;101m"    # Muted Olive foreground
-COLOR_TEXT_4="\033[38;5;16m"   # Black text on olive
+COLOR_BG_4="\033[48;5;111m"    # Light Blue #7aa2f7 (git)
+COLOR_FG_4="\033[38;5;111m"    # Light Blue foreground
+COLOR_TEXT_4="\033[38;5;16m"   # Black text on light blue
 
-COLOR_BG_5="\033[48;5;60m"     # Muted Navy #3A4F64 (Duration)
-COLOR_FG_5="\033[38;5;60m"     # Muted Navy foreground
-COLOR_TEXT_5="\033[38;5;231m"  # White text on navy
+COLOR_BG_5="\033[48;5;68m"     # Deep Blue #5a7fbf (Duration)
+COLOR_FG_5="\033[38;5;68m"     # Deep Blue foreground
+COLOR_TEXT_5="\033[38;5;231m"  # White text on deep blue
 
-COLOR_BG_ORANGE="\033[48;5;138m" # Dusky Rose #C08081 (Out tokens)
-COLOR_FG_ORANGE="\033[38;5;138m" # Dusky Rose foreground
-COLOR_TEXT_ORANGE="\033[38;5;16m" # Black text on rose
+COLOR_BG_ORANGE="\033[48;5;111m" # Medium Blue #7499e6 (Out tokens)
+COLOR_FG_ORANGE="\033[38;5;111m" # Medium Blue foreground
+COLOR_TEXT_ORANGE="\033[38;5;16m" # Black text on medium blue
 
-COLOR_BG_CYAN="\033[48;5;109m"   # Dusty Blue #7A9E9F (Cache tokens)
-COLOR_FG_CYAN="\033[38;5;109m"   # Dusty Blue foreground
-COLOR_TEXT_CYAN="\033[38;5;16m"  # Black text on blue
+COLOR_BG_CYAN="\033[48;5;117m"   # Sky Blue #89b4fa (Cache tokens)
+COLOR_FG_CYAN="\033[38;5;117m"   # Sky Blue foreground
+COLOR_TEXT_CYAN="\033[38;5;16m"  # Black text on sky blue
 
-COLOR_BG_DARK="\033[48;5;144m"   # Warm Taupe #B2A192 (directory - Line 1)
-COLOR_FG_DARK="\033[38;5;144m"   # Warm Taupe foreground
-COLOR_TEXT_DARK="\033[38;5;16m"  # Black text on taupe
+COLOR_BG_DARK="\033[48;5;105m"   # Purple Blue #7d7fcf (directory - Line 1)
+COLOR_FG_DARK="\033[38;5;105m"   # Purple Blue foreground
+COLOR_TEXT_DARK="\033[38;5;16m"  # Black text on purple blue
 
 RESET="\033[0m"
-BOLD="\033[1m"
 
 # Helper function to format token counts
 format_tokens() {
@@ -349,23 +347,23 @@ fi
 dir_name=$(basename "$current_dir")
 
 # === LINE 1: User@host | Directory | Git | Model ===
-# Warm earthy color flow: mustard → taupe → olive → smoky taupe
+# Blue/Purple cyberpunk flow: lightPurple → purpleBlue → lightBlue → turquoise
 
 line1=""
 
-# Segment 1: User@host (Muted Mustard background, black text)
-line1+="${COLOR_BG_1}${COLOR_TEXT_1}${BOLD} $(whoami)@$(hostname -s) ${RESET}"
-# Arrow transition: mustard -> taupe
+# Segment 1: User@host (Light Purple background, black text)
+line1+="${COLOR_BG_1}${COLOR_TEXT_1} $(whoami)@$(hostname -s) ${RESET}"
+# Arrow transition: lightPurple -> purpleBlue
 line1+="${COLOR_FG_1}${COLOR_BG_DARK}${SEP}${RESET}"
 
-# Segment 2: Directory (Warm Taupe background, black text)
+# Segment 2: Directory (Purple Blue background, black text)
 line1+="${COLOR_BG_DARK}${COLOR_TEXT_DARK} 📁 ${dir_name} ${RESET}"
 
 # Git segment (only if in a git repo)
 if [ -n "$git_branch" ]; then
-    # Arrow: taupe -> olive
+    # Arrow: purpleBlue -> lightBlue
     line1+="${COLOR_FG_DARK}${COLOR_BG_4}${SEP}${RESET}"
-    # Segment 3: Git branch (Faded Olive background, black text)
+    # Segment 3: Git branch (Light Blue background, black text)
     line1+="${COLOR_BG_4}${COLOR_TEXT_4}"
 
     # Show worktree if applicable
@@ -375,7 +373,7 @@ if [ -n "$git_branch" ]; then
 
     # Show branch
     if [ "$git_status" -gt 0 ]; then
-        line1+="${BOLD}  ${git_branch} ●${RESET}${COLOR_BG_4}${COLOR_TEXT_4}"
+        line1+="  ${git_branch} ●${RESET}${COLOR_BG_4}${COLOR_TEXT_4}"
     else
         line1+="  ${git_branch}"
     fi
@@ -386,44 +384,44 @@ if [ -n "$git_branch" ]; then
     fi
 
     line1+=" ${RESET}"
-    # Arrow: olive -> blush
+    # Arrow: lightBlue -> turquoise
     line1+="${COLOR_FG_4}${COLOR_BG_3}${SEP}${RESET}"
 else
-    # No git: arrow from taupe -> blush
+    # No git: arrow from purpleBlue -> turquoise
     line1+="${COLOR_FG_DARK}${COLOR_BG_3}${SEP}${RESET}"
 fi
 
-# Segment 4: Model (Soft Blush background, black text)
+# Segment 4: Model (Turquoise background, black text)
 line1+="${COLOR_BG_3}${COLOR_TEXT_3} 🤖 ${model} ${RESET}"
-# Final arrow: blush -> transparent
+# Final arrow: turquoise -> transparent
 line1+="${COLOR_FG_3}${SEP}${RESET}"
 
 # === LINE 2: Tokens | Context | Duration | Cost ===
 line2=""
 
-# Segment 1: Input Tokens (Yellow background)
-line2+="${COLOR_BG_2}${COLOR_TEXT_2}${BOLD} ⚡ In:${input_fmt} ${RESET}"
-# Arrow: yellow -> orange
+# Segment 1: Input Tokens (Blue background)
+line2+="${COLOR_BG_2}${COLOR_TEXT_2} ⚡ In:${input_fmt} ${RESET}"
+# Arrow: blue -> mediumBlue
 line2+="${COLOR_FG_2}${COLOR_BG_ORANGE}${SEP}${RESET}"
 
-# Segment 2: Output Tokens (Orange background)
-line2+="${COLOR_BG_ORANGE}${COLOR_TEXT_ORANGE}${BOLD} Out:${output_fmt} ${RESET}"
-# Arrow: orange -> cyan
+# Segment 2: Output Tokens (Medium Blue background)
+line2+="${COLOR_BG_ORANGE}${COLOR_TEXT_ORANGE} Out:${output_fmt} ${RESET}"
+# Arrow: mediumBlue -> skyBlue
 line2+="${COLOR_FG_ORANGE}${COLOR_BG_CYAN}${SEP}${RESET}"
 
-# Segment 3: Cache Tokens (Cyan background)
-line2+="${COLOR_BG_CYAN}${COLOR_TEXT_CYAN}${BOLD} Cache:${cached_fmt} ${RESET}"
-# Arrow: cyan -> dark gray
+# Segment 3: Cache Tokens (Sky Blue background)
+line2+="${COLOR_BG_CYAN}${COLOR_TEXT_CYAN} Cache:${cached_fmt} ${RESET}"
+# Arrow: skyBlue -> purpleBlue
 line2+="${COLOR_FG_CYAN}${COLOR_BG_DARK}${SEP}${RESET}"
 
-# Segment 4: Context (Dark gray background)
+# Segment 4: Context (Purple Blue background - reused from directory)
 line2+="${COLOR_BG_DARK}${COLOR_TEXT_DARK} 📊 Ctx:${context_len} (${context_pct}%) ${RESET}"
 
 # Duration segment (if available)
 if [ -n "$session_dur" ]; then
-    # Arrow: dark gray -> purple
+    # Arrow: purpleBlue -> deepBlue
     line2+="${COLOR_FG_DARK}${COLOR_BG_5}${SEP}${RESET}"
-    # Segment 5: Duration (Purple background)
+    # Segment 5: Duration (Deep Blue background)
     line2+="${COLOR_BG_5}${COLOR_TEXT_5} ⏱ ${session_dur} ${RESET}"
     LAST_BG="${COLOR_BG_5}"
     LAST_FG="${COLOR_FG_5}"
@@ -434,17 +432,17 @@ fi
 
 # Cost segment (if available)
 if [ -n "$session_cost" ]; then
-    # Define a distinct color for cost (using muted lavender)
-    COLOR_BG_COST="\033[48;5;145m"    # Muted Lavender #A3989D (Cost)
-    COLOR_FG_COST="\033[38;5;145m"    # Muted Lavender foreground
-    COLOR_TEXT_COST="\033[38;5;16m"   # Black text on lavender
+    # Define a distinct color for cost (using purple)
+    COLOR_BG_COST="\033[48;5;98m"    # Purple #7d5fb8 (Cost)
+    COLOR_FG_COST="\033[38;5;98m"    # Purple foreground
+    COLOR_TEXT_COST="\033[38;5;16m"   # Black text on purple
 
     # Arrow from last segment to cost
     line2+="${LAST_FG}${COLOR_BG_COST}${SEP}${RESET}"
-    # Segment 6: Cost (Muted Lavender background)
+    # Segment 6: Cost (Purple background)
     # Format cost with 1 decimal place
     cost_formatted=$(printf "%.1f" "$session_cost")
-    line2+="${COLOR_BG_COST}${COLOR_TEXT_COST}${BOLD} 💰 \$${cost_formatted} ${RESET}"
+    line2+="${COLOR_BG_COST}${COLOR_TEXT_COST} 💰 \$${cost_formatted} ${RESET}"
     # Final arrow for line 2: cost -> transparent
     line2+="${COLOR_FG_COST}${SEP}${RESET}"
 else
@@ -457,13 +455,13 @@ line3=""
 
 # Claude Usage segments (if available)
 if [ -n "$usage_session_pct" ]; then
-    # Define session color (Soft Sage)
-    COLOR_BG_SESSION="\033[48;5;108m"   # Soft Sage #A3B18A (Session)
-    COLOR_FG_SESSION="\033[38;5;108m"   # Soft Sage foreground
-    COLOR_TEXT_SESSION="\033[38;5;16m"  # Black text on sage
+    # Define session color (Bright Blue)
+    COLOR_BG_SESSION="\033[48;5;117m"   # Bright Blue #94c5fc (Session)
+    COLOR_FG_SESSION="\033[38;5;117m"   # Bright Blue foreground
+    COLOR_TEXT_SESSION="\033[38;5;16m"  # Black text on bright blue
 
-    # Segment 1: Session usage (Soft Sage background)
-    line3+="${COLOR_BG_SESSION}${COLOR_TEXT_SESSION}${BOLD} 📈 Session:${usage_session_pct}%"
+    # Segment 1: Session usage (Bright Blue background)
+    line3+="${COLOR_BG_SESSION}${COLOR_TEXT_SESSION} 📈 Session:${usage_session_pct}%"
 
     # Always add block timer progress bar (even if 0%)
     if [ -n "$progress_bar" ]; then
@@ -477,23 +475,23 @@ if [ -n "$usage_session_pct" ]; then
 
     # Week usage (if available)
     if [ -n "$usage_week_pct" ]; then
-        # Define week color (Muted Coral)
-        COLOR_BG_WEEK="\033[48;5;181m"    # Muted Coral #D8A39D (Week)
-        COLOR_FG_WEEK="\033[38;5;181m"    # Muted Coral foreground
-        COLOR_TEXT_WEEK="\033[38;5;16m"   # Black text on coral
+        # Define week color (Dark Turquoise)
+        COLOR_BG_WEEK="\033[48;5;80m"    # Dark Turquoise #6db3cf (Week)
+        COLOR_FG_WEEK="\033[38;5;80m"    # Dark Turquoise foreground
+        COLOR_TEXT_WEEK="\033[38;5;16m"   # Black text on turquoise
 
-        # Arrow: soft sage -> muted coral
+        # Arrow: bright blue -> dark turquoise
         line3+="${COLOR_FG_SESSION}${COLOR_BG_WEEK}${SEP}${RESET}"
-        # Segment 2: Week usage (Muted Coral background)
-        line3+="${COLOR_BG_WEEK}${COLOR_TEXT_WEEK}${BOLD} 📅 Week:${usage_week_pct}%"
+        # Segment 2: Week usage (Dark Turquoise background)
+        line3+="${COLOR_BG_WEEK}${COLOR_TEXT_WEEK} 📅 Week:${usage_week_pct}%"
         if [ -n "$usage_week_reset" ]; then
             line3+=" (⏰${usage_week_reset})"
         fi
         line3+=" ${RESET}"
-        # Final arrow: muted coral -> transparent
+        # Final arrow: dark turquoise -> transparent
         line3+="${COLOR_FG_WEEK}${SEP}${RESET}"
     else
-        # Final arrow: soft sage -> transparent
+        # Final arrow: bright blue -> transparent
         line3+="${COLOR_FG_SESSION}${SEP}${RESET}"
     fi
 elif [ -n "$usage_error" ]; then
