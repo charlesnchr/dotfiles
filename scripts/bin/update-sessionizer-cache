@@ -64,3 +64,6 @@ for dir in "${content_dirs[@]}"; do
         done < <(find -L "$dir_expanded" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
     fi
 done
+
+# Install git hooks in repos
+~/bin/install-git-branch-hooks >/dev/null 2>&1
