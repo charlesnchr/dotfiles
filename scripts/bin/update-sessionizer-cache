@@ -1,0 +1,66 @@
+#!/opt/homebrew/bin/bash
+
+# This creates a complete cache for tmux-sessionizer with all directories
+repos_dir="$HOME/2work/gitrepos"
+cache_file="$HOME/.cache/git-branches-cache"
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+
+# Define the paths to search
+content_dirs=(
+    ~/1private
+    ~/1private/Github
+    ~/2work
+    ~/2work/gitrepos
+    ~/0main/2.Projects
+    ~/onedrive
+)
+
+# Define the fixed directories to search
+fixed_dirs=(
+    ~/1private
+    ~/2work
+    ~/qmk_firmware
+    ~/dotfiles
+    ~/0main
+)
+
+# Start fresh
+> "$all_dirs_cache"
+> "$branch_lookup_cache"
+
+# First, add git repos with branches
+if [[ -f $cache_file ]]; then
+    while read -r line; do
+        folder=$(echo "$line" | awk '{print $1}')
+        branch=$(echo "$line" | awk '{print $2}')
+
+        # Find the full path for this folder
+        path=$(find "$repos_dir" -mindepth 1 -maxdepth 1 -type d -name "$folder" 2>/dev/null | head -1)
+
+        if [[ -n $path ]]; then
+            echo "$folder  [$branch]  $path" >> "$all_dirs_cache"
+            # Add to branch lookup: sessionname=[branch]
+            session_name=$(echo "$folder" | tr . _)
+            echo "$session_name=[$branch]" >> "$branch_lookup_cache"
+        fi
+    done < "$cache_file"
+fi
+
+# Then add fixed directories
+for dir in "${fixed_dirs[@]}"; do
+    dir_expanded="${dir/#\~/$HOME}"
+    if [[ -d $dir_expanded ]]; then
+        echo "$(basename "$dir_expanded")    $dir_expanded" >> "$all_dirs_cache"
+    fi
+done
+
+# Finally add subdirectories from content_dirs
+for dir in "${content_dirs[@]}"; do
+    dir_expanded="${dir/#\~/$HOME}"
+    if [[ -d $dir_expanded ]]; then
+        while IFS= read -r subdir; do
+            echo "$(basename "$subdir")    $subdir" >> "$all_dirs_cache"
+        done < <(find -L "$dir_expanded" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
+    fi
+done
