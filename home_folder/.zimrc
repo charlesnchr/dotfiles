@@ -1,8 +1,9 @@
 zmodule utility
 
 ### COMPLETIONS
-zmodule completion
+# Note: completion module MUST come AFTER all modules that add completion definitions
 zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
 
 ### UTILITY
 zmodule zshzoo/macos --if-ostype 'darwin*'
