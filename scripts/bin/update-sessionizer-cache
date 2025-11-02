@@ -1,10 +1,10 @@
-#!/opt/homebrew/bin/bash
+#!/bin/bash
 
 # This creates a complete cache for tmux-sessionizer with all directories
-repos_dir="$HOME/2work/gitrepos"
 cache_file="$HOME/.cache/git-branches-cache"
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+entry_delim="|"
 
 # Ensure git template is configured for auto-installing hooks
 template_dir="$HOME/.config/git/template"
@@ -14,64 +14,100 @@ if [[ $(git config --global init.templateDir) != "$template_dir" ]]; then
     git config --global init.templateDir "$template_dir"
 fi
 
+# Directories whose git repos should have branch hooks
+repo_roots=(
+    ~/1private
+    ~/dotfiles
+    ~/qmk_firmware
+    ~/0main
+    ~/extensions
+)
+
 # Define the paths to search
 content_dirs=(
     ~/1private
-    ~/1private/Github
-    ~/2work
-    ~/2work/gitrepos
-    ~/0main/2.Projects
-    ~/onedrive
+    ~/dotfiles
+    ~/qmk_firmware
+    ~/0main
+    ~/extensions
 )
 
 # Define the fixed directories to search
 fixed_dirs=(
     ~/1private
-    ~/2work
     ~/qmk_firmware
     ~/dotfiles
     ~/0main
+    ~/extensions
 )
 
+# Collect git repositories under the configured roots
+declare -a git_repos=()
+declare -A repo_seen
+
+for root in "${repo_roots[@]}"; do
+    root_expanded="${root/#\~/$HOME}"
+    if [[ ! -d $root_expanded ]]; then
+        continue
+    fi
+
+    if [[ -d "$root_expanded/.git" && -z ${repo_seen["$root_expanded"]} ]]; then
+        git_repos+=("$root_expanded")
+        repo_seen["$root_expanded"]=1
+    fi
+
+    while IFS= read -r candidate; do
+        candidate=${candidate%/}
+        if [[ -d "$candidate/.git" && -z ${repo_seen["$candidate"]} ]]; then
+            git_repos+=("$candidate")
+            repo_seen["$candidate"]=1
+        fi
+    done < <(find -L "$root_expanded" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+done
+
 # Start fresh
+> "$cache_file"
 > "$all_dirs_cache"
 > "$branch_lookup_cache"
 
-# First, add git repos with branches
-if [[ -f $cache_file ]]; then
-    while read -r line; do
-        folder=$(echo "$line" | awk '{print $1}')
-        branch=$(echo "$line" | awk '{print $2}')
+declare -A seen_paths
 
-        # Find the full path for this folder
-        path=$(find "$repos_dir" -mindepth 1 -maxdepth 1 -type d -name "$folder" 2>/dev/null | head -1)
+# Populate caches with git branch information
+for repo in "${git_repos[@]}"; do
+    branch=$(git -C "$repo" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    folder=$(basename "$repo")
 
-        if [[ -n $path ]]; then
-            echo "$folder  [$branch]  $path" >> "$all_dirs_cache"
-            # Add to branch lookup: sessionname=[branch]
-            session_name=$(echo "$folder" | tr . _)
-            echo "$session_name=[$branch]" >> "$branch_lookup_cache"
-        fi
-    done < "$cache_file"
-fi
-
-# Then add fixed directories
-for dir in "${fixed_dirs[@]}"; do
-    dir_expanded="${dir/#\~/$HOME}"
-    if [[ -d $dir_expanded ]]; then
-        echo "$(basename "$dir_expanded")    $dir_expanded" >> "$all_dirs_cache"
+    if [[ -n $branch ]]; then
+        session_name=$(echo "$folder" | tr . _)
+        echo "${folder}${entry_delim}${branch}${entry_delim}${repo}" >> "$cache_file"
+        echo "$folder  [$branch]  $repo" >> "$all_dirs_cache"
+        echo "$session_name=[$branch]" >> "$branch_lookup_cache"
+        seen_paths["$repo"]=1
     fi
 done
 
-# Finally add subdirectories from content_dirs
+# Then add fixed directories (without duplicates)
+for dir in "${fixed_dirs[@]}"; do
+    dir_expanded="${dir/#\~/$HOME}"
+    if [[ -d $dir_expanded && -z ${seen_paths["$dir_expanded"]} ]]; then
+        echo "$(basename "$dir_expanded")    $dir_expanded" >> "$all_dirs_cache"
+        seen_paths["$dir_expanded"]=1
+    fi
+done
+
+# Finally add subdirectories from content_dirs (without duplicates)
 for dir in "${content_dirs[@]}"; do
     dir_expanded="${dir/#\~/$HOME}"
     if [[ -d $dir_expanded ]]; then
         while IFS= read -r subdir; do
-            echo "$(basename "$subdir")    $subdir" >> "$all_dirs_cache"
-        done < <(find -L "$dir_expanded" -mindepth 1 -maxdepth 1 -type d -not -path '\*/.\*')
+            subdir=${subdir%/}
+            if [[ -z ${seen_paths["$subdir"]} ]]; then
+                echo "$(basename "$subdir")    $subdir" >> "$all_dirs_cache"
+                seen_paths["$subdir"]=1
+            fi
+        done < <(find -L "$dir_expanded" -mindepth 1 -maxdepth 1 -type d -not -path '*/.*' 2>/dev/null)
     fi
 done
 
 # Install git hooks in repos
-~/bin/install-git-branch-hooks >/dev/null 2>&1
+~/bin/install-git-branch-hooks "${repo_roots[@]}" >/dev/null 2>&1

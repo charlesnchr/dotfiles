@@ -1,40 +1,67 @@
 #!/bin/bash
 
-repos_dir="$HOME/2work/gitrepos"
 hook_script="$HOME/bin/git-branch-cache-updater"
 
-echo "Installing post-checkout hooks in $repos_dir..."
+if [[ $# -gt 0 ]]; then
+    repo_roots=("$@")
+else
+    repo_roots=(
+        ~/1private
+        ~/dotfiles
+        ~/qmk_firmware
+        ~/0main
+        ~/extensions
+    )
+fi
 
-installed=0
-skipped=0
+echo "Installing post-checkout hooks in configured repositories..."
 
-while IFS= read -r repo; do
-    hook_file="$repo/.git/hooks/post-checkout"
-    
-    # Check if .git exists
-    if [[ ! -d "$repo/.git" ]]; then
-        echo "  Skipping $(basename "$repo") - not a git repo"
-        ((skipped++))
+declare -a candidates=()
+declare -A seen
+
+for root in "${repo_roots[@]}"; do
+    root_expanded="${root/#\~/$HOME}"
+    if [[ ! -d $root_expanded ]]; then
         continue
     fi
-    
-    # Create hooks directory if it doesn't exist
-    mkdir -p "$repo/.git/hooks"
-    
-    # Create or append to post-checkout hook
-    if [[ -f $hook_file ]]; then
-        # Check if our hook is already there
-        if grep -q "git-branch-cache-updater" "$hook_file"; then
-            echo "  $(basename "$repo") - hook already installed"
-            ((installed++))
+
+    # Include the root itself if it's a git repo
+    if [[ -d "$root_expanded/.git" ]]; then
+        candidates+=("$root_expanded")
+        seen["$root_expanded"]=1
+    fi
+
+    while IFS= read -r repo; do
+        repo=${repo%/}
+        if [[ -n ${seen["$repo"]} ]]; then
             continue
         fi
-        # Append to existing hook
+        candidates+=("$repo")
+        seen["$repo"]=1
+    done < <(find -L "$root_expanded" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+done
+
+installed=0
+already=0
+
+for repo in "${candidates[@]}"; do
+    hook_file="$repo/.git/hooks/post-checkout"
+    if [[ ! -d "$repo/.git" ]]; then
+        continue
+    fi
+
+    mkdir -p "$repo/.git/hooks"
+
+    if [[ -f $hook_file ]]; then
+        if grep -q "git-branch-cache-updater" "$hook_file"; then
+            echo "  $(basename "$repo") - hook already installed"
+            ((already++))
+            continue
+        fi
         echo "" >> "$hook_file"
         echo "# Update git branch cache for tmux switcher" >> "$hook_file"
         echo "$hook_script" >> "$hook_file"
     else
-        # Create new hook
         cat > "$hook_file" << 'HOOK'
 #!/bin/bash
 # Update git branch cache for tmux switcher
@@ -42,14 +69,14 @@ HOOK
         echo "$hook_script" >> "$hook_file"
         chmod +x "$hook_file"
     fi
-    
+
     echo "  $(basename "$repo") - hook installed"
     ((installed++))
-done < <(find "$repos_dir" -mindepth 1 -maxdepth 1 -type d)
+done
 
 echo ""
 echo "Summary:"
-echo "  Installed: $installed"
-echo "  Skipped: $skipped"
+echo "  Newly installed: $installed"
+echo "  Already present: $already"
 echo ""
 echo "Cache will now auto-update when you checkout branches!"

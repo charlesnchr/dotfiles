@@ -112,4 +112,3 @@ bindkey '^R' histdb-fzf-widget
 
 _evalcache gh copilot alias -- zsh
 
-. "$HOME/.local/share/../bin/env"

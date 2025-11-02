@@ -4,7 +4,7 @@
 cache_file="$HOME/.cache/git-branches-cache"
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
-repos_dir="$HOME/2work/gitrepos"
+entry_delim="|"
 
 # Get the repo we're in
 current_repo=$(git rev-parse --show-toplevel 2>/dev/null)
@@ -15,11 +15,6 @@ fi
 # Get folder name (not repo name from git)
 folder_name=$(basename "$current_repo")
 session_name=$(echo "$folder_name" | tr . _)
-
-# Check if this repo is in our watched directory
-if [[ ! $current_repo =~ ^$repos_dir ]]; then
-    exit 0
-fi
 
 # Get current branch
 current_branch=$(git branch --show-current 2>/dev/null)
@@ -33,8 +28,8 @@ mkdir -p "$(dirname "$cache_file")"
 touch "$cache_file"
 
 # Remove old entry for this folder and add new one
-grep -v "^${folder_name} " "$cache_file" > "${cache_file}.tmp" 2>/dev/null || true
-echo "$folder_name  $current_branch" >> "${cache_file}.tmp"
+grep -v "^${folder_name}${entry_delim}" "$cache_file" > "${cache_file}.tmp" 2>/dev/null || true
+echo "${folder_name}${entry_delim}${current_branch}${entry_delim}${current_repo}" >> "${cache_file}.tmp"
 mv "${cache_file}.tmp" "$cache_file"
 
 # Update all-dirs cache with new branch
@@ -54,3 +49,6 @@ touch "$branch_lookup_cache"
 grep -v "^${session_name}=" "$branch_lookup_cache" > "${branch_lookup_cache}.tmp" 2>/dev/null || true
 echo "$session_name=[$current_branch]" >> "${branch_lookup_cache}.tmp"
 mv "${branch_lookup_cache}.tmp" "$branch_lookup_cache"
+
+# Update git branch cache for tmux switcher
+/Users/cc/bin/git-branch-cache-updater
