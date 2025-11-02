@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/opt/homebrew/bin/bash
 
 # This creates a complete cache for tmux-sessionizer with all directories
 cache_file="$HOME/.cache/git-branches-cache"
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
 entry_delim="|"
+maxdepth="${TMUX_SESSIONIZER_MAXDEPTH:-2}"
 
 # Ensure git template is configured for auto-installing hooks
 template_dir="$HOME/.config/git/template"
@@ -56,13 +57,15 @@ for root in "${repo_roots[@]}"; do
         repo_seen["$root_expanded"]=1
     fi
 
-    while IFS= read -r candidate; do
+    # Discover nested git repos up to maxdepth
+    while IFS= read -r gitdir; do
+        candidate=$(dirname "$gitdir")
         candidate=${candidate%/}
-        if [[ -d "$candidate/.git" && -z ${repo_seen["$candidate"]} ]]; then
+        if [[ -z ${repo_seen["$candidate"]} ]]; then
             git_repos+=("$candidate")
             repo_seen["$candidate"]=1
         fi
-    done < <(find -L "$root_expanded" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+    done < <(find -L "$root_expanded" -mindepth 1 -maxdepth "$maxdepth" -type d -name .git 2>/dev/null)
 done
 
 # Start fresh
