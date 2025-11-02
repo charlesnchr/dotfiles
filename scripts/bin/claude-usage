@@ -74,6 +74,16 @@ echo "Fetching fresh usage data..." >&2
 # Create a unique session name
 SESSION_NAME="claude-usage-$$"
 
+# Cleanup function to ensure session is always killed
+cleanup_session() {
+    if [ -n "$SESSION_NAME" ]; then
+        tmux kill-session -t "$SESSION_NAME" 2>/dev/null || true
+    fi
+}
+
+# Set trap to cleanup on exit/interrupt
+trap cleanup_session EXIT INT TERM
+
 # Create a new detached tmux session
 tmux new-session -d -s "$SESSION_NAME" -x 120 -y 40 "zsh" 2>/dev/null || {
     echo "Error: Failed to create tmux session" >&2
@@ -130,10 +140,7 @@ fi
 # Final capture
 raw_output=$(tmux capture-pane -t "$SESSION_NAME" -p 2>/dev/null)
 
-# Kill the session
-tmux kill-session -t "$SESSION_NAME" 2>/dev/null || true
-
-# Parse the output into JSON
+# Parse the output into JSON (session cleanup handled by trap)
 parse_usage_to_json() {
     local input="$1"
 
