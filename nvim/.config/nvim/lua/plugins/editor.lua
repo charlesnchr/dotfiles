@@ -7,6 +7,29 @@ return {
     keys = {
       { "<localleader>vg", "<cmd>G<cr>", desc = "Git status" },
       { "<localleader>gj", "<cmd>G<cr>", desc = "Git status" },
+      {
+        "<localleader>gs",
+        function()
+          local wins = vim.api.nvim_list_wins()
+          for _, win in ipairs(wins) do
+            local cfg = vim.api.nvim_win_get_config(win)
+            if cfg.relative == "" then
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.api.nvim_buf_get_option(buf, "filetype") == "fugitive" then
+                if #wins == 1 then
+                  vim.api.nvim_buf_delete(buf, { force = true })
+                else
+                  vim.api.nvim_win_close(win, true)
+                end
+                return
+              end
+            end
+          end
+          vim.cmd("botright vertical Git")
+          vim.cmd("vertical resize 55")
+        end,
+        desc = "Toggle fugitive sidebar",
+      },
       { "<localleader>gc", "<cmd>G commit --verbose -m \"Small update\"<cr>", desc = "Git commit" },
       { "<localleader>gn", "<cmd>G log --name-status<cr>", desc = "Git log with names" },
       { "<localleader>gl", "<cmd>G pull<cr>", desc = "Git pull" },
