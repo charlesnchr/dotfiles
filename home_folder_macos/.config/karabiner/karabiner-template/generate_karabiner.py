@@ -96,7 +96,6 @@ PROFILES = [
             "Fixing ae oe aa",
             "Option keys for symbols",
             "Left option + keys to hyper + keys",
-            "Map fn + number keys to their corresponding media control keys",
             "function keys with designated features",
             "Fn to left control for gaming",
         ],
