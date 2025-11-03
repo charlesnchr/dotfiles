@@ -6,6 +6,10 @@ CACHE_FILE="$HOME/.cache/claude_usage_cache.json"
 RAW_CACHE_FILE="$HOME/.cache/claude_usage_cache_raw.txt"
 CACHE_MAX_AGE=300  # 5 minutes in seconds
 
+# Use a fixed session name to prevent concurrent fetches
+SESSION_NAME="claude-usage-fetch"
+LOCK_FILE="$HOME/.cache/claude_usage.lock"
+
 # Parse arguments
 SHOW_RAW=false
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
@@ -16,6 +20,7 @@ Fetch Claude Code usage statistics with intelligent caching.
 
 OPTIONS:
     --raw       Show raw tmux output instead of JSON
+    --cleanup   Clean up stale tmux sessions and lock files
     --help, -h  Show this help message
 
 CACHING:
@@ -34,9 +39,25 @@ EXAMPLES:
     # Get raw terminal output
     $(basename "$0") --raw
 
+    # Clean up stale sessions
+    $(basename "$0") --cleanup
+
     # Parse JSON with jq
     $(basename "$0") | jq '.current_session.percentage'
 EOF
+    exit 0
+fi
+
+if [[ "$1" == "--cleanup" ]]; then
+    echo "Cleaning up stale claude-usage sessions..." >&2
+    # Kill any sessions starting with claude-usage-
+    for session in $(tmux list-sessions -F '#{session_name}' 2>/dev/null | grep '^claude-usage-' || true); do
+        echo "  Killing session: $session" >&2
+        tmux kill-session -t "$session" 2>/dev/null || true
+    done
+    # Remove lock file
+    rm -f "$LOCK_FILE"
+    echo "Cleanup complete" >&2
     exit 0
 fi
 
@@ -47,16 +68,19 @@ fi
 # Ensure cache directory exists
 mkdir -p "$(dirname "$CACHE_FILE")" 2>/dev/null
 
+# Helper function to get file age
+get_file_age() {
+    local file="$1"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo $(( $(date +%s) - $(stat -f %m "$file" 2>/dev/null || echo "0") ))
+    else
+        echo $(( $(date +%s) - $(stat -c %Y "$file" 2>/dev/null || echo "0") ))
+    fi
+}
+
 # Check if cache exists and is fresh
 if [ -f "$CACHE_FILE" ]; then
-    # Get file age in seconds (macOS compatible)
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        file_age=$(( $(date +%s) - $(stat -f %m "$CACHE_FILE") ))
-    else
-        # Linux
-        file_age=$(( $(date +%s) - $(stat -c %Y "$CACHE_FILE") ))
-    fi
-
+    file_age=$(get_file_age "$CACHE_FILE")
     if [ $file_age -lt $CACHE_MAX_AGE ]; then
         # Cache is fresh, return it
         if [ "$SHOW_RAW" = true ]; then
@@ -68,17 +92,72 @@ if [ -f "$CACHE_FILE" ]; then
     fi
 fi
 
+# Check if a fetch session already exists
+if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    # Another fetch is in progress
+    echo "Fetch already in progress, using cached data..." >&2
+
+    # Return cache if available (even if stale)
+    if [ -f "$CACHE_FILE" ]; then
+        if [ "$SHOW_RAW" = true ]; then
+            cat "$RAW_CACHE_FILE"
+        else
+            cat "$CACHE_FILE"
+        fi
+        exit 0
+    else
+        # No cache yet, wait briefly for initial fetch
+        sleep 2
+        if [ -f "$CACHE_FILE" ]; then
+            if [ "$SHOW_RAW" = true ]; then
+                cat "$RAW_CACHE_FILE"
+            else
+                cat "$CACHE_FILE"
+            fi
+            exit 0
+        fi
+    fi
+
+    echo "Error: Fetch in progress but no cache available" >&2
+    exit 1
+fi
+
+# Check for stale lock
+if [ -f "$LOCK_FILE" ]; then
+    lock_age=$(get_file_age "$LOCK_FILE")
+    if [ $lock_age -gt 120 ]; then
+        echo "Removing stale lock (${lock_age}s old)..." >&2
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+# Try to acquire lock
+if [ -f "$LOCK_FILE" ]; then
+    echo "Lock file exists, using cached data..." >&2
+    if [ -f "$CACHE_FILE" ]; then
+        if [ "$SHOW_RAW" = true ]; then
+            cat "$RAW_CACHE_FILE"
+        else
+            cat "$CACHE_FILE"
+        fi
+        exit 0
+    fi
+    echo "Error: Lock exists but no cache available" >&2
+    exit 1
+fi
+
+# Acquire lock
+echo $$ > "$LOCK_FILE"
+
 # Cache is stale or doesn't exist, fetch new data
 echo "Fetching fresh usage data..." >&2
 
-# Create a unique session name
-SESSION_NAME="claude-usage-$$"
-
-# Cleanup function to ensure session is always killed
+# Cleanup function to ensure session and lock are always removed
 cleanup_session() {
     if [ -n "$SESSION_NAME" ]; then
         tmux kill-session -t "$SESSION_NAME" 2>/dev/null || true
     fi
+    rm -f "$LOCK_FILE"
 }
 
 # Set trap to cleanup on exit/interrupt
@@ -146,13 +225,13 @@ parse_usage_to_json() {
 
     # Extract percentages and reset times using grep and sed
     # Use larger context window to handle variable line breaks in the output
-    session_pct=$(echo "$input" | grep -A4 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
-    session_reset=$(echo "$input" | grep "Current session" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    session_pct=$(echo "$input" | grep -A4 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
+    session_reset=$(echo "$input" | grep -A4 "Current session" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
-    week_all_pct=$(echo "$input" | grep -A5 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
-    week_all_reset=$(echo "$input" | grep "Current week (all models)" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    week_all_pct=$(echo "$input" | grep -A5 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
+    week_all_reset=$(echo "$input" | grep -A5 "Current week (all models)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
-    opus_pct=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    opus_pct=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
     opus_reset=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
     # Get timestamp
