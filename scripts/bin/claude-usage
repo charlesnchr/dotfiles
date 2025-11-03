@@ -50,8 +50,8 @@ fi
 
 if [[ "$1" == "--cleanup" ]]; then
     echo "Cleaning up stale claude-usage sessions..." >&2
-    # Kill any sessions starting with claude-usage-
-    for session in $(tmux list-sessions -F '#{session_name}' 2>/dev/null | grep '^claude-usage-' || true); do
+    # Kill any sessions starting with claude-usage (including fetch session)
+    for session in $(tmux list-sessions -F '#{session_name}' 2>/dev/null | grep '^claude-usage' || true); do
         echo "  Killing session: $session" >&2
         tmux kill-session -t "$session" 2>/dev/null || true
     done
@@ -92,22 +92,33 @@ if [ -f "$CACHE_FILE" ]; then
     fi
 fi
 
+# Helper to get session age in seconds
+get_session_age() {
+    local session_name="$1"
+    if ! tmux has-session -t "$session_name" 2>/dev/null; then
+        echo "9999"
+        return
+    fi
+
+    local created=$(tmux display-message -t "$session_name" -p '#{session_created}' 2>/dev/null || echo "0")
+    local now=$(date +%s)
+    echo $((now - created))
+}
+
 # Check if a fetch session already exists
 if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    # Another fetch is in progress
-    echo "Fetch already in progress, using cached data..." >&2
+    session_age=$(get_session_age "$SESSION_NAME")
 
-    # Return cache if available (even if stale)
-    if [ -f "$CACHE_FILE" ]; then
-        if [ "$SHOW_RAW" = true ]; then
-            cat "$RAW_CACHE_FILE"
-        else
-            cat "$CACHE_FILE"
-        fi
-        exit 0
+    # If session is older than 90 seconds, it's likely stale - kill it
+    if [ "$session_age" -gt 90 ]; then
+        echo "Killing stale fetch session (${session_age}s old)..." >&2
+        tmux kill-session -t "$SESSION_NAME" 2>/dev/null || true
+        rm -f "$LOCK_FILE"
     else
-        # No cache yet, wait briefly for initial fetch
-        sleep 2
+        # Another fetch is in progress and it's recent
+        echo "Fetch already in progress (${session_age}s old), using cached data..." >&2
+
+        # Return cache if available (even if stale)
         if [ -f "$CACHE_FILE" ]; then
             if [ "$SHOW_RAW" = true ]; then
                 cat "$RAW_CACHE_FILE"
@@ -115,11 +126,22 @@ if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
                 cat "$CACHE_FILE"
             fi
             exit 0
+        else
+            # No cache yet, wait briefly for initial fetch
+            sleep 2
+            if [ -f "$CACHE_FILE" ]; then
+                if [ "$SHOW_RAW" = true ]; then
+                    cat "$RAW_CACHE_FILE"
+                else
+                    cat "$CACHE_FILE"
+                fi
+                exit 0
+            fi
         fi
-    fi
 
-    echo "Error: Fetch in progress but no cache available" >&2
-    exit 1
+        echo "Error: Fetch in progress but no cache available" >&2
+        exit 1
+    fi
 fi
 
 # Check for stale lock
@@ -184,9 +206,9 @@ prev_output=""
 stable_count=0
 usage_found=false
 
-while (( $(echo "$elapsed < $max_wait" | bc -l) )); do
+while [ $elapsed -lt $max_wait ]; do
     sleep "$poll_interval"
-    elapsed=$(echo "$elapsed + $poll_interval" | bc -l)
+    elapsed=$((elapsed + poll_interval))
 
     # Capture current output
     current_output=$(tmux capture-pane -t "$SESSION_NAME" -p 2>/dev/null || echo "")
@@ -212,8 +234,14 @@ while (( $(echo "$elapsed < $max_wait" | bc -l) )); do
     prev_output="$current_output"
 done
 
-if [ "$usage_found" = false ]; then
-    echo "Warning: Usage screen did not appear within ${max_wait}s" >&2
+# Hard timeout - exit after max_wait regardless
+if [ $elapsed -ge $max_wait ]; then
+    if [ "$usage_found" = false ]; then
+        echo "Error: Usage screen did not appear within ${max_wait}s" >&2
+        exit 1
+    else
+        echo "Warning: Output did not stabilize within ${max_wait}s, using last capture" >&2
+    fi
 fi
 
 # Final capture
