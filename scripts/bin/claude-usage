@@ -91,15 +91,15 @@ tmux new-session -d -s "$SESSION_NAME" -x 120 -y 40 "zsh" 2>/dev/null || {
 }
 
 # Wait for session to initialize
-sleep 0.5
+sleep 2
 
 # Send the claude command
 tmux send-keys -t "$SESSION_NAME" 'claude "/usage"' C-m 2>/dev/null
 
 # Intelligent polling: wait for output to stabilize
 echo "Waiting for Claude to render usage screen..." >&2
-max_wait=15
-poll_interval=0.5
+max_wait=60
+poll_interval=3
 elapsed=0
 prev_output=""
 stable_count=0
@@ -145,14 +145,15 @@ parse_usage_to_json() {
     local input="$1"
 
     # Extract percentages and reset times using grep and sed
-    session_pct=$(echo "$input" | grep -A1 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
-    session_reset=$(echo "$input" | grep -A2 "Current session" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    # Use larger context window to handle variable line breaks in the output
+    session_pct=$(echo "$input" | grep -A4 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    session_reset=$(echo "$input" | grep "Current session" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
-    week_all_pct=$(echo "$input" | grep -A1 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
-    week_all_reset=$(echo "$input" | grep -A2 "Current week (all models)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    week_all_pct=$(echo "$input" | grep -A5 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    week_all_reset=$(echo "$input" | grep "Current week (all models)" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
-    opus_pct=$(echo "$input" | grep -A1 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
-    opus_reset=$(echo "$input" | grep -A2 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    opus_pct=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' || echo "0")
+    opus_reset=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
 
     # Get timestamp
     timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
