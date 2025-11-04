@@ -50,5 +50,3 @@ grep -v "^${session_name}=" "$branch_lookup_cache" > "${branch_lookup_cache}.tmp
 echo "$session_name=[$current_branch]" >> "${branch_lookup_cache}.tmp"
 mv "${branch_lookup_cache}.tmp" "$branch_lookup_cache"
 
-# Update git branch cache for tmux switcher
-/Users/cc/bin/git-branch-cache-updater
