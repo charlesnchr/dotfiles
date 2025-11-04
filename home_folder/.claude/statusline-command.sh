@@ -292,15 +292,13 @@ shorten_reset_time() {
 }
 
 if command -v claude-usage &> /dev/null; then
-    # Run with timeout to avoid hanging (10 second max)
+    # Call claude-usage without timeout - it now has built-in queue management
     # Suppress stderr to avoid informational messages mixing with JSON
-    usage_output=$(timeout 10 claude-usage 2>/dev/null)
+    usage_output=$(claude-usage 2>/dev/null)
     usage_exit_code=$?
 
-    # Check if command failed or timed out
-    if [ $usage_exit_code -eq 124 ]; then
-        usage_error="timeout"
-    elif [ $usage_exit_code -ne 0 ] || [ -z "$usage_output" ]; then
+    # Check if command failed
+    if [ $usage_exit_code -ne 0 ] || [ -z "$usage_output" ]; then
         usage_error="cmd_failed"
     else
         # With stderr suppressed, the output is now clean JSON
