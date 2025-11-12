@@ -106,3 +106,12 @@ keybind = shift+enter=text:\n
 
 # Toggle pane zoom (prefix + z)
 # keybind = cmd+z=text:\x01\x7a
+
+# Quick switch to bookmarked tmux sessions (opt+1-5)
+keybind = opt+digit_1=text:\x1b1
+keybind = opt+digit_2=text:\x1b2
+keybind = opt+digit_3=text:\x1b3
+keybind = opt+digit_4=text:\x1b4
+keybind = opt+digit_5=text:\x1b5
+
+# Toggle bookmark: use prefix+B then 1-5 (no Ghostty binding needed)
