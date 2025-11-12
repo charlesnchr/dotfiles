@@ -1,8 +1,8 @@
 # open apps
 #
-alt + shift - return : $HOME/.config/yabai/open_term.sh iTerm
-alt - 2 : $HOME/.config/yabai/open_term.sh Alacritty
-alt + cmd - return : $HOME/.config/yabai/open_firefox.sh
+# alt + shift - return : $HOME/.config/yabai/open_term.sh iTerm
+# alt - 2 : $HOME/.config/yabai/open_term.sh Alacritty
+# alt + cmd - return : $HOME/.config/yabai/open_firefox.sh
 
 # Navigation
 # alt - f6: yabai -m window --focus west
