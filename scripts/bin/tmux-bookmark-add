@@ -1,0 +1,51 @@
+#!/opt/homebrew/bin/bash
+
+# Script to add current session to next available bookmark slot
+# Usage: tmux-bookmark-add
+
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+
+# Get current session name
+current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
+
+if [[ -z $current_session ]]; then
+    echo "Not in a tmux session"
+    exit 1
+fi
+
+# Read existing bookmarks into associative array
+declare -A bookmarks
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Check if current session is already bookmarked
+for idx in {1..5}; do
+    if [[ "${bookmarks[$idx]}" == "$current_session" ]]; then
+        tmux display-message "Session already bookmarked at position $idx"
+        exit 0
+    fi
+done
+
+# Find next available slot
+for idx in {1..5}; do
+    if [[ -z ${bookmarks[$idx]} ]]; then
+        bookmarks[$idx]="$current_session"
+
+        # Write back to file
+        > "$bookmark_file"
+        for i in {1..5}; do
+            if [[ -n ${bookmarks[$i]} ]]; then
+                echo "$i=${bookmarks[$i]}" >> "$bookmark_file"
+            fi
+        done
+
+        tmux display-message "Bookmarked '$current_session' at position $idx"
+        tmux refresh-client -S
+        exit 0
+    fi
+done
+
+tmux display-message "All bookmark slots full (use prefix+B+\` to clear)"

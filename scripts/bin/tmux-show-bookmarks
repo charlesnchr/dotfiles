@@ -1,0 +1,73 @@
+#!/opt/homebrew/bin/bash
+
+# Script to display bookmarked tmux sessions for status bar
+
+# Function to truncate string from beginning if longer than threshold
+truncate_beginning() {
+    local str="$1"
+    local threshold=30
+    local truncate_to=25
+
+    if [[ ${#str} -le $threshold ]]; then
+        echo "$str"
+        return
+    fi
+
+    local keep=$((truncate_to - 3))  # Account for "..."
+
+    echo "...${str: -$keep}"
+}
+
+# Load branch lookup cache
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+declare -A branch_map
+
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Load bookmarks
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+declare -A bookmarks
+
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Build output string
+output=""
+
+for idx in {1..5}; do
+    session="${bookmarks[$idx]}"
+
+    # Add separator if not first and there's content
+    if [[ -n $output ]] && [[ -n $session ]]; then
+        output+=" #[fg=colour239]│#[fg=colour223] "
+    fi
+
+    if [[ -n $session ]]; then
+        # Add index number with color
+        output+="#[fg=colour108,bold][$idx]#[fg=colour223,nobold]"
+
+        # Add session name (truncated)
+        session_display=$(truncate_beginning "$session")
+        output+=" $session_display"
+
+        # Add branch if available
+        if [[ -n ${branch_map[$session]} ]]; then
+            branch_display=$(truncate_beginning "${branch_map[$session]}")
+            output+=" #[fg=colour146]${branch_display}#[fg=colour223]"
+        fi
+    fi
+done
+
+# If no bookmarks, show helpful message
+if [[ -z $output ]]; then
+    output="No bookmarks (prefix+b to bookmark)"
+fi
+
+echo "$output"
