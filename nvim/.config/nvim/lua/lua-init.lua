@@ -481,7 +481,7 @@ require("toggleterm").setup{
 -- 	},
 -- })
 
-require('leap').add_default_mappings()
+-- Leap mappings are configured in plugins/editor.lua
 
 
 local python_lsp_home = vim.env.PYTHON_LSP_HOME

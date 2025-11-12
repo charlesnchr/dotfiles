@@ -193,7 +193,7 @@ if python_lsp_home == nil then
 	python_lsp_home = ""
 end
 
-require("lspconfig").pylsp.setup(config({
+vim.lsp.config('pylsp', config({
 	cmd_env = {
 		PATH = python_lsp_home .. ":" .. vim.env.PATH,
 	},
@@ -216,6 +216,7 @@ require("lspconfig").pylsp.setup(config({
 		debounce_text_changes = 200,
 	},
 }))
+vim.lsp.enable('pylsp')
 
 -- require("lspsaga").setup({
 -- 	symbol_in_winbar = {
@@ -230,15 +231,16 @@ require("lspconfig").pylsp.setup(config({
 -- 	},
 -- })
 
-require("lspconfig").clangd.setup(config({
+vim.lsp.config('clangd', config({
 	cmd = {
 		"clangd",
 		"--offset-encoding=utf-16",
 	},
 }))
+vim.lsp.enable('clangd')
 
 
-require'lspconfig'.ts_ls.setup(config({
+vim.lsp.config('ts_ls', config({
     filetypes = {
         "javascript",
         "javascriptreact",
@@ -280,22 +282,24 @@ require'lspconfig'.ts_ls.setup(config({
         }
     }
 }))
+vim.lsp.enable('ts_ls')
 
-require'lspconfig'.jsonls.setup(config({
+vim.lsp.config('jsonls', config({
     filetypes = {
         "json",
         "jsonc",
     },
 }))
+vim.lsp.enable('jsonls')
 
 -- ESLint LSP for linting
-require'lspconfig'.eslint.setup(config({
-    root_dir = require('lspconfig').util.root_pattern(
+vim.lsp.config('eslint', config({
+    root_markers = {
         '.eslintrc.js',
         '.eslintrc.json',
         '.eslintrc',
         'package.json'
-    ),
+    },
     on_attach = function(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
@@ -303,5 +307,6 @@ require'lspconfig'.eslint.setup(config({
         })
     end,
 }))
+vim.lsp.enable('eslint')
 
 return M

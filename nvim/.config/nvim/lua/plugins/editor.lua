@@ -154,13 +154,22 @@ return {
   -- Leap motion
   {
     "ggandor/leap.nvim",
-    keys = { "s", "S" },
+    keys = {
+      { "s", mode = { "n", "x", "o" }, desc = "Leap Forward to" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap Backward to" },
+      { "gs", mode = { "n", "x", "o" }, desc = "Leap from Windows" },
+    },
     config = function()
-      require("leap").add_default_mappings()
+      local leap = require("leap")
+      -- Set up default keymaps
+      vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+      vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
+      vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
+
       -- Highlight setup for colorschemes
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()
-          require("leap").init_highlight(true)
+          leap.init_highlight(true)
         end,
       })
     end,
