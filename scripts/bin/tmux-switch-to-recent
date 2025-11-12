@@ -1,0 +1,38 @@
+#!/opt/homebrew/bin/bash
+
+# Script to switch to a bookmarked session by index
+# Usage: tmux-switch-to-recent <index>
+
+index=$1
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+
+if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
+    echo "Usage: tmux-switch-to-recent <1-5>"
+    exit 1
+fi
+
+if [[ ! -f $bookmark_file ]]; then
+    echo "No bookmarked sessions"
+    exit 1
+fi
+
+# Load bookmarks
+declare -A bookmarks
+while IFS='=' read -r idx session; do
+    [[ -n $idx ]] && bookmarks[$idx]="$session"
+done < "$bookmark_file"
+
+session_name="${bookmarks[$index]}"
+
+if [[ -z $session_name ]]; then
+    echo "No session bookmarked at index $index"
+    exit 1
+fi
+
+# Switch to the session
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux switch-client -t "$session_name"
+else
+    echo "Session $session_name no longer exists"
+    exit 1
+fi

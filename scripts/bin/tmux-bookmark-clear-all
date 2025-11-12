@@ -1,0 +1,12 @@
+#!/opt/homebrew/bin/bash
+
+# Script to clear all bookmarks
+# Usage: tmux-bookmark-clear-all
+
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+
+# Clear the bookmark file
+> "$bookmark_file"
+
+tmux display-message "Cleared all bookmarks"
+tmux refresh-client -S
