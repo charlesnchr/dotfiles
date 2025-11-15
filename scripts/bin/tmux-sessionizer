@@ -1,5 +1,15 @@
 #!/opt/homebrew/bin/bash
 
+# If we're in a window named "sessionizer", close it (toggle behavior)
+current_window=$(tmux display-message -p '#{window_name}' 2>/dev/null)
+if [[ "$current_window" == "sessionizer" ]]; then
+    tmux kill-window
+    exit 0
+fi
+
+# Name this window "sessionizer" for toggle functionality
+tmux rename-window "sessionizer" 2>/dev/null
+
 # Load all directories from cache - no find commands!
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"

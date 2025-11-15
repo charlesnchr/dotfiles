@@ -1,0 +1,122 @@
+#!/opt/homebrew/bin/bash
+
+# Script to detect which bookmark was clicked and switch to it
+
+# Function to truncate string from beginning if longer than threshold
+truncate_beginning() {
+    local str="$1"
+    local threshold=25
+    local truncate_to=20
+
+    if [[ ${#str} -le $threshold ]]; then
+        echo "$str"
+        return
+    fi
+
+    local keep=$((truncate_to - 3))
+    echo "...${str: -$keep}"
+}
+
+# Get mouse position from tmux environment (set by the binding)
+mouse_x=$(tmux show-environment MOUSE_X 2>/dev/null | cut -d= -f2)
+client_width=$(tmux show-environment MOUSE_W 2>/dev/null | cut -d= -f2)
+
+if [[ -z $mouse_x ]]; then
+    exit 1
+fi
+
+# Load branch lookup cache
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+declare -A branch_map
+
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Load bookmarks
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+declare -A bookmarks
+
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Calculate the display width of each bookmark (approximate, without color codes)
+declare -A bookmark_widths
+declare -A bookmark_positions
+total_width=0
+
+for idx in {1..5}; do
+    session="${bookmarks[$idx]}"
+    if [[ -n $session ]]; then
+        # Calculate width: [idx] + space + session + branch (if exists)
+        width=0
+
+        # [idx] part
+        width=$((width + 3))  # [1], [2], etc.
+
+        # Session name
+        session_display=$(truncate_beginning "$session")
+        width=$((width + 1 + ${#session_display}))  # space + session name
+
+        # Branch if available
+        if [[ -n ${branch_map[$session]} ]]; then
+            branch_display=$(truncate_beginning "${branch_map[$session]}")
+            width=$((width + 1 + ${#branch_display}))  # space + branch
+        fi
+
+        # Add separator if not first
+        if [[ $total_width -gt 0 ]]; then
+            total_width=$((total_width + 3))  # " │ "
+        fi
+
+        bookmark_positions[$idx]=$total_width
+        bookmark_widths[$idx]=$width
+        total_width=$((total_width + width))
+    fi
+done
+
+# If no bookmarks, exit
+if [[ $total_width -eq 0 ]]; then
+    tmux display-message "No bookmarks"
+    exit 0
+fi
+
+# Calculate starting position (centered)
+start_pos=$(( (client_width - total_width) / 2 ))
+
+# Find which bookmark was clicked
+current_pos=$start_pos
+clicked_index=""
+
+for idx in {1..5}; do
+    session="${bookmarks[$idx]}"
+    if [[ -n $session ]]; then
+        # Add separator offset if not first
+        if [[ $current_pos -gt $start_pos ]]; then
+            current_pos=$((current_pos + 3))  # " │ "
+        fi
+
+        # Check if mouse_x is within this bookmark's range
+        end_pos=$((current_pos + bookmark_widths[$idx]))
+
+        if [[ $mouse_x -ge $current_pos ]] && [[ $mouse_x -lt $end_pos ]]; then
+            clicked_index=$idx
+            break
+        fi
+
+        current_pos=$end_pos
+    fi
+done
+
+# Switch to the session
+if [[ -n $clicked_index ]]; then
+    session="${bookmarks[$clicked_index]}"
+    if [[ -n $session ]]; then
+        tmux switch-client -t "$session"
+    fi
+fi
