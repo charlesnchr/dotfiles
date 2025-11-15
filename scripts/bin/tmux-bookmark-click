@@ -119,4 +119,12 @@ if [[ -n $clicked_index ]]; then
     if [[ -n $session ]]; then
         tmux switch-client -t "$session"
     fi
+else
+    # No bookmark clicked - jump to most recent session
+    current_session=$(tmux display-message -p '#{session_name}')
+    recent_session=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk -v current="$current_session" '$2 != current {print $2; exit}')
+
+    if [[ -n $recent_session ]]; then
+        tmux switch-client -t "$recent_session"
+    fi
 fi
