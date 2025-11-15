@@ -5,8 +5,8 @@
 # Function to truncate string from beginning if longer than threshold
 truncate_beginning() {
     local str="$1"
-    local threshold=30
-    local truncate_to=25
+    local threshold=25
+    local truncate_to=20
 
     if [[ ${#str} -le $threshold ]]; then
         echo "$str"
