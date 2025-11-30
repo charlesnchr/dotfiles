@@ -420,6 +420,22 @@ CapsLock & w::
         Send,{w}
 return
 
+CapsLock & a::
+SetTitleMatchMode, 2
+if getkeystate("shift") = 1
+    Send,{Media_Prev}
+else
+    IfWinExist, WindowsTerminal
+    {
+        WinActivate ; use the window found above
+        WinSet, Top,, A
+    }
+    else
+    {
+        Send #1 ; Run code ,, Hide ; this will be administrator
+    }
+return
+
 CapsLock & s::
 SetTitleMatchMode, 2
 if getkeystate("shift") = 1
@@ -432,39 +448,7 @@ else
     }
     else
     {
-        Send #1 ; Run code ,, Hide ; this will be administrator
-    }
-return
-
-CapsLock & a::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 1
-    Send,{Media_Prev}
-else
-    IfWinExist, Neovim
-    {
-        WinActivate ; use the window found above
-        WinSet, Top,, A
-    }
-    else
-    {
-        Send #3 ; Run code ,, Hide ; this will be administrator
-    }
-return
-
-CapsLock & d::
-SetTitleMatchMode, 2
-if getkeystate("shift") = 1
-    Send,{Media_Next}
-else
-    IfWinExist, ahk_class CabinetWClass
-    {
-        WinActivate
-        WinSet, Top,, A
-    }
-    else
-    {
-        send #2
+        Send #2 ; Run code ,, Hide ; this will be administrator
     }
 return
 

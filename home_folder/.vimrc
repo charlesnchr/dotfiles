@@ -93,8 +93,8 @@ nnoremap <ScrollWheelDown> <C-E>
 if has('mac')
     let g:vimtex_view_method = 'skim'
 elseif has('unix')
-    let g:latex_view_general_viewer = 'zathura'
-    let g:vimtex_view_method = "zathura"
+    let g:latex_view_general_viewer = 'explorer.exe'
+    let g:vimtex_view_method = "explorer.exe"
 endif
 let g:vimtex_syntax_conceal_disable = 1
 let g:vimtex_fold_enabled = 1
