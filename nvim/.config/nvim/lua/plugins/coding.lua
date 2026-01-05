@@ -444,7 +444,7 @@ return {
       auto_suggestions = false,
       auto_set_keymaps = true,
       minimize_diff = false,
-      enable_token_counting = true,
+      enable_token_counting = false,
       auto_approve_tool_permissions = { },
     },
     disabled_tools = { "bash", "python", "web_search", "ls", "view", "search_files", "thought" },
@@ -486,6 +486,10 @@ return {
     prompt_logger = {
       enabled = true,
       log_dir = vim.fn.stdpath("cache") .. "/avante_prompts",
+    },
+
+    selection = {
+      hint_display = "none",
     },
   },
   dependencies = {
