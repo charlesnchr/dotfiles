@@ -73,7 +73,7 @@ keybinds clear-defaults=true {
 
         // Bookmark management
         bind "b" { Run "zellij-bookmark-add"; SwitchToMode "Normal"; }
-        bind "B" { SwitchToMode "bookmark"; }
+        bind "B" { Run "zellij-bookmark-select"; SwitchToMode "Normal"; }
 
         // Reload config
         bind "r" { Run "zellij" "action" "reload-config"; SwitchToMode "Normal"; }
@@ -85,18 +85,6 @@ keybinds clear-defaults=true {
         bind "v" { Run "zellij-launch-overview"; SwitchToMode "Normal"; }
 
         // Escape back to normal
-        bind "Esc" { SwitchToMode "Normal"; }
-        bind "Ctrl c" { SwitchToMode "Normal"; }
-    }
-
-    // Bookmark mode - for setting specific bookmark slots
-    bookmark {
-        bind "1" { Run "zellij-bookmark-session" "1"; SwitchToMode "Normal"; }
-        bind "2" { Run "zellij-bookmark-session" "2"; SwitchToMode "Normal"; }
-        bind "3" { Run "zellij-bookmark-session" "3"; SwitchToMode "Normal"; }
-        bind "4" { Run "zellij-bookmark-session" "4"; SwitchToMode "Normal"; }
-        bind "5" { Run "zellij-bookmark-session" "5"; SwitchToMode "Normal"; }
-        bind "`" { Run "zellij-bookmark-clear-all"; SwitchToMode "Normal"; }
         bind "Esc" { SwitchToMode "Normal"; }
         bind "Ctrl c" { SwitchToMode "Normal"; }
     }

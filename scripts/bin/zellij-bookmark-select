@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Interactive bookmark slot selector
+# Usage: zellij-bookmark-select
+
+echo "Select bookmark slot (1-5) or \` to clear all:"
+read -n 1 slot
+
+case $slot in
+    [1-5])
+        ~/bin/zellij-bookmark-session "$slot"
+        ;;
+    '`')
+        ~/bin/zellij-bookmark-clear-all
+        ;;
+    *)
+        echo "Invalid selection"
+        ;;
+esac
