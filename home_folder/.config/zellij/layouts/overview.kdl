@@ -31,8 +31,8 @@ layout {
                 args "5"
             }
             pane name="claude" focus=true {
-                // This pane will show the Claude window
-                // You can attach to it from all sessions
+                // Shared Claude pane
+                // Use this for running claude-code across all your sessions
             }
         }
     }

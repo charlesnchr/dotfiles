@@ -39,22 +39,46 @@ if [[ -z $session_exists ]]; then
     exit 0
 fi
 
-# Show session info
-echo "═══════════════════════════════════════"
-echo "  Session $index: $session_name"
-echo "═══════════════════════════════════════"
-echo ""
-echo "This is a view into session: $session_name"
-echo ""
-echo "Press Alt+$index to switch to this session"
-echo ""
-echo "─────────────────────────────────────"
-echo ""
+# Show live session info with continuous updates
+clear
 
-# In a real implementation, we would mirror the session here
-# For now, just show info and keep the pane alive
-# Zellij doesn't support session mirroring in the same way tmux does
-# But we can use `zellij pipe` to get session information
+# Function to display session info
+show_session_info() {
+    clear
+    echo "═══════════════════════════════════════"
+    echo "  📍 Slot $index: $session_name"
+    echo "═══════════════════════════════════════"
+    echo ""
 
-# Keep the pane alive
-sleep infinity
+    # Show session status
+    if zellij list-sessions 2>/dev/null | grep -q "(current).*$session_name"; then
+        echo "🟢 Status: Active (you're here)"
+    else
+        echo "🟡 Status: Running"
+    fi
+    echo ""
+
+    # Show working directory if available
+    if [[ -d ~/.local/share/zellij/sessions/$session_name ]]; then
+        echo "📂 Session exists"
+    fi
+    echo ""
+
+    # Show quick actions
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "  Alt+$index  → Switch to this session"
+    echo "  Ctrl+a B $index → Rebookmark this slot"
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+
+    # Show last update time
+    echo "Last updated: $(date '+%H:%M:%S')"
+}
+
+# Update every 2 seconds
+while true; do
+    show_session_info
+    sleep 2
+done
