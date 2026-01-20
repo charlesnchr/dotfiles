@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Helper script to switch between Zellij sessions
+# Usage: zellij-switch-session <session-name> [path]
+
+session_name=$1
+session_path=$2
+
+if [[ -z $session_name ]]; then
+    echo "Usage: zellij-switch-session <session-name> [path]"
+    exit 1
+fi
+
+# Check if session exists
+session_exists=$(zellij list-sessions 2>/dev/null | grep -w "$session_name")
+
+if [[ -z $session_exists ]]; then
+    # Session doesn't exist, create it
+    if [[ -n $session_path ]] && [[ -d $session_path ]]; then
+        cd "$session_path"
+    fi
+
+    # Detach from current session and create new one
+    if [[ -n $ZELLIJ ]]; then
+        zellij action detach
+        sleep 0.1
+    fi
+
+    zellij attach -c "$session_name"
+else
+    # Session exists, switch to it
+    if [[ -n $ZELLIJ ]]; then
+        # Currently in a session, need to detach and reattach
+        zellij action detach
+        sleep 0.1
+    fi
+
+    zellij attach "$session_name"
+fi

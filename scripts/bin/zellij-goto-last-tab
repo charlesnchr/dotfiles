@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Go to the last tab (like tmux's select-window -t <last-window>)
+
+# Get the number of tabs
+tab_count=$(zellij action query-tab-names 2>/dev/null | wc -l)
+
+if [[ $tab_count -gt 0 ]]; then
+    zellij action go-to-tab $tab_count
+fi

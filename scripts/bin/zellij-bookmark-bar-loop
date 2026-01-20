@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Continuously display bookmark bar
+# This is a simpler alternative to the WASM plugin
+
+while true; do
+    clear
+
+    # Get terminal width
+    width=$(tput cols)
+
+    # Get bookmark display
+    bookmarks=$(~/bin/zellij-show-bookmarks)
+
+    # Calculate padding for centering
+    bookmark_len=${#bookmarks}
+    padding=$(( (width - bookmark_len) / 2 ))
+
+    # Print centered bookmarks
+    printf "%${padding}s" ""
+    echo -e "\033[1;33m${bookmarks}\033[0m"
+
+    # Update every 2 seconds
+    sleep 2
+done

@@ -1,0 +1,39 @@
+// Virtual session overview layout
+// Shows all sessions in a grid view
+
+layout {
+    tab name="overview" focus=true {
+        pane split_direction="vertical" {
+            pane split_direction="horizontal" {
+                pane {
+                    command "zellij-session-overview"
+                    args "1"
+                }
+                pane {
+                    command "zellij-session-overview"
+                    args "2"
+                }
+            }
+            pane split_direction="horizontal" {
+                pane {
+                    command "zellij-session-overview"
+                    args "3"
+                }
+                pane {
+                    command "zellij-session-overview"
+                    args "4"
+                }
+            }
+        }
+        pane split_direction="horizontal" {
+            pane {
+                command "zellij-session-overview"
+                args "5"
+            }
+            pane name="claude" focus=true {
+                // This pane will show the Claude window
+                // You can attach to it from all sessions
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Go to a tab by name, or create it if it doesn't exist
+# Usage: zellij-goto-or-create-tab <tab-name>
+
+tab_name=$1
+
+if [[ -z $tab_name ]]; then
+    echo "Usage: zellij-goto-or-create-tab <tab-name>"
+    exit 1
+fi
+
+# Get list of existing tabs
+existing_tabs=$(zellij action query-tab-names 2>/dev/null)
+
+# Check if tab exists
+if echo "$existing_tabs" | grep -qi "^${tab_name}$"; then
+    # Tab exists, try to switch to it
+    # Note: Zellij doesn't have a direct "go to tab by name" command
+    # We need to use the tab index
+    tab_index=$(echo "$existing_tabs" | grep -in "^${tab_name}$" | cut -d: -f1)
+    if [[ -n $tab_index ]]; then
+        zellij action go-to-tab $tab_index
+    fi
+else
+    # Tab doesn't exist, create it
+    case "$tab_name" in
+        ranger)
+            zellij action new-tab -n ranger
+            zellij action write-chars 'zsh -i -c "ranger"'
+            zellij action write 13  # Enter key
+            ;;
+        nvim)
+            zellij action new-tab -n nvim
+            zellij action write-chars 'penv && nvim'
+            zellij action write 13  # Enter key
+            ;;
+        *)
+            zellij action new-tab -n "$tab_name"
+            ;;
+    esac
+fi

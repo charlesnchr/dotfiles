@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Display overview of a session
+# Usage: zellij-session-overview <bookmark-index>
+
+index=$1
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+if [[ -z $index ]]; then
+    echo "No session index specified"
+    sleep infinity
+    exit 1
+fi
+
+# Load bookmarks
+declare -A bookmarks
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+session_name="${bookmarks[$index]}"
+
+if [[ -z $session_name ]]; then
+    echo "Slot $index: No session bookmarked"
+    echo ""
+    echo "Press Ctrl+a B $index to bookmark a session here"
+    sleep infinity
+    exit 0
+fi
+
+# Check if session exists
+session_exists=$(zellij list-sessions 2>/dev/null | grep -w "$session_name")
+
+if [[ -z $session_exists ]]; then
+    echo "Slot $index: $session_name (not running)"
+    sleep infinity
+    exit 0
+fi
+
+# Show session info
+echo "═══════════════════════════════════════"
+echo "  Session $index: $session_name"
+echo "═══════════════════════════════════════"
+echo ""
+echo "This is a view into session: $session_name"
+echo ""
+echo "Press Alt+$index to switch to this session"
+echo ""
+echo "─────────────────────────────────────"
+echo ""
+
+# In a real implementation, we would mirror the session here
+# For now, just show info and keep the pane alive
+# Zellij doesn't support session mirroring in the same way tmux does
+# But we can use `zellij pipe` to get session information
+
+# Keep the pane alive
+sleep infinity

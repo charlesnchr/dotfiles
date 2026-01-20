@@ -1,0 +1,239 @@
+// Zellij configuration - migrated from tmux
+// Main keybindings and settings
+
+keybinds clear-defaults=true {
+    // Normal mode - equivalent to tmux prefix mode
+    normal {
+        // Prefix key: Ctrl+a (like tmux)
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+        bind "Ctrl q" { SwitchToMode "tmux"; }
+
+        // Vim-like pane navigation (without prefix)
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+
+        // Quick session bookmarks (Alt+1-5)
+        bind "Alt 1" { Run "zellij-switch-to-recent" "1"; }
+        bind "Alt 2" { Run "zellij-switch-to-recent" "2"; }
+        bind "Alt 3" { Run "zellij-switch-to-recent" "3"; }
+        bind "Alt 4" { Run "zellij-switch-to-recent" "4"; }
+        bind "Alt 5" { Run "zellij-switch-to-recent" "5"; }
+
+        // Send literal Alt+a
+        bind "Alt a" { Write 27; WriteChars "a"; }
+    }
+
+    // Tmux mode - activated by prefix (Ctrl+a or Ctrl+q)
+    tmux {
+        // Send prefix to terminal
+        bind "Ctrl a" { Write 1; SwitchToMode "Normal"; }
+        bind "Ctrl q" { Write 17; SwitchToMode "Normal"; }
+
+        // Pane navigation (vim-like with Ctrl)
+        bind "Ctrl k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "Ctrl j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+        bind "Ctrl h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "Ctrl l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+
+        // Pane resizing (vim-like)
+        bind "K" { Resize "Increase Up"; }
+        bind "J" { Resize "Increase Down"; }
+        bind "H" { Resize "Increase Left"; }
+        bind "L" { Resize "Increase Right"; }
+
+        // Session management
+        bind "Ctrl b" { PreviousSwapLayout; SwitchToMode "Normal"; }
+        bind "Ctrl u" { PreviousSwapLayout; SwitchToMode "Normal"; }
+
+        // Tab/Window management
+        bind "c" { NewTab; SwitchToMode "Normal"; }
+        bind "x" { CloseTab; SwitchToMode "Normal"; }
+        bind "," { SwitchToMode "RenameTab"; }
+        bind "Ctrl o" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "9" { Run "zellij-goto-last-tab"; SwitchToMode "Normal"; }
+
+        // Pane management
+        bind "/" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "Ctrl i" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "|" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "\\" { NewPane "Right"; SwitchToMode "Normal"; }
+
+        // Sessionizer (equivalent to tmux prefix+o)
+        bind "o" { Run "zellij" "run" "--" "zellij-sessionizer"; SwitchToMode "Normal"; }
+
+        // Quick window creation
+        bind "Ctrl w" { Run "zellij-create-tabs"; SwitchToMode "Normal"; }
+
+        // Quick tab access
+        bind "Ctrl r" { Run "zellij-goto-or-create-tab" "ranger"; SwitchToMode "Normal"; }
+        bind "Ctrl e" { Run "zellij-goto-or-create-tab" "nvim"; SwitchToMode "Normal"; }
+        bind "Ctrl t" { Run "zellij-goto-or-create-tab" "zsh"; SwitchToMode "Normal"; }
+
+        // Bookmark management
+        bind "b" { Run "zellij-bookmark-add"; SwitchToMode "Normal"; }
+        bind "B" { SwitchToMode "bookmark"; }
+
+        // Reload config
+        bind "r" { Run "zellij" "action" "reload-config"; SwitchToMode "Normal"; }
+
+        // Command prompt
+        bind ";" { SwitchToMode "Pane"; }
+
+        // Virtual session overview
+        bind "v" { Run "zellij-launch-overview"; SwitchToMode "Normal"; }
+
+        // Escape back to normal
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+    }
+
+    // Bookmark mode - for setting specific bookmark slots
+    bookmark {
+        bind "1" { Run "zellij-bookmark-session" "1"; SwitchToMode "Normal"; }
+        bind "2" { Run "zellij-bookmark-session" "2"; SwitchToMode "Normal"; }
+        bind "3" { Run "zellij-bookmark-session" "3"; SwitchToMode "Normal"; }
+        bind "4" { Run "zellij-bookmark-session" "4"; SwitchToMode "Normal"; }
+        bind "5" { Run "zellij-bookmark-session" "5"; SwitchToMode "Normal"; }
+        bind "`" { Run "zellij-bookmark-clear-all"; SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+    }
+
+    // Pane mode
+    pane {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "h" { MoveFocus "Left"; }
+        bind "l" { MoveFocus "Right"; }
+        bind "j" { MoveFocus "Down"; }
+        bind "k" { MoveFocus "Up"; }
+        bind "p" { SwitchFocus; }
+        bind "n" { NewPane; SwitchToMode "Normal"; }
+        bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "r" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "f" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "z" { TogglePaneFrames; SwitchToMode "Normal"; }
+        bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+        bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
+    }
+
+    // Tab/Window rename mode
+    renametab {
+        bind "Esc" { UndoRenameTab; SwitchToMode "Normal"; }
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // Scroll mode
+    scroll {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "e" { EditScrollback; SwitchToMode "Normal"; }
+        bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+        bind "Ctrl f" "PageDown" { PageScrollDown; }
+        bind "Ctrl b" "PageUp" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+    }
+
+    // Search mode
+    search {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "n" { Search "down"; }
+        bind "p" { Search "up"; }
+        bind "c" { SearchToggleOption "CaseSensitivity"; }
+        bind "w" { SearchToggleOption "Wrap"; }
+        bind "o" { SearchToggleOption "WholeWord"; }
+    }
+
+    entersearch {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Search"; }
+    }
+
+    // Session mode
+    session {
+        bind "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "d" { Detach; }
+    }
+
+    // Shared bindings across modes
+    shared_except "normal" {
+        bind "Enter" "Esc" { SwitchToMode "Normal"; }
+    }
+
+    shared_except "tmux" {
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+        bind "Ctrl q" { SwitchToMode "tmux"; }
+    }
+}
+
+// UI settings
+ui {
+    pane_frames {
+        rounded_corners true
+        hide_session_name false
+    }
+}
+
+// Theme - Gruvbox Dark (matching tmux theme)
+themes {
+    gruvbox-dark {
+        fg 235 219 178      // fg0
+        bg 40 40 40         // bg0
+        black 40 40 40      // bg0
+        red 204 36 29       // red
+        green 152 151 26    // green
+        yellow 215 153 33   // yellow
+        blue 69 133 136     // blue
+        magenta 177 98 134  // purple
+        cyan 104 157 106    // aqua
+        white 235 219 178   // fg0
+        orange 214 93 14    // orange
+    }
+}
+
+theme "gruvbox-dark"
+
+// Default shell
+default_shell "zsh"
+
+// Scrollback
+scrollback_editor "nvim"
+scroll_buffer_size 200000
+
+// Mouse support
+mouse_mode true
+copy_on_select true
+
+// Pane frames
+pane_frames true
+
+// Session serialization for persistence
+session_serialization true
+
+// Auto layout
+auto_layout true
+
+// Default mode
+default_mode "normal"
+
+// Layout directory
+layout_dir "/home/user/.config/zellij/layouts"
+
+// Copy command
+copy_command "wl-copy"
+
+// Simplified UI
+simplified_ui false
+
+// Mirror session
+mirror_session false

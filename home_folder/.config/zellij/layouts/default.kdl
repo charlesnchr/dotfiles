@@ -1,0 +1,22 @@
+// Default Zellij layout with bookmark bar
+
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+        pane size=1 borderless=true {
+            command "zellij-bookmark-bar-loop"
+            focus false
+            name "bookmarks"
+        }
+    }
+
+    tab name="zsh" focus=true {
+        pane
+    }
+}

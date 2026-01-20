@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+# Zellij sessionizer - migrated from tmux-sessionizer
+# Interactive session selector with fzf
+
+# If we're in a tab named "sessionizer", close it (toggle behavior)
+current_tab=$(zellij action query-tab-names 2>/dev/null | grep -w "sessionizer")
+if [[ -n "$current_tab" ]]; then
+    zellij action close-tab
+    exit 0
+fi
+
+# Rename current tab to "sessionizer" for toggle functionality
+zellij action rename-tab "sessionizer" 2>/dev/null
+
+# Load all directories from cache - no find commands!
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+
+# Pre-load branch lookup cache into associative array
+declare -A branch_map
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Get current session to exclude it
+current_session=$(zellij list-sessions 2>/dev/null | grep "^(current)" | awk '{print $2}')
+
+# Get a list of running zellij sessions
+zellij_sessions_raw=$(zellij list-sessions 2>/dev/null | grep -v "^$" | grep -v "^SESSIONS" | awk '{if ($1 == "(current)") print $2; else print $1}')
+zellij_sessions=()
+declare -A active_sessions
+
+while IFS= read -r session; do
+    if [[ -n $session ]]; then
+        active_sessions["$session"]=1
+        # Skip current session
+        [[ "$session" == "$current_session" ]] && continue
+
+        # Look up branch from pre-loaded map
+        if [[ -n ${branch_map[$session]} ]]; then
+            zellij_sessions+=("▶️ $session  ${branch_map[$session]}")
+        else
+            zellij_sessions+=("▶️ $session")
+        fi
+    fi
+done <<< "$zellij_sessions_raw"
+
+# Load directories from cache, filtering out ones with active sessions
+selected_dirs=()
+if [[ -f $all_dirs_cache ]]; then
+    while IFS= read -r line; do
+        # Extract folder name and session name in one go
+        folder=${line%% *}
+        session_name=${folder//./_}
+
+        # Skip if session exists (O(1) lookup)
+        [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
+    done < "$all_dirs_cache"
+fi
+
+# Use the filtered paths array and zellij sessions in fzf
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(printf "%s\n" "${zellij_sessions[@]}" "${selected_dirs[@]}" | fzf \
+        --height=80% \
+        --margin=5%,5% \
+        --preview 'path=$(echo {} | awk "{print \$NF}"); if [[ -d "$path" ]]; then /bin/ls -la "$path"; else echo "Session: $path"; fi' \
+        --prompt="projects > " \
+        --delimiter='  ' \
+        --with-nth=1,2 \
+        --ansi \
+        --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
+        --header='[name]  [branch/type]  (ctrl-r: refresh)' \
+        --bind='ctrl-r:reload(~/bin/tmux-sessionizer-list)'
+    )
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Check if this is a session selection (starts with emoji)
+if [[ $selected == ▶️* ]]; then
+    # Extract session name (second field)
+    selected_name=$(echo "$selected" | awk '{print $2}')
+    selected_path=$selected_name
+else
+    # Extract the actual path (last field)
+    selected_path=$(echo "$selected" | awk '{print $NF}')
+
+    # If it's not a directory, treat as session name
+    if [[ ! -d $selected_path ]]; then
+        selected_path=$selected
+    fi
+
+    selected_name=$(basename "$selected_path" | tr . _)
+fi
+
+# Check if running inside Zellij
+if [[ -z $ZELLIJ ]]; then
+    # Not in Zellij, start new session
+    if [[ -d $selected_path ]]; then
+        cd "$selected_path" && zellij attach -c "$selected_name"
+    else
+        zellij attach "$selected_name" 2>/dev/null || zellij attach -c "$selected_name"
+    fi
+    exit 0
+fi
+
+# Check if session exists
+session_exists=$(zellij list-sessions 2>/dev/null | grep -w "$selected_name")
+
+if [[ -z $session_exists ]]; then
+    # Create new session
+    if [[ -d $selected_path ]]; then
+        # Create session with path
+        cd "$selected_path"
+        zellij action new-tab -l default -n "$selected_name"
+        # Switch to the new session (in Zellij, we switch tabs instead)
+        # For true session switching, we need to use a different approach
+        # Let's create a proper session switch script
+        ~/bin/zellij-switch-session "$selected_name" "$selected_path"
+    else
+        zellij action new-tab -l default -n "$selected_name"
+        ~/bin/zellij-switch-session "$selected_name"
+    fi
+else
+    # Switch to existing session
+    ~/bin/zellij-switch-session "$selected_name"
+fi

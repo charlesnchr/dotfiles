@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Create missing priority tabs and sort
+# Equivalent to tmux-create-windows.sh
+
+# Remember current active tab name
+current_tab=$(zellij action query-tab-names 2>/dev/null | head -1)
+
+# Get list of existing tabs
+existing_tabs=$(zellij action query-tab-names 2>/dev/null)
+
+# Check for ranger tab
+if ! echo "$existing_tabs" | grep -qi "ranger"; then
+    zellij action new-tab -n ranger
+    zellij action write-chars 'zsh -i -c "ranger"'
+    zellij action write 13  # Enter key
+fi
+
+# Check for nvim tab
+if ! echo "$existing_tabs" | grep -qi "nvim"; then
+    zellij action new-tab -n nvim
+    zellij action write-chars 'penv && nvim'
+    zellij action write 13  # Enter key
+fi
+
+# Check for claude tab
+if ! echo "$existing_tabs" | grep -qi "claude"; then
+    zellij action new-tab -n claude
+fi
+
+# Check for log tab
+if ! echo "$existing_tabs" | grep -qi "log"; then
+    zellij action new-tab -n log
+fi
+
+# Check for zsh tab
+if ! echo "$existing_tabs" | grep -q "^zsh$"; then
+    zellij action new-tab -n zsh
+fi
+
+# Note: Zellij doesn't have built-in tab reordering like tmux
+# We'll need to handle this differently or use a layout instead
+# For now, just create the tabs
+
+echo "Tabs created"

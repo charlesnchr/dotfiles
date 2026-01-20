@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Launch the virtual session overview
+# This creates a special view showing all bookmarked sessions in a grid
+
+# Check if already in overview session
+current_session=$(zellij list-sessions 2>/dev/null | grep "^(current)" | awk '{print $2}')
+
+if [[ "$current_session" == "overview" ]]; then
+    echo "Already in overview session"
+    exit 0
+fi
+
+# Check if overview session exists
+overview_exists=$(zellij list-sessions 2>/dev/null | grep -w "overview")
+
+if [[ -z $overview_exists ]]; then
+    # Create overview session with custom layout
+    if [[ -n $ZELLIJ ]]; then
+        zellij action detach
+        sleep 0.1
+    fi
+    zellij attach -c overview -l overview
+else
+    # Switch to existing overview session
+    ~/bin/zellij-switch-session overview
+fi

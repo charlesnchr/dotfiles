@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Script to clear all bookmarked sessions
+# Usage: zellij-bookmark-clear-all
+
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+# Clear the bookmark file
+> "$bookmark_file"
+
+echo "All bookmarks cleared"
