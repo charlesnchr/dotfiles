@@ -1,0 +1,32 @@
+#!/opt/homebrew/bin/bash
+
+# Quick session switcher for zellij using fzf
+# Simpler than full sessionizer - just switches between existing sessions
+
+# Get list of sessions
+sessions=$(zellij list-sessions 2>/dev/null)
+
+if [[ -z "$sessions" ]]; then
+    echo "No zellij sessions found"
+    exit 1
+fi
+
+# Get current session
+current=$(echo "$sessions" | grep '(current)' | awk '{print $1}')
+
+# Use fzf to select
+selected=$(echo "$sessions" | awk '{print $1}' | grep -v "^$current$" | fzf \
+    --height=40% \
+    --prompt="Switch to session > " \
+    --header="Current: $current"
+)
+
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+# Note: Can't switch sessions from within zellij directly
+# Show the session manager instead
+echo "Selected: $selected"
+echo "Use session manager to complete the switch..."
+zellij action launch-or-focus-plugin "session-manager" --floating

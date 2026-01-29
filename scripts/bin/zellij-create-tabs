@@ -1,0 +1,60 @@
+#!/opt/homebrew/bin/bash
+
+# Create standard tabs in zellij session
+# Equivalent to tmux-create-windows.sh
+
+# Get list of existing tab names
+existing_tabs=$(zellij action query-tab-names 2>/dev/null)
+
+# Helper function to check if tab exists
+tab_exists() {
+    echo "$existing_tabs" | grep -qi "^$1$"
+}
+
+# Helper function to create tab and run command
+create_tab() {
+    local name="$1"
+    local cmd="$2"
+
+    if ! tab_exists "$name"; then
+        if [[ -n "$cmd" ]]; then
+            zellij action new-tab --name "$name" --layout-dir "$HOME/.config/zellij/layouts"
+            # Give it a moment to create
+            sleep 0.2
+            # Send the command
+            zellij action write-chars "$cmd"
+            zellij action write 13  # Enter key
+        else
+            zellij action new-tab --name "$name"
+        fi
+        echo "Created tab: $name"
+    else
+        echo "Tab already exists: $name"
+    fi
+}
+
+# Create standard tabs
+# Note: Order matters - first created will be leftmost
+
+# 1. zsh (main shell) - probably already exists
+if ! tab_exists "zsh"; then
+    # Rename current tab to zsh if it's unnamed
+    zellij action rename-tab "zsh"
+fi
+
+# 2. ranger
+create_tab "ranger" "ranger"
+
+# 3. nvim
+create_tab "nvim" "nvim"
+
+# 4. claude
+create_tab "claude" "ccv -y"
+
+# 5. log
+create_tab "log" ""
+
+# Go back to first tab
+zellij action go-to-tab 1
+
+echo "Standard tabs created/verified"

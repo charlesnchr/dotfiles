@@ -197,6 +197,7 @@ vim.lsp.config('pylsp', config({
 	cmd_env = {
 		PATH = python_lsp_home .. ":" .. vim.env.PATH,
 	},
+	filetypes = { "python" },
 	settings = {
 		pylsp = {
 			plugins = {
@@ -236,6 +237,7 @@ vim.lsp.config('clangd', config({
 		"clangd",
 		"--offset-encoding=utf-16",
 	},
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
 }))
 vim.lsp.enable('clangd')
 
@@ -294,6 +296,15 @@ vim.lsp.enable('jsonls')
 
 -- ESLint LSP for linting
 vim.lsp.config('eslint', config({
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "vue",
+        "svelte",
+        "astro"
+    },
     root_markers = {
         '.eslintrc.js',
         '.eslintrc.json',

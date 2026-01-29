@@ -1,0 +1,52 @@
+#!/opt/homebrew/bin/bash
+
+# Script to display bookmarked zellij sessions
+# Can be used in status bar or standalone
+
+# Load branch lookup cache
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+declare -A branch_map
+
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Load bookmarks
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+declare -A bookmarks
+
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Build output string
+output=""
+
+for idx in {1..5}; do
+    session="${bookmarks[$idx]}"
+
+    if [[ -n $session ]]; then
+        # Add separator if not first
+        if [[ -n $output ]]; then
+            output+=" | "
+        fi
+
+        output+="[$idx] $session"
+
+        # Add branch if available
+        if [[ -n ${branch_map[$session]} ]]; then
+            output+=" ${branch_map[$session]}"
+        fi
+    fi
+done
+
+# If no bookmarks, show helpful message
+if [[ -z $output ]]; then
+    output="No bookmarks (prefix+b to bookmark)"
+fi
+
+echo "$output"

@@ -1,0 +1,80 @@
+#!/opt/homebrew/bin/bash
+
+# Script to switch to a bookmarked zellij session by index
+# Usage: zellij-switch-to-bookmark <index>
+#
+# Note: Zellij doesn't support direct session switching from within a session.
+# This script will either:
+# - If outside zellij: attach to the bookmarked session
+# - If inside zellij: show instructions or launch session manager
+
+index=$1
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
+    echo "Usage: zellij-switch-to-bookmark <1-5>"
+    exit 1
+fi
+
+if [[ ! -f $bookmark_file ]]; then
+    echo "No bookmarked sessions"
+    exit 1
+fi
+
+# Load bookmarks
+declare -A bookmarks
+while IFS='=' read -r idx session; do
+    [[ -n $idx ]] && bookmarks[$idx]="$session"
+done < "$bookmark_file"
+
+session_name="${bookmarks[$index]}"
+
+if [[ -z $session_name ]]; then
+    echo "No session bookmarked at index $index"
+    exit 1
+fi
+
+# Check if session exists
+if ! zellij list-sessions 2>/dev/null | grep -q "^$session_name"; then
+    # Session doesn't exist - try to create it from cache
+    all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+    session_path=""
+    if [[ -f $all_dirs_cache ]]; then
+        while IFS= read -r line; do
+            folder=$(echo "$line" | awk '{print $1}')
+            if [[ "${folder//./_}" == "$session_name" ]]; then
+                session_path=$(echo "$line" | awk '{print $NF}')
+                break
+            fi
+        done < "$all_dirs_cache"
+    fi
+
+    if [[ -z $ZELLIJ ]]; then
+        # Outside zellij - create and attach
+        if [[ -n $session_path && -d $session_path ]]; then
+            cd "$session_path" && zellij -s "$session_name"
+        else
+            zellij -s "$session_name"
+        fi
+    else
+        # Inside zellij - create in background
+        if [[ -n $session_path && -d $session_path ]]; then
+            (cd "$session_path" && zellij -s "$session_name" &)
+        else
+            (zellij -s "$session_name" &)
+        fi
+        sleep 0.5
+        echo "Created session '$session_name'. Use session manager to switch."
+        zellij action launch-or-focus-plugin "session-manager" --floating
+    fi
+else
+    # Session exists
+    if [[ -z $ZELLIJ ]]; then
+        # Outside zellij - just attach
+        zellij attach "$session_name"
+    else
+        # Inside zellij - use session manager
+        echo "Switching to '$session_name'..."
+        zellij action launch-or-focus-plugin "session-manager" --floating
+    fi
+fi

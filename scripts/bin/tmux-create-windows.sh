@@ -19,6 +19,7 @@ fi
 # Check for claude window
 if ! tmux list-windows -F "#{window_name}" | grep -qi "claude"; then
     tmux new-window -n claude
+    tmux send-keys -t claude 'ccv -y' Enter
 fi
 
 # Check for log window
