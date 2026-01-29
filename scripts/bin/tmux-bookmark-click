@@ -113,10 +113,30 @@ for idx in {1..5}; do
     fi
 done
 
-# Switch to the session
+# Switch to the session (create if it doesn't exist)
 if [[ -n $clicked_index ]]; then
     session="${bookmarks[$clicked_index]}"
     if [[ -n $session ]]; then
+        if ! tmux has-session -t="$session" 2>/dev/null; then
+            # Look up path from sessionizer cache
+            all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+            session_path=""
+            if [[ -f $all_dirs_cache ]]; then
+                while IFS= read -r line; do
+                    folder=$(echo "$line" | awk '{print $1}')
+                    if [[ "${folder//./_}" == "$session" ]]; then
+                        session_path=$(echo "$line" | awk '{print $NF}')
+                        break
+                    fi
+                done < "$all_dirs_cache"
+            fi
+
+            if [[ -n $session_path && -d $session_path ]]; then
+                tmux new-session -ds "$session" -c "$session_path"
+            else
+                tmux new-session -ds "$session"
+            fi
+        fi
         tmux switch-client -t "$session"
     fi
 else

@@ -1,0 +1,47 @@
+#!/opt/homebrew/bin/bash
+
+# Script to toggle bookmark for current session at specified index
+# Usage: zellij-bookmark-session <1-5>
+
+index=$1
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
+    echo "Usage: zellij-bookmark-session <1-5>"
+    exit 1
+fi
+
+# Get current session name
+current_session=$(zellij list-sessions 2>/dev/null | grep '(current)' | awk '{print $1}')
+
+if [[ -z $current_session ]]; then
+    echo "Not in a zellij session"
+    exit 1
+fi
+
+# Read existing bookmarks into associative array
+declare -A bookmarks
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Check if current session is already bookmarked at this index
+if [[ "${bookmarks[$index]}" == "$current_session" ]]; then
+    # Clear the bookmark
+    unset bookmarks[$index]
+    echo "Cleared bookmark $index"
+else
+    # Set the bookmark
+    bookmarks[$index]="$current_session"
+    echo "Bookmarked '$current_session' at position $index"
+fi
+
+# Write back to file
+> "$bookmark_file"
+for idx in {1..5}; do
+    if [[ -n ${bookmarks[$idx]} ]]; then
+        echo "$idx=${bookmarks[$idx]}" >> "$bookmark_file"
+    fi
+done

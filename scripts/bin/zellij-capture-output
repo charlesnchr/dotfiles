@@ -1,0 +1,16 @@
+#!/opt/homebrew/bin/bash
+
+# Capture pane output in zellij and open in editor
+# Equivalent to tmux-capture-last-command-output plugin
+
+# Zellij has built-in scrollback, but capturing to file requires dump-screen
+# or using the edit-scrollback feature
+
+# Option 1: Use zellij's edit-scrollback action (opens in $EDITOR)
+echo "Launching scrollback editor..."
+zellij action edit-scrollback
+
+# The above opens the scrollback in your $EDITOR (nvim)
+# If you want to save to a specific file instead, use:
+# zellij action dump-screen /tmp/zellij-capture.txt
+# nvim /tmp/zellij-capture.txt

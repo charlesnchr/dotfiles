@@ -1,0 +1,32 @@
+#!/opt/homebrew/bin/bash
+
+# Sort tabs in zellij to standard order
+# Note: Zellij doesn't have direct tab reordering via CLI yet
+# This script provides a workaround by documenting expected order
+
+# Priority order:
+# 1. zsh (main shell)
+# 2. ranger
+# 3. nvim
+# 4. claude
+# 5. log
+# 6+ Other tabs
+
+echo "Zellij Tab Sorting"
+echo "=================="
+echo ""
+echo "Note: Zellij doesn't currently support programmatic tab reordering."
+echo "To manually reorder tabs:"
+echo "  1. Enter Tab mode: Ctrl+a then 't' (or just Alt+t in normal mode)"
+echo "  2. Use 'h' and 'l' to move the current tab left/right"
+echo "  3. Press 'Esc' to exit Tab mode"
+echo ""
+echo "Recommended tab order:"
+echo "  1. zsh     - Main shell"
+echo "  2. ranger  - File browser"
+echo "  3. nvim    - Editor"
+echo "  4. claude  - AI assistant"
+echo "  5. log     - Logs/monitoring"
+echo ""
+echo "Current tabs:"
+zellij action query-tab-names 2>/dev/null | nl

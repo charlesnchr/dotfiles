@@ -253,14 +253,17 @@ parse_usage_to_json() {
 
     # Extract percentages and reset times using grep and sed
     # Use larger context window to handle variable line breaks in the output
-    session_pct=$(echo "$input" | grep -A4 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
-    session_reset=$(echo "$input" | grep -A4 "Current session" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    session_pct=$(echo "$input" | grep -A4 "Current session" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1)
+    session_pct=${session_pct:-0}
+    session_reset=$(echo "$input" | grep -A4 "Current session" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/')
 
-    week_all_pct=$(echo "$input" | grep -A5 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
-    week_all_reset=$(echo "$input" | grep -A5 "Current week (all models)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    week_all_pct=$(echo "$input" | grep -A5 "Current week (all models)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1)
+    week_all_pct=${week_all_pct:-0}
+    week_all_reset=$(echo "$input" | grep -A5 "Current week (all models)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/')
 
-    opus_pct=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1 || echo "0")
-    opus_reset=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/' || echo "null")
+    opus_pct=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "used" | sed -E 's/.*[^0-9]([0-9]+)%.*/\1/' | head -1)
+    opus_pct=${opus_pct:-0}
+    opus_reset=$(echo "$input" | grep -A4 "Current week (Opus)" | grep "Resets" | sed -E 's/.*Resets (.+)/\1/')
 
     # Get timestamp
     timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

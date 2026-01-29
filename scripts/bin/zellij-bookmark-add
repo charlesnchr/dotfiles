@@ -1,0 +1,50 @@
+#!/opt/homebrew/bin/bash
+
+# Script to add current zellij session to next available bookmark slot
+# Usage: zellij-bookmark-add
+
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+# Get current session name
+current_session=$(zellij list-sessions 2>/dev/null | grep '(current)' | awk '{print $1}')
+
+if [[ -z $current_session ]]; then
+    echo "Not in a zellij session"
+    exit 1
+fi
+
+# Read existing bookmarks into associative array
+declare -A bookmarks
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx session; do
+        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    done < "$bookmark_file"
+fi
+
+# Check if current session is already bookmarked
+for idx in {1..5}; do
+    if [[ "${bookmarks[$idx]}" == "$current_session" ]]; then
+        echo "Session already bookmarked at position $idx"
+        exit 0
+    fi
+done
+
+# Find next available slot
+for idx in {1..5}; do
+    if [[ -z ${bookmarks[$idx]} ]]; then
+        bookmarks[$idx]="$current_session"
+
+        # Write back to file
+        > "$bookmark_file"
+        for i in {1..5}; do
+            if [[ -n ${bookmarks[$i]} ]]; then
+                echo "$i=${bookmarks[$i]}" >> "$bookmark_file"
+            fi
+        done
+
+        echo "Bookmarked '$current_session' at position $idx"
+        exit 0
+    fi
+done
+
+echo "All bookmark slots full (use zellij-bookmark-clear-all to clear)"

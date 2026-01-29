@@ -1,0 +1,136 @@
+#!/opt/homebrew/bin/bash
+
+# Zellij Sessionizer - ported from tmux-sessionizer
+# Provides fzf-based project/session picker for zellij
+
+# Load all directories from cache (shared with tmux version)
+all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+
+# Pre-load branch lookup cache into associative array
+declare -A branch_map
+if [[ -f $branch_lookup_cache ]]; then
+    while IFS='=' read -r session_name branch; do
+        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
+    done < "$branch_lookup_cache"
+fi
+
+# Get current session name
+current_session=$(zellij list-sessions 2>/dev/null | grep '(current)' | awk '{print $1}')
+
+# Get a list of running zellij sessions
+zellij_sessions=()
+declare -A active_sessions
+
+while IFS= read -r line; do
+    # Parse session name (remove (current) suffix if present)
+    session=$(echo "$line" | awk '{print $1}')
+    if [[ -n $session ]]; then
+        active_sessions["$session"]=1
+        # Skip current session
+        [[ "$session" == "$current_session" ]] && continue
+
+        # Look up branch from pre-loaded map
+        if [[ -n ${branch_map[$session]} ]]; then
+            zellij_sessions+=("▶️ $session  ${branch_map[$session]}")
+        else
+            zellij_sessions+=("▶️ $session")
+        fi
+    fi
+done < <(zellij list-sessions 2>/dev/null)
+
+# Load directories from cache, filtering out ones with active sessions
+selected_dirs=()
+if [[ -f $all_dirs_cache ]]; then
+    while IFS= read -r line; do
+        # Extract folder name and session name in one go
+        folder=${line%% *}
+        session_name=${folder//./_}
+
+        # Skip if session exists (O(1) lookup)
+        [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
+    done < "$all_dirs_cache"
+fi
+
+# Use the filtered paths array and zellij sessions in fzf
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(printf "%s\n" "${zellij_sessions[@]}" "${selected_dirs[@]}" | fzf \
+        --height=80% \
+        --margin=5%,5% \
+        --preview 'path=$(echo {} | awk "{print \$NF}"); /bin/ls -la "$path" 2>/dev/null || echo "Session: $path"' \
+        --prompt="projects > " \
+        --delimiter='  ' \
+        --with-nth=1,2 \
+        --ansi \
+        --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
+        --header='[name]  [branch/type]  (ctrl-r: refresh)' \
+        --bind='ctrl-r:reload(~/bin/zellij-sessionizer-list)'
+    )
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Check if this is a session selection (starts with emoji)
+if [[ $selected == ▶️* ]]; then
+    # Extract session name (second field)
+    selected_name=$(echo "$selected" | awk '{print $2}')
+    selected_path=""
+else
+    # Extract the actual path (last field)
+    selected_path=$(echo "$selected" | awk '{print $NF}')
+
+    # If it's not a directory, treat as session name
+    if [[ ! -d $selected_path ]]; then
+        selected_path=""
+        selected_name=$selected
+    else
+        selected_name=$(basename "$selected_path" | tr . _)
+    fi
+fi
+
+# Check if zellij is running
+if [[ -z $ZELLIJ ]]; then
+    # Not inside zellij - start or attach
+    if zellij list-sessions 2>/dev/null | grep -q "^$selected_name"; then
+        # Session exists, attach
+        zellij attach "$selected_name"
+    else
+        # Create new session
+        if [[ -n $selected_path && -d $selected_path ]]; then
+            cd "$selected_path" && zellij -s "$selected_name"
+        else
+            zellij -s "$selected_name"
+        fi
+    fi
+else
+    # Inside zellij - need to switch session
+    # Zellij doesn't have direct session switching from within, so we need a workaround
+    # Option 1: Use zellij action to write to a pipe that an outer script reads
+    # Option 2: Detach and reattach (disruptive)
+    # Option 3: Use zellij plugin for session management
+
+    if ! zellij list-sessions 2>/dev/null | grep -q "^$selected_name"; then
+        # Session doesn't exist - create it in background
+        if [[ -n $selected_path && -d $selected_path ]]; then
+            # Create session in background by spawning zellij in new process
+            (cd "$selected_path" && zellij -s "$selected_name" &)
+            sleep 0.5
+        else
+            (zellij -s "$selected_name" &)
+            sleep 0.5
+        fi
+    fi
+
+    # Switch to session using the session-manager plugin
+    # Note: This opens the built-in session manager
+    zellij action launch-or-focus-plugin "session-manager" --floating
+
+    # Alternative: Use message to indicate the user should switch
+    echo "Session '$selected_name' ready. Use session-manager (prefix+Ctrl+b) to switch."
+    echo "Or detach (prefix+d) and run: zellij attach $selected_name"
+    read -p "Press Enter to continue..."
+fi

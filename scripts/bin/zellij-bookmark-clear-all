@@ -1,0 +1,11 @@
+#!/opt/homebrew/bin/bash
+
+# Script to clear all zellij bookmarks
+# Usage: zellij-bookmark-clear-all
+
+bookmark_file="$HOME/.cache/zellij-session-bookmarks"
+
+# Clear the bookmark file
+> "$bookmark_file"
+
+echo "Cleared all bookmarks"
