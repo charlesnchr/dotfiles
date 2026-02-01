@@ -1,4 +1,7 @@
 
+# Prevent Ubuntu's /etc/zsh/zshrc from calling compinit before zim
+skip_global_compinit=1
+
 export PATH="$HOME/bin:$PATH"
 # Set ZDOTDIR if you want to re-home Zsh.
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
@@ -21,3 +24,11 @@ path=(
 colo() {
     if [ $(cat ~/dotfiles/is_dark_mode) -eq 1 ]; then x=0; else x=1; fi; echo $x > ~/dotfiles/is_dark_mode
 }
+
+# Homebrew
+if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
