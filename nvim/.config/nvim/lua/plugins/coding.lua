@@ -10,7 +10,13 @@ return {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
-      -- Configuration will be loaded from lua-init.lua
+      require("nvim-treesitter").setup({
+        ensure_installed = { "c", "lua", "rust", "python", "javascript", "typescript", "vim", "vimdoc", "query" },
+        sync_install = false,
+        auto_install = true,
+        ignore_install = {},
+        highlight = { enable = true },
+      })
     end,
   },
 
