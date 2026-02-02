@@ -206,3 +206,6 @@ _evalcache atuin init zsh
 
 bindkey '^X^E' edit-command-line
 bindkey '^X^F' fzf-history-widget
+
+# OpenClaw Completion
+source <(openclaw completion --shell zsh)
