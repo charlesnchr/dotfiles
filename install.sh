@@ -1,223 +1,195 @@
 #!/bin/bash
+#
+# Streamlined dotfiles installation for macOS and Linux
+# Uses Homebrew as the common package manager substrate
+#
 
-source ~/dotfiles/ask.sh
+set -e
 
-if ask "Install conda x86" N; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
-    bash ~/anaconda.sh -b -p $HOME/anaconda3
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+info() { echo -e "${GREEN}[INFO]${NC} $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
+error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# Detect OS
+OS="$(uname -s)"
+ARCH="$(uname -m)"
+info "Detected: $OS ($ARCH)"
+
+# ==============================================================================
+# Phase 1: System packages (requires sudo on Linux)
+# ==============================================================================
+
+if [[ "$OS" == "Linux" ]]; then
+    info "Installing Linux system essentials via apt..."
+    sudo apt update
+    sudo apt install -y \
+        zsh tmux git curl wget \
+        build-essential libssl-dev zlib1g-dev libbz2-dev \
+        libreadline-dev libsqlite3-dev libncursesw5-dev \
+        xz-utils tk-dev libffi-dev liblzma-dev \
+        sqlite3 jq stow ranger zip unzip
 fi
 
-if ask "Install conda ARM" N; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -O ~/anaconda.sh
-    bash ~/anaconda.sh -b -p $HOME/anaconda3
+# ==============================================================================
+# Phase 2: Homebrew (common substrate for macOS and Linux)
+# ==============================================================================
+
+if ! command -v brew &> /dev/null; then
+    info "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add brew to PATH for this session
+    if [[ "$OS" == "Linux" ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [[ "$OS" == "Darwin" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+else
+    info "Homebrew already installed"
 fi
 
-if ask "Install conda MacOSX" N; then
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/anaconda.sh
-    bash ~/anaconda.sh -b -p $HOME/anaconda3
+# ==============================================================================
+# Phase 3: Core tools via Homebrew
+# ==============================================================================
+
+info "Installing core tools via Homebrew..."
+brew install \
+    neovim \
+    pyenv \
+    uv \
+    fnm \
+    fzf \
+    ripgrep \
+    fd \
+    bat \
+    zoxide \
+    direnv \
+    gh \
+    atuin \
+    autojump \
+    tmuxinator \
+    universal-ctags
+
+# Set up fnm with Node LTS
+info "Setting up Node via fnm..."
+eval "$(fnm env)"
+if ! fnm list | grep -q "v22"; then
+    fnm install 22
+fi
+fnm default 22
+
+# ==============================================================================
+# Phase 4: Claude Code (via official installer, not brew)
+# ==============================================================================
+
+if ! command -v claude &> /dev/null; then
+    info "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+else
+    info "Claude Code already installed"
 fi
 
-if ask "Install node/nvim without sudo (curl and conda)" N; then
-    # Node
-    conda install -c conda-forge nodejs
+# ==============================================================================
+# Phase 5: Python setup
+# ==============================================================================
 
-    # Nvim
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-    chmod u+x nvim.appimage
+info "Setting up Python via pyenv..."
+eval "$(pyenv init -)"
+if ! pyenv versions | grep -q "3.12"; then
+    pyenv install 3.12
+fi
+pyenv global 3.12
+
+# Rehash to pick up the new Python
+eval "$(pyenv init -)"
+
+# Install pynvim for neovim Python support
+info "Installing pynvim..."
+pip install -U pynvim
+
+# ==============================================================================
+# Phase 6: Dotfiles symlinks
+# ==============================================================================
+
+DOTFILES_DIR="$HOME/dotfiles"
+cd "$DOTFILES_DIR"
+
+info "Setting up dotfiles symlinks..."
+mkdir -p ~/.config
+
+# Use stow if available, otherwise manual symlinks
+if command -v stow &> /dev/null; then
+    stow -v home_folder
+    stow -v nvim
     mkdir -p ~/bin
-    mv ./nvim.appimage ~/bin/nvim
-
-    # zsh and tmux
-    conda install -y -c conda-forge zsh tmux
-
-    # other packages
-    conda install -c conda-forge ripgrep
-fi
-
-
-if ask "Install git without sudo (in this case just conda)" N; then
-    conda install -y git
-fi
-
-
-# pv required compression and backup scripts, sqlite3 required for histdb
-if ask "Ubuntu: install essentials - zsh, tmux, nvim, node, git, ranger, pv, sqlite3?" N; then
-    sudo apt install zsh tmux neovim nodejs ranger pv sqlite3 -y
-fi
-
-
-if ask "zsh, tmux, nvim, node, git and python must be installed. Continue?" Y; then
-    :
+    stow -v scripts
 else
-    exit 1
+    warn "stow not found, using manual symlinks..."
+    ln -sfn "$DOTFILES_DIR/home_folder/.zshrc" ~/.zshrc
+    ln -sfn "$DOTFILES_DIR/home_folder/.zshenv" ~/.zshenv
+    ln -sfn "$DOTFILES_DIR/home_folder/.zimrc" ~/.zimrc
+    ln -sfn "$DOTFILES_DIR/home_folder/.tmux.conf" ~/.tmux.conf
+    ln -sfn "$DOTFILES_DIR/home_folder/.vimrc" ~/.vimrc
+    ln -sfn "$DOTFILES_DIR/home_folder/.vim" ~/.vim
+    ln -sfn "$DOTFILES_DIR/home_folder/.config/ranger" ~/.config/ranger
+    ln -sfn "$DOTFILES_DIR/nvim/.config/nvim" ~/.config/nvim
+    ln -sfn "$DOTFILES_DIR/scripts/bin" ~/bin
 fi
 
+# ==============================================================================
+# Phase 7: Zsh setup (zimfw)
+# ==============================================================================
 
-# load conda
-echo "Loading conda"
-source ~/anaconda3/etc/profile.d/conda.sh
-conda activate base
-
-
-# Install CLI tools and env
-# Requirements
-# - zsh
-# - tmux
-# - nvim
-# - node
-# - python
-
-
-if ask "Install autojump and fzf from github" N; then
-    # autojump
-    git clone --depth 1 https://github.com/wting/autojump.git
-    cd autojump
-    ./install.py
-
-    # fzf
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --all
-fi
-
-
-# Setting up symlinks with stow or ln
-
-if ask "stow is recommended in the following. Install on Ubuntu?" N; then
-    sudo apt install stow -y
-fi
-
-# alternative, less clean, syntax:
-# stow -R .config -t ~/.config
-
-dirname=conf_bk_$(date '+%d%m%Y%H%M%S');
-
-function move_if() {
-    echo "moving $1"
-    mv $1 $dirname
-}
-
-if ask "Move existing .profile, .zshrc, nvim to a folder named $dirname?" N; then
-    mkdir -p $dirname
-    move_if ~/.profile
-    move_if ~/.zshrc
-    move_if ~/.tmux.conf
-    move_if ~/.vimrc
-    move_if ~/.config/nvim
-    move_if ~/.config/alacritty
-    move_if ~/.config/ranger
-    move_if ~/.config/dolphinrc
-    move_if ~/.config/kdeglobals
-    move_if ~/.config/konsolerc
-    move_if ~/.config/kwinrc
-    move_if ~/.config/plasma-org.kde.plasma.desktop-appletsrc
-    move_if ~/.config/plasmarc
-    move_if ~/.config/plasmashellrc
+if [[ ! -d "$HOME/.zim" ]]; then
+    info "Installing zimfw..."
+    curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 else
-    echo "Not moving existing files"
+    info "zimfw already installed"
 fi
 
-# setting up links
-if ask "Use stow to set up links" N; then
+# ==============================================================================
+# Phase 8: Tmux plugins
+# ==============================================================================
 
-    stow home_folder
-    mkdir -p ../bin
-    stow scripts
-    stow nvim
-
-    echo "Select extra config"
-    select yn in "Desktop" "Laptop" "No"; do
-      case $yn in
-        Desktop )
-            stow home_folder_desktop
-            break
-            ;;
-        Laptop )
-            stow home_folder_laptop
-            break
-            ;;
-        No )
-            break
-            ;;
-      esac
-    done
-else
-    if ask "Use reduced symlink setup instead" N; then
-        ln -sfn ~/dotfiles/home_folder/.profile ~/.profile
-        ln -sfn ~/dotfiles/home_folder/.zshrc ~/.zshrc
-        ln -sfn ~/dotfiles/home_folder/.tmux.conf ~/.tmux.conf
-        ln -sfn ~/dotfiles/home_folder/.vim ~/.vim
-        ln -sfn ~/dotfiles/home_folder/.vimrc ~/.vimrc
-        ln -sfn ~/dotfiles/nvim/.config/nvim ~/.config/nvim
-        ln -sfn ~/dotfiles/home_folder/.config/ranger ~/.config/ranger
-        ln -sfn ~/dotfiles/home_folder/.tmux-cht-command ~/.tmux-cht-command
-        ln -sfn ~/dotfiles/home_folder/.tmux-cht-languages ~/.tmux-cht-languages
-        ln -sfn ~/dotfiles/scripts/bin ~/bin
-    fi
-fi
-
-if ask "Set up submodule dotfiles_private and run dotfiles_private/install.sh?" N; then
-    git submodule init dotfiles_private
-    git pull --recurse-submodules
-    sh dotfiles_private/install.sh
-fi
-
-# Set up themes (for linux)
-if ask "Linux desktop: Set up themes?" N; then
-
-    # KDE theme
-    if ask "Install kde theme" N; then
-        git clone https://github.com/tonyfettes/materia-nord-kvantum.git
-        cd materia-nord-kvantum
-        sudo mv Kvantum/MateriaNordDark /usr/share/Kvantum
-    fi
-
-    # GTK theme
-    # https://github.com/EliverLara/Nordic
-    # https://www.gnome-look.org/p/1267246/
-    if ask "Install GTK theme" N; then
-        wget https://github.com/EliverLara/Nordic/releases/download/v2.1.0/Nordic-darker-v40.tar.xz
-        tar xvf Nordic-darker-v40.tar.xz
-        sudo mv Nordic-darker-v40 /usr/share/themes
-        gsettings set org.gnome.desktop.interface gtk-theme "Nordic"
-        gsettings set org.gnome.desktop.wm.preferences theme "Nordic"
-    fi
-
-
-    echo "now use lxappearance and kvantum to set themes"
-fi
-
-
-# NVIM
-if ask "Set up nvim plugins etc." N; then
-    # vim plug
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    pip install -U pynvim
-    nvim +'PlugInstall --sync' +qa
-    nvim +'MasonInstall vim-language-server json-lsp rust-analyzer'
-fi
-
-
-
-if ask "Install tmux plugin manager and antidote" N; then
-    # tmux plugin manager
+if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+    info "Installing tmux plugin manager..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    ~/.tmux/plugins/tpm/bin/install_plugins
-
-    # antidote download
-    git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-$HOME}/.antidote
-
-    zsh -ic "source ~/dotfiles/home_folder/.zshrc && source ~/.antidote/antidote.zsh && antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt"
-fi
-
-if ask "Ubuntu: Install rclone, ripgrep, ctags" N; then
-    sudo apt install universal-ctags rclone ripgrep -y
+    info "Run 'prefix + I' in tmux to install plugins"
 else
-    if ask "Conda: Install rclone, ripgrep, ctags" N; then
-        conda install -y -c conda-forge universal-ctags rclone ripgrep
-    fi
+    info "tmux plugin manager already installed"
 fi
 
-if ask "Install pylsp and scientific python packages (skimage, numpy, pylsp, streamlit)" N; then
-    pip install scikit-image numpy matplotlib python-lsp-server[all] ruff python-lsp-ruff streamlit
+# ==============================================================================
+# Phase 9: fzf key bindings
+# ==============================================================================
+
+if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+    info "Setting up fzf key bindings..."
+    "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
 fi
+
+# ==============================================================================
+# Phase 10: Neovim plugins
+# ==============================================================================
+
+info "Setting up Neovim plugins..."
+nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+
+# ==============================================================================
+# Done
+# ==============================================================================
+
+echo ""
+info "Installation complete!"
+echo ""
+echo "Next steps:"
+echo "  1. Change default shell: chsh -s \$(which zsh)"
+echo "  2. Log out and back in (or run: exec zsh)"
+echo "  3. In tmux, press prefix + I to install plugins"
+echo ""
