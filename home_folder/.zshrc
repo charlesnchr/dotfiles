@@ -112,3 +112,14 @@ bindkey '^R' histdb-fzf-widget
 
 _evalcache gh copilot alias -- zsh
 
+
+# Added by Antigravity
+export PATH="/Users/cnc40853/.antigravity/antigravity/bin:$PATH"
+
+# Zellij restart - run from outside zellij (fresh terminal)
+alias zjr='pkill -9 zellij 2>/dev/null; sleep 0.3; for s in $(zellij list-sessions -n 2>/dev/null); do zellij delete-session "$s" 2>/dev/null; done; rm -f ~/.cache/zellij-pending-session; zj'
+
+# Auto-attach to pending zellij session after detach
+if [[ -z "$ZELLIJ" && -f "$HOME/.cache/zellij-pending-session" ]]; then
+    zj
+fi
