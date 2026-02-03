@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Comparison Tool</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 20px; background: #1a1a1a; color: #eee; }
+    h1 { margin-top: 0; }
+    .upload-area { margin-bottom: 20px; }
+    .canvas-container { position: relative; display: inline-block; cursor: crosshair; }
+    #sourceCanvas { max-width: 100%; border: 1px solid #444; }
+    .selection { position: absolute; border: 2px dashed #00ff00; background: rgba(0,255,0,0.1); pointer-events: none; }
+    .comparison { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+    .comparison > div { flex: 1; min-width: 300px; }
+    .comparison h3 { margin: 0 0 10px 0; }
+    .comparison canvas { max-width: 100%; border: 1px solid #444; background: #000; }
+    .info { color: #888; font-size: 14px; margin-top: 5px; }
+    .controls { margin: 15px 0; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+    label { display: flex; align-items: center; gap: 5px; }
+    input[type="file"] { color: #eee; }
+    button { padding: 8px 16px; cursor: pointer; background: #333; color: #eee; border: 1px solid #555; border-radius: 4px; }
+    button:hover { background: #444; }
+    .zoom-container { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+    .zoom-container > div { flex: 1; min-width: 300px; }
+    .zoom-container canvas { image-rendering: pixelated; border: 1px solid #444; }
+    .overlay-container { margin-top: 20px; }
+    .overlay-container h3 { margin: 0 0 10px 0; }
+    .overlay-wrapper { position: relative; display: inline-block; cursor: pointer; }
+    .overlay-wrapper canvas { border: 1px solid #444; display: block; }
+    .overlay-wrapper .overlay-top { position: absolute; top: 0; left: 0; }
+    .overlay-hint { color: #888; font-size: 14px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Crop Comparison Tool</h1>
+  <p>Upload an image, draw a crop region, and compare quality between original and 1080p resized.</p>
+
+  <div class="upload-area">
+    <label>Primary image: <input type="file" id="fileInput" accept="image/*"></label>
+    <span style="margin: 0 15px; color: #666;">|</span>
+    <label>Compare with: <input type="file" id="secondaryInput" accept="image/*"></label>
+    <span id="secondaryStatus" style="margin-left: 10px; color: #888;"></span>
+  </div>
+
+  <div class="controls" style="display:none" id="controls">
+    <label>
+      Compare mode:
+      <select id="compareMode">
+        <option value="resize">Auto-resize primary</option>
+        <option value="secondary">Secondary file</option>
+      </select>
+    </label>
+    <label id="targetHeightLabel">
+      Target height:
+      <select id="targetHeight">
+        <option value="720">720p</option>
+        <option value="1080" selected>1080p</option>
+        <option value="1440">1440p</option>
+        <option value="2160">4K (2160p)</option>
+      </select>
+    </label>
+    <label>
+      <input type="checkbox" id="showZoom" checked>
+      Show 2x zoom
+    </label>
+    <label>
+      <input type="checkbox" id="showOverlay">
+      Show overlay (hold to compare)
+    </label>
+    <button id="resetBtn">Reset Selection</button>
+  </div>
+
+  <div class="canvas-container" id="canvasContainer" style="display:none">
+    <canvas id="sourceCanvas"></canvas>
+    <div class="selection" id="selection" style="display:none"></div>
+  </div>
+  <div class="info" id="imageInfo"></div>
+
+  <div class="comparison" id="comparison" style="display:none">
+    <div>
+      <h3>Crop from Primary</h3>
+      <canvas id="cropOriginal"></canvas>
+      <div class="info" id="origInfo"></div>
+    </div>
+    <div>
+      <h3 id="secondaryHeader">Crop from Resized</h3>
+      <canvas id="cropResized"></canvas>
+      <div class="info" id="resizedInfo"></div>
+    </div>
+  </div>
+
+  <div class="zoom-container" id="zoomContainer" style="display:none">
+    <div>
+      <h3>2x Zoom - Primary</h3>
+      <canvas id="zoomOriginal"></canvas>
+    </div>
+    <div>
+      <h3 id="zoomSecondaryHeader">2x Zoom - Resized</h3>
+      <canvas id="zoomResized"></canvas>
+    </div>
+  </div>
+
+  <div class="overlay-container" id="overlayContainer" style="display:none">
+    <h3>Overlay Comparison <span style="font-weight:normal;color:#888">(hold mouse to see secondary)</span></h3>
+    <div class="overlay-wrapper" id="overlayWrapper">
+      <canvas id="overlayBase"></canvas>
+      <canvas id="overlayTop" class="overlay-top"></canvas>
+    </div>
+    <div class="overlay-hint" id="overlayHint">Showing: Primary</div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const secondaryInput = document.getElementById('secondaryInput');
+    const secondaryStatus = document.getElementById('secondaryStatus');
+    const canvasContainer = document.getElementById('canvasContainer');
+    const sourceCanvas = document.getElementById('sourceCanvas');
+    const ctx = sourceCanvas.getContext('2d');
+    const selection = document.getElementById('selection');
+    const comparison = document.getElementById('comparison');
+    const controls = document.getElementById('controls');
+    const cropOriginal = document.getElementById('cropOriginal');
+    const cropResized = document.getElementById('cropResized');
+    const zoomOriginal = document.getElementById('zoomOriginal');
+    const zoomResized = document.getElementById('zoomResized');
+    const zoomContainer = document.getElementById('zoomContainer');
+    const targetHeightSelect = document.getElementById('targetHeight');
+    const targetHeightLabel = document.getElementById('targetHeightLabel');
+    const showZoomCheckbox = document.getElementById('showZoom');
+    const showOverlayCheckbox = document.getElementById('showOverlay');
+    const compareModeSelect = document.getElementById('compareMode');
+    const overlayContainer = document.getElementById('overlayContainer');
+    const overlayWrapper = document.getElementById('overlayWrapper');
+    const overlayBase = document.getElementById('overlayBase');
+    const overlayTop = document.getElementById('overlayTop');
+    const overlayHint = document.getElementById('overlayHint');
+
+    let originalImage = null;
+    let secondaryImage = null;
+    let resizedCanvas = null;
+    let displayScale = 1;
+    let isDrawing = false;
+    let startX, startY, currentX, currentY;
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          originalImage = img;
+          setupCanvas();
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    secondaryInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          secondaryImage = img;
+          secondaryStatus.textContent = `${img.width}x${img.height}`;
+          compareModeSelect.value = 'secondary';
+          updateCompareMode();
+          if (selection.style.display !== 'none') {
+            updateCropComparison();
+          }
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    compareModeSelect.addEventListener('change', updateCompareMode);
+
+    function updateCompareMode() {
+      const mode = compareModeSelect.value;
+      targetHeightLabel.style.display = mode === 'resize' ? 'flex' : 'none';
+      document.getElementById('secondaryHeader').textContent =
+        mode === 'secondary' ? 'Crop from Secondary' : 'Crop from Resized';
+      document.getElementById('zoomSecondaryHeader').textContent =
+        mode === 'secondary' ? '2x Zoom - Secondary' : '2x Zoom - Resized';
+      if (mode === 'secondary' && !secondaryImage) {
+        secondaryStatus.textContent = '(no file selected)';
+      }
+      if (selection.style.display !== 'none') {
+        updateCropComparison();
+      }
+    }
+
+    function setupCanvas() {
+      const maxDisplayWidth = Math.min(window.innerWidth - 60, 1200);
+      displayScale = Math.min(1, maxDisplayWidth / originalImage.width);
+
+      sourceCanvas.width = originalImage.width * displayScale;
+      sourceCanvas.height = originalImage.height * displayScale;
+
+      ctx.drawImage(originalImage, 0, 0, sourceCanvas.width, sourceCanvas.height);
+
+      canvasContainer.style.display = 'inline-block';
+      controls.style.display = 'flex';
+      comparison.style.display = 'none';
+      zoomContainer.style.display = 'none';
+      overlayContainer.style.display = 'none';
+      selection.style.display = 'none';
+
+      document.getElementById('imageInfo').textContent =
+        `Original: ${originalImage.width} x ${originalImage.height}px`;
+
+      createResizedVersion();
+    }
+
+    function createResizedVersion() {
+      const targetHeight = parseInt(targetHeightSelect.value);
+      const scale = targetHeight / originalImage.height;
+
+      resizedCanvas = document.createElement('canvas');
+      resizedCanvas.width = Math.round(originalImage.width * scale);
+      resizedCanvas.height = targetHeight;
+
+      const rctx = resizedCanvas.getContext('2d');
+      rctx.drawImage(originalImage, 0, 0, resizedCanvas.width, resizedCanvas.height);
+    }
+
+    targetHeightSelect.addEventListener('change', () => {
+      createResizedVersion();
+      if (selection.style.display !== 'none') {
+        updateCropComparison();
+      }
+    });
+
+    showZoomCheckbox.addEventListener('change', () => {
+      if (selection.style.display !== 'none') {
+        updateCropComparison();
+      }
+    });
+
+    showOverlayCheckbox.addEventListener('change', () => {
+      if (selection.style.display !== 'none') {
+        updateCropComparison();
+      }
+    });
+
+    overlayWrapper.addEventListener('mousedown', () => {
+      overlayTop.style.opacity = '0';
+      overlayHint.textContent = 'Showing: Secondary';
+    });
+
+    overlayWrapper.addEventListener('mouseup', () => {
+      overlayTop.style.opacity = '1';
+      overlayHint.textContent = 'Showing: Primary';
+    });
+
+    overlayWrapper.addEventListener('mouseleave', () => {
+      overlayTop.style.opacity = '1';
+      overlayHint.textContent = 'Showing: Primary';
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      selection.style.display = 'none';
+      comparison.style.display = 'none';
+      zoomContainer.style.display = 'none';
+      overlayContainer.style.display = 'none';
+    });
+
+    canvasContainer.addEventListener('mousedown', (e) => {
+      const rect = sourceCanvas.getBoundingClientRect();
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+      isDrawing = true;
+      selection.style.display = 'block';
+      selection.style.left = startX + 'px';
+      selection.style.top = startY + 'px';
+      selection.style.width = '0';
+      selection.style.height = '0';
+    });
+
+    canvasContainer.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const rect = sourceCanvas.getBoundingClientRect();
+      currentX = e.clientX - rect.left;
+      currentY = e.clientY - rect.top;
+
+      const left = Math.min(startX, currentX);
+      const top = Math.min(startY, currentY);
+      const width = Math.abs(currentX - startX);
+      const height = Math.abs(currentY - startY);
+
+      selection.style.left = left + 'px';
+      selection.style.top = top + 'px';
+      selection.style.width = width + 'px';
+      selection.style.height = height + 'px';
+    });
+
+    canvasContainer.addEventListener('mouseup', () => {
+      if (!isDrawing) return;
+      isDrawing = false;
+      updateCropComparison();
+    });
+
+    function updateCropComparison() {
+      const left = Math.min(startX, currentX);
+      const top = Math.min(startY, currentY);
+      const width = Math.abs(currentX - startX);
+      const height = Math.abs(currentY - startY);
+
+      if (width < 10 || height < 10) return;
+
+      // Convert display coordinates to original image coordinates
+      const origX = Math.round(left / displayScale);
+      const origY = Math.round(top / displayScale);
+      const origW = Math.round(width / displayScale);
+      const origH = Math.round(height / displayScale);
+
+      // Crop from original
+      cropOriginal.width = origW;
+      cropOriginal.height = origH;
+      const ctx1 = cropOriginal.getContext('2d');
+      ctx1.drawImage(originalImage, origX, origY, origW, origH, 0, 0, origW, origH);
+
+      document.getElementById('origInfo').textContent = `Crop: ${origW} x ${origH}px from original (${originalImage.width}x${originalImage.height})`;
+
+      const mode = compareModeSelect.value;
+
+      if (mode === 'secondary' && secondaryImage) {
+        // Calculate corresponding region on secondary image (proportional mapping)
+        const scaleX = secondaryImage.width / originalImage.width;
+        const scaleY = secondaryImage.height / originalImage.height;
+        const secX = Math.round(origX * scaleX);
+        const secY = Math.round(origY * scaleY);
+        const secW = Math.round(origW * scaleX);
+        const secH = Math.round(origH * scaleY);
+
+        // Crop from secondary, scale to match original crop size
+        cropResized.width = origW;
+        cropResized.height = origH;
+        const ctx2 = cropResized.getContext('2d');
+        ctx2.imageSmoothingEnabled = true;
+        ctx2.imageSmoothingQuality = 'high';
+        ctx2.drawImage(secondaryImage, secX, secY, secW, secH, 0, 0, origW, origH);
+
+        document.getElementById('resizedInfo').textContent =
+          `Crop: ${secW} x ${secH}px from secondary (${secondaryImage.width}x${secondaryImage.height}), scaled to ${origW}x${origH}`;
+      } else {
+        // Auto-resize mode
+        const targetHeight = parseInt(targetHeightSelect.value);
+        const resizeScale = targetHeight / originalImage.height;
+        const resX = Math.round(origX * resizeScale);
+        const resY = Math.round(origY * resizeScale);
+        const resW = Math.round(origW * resizeScale);
+        const resH = Math.round(origH * resizeScale);
+
+        // Crop from resized, then scale back up to original crop size for comparison
+        cropResized.width = origW;
+        cropResized.height = origH;
+        const ctx2 = cropResized.getContext('2d');
+        ctx2.imageSmoothingEnabled = true;
+        ctx2.imageSmoothingQuality = 'high';
+        ctx2.drawImage(resizedCanvas, resX, resY, resW, resH, 0, 0, origW, origH);
+
+        document.getElementById('resizedInfo').textContent =
+          `Crop: ${resW} x ${resH}px from ${resizedCanvas.width}x${resizedCanvas.height}, scaled to ${origW}x${origH}`;
+      }
+
+      comparison.style.display = 'flex';
+
+      // Zoom views
+      if (showZoomCheckbox.checked) {
+        const zoomSize = Math.min(400, origW, origH);
+        const zoomScale = 2;
+
+        zoomOriginal.width = zoomSize * zoomScale;
+        zoomOriginal.height = zoomSize * zoomScale;
+        const zctx1 = zoomOriginal.getContext('2d');
+        zctx1.imageSmoothingEnabled = false;
+        zctx1.drawImage(cropOriginal, 0, 0, zoomSize, zoomSize, 0, 0, zoomSize * zoomScale, zoomSize * zoomScale);
+
+        zoomResized.width = zoomSize * zoomScale;
+        zoomResized.height = zoomSize * zoomScale;
+        const zctx2 = zoomResized.getContext('2d');
+        zctx2.imageSmoothingEnabled = false;
+        zctx2.drawImage(cropResized, 0, 0, zoomSize, zoomSize, 0, 0, zoomSize * zoomScale, zoomSize * zoomScale);
+
+        zoomContainer.style.display = 'flex';
+      } else {
+        zoomContainer.style.display = 'none';
+      }
+
+      // Overlay view
+      if (showOverlayCheckbox.checked) {
+        overlayBase.width = origW;
+        overlayBase.height = origH;
+        overlayTop.width = origW;
+        overlayTop.height = origH;
+
+        const octx1 = overlayBase.getContext('2d');
+        octx1.drawImage(cropResized, 0, 0);
+
+        const octx2 = overlayTop.getContext('2d');
+        octx2.drawImage(cropOriginal, 0, 0);
+
+        overlayTop.style.opacity = '1';
+        overlayHint.textContent = 'Showing: Primary';
+        overlayContainer.style.display = 'block';
+      } else {
+        overlayContainer.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

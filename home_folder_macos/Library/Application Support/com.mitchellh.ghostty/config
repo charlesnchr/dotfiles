@@ -42,6 +42,10 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+term = xterm-256color
+mouse-hide-while-typing = true
+
+
 keybind = cmd+p=toggle_command_palette
 keybind = ctrl+m=text:\r
 keybind = cmd+b=esc:b
@@ -55,8 +59,6 @@ keybind = global:opt+t=toggle_quick_terminal
 theme = dark:Spacegray Bright,light:Rose Pine Dawn
 
 macos-option-as-alt = right
-
-macos-titlebar-style = hidden
 
 confirm-close-surface=false
 
