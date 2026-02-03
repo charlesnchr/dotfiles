@@ -1,11 +1,24 @@
 #!/opt/homebrew/bin/bash
 
 # Zellij Sessionizer - ported from tmux-sessionizer
-# Provides fzf-based project/session picker for zellij
+# Provides fzf-based project/session picker for zellij with MRU ordering
 
-# Load all directories from cache (shared with tmux version)
+# Shared caches
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
 branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
+MRU_FILE="$HOME/.cache/zellij-session-mru"
+
+update_mru() {
+    local session="$1"
+    local timestamp=$(date +%s)
+    mkdir -p "$(dirname "$MRU_FILE")"
+
+    if [[ -f "$MRU_FILE" ]]; then
+        grep -v "^$session " "$MRU_FILE" > "$MRU_FILE.tmp" 2>/dev/null || true
+        mv "$MRU_FILE.tmp" "$MRU_FILE"
+    fi
+    echo "$session $timestamp" >> "$MRU_FILE"
+}
 
 # Pre-load branch lookup cache into associative array
 declare -A branch_map
@@ -15,39 +28,53 @@ if [[ -f $branch_lookup_cache ]]; then
     done < "$branch_lookup_cache"
 fi
 
-# Get current session name
-current_session=$(zellij list-sessions 2>/dev/null | grep '(current)' | awk '{print $1}')
+# Load MRU timestamps
+declare -A mru_times
+if [[ -f "$MRU_FILE" ]]; then
+    while read -r session timestamp; do
+        [[ -n $session ]] && mru_times["$session"]="$timestamp"
+    done < "$MRU_FILE"
+fi
 
-# Get a list of running zellij sessions
-zellij_sessions=()
+# Get current session name from environment variable (set by zellij)
+current_session="$ZELLIJ_SESSION_NAME"
+
+# Get a list of running zellij sessions with MRU times
 declare -A active_sessions
+session_entries=()
 
 while IFS= read -r line; do
-    # Parse session name (remove (current) suffix if present)
     session=$(echo "$line" | awk '{print $1}')
     if [[ -n $session ]]; then
         active_sessions["$session"]=1
-        # Skip current session
         [[ "$session" == "$current_session" ]] && continue
 
-        # Look up branch from pre-loaded map
+        # Get MRU time (default to 0 if not found)
+        mru_time=${mru_times[$session]:-0}
+
+        # Look up branch from pre-loaded map - use cyan color for active sessions
         if [[ -n ${branch_map[$session]} ]]; then
-            zellij_sessions+=("▶️ $session  ${branch_map[$session]}")
+            session_entries+=("$mru_time "$'\033[36m'"▶️ $session  ${branch_map[$session]}"$'\033[0m')
         else
-            zellij_sessions+=("▶️ $session")
+            session_entries+=("$mru_time "$'\033[36m'"▶️ $session"$'\033[0m')
         fi
     fi
-done < <(zellij list-sessions 2>/dev/null)
+done < <(zellij list-sessions --no-formatting 2>/dev/null)
+
+# Sort sessions by MRU (descending) and strip the timestamp
+sorted_sessions=()
+while IFS= read -r line; do
+    # Remove leading timestamp
+    entry=$(echo "$line" | sed 's/^[0-9]* //')
+    sorted_sessions+=("$entry")
+done < <(printf '%s\n' "${session_entries[@]}" | sort -rn)
 
 # Load directories from cache, filtering out ones with active sessions
 selected_dirs=()
 if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
-        # Extract folder name and session name in one go
         folder=${line%% *}
         session_name=${folder//./_}
-
-        # Skip if session exists (O(1) lookup)
         [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
     done < "$all_dirs_cache"
 fi
@@ -56,9 +83,8 @@ fi
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf "%s\n" "${zellij_sessions[@]}" "${selected_dirs[@]}" | fzf \
-        --height=80% \
-        --margin=5%,5% \
+    selected=$(printf "%s\n" "${sorted_sessions[@]}" "${selected_dirs[@]}" | fzf \
+        --height=100% \
         --preview 'path=$(echo {} | awk "{print \$NF}"); /bin/ls -la "$path" 2>/dev/null || echo "Session: $path"' \
         --prompt="projects > " \
         --delimiter='  ' \
@@ -76,14 +102,11 @@ fi
 
 # Check if this is a session selection (starts with emoji)
 if [[ $selected == ▶️* ]]; then
-    # Extract session name (second field)
     selected_name=$(echo "$selected" | awk '{print $2}')
     selected_path=""
 else
-    # Extract the actual path (last field)
     selected_path=$(echo "$selected" | awk '{print $NF}')
 
-    # If it's not a directory, treat as session name
     if [[ ! -d $selected_path ]]; then
         selected_path=""
         selected_name=$selected
@@ -92,14 +115,15 @@ else
     fi
 fi
 
+# Update MRU
+update_mru "$selected_name"
+
 # Check if zellij is running
 if [[ -z $ZELLIJ ]]; then
     # Not inside zellij - start or attach
     if zellij list-sessions 2>/dev/null | grep -q "^$selected_name"; then
-        # Session exists, attach
         zellij attach "$selected_name"
     else
-        # Create new session
         if [[ -n $selected_path && -d $selected_path ]]; then
             cd "$selected_path" && zellij -s "$selected_name"
         else
@@ -107,30 +131,10 @@ if [[ -z $ZELLIJ ]]; then
         fi
     fi
 else
-    # Inside zellij - need to switch session
-    # Zellij doesn't have direct session switching from within, so we need a workaround
-    # Option 1: Use zellij action to write to a pipe that an outer script reads
-    # Option 2: Detach and reattach (disruptive)
-    # Option 3: Use zellij plugin for session management
-
-    if ! zellij list-sessions 2>/dev/null | grep -q "^$selected_name"; then
-        # Session doesn't exist - create it in background
-        if [[ -n $selected_path && -d $selected_path ]]; then
-            # Create session in background by spawning zellij in new process
-            (cd "$selected_path" && zellij -s "$selected_name" &)
-            sleep 0.5
-        else
-            (zellij -s "$selected_name" &)
-            sleep 0.5
-        fi
+    # Inside zellij - use zellij-switch plugin to switch sessions
+    if [[ -n $selected_path && -d $selected_path ]]; then
+        zellij pipe --plugin "file:$HOME/.config/zellij/plugins/zellij-switch.wasm" -- "--session $selected_name --cwd $selected_path"
+    else
+        zellij pipe --plugin "file:$HOME/.config/zellij/plugins/zellij-switch.wasm" -- "--session $selected_name"
     fi
-
-    # Switch to session using the session-manager plugin
-    # Note: This opens the built-in session manager
-    zellij action launch-or-focus-plugin "session-manager" --floating
-
-    # Alternative: Use message to indicate the user should switch
-    echo "Session '$selected_name' ready. Use session-manager (prefix+Ctrl+b) to switch."
-    echo "Or detach (prefix+d) and run: zellij attach $selected_name"
-    read -p "Press Enter to continue..."
 fi
