@@ -73,26 +73,27 @@ wikistats() {
 }
 
 
-jog() {
-    sqlite3 $HOME/.histdb/zsh-history.db "
-    SELECT
-        replace(commands.argv, '
-        ', '
-        ')
-        FROM commands
-        JOIN history ON history.command_id = commands.id
-        JOIN places ON history.place_id = places.id
-        WHERE history.exit_status = 0
-        AND dir = '${PWD}'
-        AND places.host = '${HOST}'
-        AND commands.argv != 'jog'
-        AND commands.argv NOT LIKE 'z %'
-        AND commands.argv NOT LIKE 'cd %'
-        AND commands.argv != '..'
-        ORDER BY start_time DESC
-        LIMIT 10
-        "
-    }
+# jog() {
+#     sqlite3 $HOME/.histdb/zsh-history.db "
+#     SELECT
+#         replace(commands.argv, '
+#         ', '
+#         ')
+#         FROM commands
+#         JOIN history ON history.command_id = commands.id
+#         JOIN places ON history.place_id = places.id
+#         WHERE history.exit_status = 0
+#         AND dir = '${PWD}'
+#         AND places.host = '${HOST}'
+#         AND commands.argv != 'jog'
+#         AND commands.argv NOT LIKE 'z %'
+#         AND commands.argv NOT LIKE 'cd %'
+#         AND commands.argv != '..'
+#         ORDER BY start_time DESC
+#         LIMIT 10
+#         "
+#     }
+# Disabled - histdb disabled for performance
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd

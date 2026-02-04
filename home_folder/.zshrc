@@ -196,13 +196,15 @@ zstyle ':completion:*:descriptions' format ''
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-# Tool initializations (cached for faster shell startup)
-_evalcache pyenv init -
-_evalcache fnm env
-_evalcache direnv hook zsh
-_evalcache zoxide init zsh
-_evalcache fzf --zsh
-_evalcache atuin init zsh
+# compinit loaded by zim completion module
+
+# Defer everything for maximum startup speed
+zsh-defer -c 'eval "$(direnv hook zsh)"'
+zsh-defer -c 'eval "$(pyenv init -)"'
+zsh-defer -c 'eval "$(fnm env)"'
+zsh-defer -c 'eval "$(zoxide init zsh)"'
+zsh-defer -c 'eval "$(fzf --zsh)"'
+zsh-defer -c 'eval "$(atuin init zsh)"'
 
 bindkey '^X^E' edit-command-line
 bindkey '^X^F' fzf-history-widget

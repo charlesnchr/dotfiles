@@ -2,13 +2,13 @@ zmodule utility
 
 ### COMPLETIONS
 # Note: completion module MUST come AFTER all modules that add completion definitions
-zmodule zsh-users/zsh-completions --fpath src
+# zmodule zsh-users/zsh-completions --fpath src  # Disabled - 500+ completions slow startup
 zmodule completion
 
 ### UTILITY
 zmodule zshzoo/macos --if-ostype 'darwin*'
 zmodule belak/zsh-utils --root utility
-zmodule larkery/zsh-histdb
+# zmodule larkery/zsh-histdb  # Disabled - SQLite overhead slows down terminal startup
 zmodule charlesnchr/ranger-autojump
 zmodule aloxaf/fzf-tab
 zmodule romkatv/zsh-bench --cmd 'path+=({})'
@@ -20,14 +20,14 @@ zmodule so-fancy/diff-so-fancy
 #   ~/.zim/modules/zsh-completions
 #  /opt/homebrew/Cellar/zsh/5.9/share/zsh/functions
 # )
-zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases
+# zmodule ohmyzsh/ohmyzsh --root plugins/common-aliases  # Disabled - just aliases, no completions needed
 zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule ohmyzsh/ohmyzsh --root plugins/pip
 zmodule ohmyzsh/ohmyzsh --root plugins/uv
 
 # TERMINAL
 zmodule mroth/evalcache
-zmodule romkatv/zsh-defer -d
+zmodule romkatv/zsh-defer
 zmodule romkatv/powerlevel10k --use degit
 
 
