@@ -152,11 +152,6 @@ setopt INTERACTIVE_COMMENTS
 setopt LONG_LIST_JOBS
 # Prevent background jobs being given a lower priority.
 setopt NO_BG_NICE
-# Prevent status report of jobs on shell exit.
-setopt NO_CHECK_JOBS
-# Prevent SIGHUP to jobs on shell exit.
-setopt NO_HUP
-
 
 HISTORY_START_WITH_GLOBAL="true" # for per-directory-history plugin
 HISTFILE="$ZDOTDIR/.zsh_history"
@@ -198,13 +193,15 @@ bindkey '^[[B' history-substring-search-down
 
 # compinit loaded by zim completion module
 
-# Defer everything for maximum startup speed
-zsh-defer -c 'eval "$(direnv hook zsh)"'
-zsh-defer -c 'eval "$(pyenv init -)"'
-zsh-defer -c 'eval "$(fnm env)"'
-zsh-defer -c 'eval "$(zoxide init zsh)"'
-zsh-defer -c 'eval "$(fzf --zsh)"'
-zsh-defer -c 'eval "$(atuin init zsh)"'
+# Defer and cache heavy init blocks for cold-start speed.
+if [[ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh-disable-direnv" ]]; then
+  zsh-defer -c '_evalcache direnv hook zsh'
+fi
+zsh-defer -c '_evalcache pyenv init -'
+zsh-defer -c '_evalcache fnm env'
+zsh-defer -c '_evalcache zoxide init zsh'
+zsh-defer -c '_evalcache fzf --zsh'
+zsh-defer -c '_evalcache atuin init zsh'
 
 bindkey '^X^E' edit-command-line
 bindkey '^X^F' fzf-history-widget
