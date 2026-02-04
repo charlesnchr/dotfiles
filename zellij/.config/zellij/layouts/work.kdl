@@ -1,0 +1,53 @@
+// Work layout - comprehensive development setup
+// Similar to tmuxinator work configuration
+
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        children
+    }
+
+    // Tab 1: Main shell
+    tab name="zsh" focus=true {
+        pane
+    }
+
+    // Tab 2: File browser
+    tab name="ranger" {
+        pane command="zsh" {
+            args "-ic" "ranger"
+        }
+    }
+
+    // Tab 3: Editor with horizontal split for terminal
+    tab name="nvim" {
+        pane split_direction="vertical" {
+            pane command="zsh" {
+                args "-ic" "nvim"
+                size "70%"
+            }
+            pane size="30%"
+        }
+    }
+
+    // Tab 4: Claude AI
+    tab name="claude" {
+        pane command="zsh" {
+            args "-ic" "ccv -y"
+        }
+    }
+
+    // Tab 5: Git operations
+    tab name="git" {
+        pane command="zsh" {
+            args "-ic" "lazygit || git status"
+        }
+    }
+
+    // Tab 6: Logs / monitoring
+    tab name="log" {
+        pane
+    }
+}

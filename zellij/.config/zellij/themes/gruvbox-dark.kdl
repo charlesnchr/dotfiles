@@ -1,0 +1,21 @@
+// Gruvbox Dark theme for Zellij
+// Ported from tmux-gruvbox with periwinkle accent for current tab
+
+themes {
+    gruvbox-dark {
+        // Main background/foreground
+        bg "#282828"           // gruvbox bg0
+        fg "#ebdbb2"           // gruvbox fg1
+
+        // UI colors
+        black "#282828"        // gruvbox bg0
+        red "#cc241d"          // gruvbox red
+        green "#98971a"        // gruvbox green
+        yellow "#d79921"       // gruvbox yellow
+        blue "#458588"         // gruvbox blue
+        magenta "#b16286"      // gruvbox purple
+        cyan "#689d6a"         // gruvbox aqua
+        white "#a89984"        // gruvbox fg4
+        orange "#d65d0e"       // gruvbox orange
+    }
+}

@@ -1,0 +1,85 @@
+#!/opt/homebrew/bin/bash
+
+# zj - Zellij wrapper that auto-names sessions and tracks MRU
+# Usage: zj [session_name]
+#        zj (no args) - names session after current directory
+#        zj -a/attach [name] - attach to session and update MRU
+
+MRU_FILE="$HOME/.cache/zellij-session-mru"
+PENDING_FILE="$HOME/.cache/zellij-pending-session"
+
+update_mru() {
+    local session="$1"
+    local timestamp=$(date +%s)
+
+    # Create cache dir if needed
+    mkdir -p "$(dirname "$MRU_FILE")"
+
+    # Remove old entry for this session, add new one at top
+    if [[ -f "$MRU_FILE" ]]; then
+        grep -v "^$session " "$MRU_FILE" > "$MRU_FILE.tmp" 2>/dev/null || true
+        mv "$MRU_FILE.tmp" "$MRU_FILE"
+    fi
+
+    # Add new entry
+    echo "$session $timestamp" >> "$MRU_FILE"
+}
+
+# Check for pending session from sessionizer
+if [[ -f "$PENDING_FILE" && $# -eq 0 ]]; then
+    read -r pending_name pending_path < "$PENDING_FILE"
+    rm -f "$PENDING_FILE"
+    if [[ -n "$pending_name" ]]; then
+        echo "Creating pending session: $pending_name"
+        update_mru "$pending_name"
+        if [[ -n "$pending_path" && -d "$pending_path" ]]; then
+            cd "$pending_path" && exec zellij -s "$pending_name"
+        else
+            exec zellij -s "$pending_name"
+        fi
+    fi
+fi
+
+# Parse arguments
+if [[ "$1" == "-a" || "$1" == "attach" ]]; then
+    shift
+    session_name="$1"
+    if [[ -z "$session_name" ]]; then
+        echo "Usage: zj attach <session_name>"
+        exit 1
+    fi
+    update_mru "$session_name"
+    exec zellij attach "$session_name"
+elif [[ "$1" == "-l" || "$1" == "list" || "$1" == "ls" ]]; then
+    exec zellij list-sessions
+elif [[ "$1" == "-k" || "$1" == "kill" ]]; then
+    shift
+    exec zellij delete-session "$@"
+elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "zj - Zellij wrapper with auto-naming and MRU tracking"
+    echo ""
+    echo "Usage:"
+    echo "  zj                  Start/attach session named after current directory"
+    echo "  zj <name>           Start/attach session with given name"
+    echo "  zj -a/attach <name> Attach to existing session"
+    echo "  zj -l/list/ls       List sessions"
+    echo "  zj -k/kill <name>   Kill session"
+    echo ""
+    exit 0
+elif [[ -n "$1" && "$1" != -* ]]; then
+    session_name="$1"
+else
+    # Auto-name based on current directory
+    session_name=$(basename "$PWD" | tr . _)
+fi
+
+# Check if session exists
+if zellij list-sessions 2>/dev/null | grep -q "^$session_name"; then
+    # Session exists, attach
+    update_mru "$session_name"
+    exec zellij attach "$session_name"
+else
+    # Create new session
+    update_mru "$session_name"
+    exec zellij -s "$session_name"
+fi

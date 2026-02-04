@@ -1,0 +1,43 @@
+// Default layout for zellij
+// Creates the standard tabs: zsh, ranger, nvim, claude, log
+
+layout {
+    // Use compact-bar for cleaner look (like gruvbox theme)
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        children
+    }
+
+    // Tab 1: Shell (zsh)
+    tab name="zsh" focus=true {
+        pane
+    }
+
+    // Tab 2: File manager (ranger)
+    tab name="ranger" {
+        pane command="zsh" {
+            args "-ic" "ranger"
+        }
+    }
+
+    // Tab 3: Editor (nvim)
+    tab name="nvim" {
+        pane command="zsh" {
+            args "-ic" "nvim"
+        }
+    }
+
+    // Tab 4: Claude (AI assistant)
+    tab name="claude" {
+        pane command="zsh" {
+            args "-ic" "ccv -y"
+        }
+    }
+
+    // Tab 5: Logs
+    tab name="log" {
+        pane
+    }
+}

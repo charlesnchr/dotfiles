@@ -1,0 +1,35 @@
+#!/opt/homebrew/bin/bash
+
+# Switch to the most recently used session (that isn't current)
+
+MRU_FILE="$HOME/.cache/zellij-session-mru"
+current_session="$ZELLIJ_SESSION_NAME"
+
+if [[ ! -f "$MRU_FILE" ]]; then
+    echo "No MRU history found"
+    exit 1
+fi
+
+# Get active sessions
+declare -A active_sessions
+while IFS= read -r line; do
+    session=$(echo "$line" | awk '{print $1}')
+    [[ -n $session ]] && active_sessions["$session"]=1
+done < <(zellij list-sessions --no-formatting 2>/dev/null)
+
+# Find the most recent session that isn't current and is still active
+last_session=""
+while read -r session timestamp; do
+    if [[ "$session" != "$current_session" && -n "${active_sessions[$session]}" ]]; then
+        last_session="$session"
+        break
+    fi
+done < <(sort -t' ' -k2 -rn "$MRU_FILE")
+
+if [[ -z "$last_session" ]]; then
+    echo "No other active session found"
+    exit 1
+fi
+
+# Switch to it
+zellij pipe --plugin "file:$HOME/.config/zellij/plugins/zellij-switch.wasm" -- "--session $last_session"

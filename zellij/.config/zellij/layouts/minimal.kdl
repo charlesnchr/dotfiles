@@ -1,0 +1,15 @@
+// Minimal layout - just a single shell tab
+// Good for quick sessions or when you want to build your own setup
+
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        children
+    }
+
+    tab name="zsh" focus=true {
+        pane
+    }
+}
