@@ -45,9 +45,9 @@ COLOR_BG_CYAN="\033[48;5;110m"   # periwinkle #87afd7 → ANSI 110 (Cache tokens
 COLOR_FG_CYAN="\033[38;5;110m"   # periwinkle foreground
 COLOR_TEXT_CYAN="\033[38;5;16m"  # Black text (ANSI 16) on periwinkle
 
-COLOR_BG_DARK="\033[48;5;111m"   # softBlue #87afff → ANSI 111 (Context - Line 2)
-COLOR_FG_DARK="\033[38;5;111m"   # softBlue foreground
-COLOR_TEXT_DARK="\033[38;5;16m"  # Black text (ANSI 16) on softBlue
+COLOR_BG_DARK="\033[48;5;151m"   # sage #afd7af → ANSI 151 (Context - Line 2)
+COLOR_FG_DARK="\033[38;5;151m"   # sage foreground
+COLOR_TEXT_DARK="\033[38;5;16m"  # Black text (ANSI 16) on sage
 
 RESET="\033[0m"
 
@@ -135,78 +135,6 @@ parse_transcript() {
     echo "$input_tokens|$output_tokens|$cached_tokens|$context_length|$context_pct|$duration"
 }
 
-# Function to calculate block progress from claude-usage reset time
-calculate_block_progress() {
-    local reset_time="$1"  # e.g., "3pm" or "3:15pm"
-
-    if [ -z "$reset_time" ]; then
-        echo "0|[░░░░░░░░░░░░░░░░]"
-        return
-    fi
-
-    # Parse reset time to get hour (convert 12-hour to 24-hour)
-    local reset_hour=$(echo "$reset_time" | sed -E 's/([0-9]+)(:[0-9]+)?(am|pm)/\1/')
-    local reset_minute=$(echo "$reset_time" | sed -E 's/[0-9]+:([0-9]+)(am|pm)/\1/')
-    local reset_ampm=$(echo "$reset_time" | sed -E 's/.*([ap]m)/\1/')
-
-    # Default minute to 0 if not specified
-    if [ -z "$reset_minute" ] || [ "$reset_minute" = "$reset_time" ]; then
-        reset_minute=0
-    fi
-
-    # Convert to 24-hour
-    if [[ "$reset_ampm" == "pm" ]] && [ "$reset_hour" -ne 12 ]; then
-        reset_hour=$((reset_hour + 12))
-    elif [[ "$reset_ampm" == "am" ]] && [ "$reset_hour" -eq 12 ]; then
-        reset_hour=0
-    fi
-
-    # Get current hour and minute
-    local current_hour=$(date +%H)
-    local current_minute=$(date +%M)
-
-    # Calculate block start (5 hours before reset)
-    local block_start_hour=$((reset_hour - 5))
-    local block_start_minute=$reset_minute
-    if [ $block_start_hour -lt 0 ]; then
-        block_start_hour=$((block_start_hour + 24))
-    fi
-
-    # Calculate elapsed time in minutes
-    local current_total_minutes=$((current_hour * 60 + current_minute))
-    local block_start_total_minutes=$((block_start_hour * 60 + block_start_minute))
-    local elapsed_minutes=$((current_total_minutes - block_start_total_minutes))
-
-    # Handle day wraparound
-    if [ $elapsed_minutes -lt 0 ]; then
-        elapsed_minutes=$((elapsed_minutes + 1440))  # 24 hours in minutes
-    fi
-
-    # Calculate progress (0-100) - 5 hours = 300 minutes
-    local progress_pct=$(( (elapsed_minutes * 100) / 300 ))
-    if [ $progress_pct -gt 100 ]; then
-        progress_pct=100
-    fi
-    if [ $progress_pct -lt 0 ]; then
-        progress_pct=0
-    fi
-
-    # Create progress bar (16 chars)
-    local filled=$(( (progress_pct * 16) / 100 ))
-    local empty=$((16 - filled))
-
-    local bar="["
-    for ((i=0; i<filled; i++)); do
-        bar+="█"
-    done
-    for ((i=0; i<empty; i++)); do
-        bar+="░"
-    done
-    bar+="]"
-
-    echo "$progress_pct|$bar"
-}
-
 # Get token metrics from transcript
 metrics=$(parse_transcript "$transcript_path")
 IFS='|' read -r input_tok output_tok cached_tok context_len context_pct session_dur <<< "$metrics"
@@ -215,10 +143,6 @@ IFS='|' read -r input_tok output_tok cached_tok context_len context_pct session_
 input_fmt=$(format_tokens "$input_tok")
 output_fmt=$(format_tokens "$output_tok")
 cached_fmt=$(format_tokens "$cached_tok")
-
-# Block progress will be calculated after we get claude-usage data
-block_pct=""
-progress_bar=""
 
 # Function to get git insertion/deletion stats
 get_git_changes() {
@@ -270,75 +194,6 @@ else
     git_branch=""
     git_status="0"
     git_changes=""
-fi
-
-# Get claude-usage metrics with reset times
-usage_session_pct=""
-usage_session_reset=""
-usage_week_pct=""
-usage_week_reset=""
-usage_error=""
-
-# Helper function to shorten reset time format
-shorten_reset_time() {
-    local reset_time="$1"
-    # Convert "2:59pm (Europe/London)" -> "2:59pm"
-    # Convert "Nov 6 at 2:59pm (Europe/London)" -> "Nov 6 2:59pm"
-    if [ -n "$reset_time" ]; then
-        reset_time=$(echo "$reset_time" | sed 's/ (.*)//')  # Remove timezone
-        reset_time=$(echo "$reset_time" | sed 's/ at / /')   # Remove "at"
-    fi
-    echo "$reset_time"
-}
-
-if command -v claude-usage &> /dev/null; then
-    # Call claude-usage without timeout - it now has built-in queue management
-    # Suppress stderr to avoid informational messages mixing with JSON
-    usage_output=$(claude-usage 2>/dev/null)
-    usage_exit_code=$?
-
-    # Check if command failed
-    if [ $usage_exit_code -ne 0 ] || [ -z "$usage_output" ]; then
-        usage_error="cmd_failed"
-    else
-        # With stderr suppressed, the output is now clean JSON
-        json_output="$usage_output"
-
-        if [ -n "$json_output" ]; then
-            # Parse the JSON with the actual field names
-            usage_session_pct=$(echo "$json_output" | jq -r '.current_session.percentage // empty' 2>/dev/null)
-            usage_session_reset=$(echo "$json_output" | jq -r '.current_session.resets // empty' 2>/dev/null)
-            usage_week_pct=$(echo "$json_output" | jq -r '.current_week_all_models.percentage // empty' 2>/dev/null)
-            usage_week_reset=$(echo "$json_output" | jq -r '.current_week_all_models.resets // empty' 2>/dev/null)
-
-            # Shorten reset times for display
-            if [ -n "$usage_session_reset" ] && [ "$usage_session_reset" != "null" ]; then
-                usage_session_reset=$(shorten_reset_time "$usage_session_reset")
-            else
-                usage_session_reset=""
-            fi
-
-            if [ -n "$usage_week_reset" ] && [ "$usage_week_reset" != "null" ]; then
-                usage_week_reset=$(shorten_reset_time "$usage_week_reset")
-            else
-                usage_week_reset=""
-            fi
-
-            # Calculate block progress from session reset time (only if available)
-            if [ -n "$usage_session_reset" ]; then
-                block_progress=$(calculate_block_progress "$usage_session_reset")
-                block_pct=$(echo "$block_progress" | cut -d'|' -f1)
-                progress_bar=$(echo "$block_progress" | cut -d'|' -f2)
-            fi
-        fi
-
-        # If still no data, mark as parse error
-        if [ -z "$usage_session_pct" ]; then
-            usage_error="parse_failed"
-        fi
-    fi
-else
-    usage_error="not_found"
 fi
 
 # Build directory path (basename)
@@ -454,60 +309,6 @@ else
     line2+="${LAST_FG}${SEP}${RESET}"
 fi
 
-# === LINE 3: Session Usage | Week Usage ===
-# Cool gray/blue flow: sage → seafoam
-line3=""
-
-# Claude Usage segments (if available)
-if [ -n "$usage_session_pct" ]; then
-    # Define session color (sage)
-    COLOR_BG_SESSION="\033[48;5;151m"   # sage #afd7af → ANSI 151 (Session - Line 3)
-    COLOR_FG_SESSION="\033[38;5;151m"   # sage foreground
-    COLOR_TEXT_SESSION="\033[38;5;16m"  # Black text (ANSI 16) on sage
-
-    # Segment 1: Session usage (sage background)
-    line3+="${COLOR_BG_SESSION}${COLOR_TEXT_SESSION} 📈 Session:${usage_session_pct}%"
-
-    # Always add block timer progress bar (even if 0%)
-    if [ -n "$progress_bar" ]; then
-        line3+=" ${progress_bar} ${block_pct}%"
-    fi
-
-    if [ -n "$usage_session_reset" ]; then
-        line3+=" (⏰${usage_session_reset})"
-    fi
-    line3+=" ${RESET}"
-
-    # Week usage (if available)
-    if [ -n "$usage_week_pct" ]; then
-        # Define week color (seafoam)
-        COLOR_BG_WEEK="\033[48;5;152m"    # seafoam #afd7d7 → ANSI 152 (Week - Line 3)
-        COLOR_FG_WEEK="\033[38;5;152m"    # seafoam foreground
-        COLOR_TEXT_WEEK="\033[38;5;16m"   # Black text (ANSI 16) on seafoam
-
-        # Arrow: sage -> seafoam
-        line3+="${COLOR_FG_SESSION}${COLOR_BG_WEEK}${SEP}${RESET}"
-        # Segment 2: Week usage (seafoam background)
-        line3+="${COLOR_BG_WEEK}${COLOR_TEXT_WEEK} 📅 Week:${usage_week_pct}%"
-        if [ -n "$usage_week_reset" ]; then
-            line3+=" (⏰${usage_week_reset})"
-        fi
-        line3+=" ${RESET}"
-        # Final arrow: seafoam -> transparent
-        line3+="${COLOR_FG_WEEK}${SEP}${RESET}"
-    else
-        # Final arrow: sage -> transparent
-        line3+="${COLOR_FG_SESSION}${SEP}${RESET}"
-    fi
-elif [ -n "$usage_error" ]; then
-    # Debug output if claude-usage failed
-    line3+="${COLOR_BG_1}${COLOR_TEXT_1} ⚠️ claude-usage: ${usage_error} ${RESET}"
-    line3+="${COLOR_FG_1}${SEP}${RESET}"
-fi
-
-# Output all three lines
+# Output lines
 printf "%b\n" "$line1"
 printf "%b\n" "$line2"
-if [ -n "$line3" ]; then
-    printf "%b\n" "$line3"
-fi
