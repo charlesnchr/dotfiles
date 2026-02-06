@@ -2,6 +2,8 @@
 # Prevent Ubuntu's /etc/zsh/zshrc from calling compinit before zim
 skip_global_compinit=1
 
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 # Set ZDOTDIR if you want to re-home Zsh.
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
@@ -32,3 +34,4 @@ elif [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+. "$HOME/.cargo/env"
