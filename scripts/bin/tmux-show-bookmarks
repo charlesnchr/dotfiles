@@ -1,6 +1,6 @@
 #!/opt/homebrew/bin/bash
 
-# Script to display bookmarked tmux sessions for status bar
+# Script to display bookmarked tmux windows for status bar
 
 # Function to truncate string from beginning if longer than threshold
 truncate_beginning() {
@@ -18,23 +18,23 @@ truncate_beginning() {
     echo "...${str: -$keep}"
 }
 
-# Load branch lookup cache
-branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
-declare -A branch_map
-
-if [[ -f $branch_lookup_cache ]]; then
-    while IFS='=' read -r session_name branch; do
-        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
-    done < "$branch_lookup_cache"
+# Spinner frames for active windows
+spinners=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
+frame_file="$HOME/.cache/tmux-bookmark-frame"
+frame_idx=0
+if [[ -f $frame_file ]]; then
+    frame_idx=$(cat "$frame_file" 2>/dev/null)
+    [[ -z $frame_idx ]] && frame_idx=0
 fi
+now=$(date +%s)
 
 # Load bookmarks
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
 declare -A bookmarks
 
 if [[ -f $bookmark_file ]]; then
-    while IFS='=' read -r idx session; do
-        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    while IFS='=' read -r idx value; do
+        [[ -n $idx ]] && bookmarks[$idx]="$value"
     done < "$bookmark_file"
 fi
 
@@ -42,26 +42,54 @@ fi
 output=""
 
 for idx in {1..5}; do
-    session="${bookmarks[$idx]}"
+    value="${bookmarks[$idx]}"
+
+    if [[ -z $value ]]; then
+        continue
+    fi
+
+    IFS='|' read -r bm_session bm_window_id <<< "$value"
+
+    # Check if window still exists
+    if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
+        continue
+    fi
+
+    # Get window info live from tmux
+    window_name=$(tmux display-message -t "$bm_window_id" -p '#{window_name}' 2>/dev/null)
+    pane_path=$(tmux display-message -t "$bm_window_id" -p '#{pane_current_path}' 2>/dev/null)
+
+    # Get git branch from pane's cwd
+    branch=""
+    if [[ -n $pane_path ]] && [[ -d $pane_path ]]; then
+        branch=$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    fi
+
+    # Build display name: session/window_name
+    display_name="${bm_session}/${window_name}"
 
     # Add separator if not first and there's content
-    if [[ -n $output ]] && [[ -n $session ]]; then
+    if [[ -n $output ]]; then
         output+=" #[fg=colour239]│#[fg=colour223] "
     fi
 
-    if [[ -n $session ]]; then
-        # Add index number with color
-        output+="#[fg=colour108,bold][$idx]#[fg=colour223,nobold]"
+    # Add index number with color
+    output+="#[fg=colour108,bold][$idx]#[fg=colour223,nobold]"
 
-        # Add session name (truncated)
-        session_display=$(truncate_beginning "$session")
-        output+=" $session_display"
+    # Add display name (truncated)
+    display=$(truncate_beginning "$display_name")
+    output+=" $display"
 
-        # Add branch if available
-        if [[ -n ${branch_map[$session]} ]]; then
-            branch_display=$(truncate_beginning "${branch_map[$session]}")
-            output+=" #[fg=colour146]${branch_display}#[fg=colour223]"
-        fi
+    # Add branch if available
+    if [[ -n $branch ]]; then
+        branch_display=$(truncate_beginning "$branch")
+        output+=" #[fg=colour146]${branch_display}#[fg=colour223]"
+    fi
+
+    # Show spinner if window has had activity in the last 10 seconds
+    activity=$(tmux display-message -t "$bm_window_id" -p '#{window_activity}' 2>/dev/null)
+    if [[ -n $activity ]] && (( now - activity < 10 )); then
+        output+=" #[fg=colour214]${spinners[$frame_idx]}#[fg=colour223]"
     fi
 done
 

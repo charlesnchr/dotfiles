@@ -1,6 +1,6 @@
 #!/opt/homebrew/bin/bash
 
-# Script to switch to a bookmarked session by index
+# Script to switch to a bookmarked window by index
 # Usage: tmux-switch-to-recent <index>
 
 index=$1
@@ -12,43 +12,34 @@ if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
 fi
 
 if [[ ! -f $bookmark_file ]]; then
-    echo "No bookmarked sessions"
+    echo "No bookmarked windows"
     exit 1
 fi
 
 # Load bookmarks
 declare -A bookmarks
-while IFS='=' read -r idx session; do
-    [[ -n $idx ]] && bookmarks[$idx]="$session"
+while IFS='=' read -r idx value; do
+    [[ -n $idx ]] && bookmarks[$idx]="$value"
 done < "$bookmark_file"
 
-session_name="${bookmarks[$index]}"
+value="${bookmarks[$index]}"
 
-if [[ -z $session_name ]]; then
-    echo "No session bookmarked at index $index"
+if [[ -z $value ]]; then
+    echo "No window bookmarked at index $index"
     exit 1
 fi
 
-# Switch to the session (create if it doesn't exist)
-if ! tmux has-session -t "$session_name" 2>/dev/null; then
-    # Look up path from sessionizer cache
-    all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
-    session_path=""
-    if [[ -f $all_dirs_cache ]]; then
-        # Session names have dots replaced with underscores, match first field
-        while IFS= read -r line; do
-            folder=$(echo "$line" | awk '{print $1}')
-            if [[ "${folder//./_}" == "$session_name" ]]; then
-                session_path=$(echo "$line" | awk '{print $NF}')
-                break
-            fi
-        done < "$all_dirs_cache"
-    fi
+IFS='|' read -r bm_session bm_window_id <<< "$value"
 
-    if [[ -n $session_path && -d $session_path ]]; then
-        tmux new-session -ds "$session_name" -c "$session_path"
-    else
-        tmux new-session -ds "$session_name"
-    fi
+# Check if the window still exists
+if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
+    tmux display-message "Bookmarked window no longer exists"
+    exit 1
 fi
-tmux switch-client -t "$session_name"
+
+# Get the session this window belongs to (may have moved)
+actual_session=$(tmux display-message -t "$bm_window_id" -p '#{session_name}' 2>/dev/null)
+
+# Switch to the session and select the window
+tmux switch-client -t "$actual_session"
+tmux select-window -t "$bm_window_id"
