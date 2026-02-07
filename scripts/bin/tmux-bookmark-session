@@ -1,6 +1,6 @@
 #!/opt/homebrew/bin/bash
 
-# Script to toggle bookmark for current session at specified index
+# Script to toggle bookmark for current window at specified index
 # Usage: tmux-bookmark-session <1-5>
 
 index=$1
@@ -11,10 +11,12 @@ if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
     exit 1
 fi
 
-# Get current session name
+# Get current session name and window id
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
+current_window_id=$(tmux display-message -p '#{window_id}' 2>/dev/null)
+current_window_name=$(tmux display-message -p '#{window_name}' 2>/dev/null)
 
-if [[ -z $current_session ]]; then
+if [[ -z $current_session ]] || [[ -z $current_window_id ]]; then
     echo "Not in a tmux session"
     exit 1
 fi
@@ -22,20 +24,21 @@ fi
 # Read existing bookmarks into associative array
 declare -A bookmarks
 if [[ -f $bookmark_file ]]; then
-    while IFS='=' read -r idx session; do
-        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    while IFS='=' read -r idx_read value; do
+        [[ -n $idx_read ]] && bookmarks[$idx_read]="$value"
     done < "$bookmark_file"
 fi
 
-# Check if current session is already bookmarked at this index
-if [[ "${bookmarks[$index]}" == "$current_session" ]]; then
+# Check if current window is already bookmarked at this index
+IFS='|' read -r bm_session bm_window_id <<< "${bookmarks[$index]}"
+if [[ "$bm_window_id" == "$current_window_id" ]]; then
     # Clear the bookmark
-    unset bookmarks[$index]
+    unset "bookmarks[$index]"
     tmux display-message "Cleared bookmark $index"
 else
     # Set the bookmark
-    bookmarks[$index]="$current_session"
-    tmux display-message "Bookmarked '$current_session' at position $index"
+    bookmarks[$index]="$current_session|$current_window_id"
+    tmux display-message "Bookmarked window '$current_window_name' at position $index"
 fi
 
 # Write back to file
@@ -48,3 +51,9 @@ done
 
 # Force refresh the status bar
 tmux refresh-client -S
+
+# Ensure watcher is running
+_pid=$(cat "$HOME/.cache/tmux-bookmark-watcher.pid" 2>/dev/null)
+if [[ -z $_pid ]] || ! kill -0 "$_pid" 2>/dev/null; then
+    nohup ~/bin/tmux-bookmark-watcher &>/dev/null &
+fi

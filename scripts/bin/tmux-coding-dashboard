@@ -1,0 +1,121 @@
+#!/opt/homebrew/bin/bash
+
+# Interactive dashboard of all coding sessions.
+# Detects Claude Code instances by walking the process tree from `pgrep -x claude`
+# back to tmux panes. Includes bookmarked windows as fallback.
+# Shows a live pane preview in FZF.
+
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+SEP=$'\t'
+
+# --- Gather all tmux pane info ---
+declare -A pane_info    # pane_pid -> session\twindow_name\twindow_id\tpane_path\tpane_id
+declare -A pane_lookup  # pane_pid -> 1 (fast existence check)
+
+while IFS="$SEP" read -r pid session wname wid ppath pane_id; do
+    [[ -z $pid ]] && continue
+    pane_info[$pid]="${session}${SEP}${wname}${SEP}${wid}${SEP}${ppath}${SEP}${pane_id}"
+    pane_lookup[$pid]=1
+done < <(tmux list-panes -a -F "#{pane_pid}${SEP}#{session_name}${SEP}#{window_name}${SEP}#{window_id}${SEP}#{pane_current_path}${SEP}#{pane_id}")
+
+# --- Find Claude Code sessions via process tree ---
+# For each `claude` process, walk up ppid chain until we hit a tmux pane PID
+declare -A claude_windows  # window_id -> session\twindow_name\tpane_path\tpane_id
+
+while IFS= read -r claude_pid; do
+    [[ -z $claude_pid ]] && continue
+    pid=$claude_pid
+    while [[ $pid -gt 1 ]]; do
+        if [[ -n ${pane_lookup[$pid]:-} ]]; then
+            IFS="$SEP" read -r session wname wid ppath pane_id <<< "${pane_info[$pid]}"
+            if [[ -n $wid ]] && [[ -z ${claude_windows[$wid]:-} ]]; then
+                claude_windows[$wid]="${session}${SEP}${wname}${SEP}${ppath}${SEP}${pane_id}"
+            fi
+            break
+        fi
+        pid=$(ps -p "$pid" -o ppid= 2>/dev/null | tr -d ' ')
+        [[ -z $pid ]] && break
+    done
+done < <(pgrep -x claude 2>/dev/null)
+
+# --- Build FZF entries ---
+declare -A seen_windows
+entries=()
+
+# Claude Code sessions
+for wid in "${!claude_windows[@]}"; do
+    seen_windows[$wid]=1
+    IFS="$SEP" read -r session wname ppath pane_id <<< "${claude_windows[$wid]}"
+    branch=$(git -C "$ppath" rev-parse --abbrev-ref HEAD 2>/dev/null) || branch=""
+    dir_name=$(basename "$ppath" 2>/dev/null)
+
+    line=$(printf "\033[32m\033[1m%-9s\033[0m \033[36m%s\033[0m/\033[33m%s\033[0m  \033[35m%-22s\033[0m \033[2m%s\033[0m" \
+        "claude" "$session" "$wname" "${branch:----}" "$dir_name")
+    entries+=("${wid}:${pane_id}|$line")
+done
+
+# Bookmarked windows (that aren't already shown as claude sessions)
+if [[ -f $bookmark_file ]]; then
+    while IFS='=' read -r idx value; do
+        [[ -z $value ]] && continue
+        IFS='|' read -r bm_session bm_window_id <<< "$value"
+        [[ -n ${seen_windows[$bm_window_id]:-} ]] && continue
+        tmux display-message -t "$bm_window_id" -p '' &>/dev/null || continue
+
+        seen_windows[$bm_window_id]=1
+        wname=$(tmux display-message -t "$bm_window_id" -p '#{window_name}' 2>/dev/null)
+        ppath=$(tmux display-message -t "$bm_window_id" -p '#{pane_current_path}' 2>/dev/null)
+        pane_id=$(tmux display-message -t "$bm_window_id" -p '#{pane_id}' 2>/dev/null)
+        branch=$(git -C "$ppath" rev-parse --abbrev-ref HEAD 2>/dev/null) || branch=""
+        dir_name=$(basename "$ppath" 2>/dev/null)
+
+        line=$(printf "\033[34m\033[1m%-9s\033[0m \033[36m%s\033[0m/\033[33m%s\033[0m  \033[35m%-22s\033[0m \033[2m%s\033[0m" \
+            "bookmark" "$bm_session" "$wname" "${branch:----}" "$dir_name")
+        entries+=("${bm_window_id}:${pane_id}|$line")
+    done < "$bookmark_file"
+fi
+
+# --- Empty state ---
+if [[ ${#entries[@]} -eq 0 ]]; then
+    printf '\033[2mNo coding sessions found.\033[0m\n'
+    read -n 1 -s -r -p "Press any key to close..."
+    exit 0
+fi
+
+# --- FZF with live pane preview ---
+# {1} is the first FZF field (before |): "window_id:pane_id"
+preview_cmd='ids={1}; wid="${ids%%:*}"; pane="${ids##*:}"
+    printf "\033[1m%s\033[0m  \033[2m%s\033[0m\n" \
+        "$(tmux display-message -t "$wid" -p "#{session_name}/#{window_name}" 2>/dev/null)" \
+        "$(tmux display-message -t "$wid" -p "#{pane_current_path}" 2>/dev/null)"
+    printf "%50s\n" "" | tr " " "─"
+    tmux capture-pane -t "$pane" -p 2>/dev/null || echo "Preview unavailable"'
+
+selected=$(printf '%s\n' "${entries[@]}" | \
+    fzf --ansi \
+        --delimiter='|' \
+        --with-nth=2 \
+        --header=$' TYPE      SESSION/WINDOW            BRANCH                 DIR' \
+        --prompt='  > ' \
+        --reverse \
+        --no-info \
+        --border=rounded \
+        --border-label=' Coding Sessions ' \
+        --border-label-pos=2 \
+        --preview="$preview_cmd" \
+        --preview-window='right:50%:wrap:border-left' \
+        --preview-label=' Pane Preview ' \
+        --bind='ctrl-/:toggle-preview' \
+        --color='header:italic,border:bright-black,label:bold' \
+    || true)
+
+# --- Switch to selected window ---
+if [[ -n $selected ]]; then
+    ids="${selected%%|*}"
+    window_id="${ids%%:*}"
+    if tmux display-message -t "$window_id" -p '' &>/dev/null; then
+        actual_session=$(tmux display-message -t "$window_id" -p '#{session_name}' 2>/dev/null)
+        tmux switch-client -t "$actual_session"
+        tmux select-window -t "$window_id"
+    fi
+fi

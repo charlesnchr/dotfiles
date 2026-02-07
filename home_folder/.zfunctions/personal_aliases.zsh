@@ -17,3 +17,4 @@ alias off="sleep 1; kscreen-doctor --dpms off"
 alias xclip="xclip -selection clipboard"
 alias fabric='fabric-ai'
 alias rm='rm -f'
+alias pr='gh pr view --web'

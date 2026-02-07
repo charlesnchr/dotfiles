@@ -1,14 +1,16 @@
 #!/opt/homebrew/bin/bash
 
-# Script to add current session to next available bookmark slot
+# Script to add current window to next available bookmark slot
 # Usage: tmux-bookmark-add
 
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
 
-# Get current session name
+# Get current session name and window id
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
+current_window_id=$(tmux display-message -p '#{window_id}' 2>/dev/null)
+current_window_name=$(tmux display-message -p '#{window_name}' 2>/dev/null)
 
-if [[ -z $current_session ]]; then
+if [[ -z $current_session ]] || [[ -z $current_window_id ]]; then
     echo "Not in a tmux session"
     exit 1
 fi
@@ -16,15 +18,16 @@ fi
 # Read existing bookmarks into associative array
 declare -A bookmarks
 if [[ -f $bookmark_file ]]; then
-    while IFS='=' read -r idx session; do
-        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    while IFS='=' read -r idx value; do
+        [[ -n $idx ]] && bookmarks[$idx]="$value"
     done < "$bookmark_file"
 fi
 
-# Check if current session is already bookmarked
+# Check if current window is already bookmarked
 for idx in {1..5}; do
-    if [[ "${bookmarks[$idx]}" == "$current_session" ]]; then
-        tmux display-message "Session already bookmarked at position $idx"
+    IFS='|' read -r bm_session bm_window_id <<< "${bookmarks[$idx]}"
+    if [[ "$bm_window_id" == "$current_window_id" ]]; then
+        tmux display-message "Window already bookmarked at position $idx"
         exit 0
     fi
 done
@@ -32,7 +35,7 @@ done
 # Find next available slot
 for idx in {1..5}; do
     if [[ -z ${bookmarks[$idx]} ]]; then
-        bookmarks[$idx]="$current_session"
+        bookmarks[$idx]="$current_session|$current_window_id"
 
         # Write back to file
         > "$bookmark_file"
@@ -42,8 +45,14 @@ for idx in {1..5}; do
             fi
         done
 
-        tmux display-message "Bookmarked '$current_session' at position $idx"
+        tmux display-message "Bookmarked window '$current_window_name' at position $idx"
         tmux refresh-client -S
+
+        # Ensure watcher is running
+        _pid=$(cat "$HOME/.cache/tmux-bookmark-watcher.pid" 2>/dev/null)
+        if [[ -z $_pid ]] || ! kill -0 "$_pid" 2>/dev/null; then
+            nohup ~/bin/tmux-bookmark-watcher &>/dev/null &
+        fi
         exit 0
     fi
 done
