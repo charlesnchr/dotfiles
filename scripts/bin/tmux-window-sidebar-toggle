@@ -1,0 +1,14 @@
+#!/opt/homebrew/bin/bash
+
+# Toggle a left-side window-list sidebar pane.
+
+sidebar_pane=$(tmux list-panes -F '#{@sidebar} #{pane_id}' | grep '^1 ' | awk '{print $2}')
+
+if [[ -n $sidebar_pane ]]; then
+    # Hide: kill the sidebar pane
+    tmux kill-pane -t "$sidebar_pane"
+else
+    # Show: split a narrow pane on the left, run the sidebar script
+    tmux split-window -hbdl 30 \
+        "tmux set-option -p @sidebar 1; exec $HOME/bin/tmux-window-sidebar"
+fi

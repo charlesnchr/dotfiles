@@ -1,0 +1,63 @@
+#!/opt/homebrew/bin/bash
+
+# Render a live vertical window list for the current tmux session.
+# Runs in a narrow pane, refreshes every 0.5s.
+
+tput civis  # hide cursor
+trap 'tput cnorm; exit' EXIT INT TERM
+
+session=$(tmux display-message -p '#{session_name}')
+width=$(tput cols 2>/dev/null || echo 28)
+
+while true; do
+    printf '\033[H'  # cursor to top-left
+
+    while IFS=$'\t' read -r windex wactive wname claude_status claude_project pane_title pane_path; do
+        # Directory basename
+        dir=$(basename "$pane_path" 2>/dev/null)
+
+        # Git branch
+        branch=$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null) || branch=""
+
+        # Build status emoji prefix
+        emoji=""
+        if [[ -n $claude_status ]]; then
+            emoji="$claude_status "
+        fi
+
+        # Active marker + coloring
+        if [[ $wactive == "1" ]]; then
+            marker="▸"
+            # Bold + highlight color (gruvbox aqua)
+            color_on=$'\033[1;36m'
+            color_off=$'\033[0m'
+        else
+            marker=" "
+            color_on=$'\033[0m'
+            color_off=$'\033[0m'
+        fi
+
+        # Line 1: marker index emoji dir/name
+        line1="${marker} ${windex} ${emoji}${dir:-$wname}"
+        printf '%s%-*.*s%s\n' "$color_on" "$width" "$width" "$line1" "$color_off"
+
+        # Line 2: [branch] if available
+        if [[ -n $branch ]]; then
+            printf '  \033[2m[%.*s]\033[0m\n' "$((width - 4))" "$branch"
+        fi
+
+        # Line 3: pane title (Claude Code conversation name) if non-default
+        if [[ -n $pane_title && $pane_title != "$wname" && $pane_title != "zsh" && $pane_title != "bash" ]]; then
+            printf '  \033[33m✳ %.*s\033[0m\n' "$((width - 5))" "$pane_title"
+        fi
+
+        # Separator
+        printf '\033[2m'
+        printf '%.0s─' $(seq 1 "$width")
+        printf '\033[0m\n'
+
+    done < <(tmux list-windows -t "$session" -F "#{window_index}	#{window_active}	#{window_name}	#{@claude_status}	#{@claude_project}	#{pane_title}	#{pane_current_path}")
+
+    printf '\033[J'  # clear stale content below
+    sleep 0.5
+done
