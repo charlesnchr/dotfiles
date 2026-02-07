@@ -1,0 +1,28 @@
+#!/opt/homebrew/bin/bash
+
+# Render a read-only live mirror of another tmux pane.
+# Used by tmux-perm-dashboard to build the monitoring view.
+
+target=$1
+label=$2
+
+tput civis  # hide cursor
+trap 'tput cnorm; exit' EXIT INT TERM
+
+while true; do
+    printf '\033[H'  # cursor to top-left (no flicker clear)
+
+    # Label bar
+    if [[ -n $label ]]; then
+        printf '\033[1;7m %s \033[0m\n' "$label"
+    fi
+
+    # Mirror the source pane content with colors
+    if ! tmux capture-pane -t "$target" -p -e 2>/dev/null; then
+        printf '\033[2m[pane no longer exists]\033[0m'
+        sleep 5
+    fi
+
+    printf '\033[J'  # clear any stale content below
+    sleep 0.5
+done

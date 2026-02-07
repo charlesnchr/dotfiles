@@ -25,59 +25,68 @@ if [[ -z $mouse_x ]]; then
     exit 1
 fi
 
-# Load branch lookup cache
-branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
-declare -A branch_map
-
-if [[ -f $branch_lookup_cache ]]; then
-    while IFS='=' read -r session_name branch; do
-        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
-    done < "$branch_lookup_cache"
-fi
+now=$(date +%s)
 
 # Load bookmarks
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
 declare -A bookmarks
 
 if [[ -f $bookmark_file ]]; then
-    while IFS='=' read -r idx session; do
-        [[ -n $idx ]] && bookmarks[$idx]="$session"
+    while IFS='=' read -r idx value; do
+        [[ -n $idx ]] && bookmarks[$idx]="$value"
     done < "$bookmark_file"
 fi
 
-# Calculate the display width of each bookmark (approximate, without color codes)
+# Calculate the display width of each bookmark (must match tmux-show-bookmarks logic)
 declare -A bookmark_widths
-declare -A bookmark_positions
 total_width=0
 
 for idx in {1..5}; do
-    session="${bookmarks[$idx]}"
-    if [[ -n $session ]]; then
-        # Calculate width: [idx] + space + session + branch (if exists)
-        width=0
-
-        # [idx] part
-        width=$((width + 3))  # [1], [2], etc.
-
-        # Session name
-        session_display=$(truncate_beginning "$session")
-        width=$((width + 1 + ${#session_display}))  # space + session name
-
-        # Branch if available
-        if [[ -n ${branch_map[$session]} ]]; then
-            branch_display=$(truncate_beginning "${branch_map[$session]}")
-            width=$((width + 1 + ${#branch_display}))  # space + branch
-        fi
-
-        # Add separator if not first
-        if [[ $total_width -gt 0 ]]; then
-            total_width=$((total_width + 3))  # " │ "
-        fi
-
-        bookmark_positions[$idx]=$total_width
-        bookmark_widths[$idx]=$width
-        total_width=$((total_width + width))
+    value="${bookmarks[$idx]}"
+    if [[ -z $value ]]; then
+        continue
     fi
+
+    IFS='|' read -r bm_session bm_window_id <<< "$value"
+
+    # Check if window still exists
+    if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
+        continue
+    fi
+
+    window_name=$(tmux display-message -t "$bm_window_id" -p '#{window_name}' 2>/dev/null)
+    pane_path=$(tmux display-message -t "$bm_window_id" -p '#{pane_current_path}' 2>/dev/null)
+
+    branch=""
+    if [[ -n $pane_path ]] && [[ -d $pane_path ]]; then
+        branch=$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    fi
+
+    display_name="${bm_session}/${window_name}"
+
+    # Calculate width: [idx] + space + display_name + branch
+    width=3  # [1], [2], etc.
+
+    display=$(truncate_beginning "$display_name")
+    width=$((width + 1 + ${#display}))
+
+    if [[ -n $branch ]]; then
+        branch_display=$(truncate_beginning "$branch")
+        width=$((width + 1 + ${#branch_display}))
+    fi
+
+    # Account for spinner character if window has recent activity
+    activity=$(tmux display-message -t "$bm_window_id" -p '#{window_activity}' 2>/dev/null)
+    if [[ -n $activity ]] && (( now - activity < 10 )); then
+        width=$((width + 2))  # space + spinner char
+    fi
+
+    if [[ $total_width -gt 0 ]]; then
+        total_width=$((total_width + 3))  # " │ "
+    fi
+
+    bookmark_widths[$idx]=$width
+    total_width=$((total_width + width))
 done
 
 # If no bookmarks, exit
@@ -94,50 +103,37 @@ current_pos=$start_pos
 clicked_index=""
 
 for idx in {1..5}; do
-    session="${bookmarks[$idx]}"
-    if [[ -n $session ]]; then
-        # Add separator offset if not first
-        if [[ $current_pos -gt $start_pos ]]; then
-            current_pos=$((current_pos + 3))  # " │ "
-        fi
-
-        # Check if mouse_x is within this bookmark's range
-        end_pos=$((current_pos + bookmark_widths[$idx]))
-
-        if [[ $mouse_x -ge $current_pos ]] && [[ $mouse_x -lt $end_pos ]]; then
-            clicked_index=$idx
-            break
-        fi
-
-        current_pos=$end_pos
+    if [[ -z ${bookmark_widths[$idx]} ]]; then
+        continue
     fi
+
+    # Add separator offset if not first
+    if [[ $current_pos -gt $start_pos ]]; then
+        current_pos=$((current_pos + 3))  # " │ "
+    fi
+
+    # Check if mouse_x is within this bookmark's range
+    end_pos=$((current_pos + bookmark_widths[$idx]))
+
+    if [[ $mouse_x -ge $current_pos ]] && [[ $mouse_x -lt $end_pos ]]; then
+        clicked_index=$idx
+        break
+    fi
+
+    current_pos=$end_pos
 done
 
-# Switch to the session (create if it doesn't exist)
+# Switch to the bookmarked window
 if [[ -n $clicked_index ]]; then
-    session="${bookmarks[$clicked_index]}"
-    if [[ -n $session ]]; then
-        if ! tmux has-session -t="$session" 2>/dev/null; then
-            # Look up path from sessionizer cache
-            all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
-            session_path=""
-            if [[ -f $all_dirs_cache ]]; then
-                while IFS= read -r line; do
-                    folder=$(echo "$line" | awk '{print $1}')
-                    if [[ "${folder//./_}" == "$session" ]]; then
-                        session_path=$(echo "$line" | awk '{print $NF}')
-                        break
-                    fi
-                done < "$all_dirs_cache"
-            fi
+    value="${bookmarks[$clicked_index]}"
+    IFS='|' read -r bm_session bm_window_id <<< "$value"
 
-            if [[ -n $session_path && -d $session_path ]]; then
-                tmux new-session -ds "$session" -c "$session_path"
-            else
-                tmux new-session -ds "$session"
-            fi
-        fi
-        tmux switch-client -t "$session"
+    if tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
+        actual_session=$(tmux display-message -t "$bm_window_id" -p '#{session_name}' 2>/dev/null)
+        tmux switch-client -t "$actual_session"
+        tmux select-window -t "$bm_window_id"
+    else
+        tmux display-message "Bookmarked window no longer exists"
     fi
 else
     # No bookmark clicked - jump to most recent session
