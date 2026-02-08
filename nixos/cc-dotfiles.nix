@@ -37,6 +37,7 @@
 
   # Containers (parity with helsinki)
   virtualisation.docker.enable = true;
+  users.users.cc.extraGroups = lib.mkAfter [ "docker" ];
 
   environment.systemPackages = with pkgs; [
     # System essentials
@@ -111,6 +112,4 @@
     python312
     nodejs_22
   ];
-} // lib.optionalAttrs (config.users.users ? cc) {
-  users.users.cc.extraGroups = lib.mkAfter [ "docker" ];
 }
