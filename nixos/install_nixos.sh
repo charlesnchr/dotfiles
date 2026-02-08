@@ -39,7 +39,7 @@ if ! sudo grep -q "cc-dotfiles\\.nix" "$CONFIG" >/dev/null 2>&1; then
   sudo awk '
     BEGIN{inImports=0; inserted=0}
     {
-      if (!inserted && $0 ~ /^[[:space:]]*imports[[:space:]]*=[[:space:]]*\\[/) { inImports=1 }
+      if (!inserted && $0 ~ /^[[:space:]]*imports[[:space:]]*=/) { inImports=1 }
       if (inImports && !inserted && $0 ~ /^[[:space:]]*\\];[[:space:]]*$/) {
         print "    ./cc-dotfiles.nix"
         inserted=1
