@@ -101,7 +101,8 @@ fi
 
 log "python (pyenv) + pynvim"
 eval "$(pyenv init -)"
-if ! pyenv versions --bare | grep -q '^3\\.12'; then
+# pyenv may print versions with leading spaces depending on context; normalize.
+if ! pyenv versions --bare | tr -d '[:space:]' | grep -q '^3\\.12'; then
   if ! pyenv install 3.12; then
     log "pyenv install failed; retrying with nix-shell build deps"
     nix-shell -p zlib.dev bzip2.dev openssl.dev readline.dev sqlite.dev ncurses.dev xz.dev tk.dev libffi.dev pkg-config gcc gnumake --run "pyenv install 3.12"
