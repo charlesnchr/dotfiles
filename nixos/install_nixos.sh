@@ -40,7 +40,7 @@ if ! sudo grep -q "cc-dotfiles\\.nix" "$CONFIG" >/dev/null 2>&1; then
     BEGIN{inImports=0; inserted=0}
     {
       if (!inserted && $0 ~ /^[[:space:]]*imports[[:space:]]*=/) { inImports=1 }
-      if (inImports && !inserted && $0 ~ /^[[:space:]]*\\];[[:space:]]*$/) {
+      if (inImports && !inserted && $0 ~ /^[[:space:]]*];[[:space:]]*$/) {
         print "    ./cc-dotfiles.nix"
         inserted=1
         inImports=0
@@ -49,6 +49,7 @@ if ! sudo grep -q "cc-dotfiles\\.nix" "$CONFIG" >/dev/null 2>&1; then
     }
   ' "$CONFIG" | sudo tee "$CONFIG.tmp" >/dev/null
   sudo mv "$CONFIG.tmp" "$CONFIG"
+  sudo grep -q "cc-dotfiles\\.nix" "$CONFIG"
 fi
 
 log "nixos-rebuild switch"
