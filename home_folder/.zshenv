@@ -34,4 +34,5 @@ elif [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-. "$HOME/.cargo/env"
+# Optional: rustup adds this; avoid hard-failing on machines without it.
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
