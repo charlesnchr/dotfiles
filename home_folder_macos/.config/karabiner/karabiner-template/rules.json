@@ -1166,6 +1166,20 @@
                   "is_pointing_device": false,
                   "product_id": 0,
                   "vendor_id": 65261
+                },
+                {
+                  "description": "BM60 RGB Poker",
+                  "is_keyboard": true,
+                  "is_pointing_device": false,
+                  "product_id": 834,
+                  "vendor_id": 1452
+                },
+                {
+                  "description": "BM60V2 KP Republic",
+                  "is_keyboard": true,
+                  "is_pointing_device": false,
+                  "product_id": 4385,
+                  "vendor_id": 19280
                 }
               ],
               "type": "device_unless"
