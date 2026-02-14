@@ -1,12 +1,14 @@
 #!/opt/homebrew/bin/bash
 
 # Background process that refreshes the status bar when bookmarked windows
-# have recent activity, driving the spinner animation in tmux-show-bookmarks.
+# have an active Claude Code/CLI process, driving the spinner animation
+# in tmux-show-bookmarks.
 # Started by .tmux.conf and kept alive while tmux is running.
 
 pidfile="$HOME/.cache/tmux-bookmark-watcher.pid"
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
 frame_file="$HOME/.cache/tmux-bookmark-frame"
+active_file="$HOME/.cache/tmux-bookmark-active"
 
 # Kill existing watcher if running
 if [[ -f $pidfile ]]; then
@@ -18,34 +20,117 @@ if [[ -f $pidfile ]]; then
 fi
 
 echo $$ > "$pidfile"
-trap 'rm -f "$pidfile" "$frame_file"; exit 0' EXIT TERM INT
+trap 'rm -f "$pidfile" "$frame_file" "$active_file"; exit 0' EXIT TERM INT
 
 frame=0
 
 while tmux list-sessions &>/dev/null; do
     # No bookmarks — sleep and retry
     if [[ ! -s $bookmark_file ]]; then
-        rm -f "$frame_file"
+        rm -f "$frame_file" "$active_file"
         sleep 2
         continue
     fi
 
-    # Check if any bookmarked window has activity within the last 10 seconds
-    has_activity=false
-    now=$(date +%s)
+    # Find all claude process PIDs (covers both Claude Code and Claude CLI)
+    claude_pids=$(pgrep -x claude 2>/dev/null)
+
+    if [[ -z $claude_pids ]]; then
+        # No claude processes running anywhere
+        rm -f "$frame_file" "$active_file"
+        sleep 2
+        continue
+    fi
+
+    # Get full process snapshot once (pid, ppid, cpu)
+    ps_snapshot=$(ps -eo pid=,ppid=,pcpu= 2>/dev/null)
+
+    # Collect pane PIDs for bookmarked windows
+    declare -A pane_to_window
+    pane_pid_list=""
 
     while IFS='=' read -r idx value; do
         [[ -z $value ]] && continue
         IFS='|' read -r _ bm_window_id <<< "$value"
-        activity=$(tmux display-message -t "$bm_window_id" -p '#{window_activity}' 2>/dev/null)
-        if [[ -n $activity ]] && (( now - activity < 10 )); then
-            has_activity=true
-            break
-        fi
+        pane_pid=$(tmux display-message -t "$bm_window_id" -p '#{pane_pid}' 2>/dev/null)
+        [[ -z $pane_pid ]] && continue
+        pane_to_window[$pane_pid]=$bm_window_id
+        pane_pid_list+="$pane_pid "
     done < "$bookmark_file"
 
-    if [[ $has_activity == true ]]; then
+    if [[ -z $pane_pid_list ]]; then
+        rm -f "$frame_file" "$active_file"
+        unset pane_to_window
+        sleep 2
+        continue
+    fi
+
+    # Use awk to analyze the process tree in one pass:
+    # For each claude PID, walk up to find if it's under a bookmarked pane.
+    # If so, walk down from the claude PID to sum CPU of its subtree.
+    # Output pane PIDs that have active claude processes.
+    active_pane_pids=$(echo "$ps_snapshot" | awk \
+        -v cpids="$(echo $claude_pids | tr '\n' ' ')" \
+        -v ppids="$pane_pid_list" '
+    BEGIN {
+        nc = split(cpids, ca, " ")
+        for (i = 1; i <= nc; i++) if (ca[i]+0 > 0) claude[ca[i]+0] = 1
+        np = split(ppids, pa, " ")
+        for (i = 1; i <= np; i++) if (pa[i]+0 > 0) panes[pa[i]+0] = 1
+    }
+    {
+        pid = $1+0; ppid = $2+0; cpu = $3+0
+        if (pid > 0) {
+            parent[pid] = ppid
+            cpu_val[pid] = cpu
+            children[ppid] = children[ppid] " " pid
+        }
+    }
+    END {
+        for (cpid in claude) {
+            # Walk up from claude to find a bookmarked pane ancestor
+            current = cpid
+            found = 0
+            visited = 0
+            while (current > 1 && visited++ < 50) {
+                if (current in panes) { found = current; break }
+                if (!(current in parent)) break
+                current = parent[current]
+            }
+            if (!found) continue
+
+            # BFS down from claude PID to sum CPU of its subtree
+            total = cpu_val[cpid]
+            queue[1] = cpid; qi = 1; qn = 1
+            while (qi <= qn) {
+                cur = queue[qi++]
+                n = split(children[cur], kids, " ")
+                for (j = 1; j <= n; j++) {
+                    k = kids[j]+0
+                    if (k > 0) {
+                        qn++
+                        queue[qn] = k
+                        total += cpu_val[k]
+                    }
+                }
+            }
+
+            if (total > 2.0) print found
+        }
+    }')
+
+    # Convert active pane PIDs to window IDs
+    active_windows=""
+    for ppid in $active_pane_pids; do
+        wid=${pane_to_window[$ppid]}
+        [[ -n $wid ]] && active_windows+="$wid"$'\n'
+    done
+
+    unset pane_to_window
+
+    if [[ -n $active_windows ]]; then
         echo "$frame" > "$frame_file"
+        printf '%s' "$active_windows" > "$active_file"
         frame=$(( (frame + 1) % 10 ))
 
         # Refresh all attached clients
@@ -55,7 +140,7 @@ while tmux list-sessions &>/dev/null; do
 
         sleep 0.5
     else
-        rm -f "$frame_file"
+        rm -f "$frame_file" "$active_file"
         sleep 2
     fi
 done

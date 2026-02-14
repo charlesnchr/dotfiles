@@ -1,18 +1,14 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
-      "pointer" : {
-        "acceleration" : 0.4,
-        "speed" : 0.0479,
-        "disableAcceleration" : true
-      },
       "if" : {
         "device" : {
-          "productName" : "UGREEN Mouse",
           "vendorID" : "0x2b89",
+          "productID" : "0x43",
+          "productName" : "UGREEN Mouse",
           "serialNumber" : "No.161-0043-2",
-          "category" : "mouse",
-          "productID" : "0x43"
+          "category" : "mouse"
         }
       },
       "scrolling" : {
@@ -22,28 +18,28 @@
         },
         "modifiers" : {
           "vertical" : {
-            "shift" : {
-              "type" : "alterOrientation"
-            },
             "command" : {
               "type" : "pinchZoom"
+            },
+            "shift" : {
+              "type" : "alterOrientation"
             }
           }
         }
+      },
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 0.4,
+        "speed" : 0.0479
       }
     },
     {
-      "pointer" : {
-        "speed" : 0.0298,
-        "disableAcceleration" : true,
-        "acceleration" : 0.6598
-      },
       "if" : {
         "device" : {
-          "productID" : "0xb2",
-          "vendorID" : "0x1532",
+          "category" : "mouse",
           "productName" : "Razer DeathAdder V3",
-          "category" : "mouse"
+          "productID" : "0xb2",
+          "vendorID" : "0x1532"
         }
       },
       "buttons" : {
@@ -55,68 +51,73 @@
         },
         "modifiers" : {
           "vertical" : {
-            "command" : {
-              "type" : "pinchZoom"
-            },
             "shift" : {
               "type" : "alterOrientation"
+            },
+            "command" : {
+              "type" : "pinchZoom"
             }
           }
         },
         "acceleration" : {
           "vertical" : 1
         }
+      },
+      "pointer" : {
+        "speed" : 0.0298,
+        "acceleration" : 0.6598,
+        "disableAcceleration" : true
       }
     },
     {
-      "pointer" : {
-        "acceleration" : 0.3,
-        "disableAcceleration" : true
-      },
       "if" : {
         "device" : {
+          "productID" : "0x16",
           "productName" : "Razer DeathAdder",
           "category" : "mouse",
-          "productID" : "0x16",
           "vendorID" : "0x1532"
         }
       },
       "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
         "acceleration" : {
           "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
         }
+      },
+      "pointer" : {
+        "acceleration" : 0.3,
+        "disableAcceleration" : true
       }
     },
     {
-      "pointer" : {
-        "disableAcceleration" : true
-      },
       "if" : {
         "device" : {
+          "category" : "mouse",
           "serialNumber" : "FBAAFE6005E27D8F",
           "vendorID" : "0x46d",
           "productID" : "0xb023",
-          "productName" : "MX Master 3",
-          "category" : "mouse"
+          "productName" : "MX Master 3"
         }
       },
       "scrolling" : {
         "reverse" : {
           "horizontal" : true
         }
+      },
+      "pointer" : {
+        "disableAcceleration" : true
       }
     },
     {
       "if" : {
         "device" : {
+          "category" : "mouse",
           "productID" : "0xb020",
-          "vendorID" : "0x46d",
-          "serialNumber" : "54A474C7540A70D2",
           "productName" : "MX Vertical",
-          "category" : "mouse"
+          "vendorID" : "0x46d",
+          "serialNumber" : "54A474C7540A70D2"
         }
       },
       "scrolling" : {
@@ -127,7 +128,24 @@
           "vertical" : 1
         }
       }
+    },
+    {
+      "if" : {
+        "device" : {
+          "vendorID" : "0x1532",
+          "productID" : "0xb2",
+          "category" : "mouse",
+          "productName" : "V-Razer DeathAdder V3"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
+        }
+      }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }

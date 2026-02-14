@@ -1,3 +1,7 @@
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 # Start configuration added by Zim Framework install {{{
 #
 # User configuration sourced by interactive shells
@@ -216,3 +220,18 @@ alias zjr='pkill -9 zellij 2>/dev/null; sleep 0.3; for s in $(zellij list-sessio
 if [[ -z "$ZELLIJ" && -f "$HOME/.cache/zellij-pending-session" ]]; then
     zj
 fi
+
+# pnpm
+export PNPM_HOME="/Users/cnc40853/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# OpenClaw Completion
+source "/Users/cnc40853/.openclaw/completions/openclaw.zsh"
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
