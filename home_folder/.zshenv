@@ -1,6 +1,7 @@
 
-# Prevent Ubuntu's /etc/zsh/zshrc from calling compinit before zim
-skip_global_compinit=1
+# Prevent global /etc/zshrc from calling compinit before zim
+skip_global_compinit=1  # Ubuntu/Debian
+NOSYSZSHRC=1            # NixOS
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
@@ -41,3 +42,13 @@ path=( /opt/homebrew/opt/rustup/bin(N) $path )
 
 # Optional: rustup adds this; avoid hard-failing on machines without it.
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# OpenClaw: export vars from global env file for all shells (needed by tools like netlify)
+# Keep secrets in ~/.openclaw/.env; this just exports them into the shell environment.
+if [[ -f "$HOME/.openclaw/.env" ]]; then
+  set -a
+  source "$HOME/.openclaw/.env"
+  set +a
+fi
+
+export OPENCLAW_GIT_DIR=~/openclaw

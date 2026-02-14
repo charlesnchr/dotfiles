@@ -113,4 +113,8 @@ keybind = opt+digit_3=text:\x1b3
 keybind = opt+digit_4=text:\x1b4
 keybind = opt+digit_5=text:\x1b5
 
+# New tmux window (prefix+c) vs new Ghostty tab
+keybind = cmd+t=text:\x01\x63
+keybind = cmd+shift+t=new_tab
+
 # Toggle bookmark: use prefix+B then 1-5 (no Ghostty binding needed)
