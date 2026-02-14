@@ -18,6 +18,8 @@ typeset -gU path fpath
 path=(
   $HOME/{,s}bin(N)
   $HOME/.local/{,s}bin(N)
+  # Prefer rustup shims (cargo/rustc/rust-analyzer) over Homebrew's `rust`.
+  /opt/homebrew/opt/rustup/bin(N)
   /opt/{homebrew,local}/{,s}bin(N)
   /usr/local/{,s}bin(N)
   $path
@@ -33,6 +35,9 @@ if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 elif [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+# Ensure rustup shims win even after `brew shellenv` prepends Homebrew's bin dirs.
+path=( /opt/homebrew/opt/rustup/bin(N) $path )
 
 # Optional: rustup adds this; avoid hard-failing on machines without it.
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
