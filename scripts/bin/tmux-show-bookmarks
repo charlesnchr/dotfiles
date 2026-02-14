@@ -21,12 +21,20 @@ truncate_beginning() {
 # Spinner frames for active windows
 spinners=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
 frame_file="$HOME/.cache/tmux-bookmark-frame"
+active_file="$HOME/.cache/tmux-bookmark-active"
 frame_idx=0
 if [[ -f $frame_file ]]; then
     frame_idx=$(cat "$frame_file" 2>/dev/null)
     [[ -z $frame_idx ]] && frame_idx=0
 fi
-now=$(date +%s)
+
+# Load active window IDs (set by tmux-bookmark-watcher based on Claude process CPU)
+declare -A active_windows
+if [[ -f $active_file ]]; then
+    while IFS= read -r wid; do
+        [[ -n $wid ]] && active_windows[$wid]=1
+    done < "$active_file"
+fi
 
 # Load bookmarks
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
@@ -86,9 +94,8 @@ for idx in {1..5}; do
         output+=" #[fg=colour146]${branch_display}#[fg=colour223]"
     fi
 
-    # Show spinner if window has had activity in the last 10 seconds
-    activity=$(tmux display-message -t "$bm_window_id" -p '#{window_activity}' 2>/dev/null)
-    if [[ -n $activity ]] && (( now - activity < 10 )); then
+    # Show spinner if Claude is actively working in this window
+    if [[ -n ${active_windows[$bm_window_id]} ]]; then
         output+=" #[fg=colour214]${spinners[$frame_idx]}#[fg=colour223]"
     fi
 done
