@@ -216,3 +216,6 @@ alias zjr='pkill -9 zellij 2>/dev/null; sleep 0.3; for s in $(zellij list-sessio
 if [[ -z "$ZELLIJ" && -f "$HOME/.cache/zellij-pending-session" ]]; then
     zj
 fi
+if [[ "$(hostname)" = "nixos" ]]; then
+    export PATH="$HOME/.npm-global/bin:$PATH"
+fi
