@@ -27,7 +27,6 @@ fi
 for idx in {1..5}; do
     IFS='|' read -r bm_session bm_window_id <<< "${bookmarks[$idx]}"
     if [[ "$bm_window_id" == "$current_window_id" ]]; then
-        tmux display-message "Window already bookmarked at position $idx"
         exit 0
     fi
 done
@@ -45,16 +44,8 @@ for idx in {1..5}; do
             fi
         done
 
-        tmux display-message "Bookmarked window '$current_window_name' at position $idx"
         tmux refresh-client -S
-
-        # Ensure watcher is running
-        _pid=$(cat "$HOME/.cache/tmux-bookmark-watcher.pid" 2>/dev/null)
-        if [[ -z $_pid ]] || ! kill -0 "$_pid" 2>/dev/null; then
-            nohup ~/bin/tmux-bookmark-watcher &>/dev/null &
-        fi
         exit 0
     fi
 done
 
-tmux display-message "All bookmark slots full (use prefix+B+\` to clear)"
