@@ -95,6 +95,12 @@ else
     info "Claude Code already installed"
 fi
 
+# Install Claude Code hooks (tmux status emojis + notifications)
+if [ -x "$HOME/.claude/hooks/install-hooks.sh" ]; then
+    info "Installing Claude Code hooks..."
+    "$HOME/.claude/hooks/install-hooks.sh"
+fi
+
 # ==============================================================================
 # Phase 5: Python setup
 # ==============================================================================
