@@ -1,0 +1,29 @@
+#!/opt/homebrew/bin/bash
+
+# Compact bookmarks: remove gaps so they start from 1 consecutively
+
+bookmark_file="$HOME/.cache/tmux-session-bookmarks"
+
+if [[ ! -f $bookmark_file ]]; then
+    tmux display-message "No bookmarks to compact"
+    exit 0
+fi
+
+# Read existing bookmarks in index order
+declare -a values
+while IFS='=' read -r idx value; do
+    [[ -n $idx && -n $value ]] && values+=("$value")
+done < <(sort -t= -k1 -n "$bookmark_file")
+
+if [[ ${#values[@]} -eq 0 ]]; then
+    tmux display-message "No bookmarks to compact"
+    exit 0
+fi
+
+# Rewrite with consecutive indices starting from 1
+> "$bookmark_file"
+for i in "${!values[@]}"; do
+    echo "$(( i + 1 ))=${values[$i]}" >> "$bookmark_file"
+done
+
+tmux display-message "Compacted ${#values[@]} bookmark(s)"
