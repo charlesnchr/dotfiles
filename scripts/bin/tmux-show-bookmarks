@@ -73,8 +73,9 @@ for idx in {1..5}; do
         branch=$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null)
     fi
 
-    # Build display name: session/window_name
-    display_name="${bm_session}/${window_name}"
+    # Build display name: cwd/window_name
+    cwd_name=$(basename "$pane_path" 2>/dev/null)
+    display_name="${cwd_name}/${window_name}"
 
     # Add separator if not first and there's content
     if [[ -n $output ]]; then

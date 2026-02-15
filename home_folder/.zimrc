@@ -26,6 +26,7 @@ zmodule ohmyzsh/ohmyzsh --root plugins/pip
 zmodule ohmyzsh/ohmyzsh --root plugins/uv
 
 # TERMINAL
+zmodule termtitle
 zmodule mroth/evalcache
 zmodule romkatv/zsh-defer
 zmodule romkatv/powerlevel10k --use degit
