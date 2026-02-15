@@ -34,11 +34,9 @@ IFS='|' read -r bm_session bm_window_id <<< "${bookmarks[$index]}"
 if [[ "$bm_window_id" == "$current_window_id" ]]; then
     # Clear the bookmark
     unset "bookmarks[$index]"
-    tmux display-message "Cleared bookmark $index"
 else
     # Set the bookmark
     bookmarks[$index]="$current_session|$current_window_id"
-    tmux display-message "Bookmarked window '$current_window_name' at position $index"
 fi
 
 # Write back to file
@@ -52,8 +50,3 @@ done
 # Force refresh the status bar
 tmux refresh-client -S
 
-# Ensure watcher is running
-_pid=$(cat "$HOME/.cache/tmux-bookmark-watcher.pid" 2>/dev/null)
-if [[ -z $_pid ]] || ! kill -0 "$_pid" 2>/dev/null; then
-    nohup ~/bin/tmux-bookmark-watcher &>/dev/null &
-fi

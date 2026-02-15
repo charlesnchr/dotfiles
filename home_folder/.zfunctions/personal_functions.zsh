@@ -1,5 +1,18 @@
 #!/bin/zsh
 
+# Update tmux window git branch on each prompt
+_update_tmux_git() {
+  if [ -n "$TMUX_PANE" ]; then
+    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [ -n "$branch" ]; then
+      tmux set-option -wq -t "$TMUX_PANE" @git_branch "$branch"
+    else
+      tmux set-option -wqu -t "$TMUX_PANE" @git_branch 2>/dev/null
+    fi
+  fi
+}
+add-zsh-hook precmd _update_tmux_git
+
 # alias for ssh to make panel naming for tmux
 # ssh() {
 #     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then

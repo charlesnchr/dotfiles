@@ -4,6 +4,7 @@ set -euo pipefail
 # Run this on the NixOS machine (as your normal user).
 # Assumes this repo is checked out at ~/dotfiles (or set DOTFILES_DIR).
 
+
 log() { printf "[nixos-install] %s\n" "$*"; }
 
 need() {
