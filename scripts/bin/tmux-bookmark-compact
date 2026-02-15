@@ -5,7 +5,6 @@
 bookmark_file="$HOME/.cache/tmux-session-bookmarks"
 
 if [[ ! -f $bookmark_file ]]; then
-    tmux display-message "No bookmarks to compact"
     exit 0
 fi
 
@@ -16,7 +15,6 @@ while IFS='=' read -r idx value; do
 done < <(sort -t= -k1 -n "$bookmark_file")
 
 if [[ ${#values[@]} -eq 0 ]]; then
-    tmux display-message "No bookmarks to compact"
     exit 0
 fi
 
@@ -26,4 +24,4 @@ for i in "${!values[@]}"; do
     echo "$(( i + 1 ))=${values[$i]}" >> "$bookmark_file"
 done
 
-tmux display-message "Compacted ${#values[@]} bookmark(s)"
+tmux refresh-client -S
