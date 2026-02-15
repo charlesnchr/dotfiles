@@ -48,3 +48,6 @@ fi
 
 
 export OPENCLAW_GIT_DIR=~/openclaw
+if [[ "$(hostname)" = "nixos" ]]; then
+    export PATH="$HOME/.nix-profile/bin:$PATH"
+fi
