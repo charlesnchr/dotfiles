@@ -238,4 +238,3 @@ esac
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
->>>>>>> 404ef03b9a7206c030cf567c260e15d9756ff920
