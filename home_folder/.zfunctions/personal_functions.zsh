@@ -13,16 +13,17 @@ _update_tmux_git() {
 }
 add-zsh-hook precmd _update_tmux_git
 
-# alias for ssh to make panel naming for tmux
-# ssh() {
-#     if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
-#         tmux rename-window "$(echo $* | cut -w -f 1)"
-#         command ssh "$@"
-#         tmux set-window-option automatic-rename "on" 1>/dev/null
-#     else
-#         command ssh "$@"
-#     fi
-# }
+ssh() {
+    if [ -n "$TMUX_PANE" ]; then
+        local host="${@: -1}"
+        host="${host##*@}"
+        tmux set-option -wq -t "$TMUX_PANE" @ssh_host "$host"
+        command ssh "$@"
+        tmux set-option -wqu -t "$TMUX_PANE" @ssh_host 2>/dev/null
+    else
+        command ssh "$@"
+    fi
+}
 
 jcd() {
 	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
