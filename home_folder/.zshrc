@@ -198,8 +198,10 @@ bindkey '^[[B' history-substring-search-down
 # compinit loaded by zim completion module
 
 # Defer and cache heavy init blocks for cold-start speed.
+# direnv hook must run eagerly (not via zsh-defer) so its chpwd/precmd hooks
+# register in time to fire on directory changes, not just at shell startup.
 if [[ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh-disable-direnv" ]]; then
-  zsh-defer -c '_evalcache direnv hook zsh'
+  _evalcache direnv hook zsh
 fi
 zsh-defer -c '_evalcache pyenv init -'
 zsh-defer -c '_evalcache fnm env'
