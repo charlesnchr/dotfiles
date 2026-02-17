@@ -45,7 +45,7 @@ for idx in {1..5}; do
         continue
     fi
 
-    IFS='|' read -r bm_session bm_window_id <<< "$value"
+    IFS='|' read -r bm_session bm_window_id bm_pane_id <<< "$value"
 
     # Check if window still exists
     if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
@@ -117,12 +117,15 @@ done
 # Switch to the bookmarked window
 if [[ -n $clicked_index ]]; then
     value="${bookmarks[$clicked_index]}"
-    IFS='|' read -r bm_session bm_window_id <<< "$value"
+    IFS='|' read -r bm_session bm_window_id bm_pane_id <<< "$value"
 
     if tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
         actual_session=$(tmux display-message -t "$bm_window_id" -p '#{session_name}' 2>/dev/null)
         tmux switch-client -t "$actual_session"
         tmux select-window -t "$bm_window_id"
+        if [[ -n $bm_pane_id ]] && tmux display-message -t "$bm_pane_id" -p '' &>/dev/null; then
+            tmux select-pane -t "$bm_pane_id"
+        fi
     else
     fi
 else

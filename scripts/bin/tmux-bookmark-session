@@ -11,10 +11,10 @@ if [[ -z $index ]] || [[ ! $index =~ ^[1-5]$ ]]; then
     exit 1
 fi
 
-# Get current session name and window id
+# Get current session name, window id, and pane id
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
 current_window_id=$(tmux display-message -p '#{window_id}' 2>/dev/null)
-current_window_name=$(tmux display-message -p '#{window_name}' 2>/dev/null)
+current_pane_id=$(tmux display-message -p '#{pane_id}' 2>/dev/null)
 
 if [[ -z $current_session ]] || [[ -z $current_window_id ]]; then
     echo "Not in a tmux session"
@@ -29,14 +29,14 @@ if [[ -f $bookmark_file ]]; then
     done < "$bookmark_file"
 fi
 
-# Check if current window is already bookmarked at this index
-IFS='|' read -r bm_session bm_window_id <<< "${bookmarks[$index]}"
-if [[ "$bm_window_id" == "$current_window_id" ]]; then
+# Check if current pane is already bookmarked at this index
+IFS='|' read -r bm_session bm_window_id bm_pane_id <<< "${bookmarks[$index]}"
+if [[ "$bm_pane_id" == "$current_pane_id" ]]; then
     # Clear the bookmark
     unset "bookmarks[$index]"
 else
     # Set the bookmark
-    bookmarks[$index]="$current_session|$current_window_id"
+    bookmarks[$index]="$current_session|$current_window_id|$current_pane_id"
 fi
 
 # Write back to file
