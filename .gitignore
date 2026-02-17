@@ -13,3 +13,4 @@ dotfiles_private
 .zshrc_local
 is_dark_mode
 *.zwc
+/.envrc
