@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Custom grid layout: max 2 rows, auto-balanced columns.
+# 1-3 panes: single row. 4+: two rows, larger row on top.
+
+n=$(tmux display-message -p '#{window_panes}')
+[[ $n -le 1 ]] && exit 0
+[[ $n -le 3 ]] && exec tmux select-layout even-horizontal
+
+W=$(tmux display-message -p '#{window_width}')
+H=$(tmux display-message -p '#{window_height}')
+read -ra IDX <<< "$(tmux list-panes -F '#{pane_index}' | tr '\n' ' ')"
+
+top_n=$(( (n + 1) / 2 ))
+bot_n=$(( n - top_n ))
+top_h=$(( H / 2 ))
+bot_h=$(( H - top_h - 1 ))
+bot_y=$(( top_h + 1 ))
+
+build_row() {
+    local height=$2 y=$3
+    local -a arr
+    read -ra arr <<< "$1"
+    local total=${#arr[@]}
+
+    if [[ $total -eq 1 ]]; then
+        printf '%s' "${W}x${height},0,${y},${arr[0]}"
+        return
+    fi
+
+    local panes="" x=0 w
+    for (( i=0; i<total; i++ )); do
+        if (( i + 1 == total )); then
+            w=$((W - x))
+        else
+            local remaining=$((total - i))
+            w=$(( (W - x - remaining + 1) / remaining ))
+        fi
+        [[ -n "$panes" ]] && panes+=","
+        panes+="${w}x${height},${x},${y},${arr[$i]}"
+        x=$((x + w + 1))
+    done
+
+    printf '%s' "${W}x${height},0,${y}{${panes}}"
+}
+
+top_str=$(build_row "${IDX[*]:0:top_n}" "$top_h" 0)
+bot_str=$(build_row "${IDX[*]:top_n:bot_n}" "$bot_h" "$bot_y")
+
+body="${W}x${H},0,0[${top_str},${bot_str}]"
+
+# Compute tmux layout checksum
+csum=$(printf '%s' "$body" | od -An -tu1 | tr -s ' \n' '\n' | awk '
+BEGIN { s = 0 }
+/^[0-9]/ { s = int(s/2) + (s%2)*32768; s = (s + $1) % 65536 }
+END { printf "%04x", s }
+')
+
+tmux select-layout "${csum},${body}"

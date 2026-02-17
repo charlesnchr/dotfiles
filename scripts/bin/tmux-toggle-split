@@ -1,0 +1,15 @@
+#!/bin/sh
+# Toggle split direction for the current pane pair.
+n=$(tmux display-message -p "#{window_panes}")
+[ "$n" -lt 2 ] && exit 0
+id=$(tmux display-message -p "#{pane_id}")
+top=$(tmux display-message -p "#{pane_top}")
+tmux select-pane -t ".-"
+ptop=$(tmux display-message -p "#{pane_top}")
+tmux select-pane -t "$id"
+if [ "$top" = "$ptop" ]; then
+  tmux move-pane -v -t ".-"
+else
+  tmux move-pane -h -t ".-"
+fi
+tmux select-pane -t "$id"
