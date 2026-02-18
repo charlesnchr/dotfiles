@@ -166,6 +166,9 @@ function init_cargo() {
     . "$HOME/.cargo/env"
 }
 
+alias c='ccv -y'
+alias cr='ccv -yr'
+
 function ccv() {
   local env_vars=(
     "ENABLE_BACKGROUND_TASKS=true"

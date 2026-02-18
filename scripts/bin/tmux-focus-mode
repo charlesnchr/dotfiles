@@ -1,0 +1,18 @@
+#!/bin/sh
+# Toggle focus mode: active pane auto-enlarges on selection.
+
+current=$(tmux show-option -gv @focus_mode 2>/dev/null)
+
+if [ "$current" = "on" ]; then
+    tmux set-option -g @focus_mode off
+    tmux set-hook -gu after-select-pane
+    tmux select-layout -E
+    tmux display-message "Focus mode OFF"
+else
+    tmux set-option -g @focus_mode on
+    tmux set-hook -g after-select-pane \
+        'run-shell "tmux resize-pane -x 70% 2>/dev/null; tmux resize-pane -y 70% 2>/dev/null"'
+    tmux resize-pane -x 70% 2>/dev/null
+    tmux resize-pane -y 70% 2>/dev/null
+    tmux display-message "Focus mode ON"
+fi

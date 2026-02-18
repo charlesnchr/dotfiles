@@ -38,16 +38,20 @@ for idx in {1..5}; do
         continue
     fi
 
-    IFS='|' read -r bm_session bm_window_id <<< "$value"
+    IFS='|' read -r bm_session bm_window_id bm_pane_id <<< "$value"
 
     # Check if window still exists
     if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
         continue
     fi
 
-    # Get window info live from tmux
-    window_name=$(tmux display-message -t "$bm_window_id" -p '#{window_name}' 2>/dev/null)
-    pane_path=$(tmux display-message -t "$bm_window_id" -p '#{pane_current_path}' 2>/dev/null)
+    # Get info from the bookmarked pane if it exists, otherwise fall back to window
+    target="$bm_window_id"
+    if [[ -n $bm_pane_id ]] && tmux display-message -t "$bm_pane_id" -p '' &>/dev/null; then
+        target="$bm_pane_id"
+    fi
+    window_name=$(tmux display-message -t "$target" -p '#{window_name}' 2>/dev/null)
+    pane_path=$(tmux display-message -t "$target" -p '#{pane_current_path}' 2>/dev/null)
 
     # Get git branch from pane's cwd
     branch=""

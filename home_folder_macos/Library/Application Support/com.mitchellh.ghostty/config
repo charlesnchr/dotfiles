@@ -44,6 +44,8 @@
 
 term = xterm-256color
 mouse-hide-while-typing = true
+macos-titlebar-style = hidden
+font-size = 12
 
 
 keybind = cmd+p=toggle_command_palette
@@ -56,7 +58,8 @@ keybind = cmd+e=esc:e
 keybind = global:opt+t=toggle_quick_terminal
 
 # theme = dark:Catppuccin Frappe,light:Catppuccin Latte
-theme = dark:Spacegray Bright,light:Rose Pine Dawn
+# theme = dark:Spacegray Bright,light:Rose Pine Dawn
+theme = Spacegray Bright
 
 macos-option-as-alt = right
 
@@ -78,7 +81,7 @@ keybind = ctrl+space>equal=equalize_splits
 
 # Resize splits (hold down for repeated resizing)
 keybind = cmd+u=resize_split:left,20
-keybind = cmd+i=resize_split:up,20
+# keybind = cmd+i=resize_split:up,20  # moved to tmux pane nav
 keybind = cmd+shift+o=resize_split:down,20
 keybind = cmd+shift+p=resize_split:right,20
 
@@ -116,5 +119,41 @@ keybind = opt+digit_5=text:\x1b5
 # New tmux window (prefix+c) vs new Ghostty tab
 keybind = cmd+t=text:\x01\x63
 keybind = cmd+shift+t=new_tab
+
+# Tmux pane splits (like cmd+t for new window)
+# cmd+\ = prefix + % = split right
+keybind = cmd+backslash=text:\x01\x25
+# cmd+shift+\ = prefix + " = split down
+keybind = cmd+shift+backslash=text:\x01\x22
+
+# Tmux layouts: main-vertical (cmd+opt+\), main-horizontal (cmd+opt+-)
+keybind = cmd+opt+backslash=text:\x01\x76
+keybind = cmd+opt+minus=text:\x01\x68
+
+# Tmux pane navigation (ijkl like wasd: i=up, j=left, k=down, l=right)
+keybind = cmd+i=text:\x01\x0b
+keybind = cmd+j=text:\x01\x08
+keybind = cmd+k=text:\x01\x0a
+keybind = cmd+l=text:\x01\x0c
+
+# Tmux pane resize (cmd+opt+ijkl, same cluster as nav)
+keybind = cmd+opt+i=text:\x01\x4b
+keybind = cmd+opt+j=text:\x01\x48
+keybind = cmd+opt+k=text:\x01\x4a
+keybind = cmd+opt+l=text:\x01\x4c
+
+# Tmux rotate layout (toggles split orientation for current pane)
+keybind = cmd+r=text:\x01\x20
+# Tmux equalise pane sizes
+keybind = cmd+shift+r=text:\x01\x3d
+
+# Tmux pane swapping (cmd+shift+[ / ] = swap pane backward/forward)
+keybind = cmd+shift+left_bracket=text:\x01\x7b
+keybind = cmd+shift+right_bracket=text:\x01\x7d
+
+# Explode panes into windows / implode back
+keybind = cmd+shift+e=text:\x01\x67
+# Focus mode: auto-enlarge active pane
+keybind = cmd+shift+f=text:\x01\x66
 
 # Toggle bookmark: use prefix+B then 1-5 (no Ghostty binding needed)

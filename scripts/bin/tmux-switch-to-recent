@@ -29,7 +29,7 @@ if [[ -z $value ]]; then
     exit 1
 fi
 
-IFS='|' read -r bm_session bm_window_id <<< "$value"
+IFS='|' read -r bm_session bm_window_id bm_pane_id <<< "$value"
 
 # Check if the window still exists
 if ! tmux display-message -t "$bm_window_id" -p '' &>/dev/null; then
@@ -40,6 +40,9 @@ fi
 # Get the session this window belongs to (may have moved)
 actual_session=$(tmux display-message -t "$bm_window_id" -p '#{session_name}' 2>/dev/null)
 
-# Switch to the session and select the window
+# Switch to the session, select the window, and select the pane
 tmux switch-client -t "$actual_session"
 tmux select-window -t "$bm_window_id"
+if [[ -n $bm_pane_id ]] && tmux display-message -t "$bm_pane_id" -p '' &>/dev/null; then
+    tmux select-pane -t "$bm_pane_id"
+fi

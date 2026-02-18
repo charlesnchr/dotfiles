@@ -1,0 +1,63 @@
+#!/bin/sh
+# Toggle: explode panes into separate windows, or implode back.
+
+win_id=$(tmux display-message -p '#{window_id}')
+saved_layout=$(tmux show-option -wv @exploded_layout 2>/dev/null)
+
+if [ -n "$saved_layout" ]; then
+    # --- IMPLODE: gather windows back into panes ---
+    saved_others=$(tmux show-option -wv @exploded_panes)
+    saved_all=$(tmux show-option -wv @exploded_all_panes)
+    focused=$(tmux display-message -p '#{pane_id}')
+
+    # Join broken-out panes back
+    for pane in $saved_others; do
+        pane_win=$(tmux display-message -t "$pane" -p '#{window_id}' 2>/dev/null)
+        if [ -n "$pane_win" ] && [ "$pane_win" != "$win_id" ]; then
+            tmux join-pane -d -s "$pane" -t "$win_id"
+        fi
+    done
+
+    # Reorder panes to match original indices so layout string applies
+    base=$(tmux show-option -gv pane-base-index 2>/dev/null)
+    [ -z "$base" ] && base=0
+    i=$base
+    for pane_id in $saved_all; do
+        cur=$(tmux display-message -t "$pane_id" -p '#{pane_index}' 2>/dev/null)
+        if [ -n "$cur" ] && [ "$cur" != "$i" ]; then
+            tmux swap-pane -d -s "$pane_id" -t "${win_id}.${i}"
+        fi
+        i=$((i + 1))
+    done
+
+    # Restore layout and focus
+    tmux select-layout "$saved_layout" 2>/dev/null || tmux select-layout -E
+    tmux select-pane -t "$focused"
+
+    # Clean up
+    tmux set-option -wu @exploded_layout
+    tmux set-option -wu @exploded_panes
+    tmux set-option -wu @exploded_all_panes
+    tmux display-message "Imploded"
+else
+    # --- EXPLODE: break panes into windows ---
+    n=$(tmux display-message -p '#{window_panes}')
+    [ "$n" -lt 2 ] && { tmux display-message "Single pane"; exit 0; }
+
+    layout=$(tmux display-message -p '#{window_layout}')
+    current=$(tmux display-message -p '#{pane_id}')
+
+    # Save ALL pane IDs in index order (space-separated)
+    all_panes=$(tmux list-panes -F '#{pane_id}' | tr '\n' ' ')
+    others=$(tmux list-panes -F '#{pane_id}' | grep -v "^${current}$" | tr '\n' ' ')
+
+    tmux set-option -w @exploded_layout "$layout"
+    tmux set-option -w @exploded_all_panes "$all_panes"
+    tmux set-option -w @exploded_panes "$others"
+
+    for pane in $others; do
+        tmux break-pane -d -s "$pane"
+    done
+
+    tmux display-message "Exploded $n panes -> windows"
+fi

@@ -18,3 +18,9 @@ alias xclip="xclip -selection clipboard"
 alias fabric='fabric-ai'
 alias rm='rm -f'
 alias pr='gh pr view --web'
+
+# Unified Claude usage reporting: syncs OpenClaw data then runs ccusage over both
+function allusage() {
+  ~/.openclaw/bin/openclaw-ccusage-sync
+  CLAUDE_CONFIG_DIR="$HOME/.claude,$HOME/.openclaw/ccusage-compat" npx ccusage@latest "$@"
+}

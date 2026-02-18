@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# claude-queue — Auto-submit pre-typed input to Claude Code when it finishes
+#
+# Usage:
+#   claude-queue arm [-t %42]        Arm: press Enter when current task finishes
+#   claude-queue clear [-t %42]      Disarm
+#   claude-queue status [-t %42]     Show armed status
+#
+# Type your next message into the Claude Code input field, then run
+# `claude-queue arm`. When Claude finishes, Enter is pressed automatically.
+# State stored in tmux pane option @claude_queued.
+
+BORDER_FMT='#[bg=colour146#,fg=colour239#,bold] #P #[bg=colour237#,fg=colour146#,nobold] #T #[fg=colour146]📋 #[fg=colour246]│ #{pane_current_path} '
+
+resolve_pane() {
+    if [ "$1" = "-t" ] && [ -n "$2" ]; then
+        echo "$2"
+    elif [ -n "$TMUX_PANE" ]; then
+        echo "$TMUX_PANE"
+    else
+        echo "Error: not in tmux and no -t <pane> specified" >&2
+        exit 1
+    fi
+}
+
+case "${1:-help}" in
+    arm)
+        shift; pane=$(resolve_pane "$@")
+        tmux set-option -p -t "$pane" @claude_queued 1 2>/dev/null
+        tmux set-option -p -t "$pane" pane-border-format "$BORDER_FMT" 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        echo "Armed $pane — will press Enter when task finishes"
+        ;;
+
+    clear)
+        shift; pane=$(resolve_pane "$@")
+        tmux set-option -pu -t "$pane" @claude_queued 2>/dev/null
+        tmux set-option -pu -t "$pane" pane-border-format 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        echo "Cleared $pane"
+        ;;
+
+    status)
+        shift; pane=$(resolve_pane "$@")
+        if [ "$(tmux show-options -p -t "$pane" -v @claude_queued 2>/dev/null)" = "1" ]; then
+            echo "Armed"
+        else
+            echo "Inactive"
+        fi
+        ;;
+
+    pop)
+        shift; pane=$(resolve_pane "$@")
+        if [ "$(tmux show-options -p -t "$pane" -v @claude_queued 2>/dev/null)" != "1" ]; then
+            exit 0
+        fi
+        tmux set-option -pu -t "$pane" @claude_queued 2>/dev/null
+        tmux set-option -pu -t "$pane" pane-border-format 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        sleep 0.5
+        tmux send-keys -t "$pane" Enter
+        ;;
+
+    help|--help|-h)
+        cat <<'EOF'
+claude-queue — Auto-submit pre-typed input to Claude Code
+
+Type your next message, then arm. Enter is pressed when Claude finishes.
+
+Commands:
+  arm                  Arm current pane
+  clear                Disarm
+  status               Show armed status
+
+Options:
+  -t <pane>            Target pane (default: current, e.g. -t %42)
+
+tmux binding (prefix+Q toggles):
+  bind-key Q run-shell "claude-queue arm"
+EOF
+        ;;
+
+    *)
+        echo "Unknown command: $1 (try 'claude-queue help')" >&2
+        exit 1
+        ;;
+esac

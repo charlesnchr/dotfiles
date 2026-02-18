@@ -1,4 +1,6 @@
 
+export PATH="$HOME/bin:$PATH"
+
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 
@@ -198,8 +200,10 @@ bindkey '^[[B' history-substring-search-down
 # compinit loaded by zim completion module
 
 # Defer and cache heavy init blocks for cold-start speed.
+# direnv hook must run eagerly (not via zsh-defer) so its chpwd/precmd hooks
+# register in time to fire on directory changes, not just at shell startup.
 if [[ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh-disable-direnv" ]]; then
-  zsh-defer -c '_evalcache direnv hook zsh'
+  _evalcache direnv hook zsh
 fi
 zsh-defer -c '_evalcache pyenv init -'
 zsh-defer -c '_evalcache fnm env'
@@ -238,3 +242,5 @@ esac
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+export PATH="/Users/cc/.pixi/bin:$PATH"

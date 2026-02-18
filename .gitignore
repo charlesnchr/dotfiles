@@ -4,6 +4,7 @@ tags
 dotfiles_private
 *.pyc
 **/karabiner/automatic_backups/
+**/karabiner/karabiner.json
 **/qalculate/qalculate-qt.cfg
 **/.vim/undo
 **/.vim/view
