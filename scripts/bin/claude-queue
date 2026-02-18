@@ -1,166 +1,87 @@
-#!/bin/bash
-# claude-queue — Queue messages for Claude Code sessions running in tmux panes
+#!/usr/bin/env bash
+# claude-queue — Auto-submit pre-typed input to Claude Code when it finishes
 #
 # Usage:
-#   claude-queue add <message>        Add message to queue for current pane
-#   claude-queue add -t %42 <message> Add message to queue for specific pane
-#   claude-queue arm [-t %42]         Arm: just press Enter when current task finishes
-#   claude-queue list [-t %42]        Show queued messages
-#   claude-queue clear [-t %42]       Clear queue and disarm
-#   claude-queue status [-t %42]      Show armed/queue status
-
-QUEUE_DIR="$HOME/.claude/queue"
-mkdir -p "$QUEUE_DIR"
-
-# Parse -t <pane> option from anywhere in args
-parse_pane() {
-    local pane=""
-    local args=()
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            -t) pane="$2"; shift 2 ;;
-            *)  args+=("$1"); shift ;;
-        esac
-    done
-    # Default to current pane
-    if [ -z "$pane" ]; then
-        if [ -n "$TMUX_PANE" ]; then
-            pane="$TMUX_PANE"
-        else
-            echo "Error: not in tmux and no -t <pane> specified" >&2
-            exit 1
-        fi
-    fi
-    echo "$pane"
-    # Store remaining args in a temp file so caller can read them
-    printf '%s\n' "${args[@]}" > /tmp/claude-queue-args.$$
-}
-
-queue_file_for() {
-    local pane="$1"
-    local safe=$(echo "$pane" | tr -d '%' | tr ':.' '_')
-    echo "$QUEUE_DIR/$safe"
-}
+#   claude-queue arm [-t %42]        Arm: press Enter when current task finishes
+#   claude-queue clear [-t %42]      Disarm
+#   claude-queue status [-t %42]     Show armed status
+#
+# Type your next message into the Claude Code input field, then run
+# `claude-queue arm`. When Claude finishes, Enter is pressed automatically.
+# State stored in tmux pane option @claude_queued.
 
 BORDER_FMT='#[bg=colour146#,fg=colour239#,bold] #P #[bg=colour237#,fg=colour146#,nobold] #T #[fg=colour146]📋 #[fg=colour246]│ #{pane_current_path} '
 
-set_queued() {
-    local pane="$1"
-    tmux set-option -p -t "$pane" @claude_queued 1 2>/dev/null
-    tmux set-option -p -t "$pane" pane-border-format "$BORDER_FMT" 2>/dev/null
-    tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+resolve_pane() {
+    if [ "$1" = "-t" ] && [ -n "$2" ]; then
+        echo "$2"
+    elif [ -n "$TMUX_PANE" ]; then
+        echo "$TMUX_PANE"
+    else
+        echo "Error: not in tmux and no -t <pane> specified" >&2
+        exit 1
+    fi
 }
 
-unset_queued() {
-    local pane="$1"
-    tmux set-option -pu -t "$pane" @claude_queued 2>/dev/null
-    tmux set-option -pu -t "$pane" pane-border-format 2>/dev/null
-    tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
-}
-
-is_queued() {
-    local pane="$1"
-    tmux show-options -p -t "$pane" -v @claude_queued 2>/dev/null
-}
-
-cmd="${1:-help}"
-shift 2>/dev/null || true
-
-case "$cmd" in
-    add)
-        pane=$(parse_pane "$@")
-        # Read remaining args (everything except -t <pane>)
-        mapfile -t remaining < /tmp/claude-queue-args.$$
-        rm -f /tmp/claude-queue-args.$$
-        # First element was the subcommand 'add', rest is the message
-        message="${remaining[*]}"
-        if [ -z "$message" ]; then
-            echo "Usage: claude-queue add [-t <pane>] <message>" >&2
-            exit 1
-        fi
-        qf=$(queue_file_for "$pane")
-        echo "$message" >> "$qf"
-        set_queued "$pane"
-        count=$(wc -l < "$qf" | tr -d ' ')
-        echo "Queued message #$count for pane $pane"
-        ;;
-
+case "${1:-help}" in
     arm)
-        pane=$(parse_pane "$@")
-        rm -f /tmp/claude-queue-args.$$
-        set_queued "$pane"
-        echo "Armed pane $pane — will press Enter when task finishes"
-        ;;
-
-    list)
-        pane=$(parse_pane "$@")
-        rm -f /tmp/claude-queue-args.$$
-        qf=$(queue_file_for "$pane")
-        armed=$(is_queued "$pane")
-        if [ "$armed" = "1" ]; then
-            echo "Status: ARMED"
-        else
-            echo "Status: inactive"
-        fi
-        if [ -f "$qf" ] && [ -s "$qf" ]; then
-            echo "Queued messages:"
-            nl -ba "$qf"
-        else
-            echo "No messages in queue"
-        fi
+        shift; pane=$(resolve_pane "$@")
+        tmux set-option -p -t "$pane" @claude_queued 1 2>/dev/null
+        tmux set-option -p -t "$pane" pane-border-format "$BORDER_FMT" 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        echo "Armed $pane — will press Enter when task finishes"
         ;;
 
     clear)
-        pane=$(parse_pane "$@")
-        rm -f /tmp/claude-queue-args.$$
-        qf=$(queue_file_for "$pane")
-        rm -f "$qf"
-        unset_queued "$pane"
-        echo "Queue cleared for pane $pane"
+        shift; pane=$(resolve_pane "$@")
+        tmux set-option -pu -t "$pane" @claude_queued 2>/dev/null
+        tmux set-option -pu -t "$pane" pane-border-format 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        echo "Cleared $pane"
         ;;
 
     status)
-        pane=$(parse_pane "$@")
-        rm -f /tmp/claude-queue-args.$$
-        qf=$(queue_file_for "$pane")
-        armed=$(is_queued "$pane")
-        if [ "$armed" = "1" ]; then
-            if [ -f "$qf" ] && [ -s "$qf" ]; then
-                count=$(wc -l < "$qf" | tr -d ' ')
-                echo "ARMED — $count message(s) queued"
-            else
-                echo "ARMED — will press Enter (prefilled message)"
-            fi
+        shift; pane=$(resolve_pane "$@")
+        if [ "$(tmux show-options -p -t "$pane" -v @claude_queued 2>/dev/null)" = "1" ]; then
+            echo "Armed"
         else
             echo "Inactive"
         fi
         ;;
 
+    pop)
+        shift; pane=$(resolve_pane "$@")
+        if [ "$(tmux show-options -p -t "$pane" -v @claude_queued 2>/dev/null)" != "1" ]; then
+            exit 0
+        fi
+        tmux set-option -pu -t "$pane" @claude_queued 2>/dev/null
+        tmux set-option -pu -t "$pane" pane-border-format 2>/dev/null
+        tmux set-option -w -t "$pane" automatic-rename on 2>/dev/null
+        sleep 0.5
+        tmux send-keys -t "$pane" Enter
+        ;;
+
     help|--help|-h)
         cat <<'EOF'
-claude-queue — Queue messages for Claude Code in tmux
+claude-queue — Auto-submit pre-typed input to Claude Code
+
+Type your next message, then arm. Enter is pressed when Claude finishes.
 
 Commands:
-  add <message>        Queue a message (submitted when current task finishes)
-  arm                  Just press Enter when task finishes (for prefilled input)
-  list                 Show queue contents
-  clear                Clear queue and disarm
-  status               Show armed/queue status
+  arm                  Arm current pane
+  clear                Disarm
+  status               Show armed status
 
 Options:
-  -t <pane>            Target pane (default: current pane, e.g. -t %42)
+  -t <pane>            Target pane (default: current, e.g. -t %42)
 
-Examples:
-  claude-queue add "now run the tests"
-  claude-queue add "refactor the auth module"
-  claude-queue arm
-  claude-queue list
-  claude-queue clear
+tmux binding (prefix+Q toggles):
+  bind-key Q run-shell "claude-queue arm"
 EOF
         ;;
 
     *)
-        echo "Unknown command: $cmd (try 'claude-queue help')" >&2
+        echo "Unknown command: $1 (try 'claude-queue help')" >&2
         exit 1
         ;;
 esac
