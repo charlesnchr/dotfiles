@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(codex:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "additionalDirectories": [
+      "/Users/cc/.cache/vim/ctags"
+    ]
+  }
+}
