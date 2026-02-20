@@ -149,10 +149,10 @@ keybind = cmd+opt+i=text:\x01\x4b
 keybind = cmd+opt+j=text:\x01\x48
 keybind = cmd+opt+k=text:\x01\x4a
 keybind = cmd+opt+l=text:\x01\x4c
-keybind = cmd+opt+up=text:\x01\x4b
-keybind = cmd+opt+left=text:\x01\x48
-keybind = cmd+opt+down=text:\x01\x4a
-keybind = cmd+opt+right=text:\x01\x4c
+keybind = cmd+alt+up=text:\x01\x4b
+keybind = cmd+alt+left=text:\x01\x48
+keybind = cmd+alt+down=text:\x01\x4a
+keybind = cmd+alt+right=text:\x01\x4c
 
 # Tmux rotate layout (toggles split orientation for current pane)
 keybind = cmd+r=text:\x01\x20
