@@ -24,3 +24,5 @@ function allusage() {
   ~/.openclaw/bin/openclaw-ccusage-sync
   CLAUDE_CONFIG_DIR="$HOME/.claude,$HOME/.openclaw/ccusage-compat" npx ccusage@latest "$@"
 }
+
+alias a='opencode' # Claude Code alias
