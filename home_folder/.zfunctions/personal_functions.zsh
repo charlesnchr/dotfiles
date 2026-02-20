@@ -26,7 +26,17 @@ ssh() {
 }
 
 jcd() {
-	cd "$(j -s | fzf | awk '{$1=""; print $0}' |  sed -e 's/^[ \t]*//')"; zsh
+	local dir="$(j -s | fzf | xargs)"
+	if [ -n "$dir" ]; then cd "$dir"; zsh; fi
+}
+
+# Emulates old autojump 'j -s' behavior by listing zoxide directories
+j() {
+  if [ "$1" = "-s" ]; then
+    zoxide query -l
+  else
+    z "$@"
+  fi
 }
 
 function markdown-show() {
@@ -35,20 +45,18 @@ function markdown-show() {
 }
 
 jf() {
-    cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
+	local dir="$(j -s | fzf | xargs)"
+	if [ -n "$dir" ]; then cd "$dir"; fi
 }
 
 jr() {
-    goto=$(j -s | fzf | cut -d ":" -f 2 | xargs); if [ $goto ] && r $goto
+	local dir="$(j -s | fzf | xargs)"
+	if [ -n "$dir" ]; then r "$dir"; fi
 }
-
 
 jv() {
-	file="$(AUTOJUMP_DATA_DIR=~/.autojump.vim/global autojump $@)"; if [ -n "$file" ]; then vim "$file"; fi
-}
-
-jf() {
-    cd $(j -s | fzf | cut -d ":" -f 2 | xargs)
+	local dir="$(_ZO_DATA_DIR=~/.zoxide.vim/global zoxide query "$@")"
+	if [ -n "$dir" ]; then vim "$dir"; fi
 }
 
 e() {
@@ -260,4 +268,29 @@ function vl() {
 }
 function vz() {
     nvim ~/dotfiles/.zshrc_local
+}
+
+# Replaces the 'r' command from charlesnchr/ranger-autojump
+r() {
+  if [ "$1" != "" ]; then
+    if [ -d "$1" ]; then
+      ranger "$1"
+    elif [ -f "$1" ]; then
+      ranger --selectfile="$1"
+    else
+      local out="$(zoxide query -- "$1" 2>/dev/null)"
+      if [ -n "$out" ]; then
+        if [ -d "$out" ]; then
+          ranger "$out"
+        else
+          ranger --selectfile="$out"
+        fi
+      else
+        echo "zoxide: no match found for '$1'"
+      fi
+    fi
+  else
+    ranger
+  fi
+  return $?
 }

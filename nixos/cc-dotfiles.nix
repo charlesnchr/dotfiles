@@ -92,7 +92,6 @@
     direnv
     gh
     atuin
-    autojump
     tmuxinator
     universal-ctags
 

@@ -31,10 +31,53 @@ return {
     cmd = "DirDiff",
   },
 
-  -- Autojump integration
+  -- Zoxide integration (Custom plugin)
   {
-    "trotter/autojump.vim",
-    cmd = "J",
+    "nanotee/zoxide.vim",
+    cmd = { "Z", "Lz", "Tz", "Zi", "Lzi", "Tzi" },
+    keys = {
+      { "<leader>z", "<cmd>Zi<CR>", desc = "Zoxide Interactive" }
+    },
+    init = function()
+      -- Must be set in `init` to ensure variables exist before plugin loads
+      vim.g.zoxide_use_select = 1 -- Use native neovim select for Zi
+      
+      local zo_dir = vim.fn.expand("~/.zoxide.vim/global")
+      vim.env._ZO_DATA_DIR = zo_dir
+      
+      local wrapper_path = vim.fn.expand("~/.local/share/nvim/zoxide_wrapper.sh")
+      if vim.fn.filereadable(wrapper_path) == 0 then
+        local file = io.open(wrapper_path, "w")
+        if file then
+          file:write("#!/bin/sh\n")
+          file:write("export _ZO_DATA_DIR='" .. zo_dir .. "'\n")
+          file:write("exec zoxide \"$@\"\n")
+          file:close()
+          vim.fn.system({"chmod", "+x", wrapper_path})
+        end
+      end
+      vim.g.zoxide_executable = wrapper_path
+    end,
+    config = function()
+      local wrapper_path = vim.fn.expand("~/.local/share/nvim/zoxide_wrapper.sh")
+      local zo_dir = vim.fn.expand("~/.zoxide.vim/global")
+      
+      -- Ensure isolated directory exists
+      if vim.fn.isdirectory(zo_dir) == 0 then
+        vim.fn.mkdir(zo_dir, "p")
+      end
+
+      -- Autocmd to feed isolated Zoxide database
+      vim.api.nvim_create_autocmd({ "BufReadPost", "BufEnter" }, {
+        callback = function()
+          local file = vim.fn.expand("%:p")
+          if file ~= "" and vim.fn.filereadable(file) == 1 then
+            local dir = vim.fn.fnamemodify(file, ":h")
+            vim.fn.system({wrapper_path, "add", dir})
+          end
+        end,
+      })
+    end,
   },
 
   -- Plenary (required by many plugins)

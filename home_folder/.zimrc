@@ -9,7 +9,7 @@ zmodule completion
 zmodule zshzoo/macos --if-ostype 'darwin*'
 zmodule belak/zsh-utils --root utility
 # zmodule larkery/zsh-histdb  # Disabled - SQLite overhead slows down terminal startup
-zmodule charlesnchr/ranger-autojump
+# zmodule charlesnchr/ranger-autojump
 zmodule aloxaf/fzf-tab
 zmodule romkatv/zsh-bench --cmd 'path+=({})'
 # zmodule ohmyzsh/ohmyzsh --root plugins/autojump # zoxide better

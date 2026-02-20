@@ -72,7 +72,7 @@ brew install \
     direnv \
     gh \
     atuin \
-    autojump \
+    zoxide \
     tmuxinator \
     universal-ctags
 
