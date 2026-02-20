@@ -26,3 +26,814 @@ desc = "custom-shell as default, interactive, block"
 on = [ "'", "h" ]
 run = "plugin custom-shell history"
 desc = "Show Custom-shell history"
+
+[[mgr.prepend_keymap]]
+on = [ "Q" ]
+run = 'quit --no-cwd-file'
+desc = "Quit without cwd"
+
+[[mgr.prepend_keymap]]
+on = [ "q" ]
+run = 'quit'
+desc = "Quit"
+
+[[mgr.prepend_keymap]]
+on = [ "Z", "Z" ]
+run = 'quit'
+desc = "Quit"
+
+[[mgr.prepend_keymap]]
+on = [ "Z", "Q" ]
+run = 'quit --no-cwd-file'
+desc = "Quit without cwd"
+
+[[mgr.prepend_keymap]]
+on = [ "R" ]
+run = 'refresh'
+desc = "Reload"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-r>" ]
+run = 'refresh'
+desc = "Reset"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-c>" ]
+run = 'escape'
+desc = "Cancel"
+
+[[mgr.prepend_keymap]]
+on = [ "<Esc>" ]
+run = 'escape'
+desc = "Cancel"
+
+[[mgr.prepend_keymap]]
+on = [ "i" ]
+run = 'open'
+desc = "Open file"
+
+[[mgr.prepend_keymap]]
+on = [ "?" ]
+run = 'help'
+desc = "Help"
+
+[[mgr.prepend_keymap]]
+on = [ "w" ]
+run = 'tasks_show'
+desc = "Task manager"
+
+[[mgr.prepend_keymap]]
+on = [ "W" ]
+run = 'tasks_show'
+desc = "Task manager"
+
+[[mgr.prepend_keymap]]
+on = [ "S" ]
+run = 'shell "$SHELL" --block --confirm'
+desc = "Shell"
+
+[[mgr.prepend_keymap]]
+on = [ ":" ]
+run = 'console'
+desc = "Console"
+
+[[mgr.prepend_keymap]]
+on = [ ";" ]
+run = 'console'
+desc = "Console"
+
+[[mgr.prepend_keymap]]
+on = [ "!" ]
+run = 'console "shell "'
+desc = "Shell command"
+
+[[mgr.prepend_keymap]]
+on = [ "s" ]
+run = 'console "shell "'
+desc = "Shell command"
+
+[[mgr.prepend_keymap]]
+on = [ "f" ]
+run = 'find'
+desc = "Find"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "d" ]
+run = 'console "cd "'
+desc = "cd"
+
+[[mgr.prepend_keymap]]
+on = [ "M", "f" ]
+run = 'linemode "none"'
+desc = "Linemode none"
+
+[[mgr.prepend_keymap]]
+on = [ "M", "i" ]
+run = 'linemode "size"'
+desc = "Linemode size"
+
+[[mgr.prepend_keymap]]
+on = [ "M", "m" ]
+run = 'linemode "mtime"'
+desc = "Linemode mtime"
+
+[[mgr.prepend_keymap]]
+on = [ "M", "p" ]
+run = 'linemode "permissions"'
+desc = "Linemode permissions"
+
+[[mgr.prepend_keymap]]
+on = [ "<Space>" ]
+run = 'toggle'
+desc = "Toggle selection"
+
+[[mgr.prepend_keymap]]
+on = [ "v" ]
+run = 'toggle_all'
+desc = "Select all"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "v" ]
+run = 'escape'
+desc = "Unselect all"
+
+[[mgr.prepend_keymap]]
+on = [ "V" ]
+run = 'visual_mode'
+desc = "Visual mode"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "V" ]
+run = 'visual_mode --unset'
+desc = "Unset visual mode"
+
+[[mgr.prepend_keymap]]
+on = [ "<F1>" ]
+run = 'help'
+desc = "Help"
+
+[[mgr.prepend_keymap]]
+on = [ "<F3>" ]
+run = 'open'
+desc = "Open"
+
+[[mgr.prepend_keymap]]
+on = [ "<F4>" ]
+run = 'open --interactive'
+desc = "Edit"
+
+[[mgr.prepend_keymap]]
+on = [ "<F5>" ]
+run = 'yank'
+desc = "Copy"
+
+[[mgr.prepend_keymap]]
+on = [ "<F6>" ]
+run = 'yank --cut'
+desc = "Cut"
+
+[[mgr.prepend_keymap]]
+on = [ "<F7>" ]
+run = 'create --dir'
+desc = "Mkdir"
+
+[[mgr.prepend_keymap]]
+on = [ "<F8>" ]
+run = 'remove'
+desc = "Delete"
+
+[[mgr.prepend_keymap]]
+on = [ "<F10>" ]
+run = 'quit'
+desc = "Exit"
+
+[[mgr.prepend_keymap]]
+on = [ "J" ]
+run = 'arrow 5'
+desc = "Down 5"
+
+[[mgr.prepend_keymap]]
+on = [ "K" ]
+run = 'arrow -5'
+desc = "Up 5"
+
+[[mgr.prepend_keymap]]
+on = [ "H" ]
+run = 'back'
+desc = "Back"
+
+[[mgr.prepend_keymap]]
+on = [ "L" ]
+run = 'forward'
+desc = "Forward"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "h" ]
+run = 'cd ~'
+desc = "cd Home"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "e" ]
+run = 'cd /etc'
+desc = "cd /etc"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "u" ]
+run = 'cd /usr'
+desc = "cd /usr"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "d" ]
+run = 'cd /dev'
+desc = "cd /dev"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "l" ]
+run = 'cd .'
+desc = "cd ."
+
+[[mgr.prepend_keymap]]
+on = [ "g", "o" ]
+run = 'cd /opt'
+desc = "cd /opt"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "v" ]
+run = 'cd /var'
+desc = "cd /var"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "m" ]
+run = 'cd /media'
+desc = "cd /media"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "M" ]
+run = 'cd /mnt'
+desc = "cd /mnt"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "s" ]
+run = 'cd /srv'
+desc = "cd /srv"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "r" ]
+run = 'cd /'
+desc = "cd /"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "/" ]
+run = 'cd /'
+desc = "cd /"
+
+[[mgr.prepend_keymap]]
+on = [ "E" ]
+run = 'open --interactive'
+desc = "Edit"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "p" ]
+run = 'copy path'
+desc = "Copy path"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "d" ]
+run = 'copy dirname'
+desc = "Copy dir"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "n" ]
+run = 'copy filename'
+desc = "Copy name"
+
+[[mgr.prepend_keymap]]
+on = [ "=" ]
+run = 'console "shell chmod "'
+desc = "chmod"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "w" ]
+run = 'rename'
+desc = "Rename"
+
+[[mgr.prepend_keymap]]
+on = [ "a" ]
+run = 'rename --cursor=end'
+desc = "Rename append"
+
+[[mgr.prepend_keymap]]
+on = [ "A" ]
+run = 'rename --cursor=end'
+desc = "Rename append"
+
+[[mgr.prepend_keymap]]
+on = [ "I" ]
+run = 'rename --cursor=start'
+desc = "Rename prepend"
+
+[[mgr.prepend_keymap]]
+on = [ "p", "p" ]
+run = 'paste'
+desc = "Paste"
+
+[[mgr.prepend_keymap]]
+on = [ "p", "o" ]
+run = 'paste --force'
+desc = "Paste overwrite"
+
+[[mgr.prepend_keymap]]
+on = [ "p", "l" ]
+run = 'link'
+desc = "Symlink"
+
+[[mgr.prepend_keymap]]
+on = [ "p", "L" ]
+run = 'link --relative'
+desc = "Relative symlink"
+
+[[mgr.prepend_keymap]]
+on = [ "p", "h", "l" ]
+run = 'hardlink'
+desc = "Hardlink"
+
+[[mgr.prepend_keymap]]
+on = [ "d", "D" ]
+run = 'remove --permanently'
+desc = "Delete permanently"
+
+[[mgr.prepend_keymap]]
+on = [ "d", "d" ]
+run = 'yank --cut'
+desc = "Cut"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "d" ]
+run = 'escape'
+desc = "Uncut"
+
+[[mgr.prepend_keymap]]
+on = [ "d", "a" ]
+run = 'yank --cut'
+desc = "Cut"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "y" ]
+run = 'yank'
+desc = "Copy"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "y" ]
+run = 'escape'
+desc = "Uncopy"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "a" ]
+run = 'yank'
+desc = "Copy"
+
+[[mgr.prepend_keymap]]
+on = [ "/" ]
+run = 'search --via=fd'
+desc = "Search via fd"
+
+[[mgr.prepend_keymap]]
+on = [ "n" ]
+run = 'search_next'
+desc = "Search next"
+
+[[mgr.prepend_keymap]]
+on = [ "N" ]
+run = 'search_next --previous'
+desc = "Search prev"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-n>" ]
+run = 'tab_create ~'
+desc = "New tab"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-w>" ]
+run = 'tab_close'
+desc = "Close tab"
+
+[[mgr.prepend_keymap]]
+on = [ "<Tab>" ]
+run = 'tab_switch 1 --relative'
+desc = "Next tab"
+
+[[mgr.prepend_keymap]]
+on = [ "<S-Tab>" ]
+run = 'tab_switch -1 --relative'
+desc = "Prev tab"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "t" ]
+run = 'tab_switch 1 --relative'
+desc = "Next tab"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "T" ]
+run = 'tab_switch -1 --relative'
+desc = "Prev tab"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "n" ]
+run = 'tab_create ~'
+desc = "New tab"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "c" ]
+run = 'tab_close'
+desc = "Close tab"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "q" ]
+run = 'tab_restore'
+desc = "Restore tab"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-1>" ]
+run = 'tab_switch 0'
+desc = "Tab 1"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-2>" ]
+run = 'tab_switch 1'
+desc = "Tab 2"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-3>" ]
+run = 'tab_switch 2'
+desc = "Tab 3"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-4>" ]
+run = 'tab_switch 3'
+desc = "Tab 4"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-5>" ]
+run = 'tab_switch 4'
+desc = "Tab 5"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-6>" ]
+run = 'tab_switch 5'
+desc = "Tab 6"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-7>" ]
+run = 'tab_switch 6'
+desc = "Tab 7"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-8>" ]
+run = 'tab_switch 7'
+desc = "Tab 8"
+
+[[mgr.prepend_keymap]]
+on = [ "<A-9>" ]
+run = 'tab_switch 8'
+desc = "Tab 9"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "r" ]
+run = 'sort_reverse'
+desc = "Sort reverse"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "z" ]
+run = 'sort random'
+desc = "Sort random"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "s" ]
+run = 'sort size --reverse=no'
+desc = "Sort size"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "b" ]
+run = 'sort natural --reverse=no'
+desc = "Sort natural"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "n" ]
+run = 'sort natural --reverse=no'
+desc = "Sort natural"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "m" ]
+run = 'sort mtime --reverse=no'
+desc = "Sort mtime"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "c" ]
+run = 'sort ctime --reverse=no'
+desc = "Sort ctime"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "a" ]
+run = 'sort atime --reverse=no'
+desc = "Sort atime"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "t" ]
+run = 'sort extension --reverse=no'
+desc = "Sort type"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "e" ]
+run = 'sort extension --reverse=no'
+desc = "Sort extension"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "S" ]
+run = 'sort size --reverse=yes'
+desc = "Sort size rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "B" ]
+run = 'sort natural --reverse=yes'
+desc = "Sort natural rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "N" ]
+run = 'sort natural --reverse=yes'
+desc = "Sort natural rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "M" ]
+run = 'sort mtime --reverse=yes'
+desc = "Sort mtime rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "C" ]
+run = 'sort ctime --reverse=yes'
+desc = "Sort ctime rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "A" ]
+run = 'sort atime --reverse=yes'
+desc = "Sort atime rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "T" ]
+run = 'sort extension --reverse=yes'
+desc = "Sort type rev"
+
+[[mgr.prepend_keymap]]
+on = [ "o", "E" ]
+run = 'sort extension --reverse=yes'
+desc = "Sort extension rev"
+
+[[mgr.prepend_keymap]]
+on = [ "z", "c" ]
+run = 'hidden toggle'
+desc = "Toggle hidden"
+
+[[mgr.prepend_keymap]]
+on = [ "z", "d" ]
+run = 'sort_dir_first toggle'
+desc = "Toggle dir first"
+
+[[mgr.prepend_keymap]]
+on = [ "z", "h" ]
+run = 'hidden toggle'
+desc = "Toggle hidden"
+
+[[mgr.prepend_keymap]]
+on = [ "<C-h>" ]
+run = 'hidden toggle'
+desc = "Toggle hidden"
+
+[[mgr.prepend_keymap]]
+on = [ "z", "s" ]
+run = 'sort_sensitive toggle'
+desc = "Toggle sensitive"
+
+
+
+[[mgr.prepend_keymap]]
+on = [ "S" ]
+run = "shell \"$SHELL\" --confirm"
+desc = "Ranger shell macro S"
+
+[[mgr.prepend_keymap]]
+on = [ "d", "u" ]
+run = "shell \"(du --max-depth=2 --human-readable --apparent-size || du -d 1 -h) 2>/dev/null\" --confirm --block"
+desc = "Ranger shell macro du"
+
+[[mgr.prepend_keymap]]
+on = [ "d", "U" ]
+run = "shell \"(du --max-depth=1 --human-readable --apparent-size || du -d 1 -h) 2>/dev/null | sort -rh\" --confirm --block"
+desc = "Ranger shell macro dU"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "i" ]
+run = "shell \"nvim \"$@\"\" --confirm"
+desc = "Ranger shell macro ei"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "e" ]
+run = "shell \"TMUX_ID=$(tmux display-message -p '#S_#I') && [[ -n $TMUX ]] && tmux neww zsh -ic \"ranger --selectfile \"$@\"\"\" --confirm"
+desc = "Ranger shell macro ee"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "t" ]
+run = "shell \"TMUX_ID=$(tmux display-message -p '#S_#I') && [[ -n $TMUX ]] && tmux neww zsh -ic \"nvim --listen /tmp/$TMUX_ID \"$@\"\"\" --confirm"
+desc = "Ranger shell macro et"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "s" ]
+run = "shell \"TMUX_ID=$(tmux display-message -p '#S_#I') && [[ -n $TMUX ]] && tmux split-window -v zsh -ic \"nvim --listen /tmp/$TMUX_ID \"$@\"\"\" --confirm"
+desc = "Ranger shell macro es"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "v" ]
+run = "shell \"TMUX_ID=$(tmux display-message -p '#S_#I') && [[ -n $TMUX ]] && tmux split-window -h zsh -ic \"nvim --listen /tmp/$TMUX_ID \"$@\"\"\" --confirm"
+desc = "Ranger shell macro ev"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "r" ]
+run = "shell \"[[ -n $TMUX ]] && tmux select-window -t nvim && tmux send-keys -t nvim \":e $(echo '\"$1\"' | tr -d '\\\"')\" Enter\" --confirm"
+desc = "Ranger shell macro er"
+
+[[mgr.prepend_keymap]]
+on = [ "e", "c" ]
+run = "shell \"cursor \"$@\"\" --confirm"
+desc = "Ranger shell macro ec"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "n" ]
+run = "shell \"~/bin/open_file_manager.sh \"$@\"\" --confirm"
+desc = "Ranger shell macro cn"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "z" ]
+run = "shell \"for i in \"$@\"; do zip -r $i.zip $i; done\" --confirm --block"
+desc = "Ranger shell macro cz"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "g" ]
+run = "shell \"for i in \"$@\"; do tar cf - $i | pv -s $[$(du -sk $i | awk '{print $1}') * 1024] | gzip > $i.tgz; done\" --confirm --block"
+desc = "Ranger shell macro cg"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "5" ]
+run = "shell \"for i in \"$@\"; do 7z -mx=5 a $i.7z $i; done\" --confirm --block"
+desc = "Ranger shell macro c5"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "1" ]
+run = "shell \"for i in \"$@\"; do 7z -mx=1 a $i.7z $i; done\" --confirm --block"
+desc = "Ranger shell macro c1"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "x" ]
+run = "shell \"for i in \"$@\"; do bsdtar xvf $i; done\" --confirm --block"
+desc = "Ranger shell macro cx"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "2", "4" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -c:v libx265 -crf 24 -preset slow -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cv24"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "2", "6" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -c:v libx265 -crf 26 -preset slow -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cv26"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "2", "8" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -c:v libx265 -crf 28 -preset slow -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cv28"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "f" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -c:v libx265 -crf 24 -preset fast -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cvf"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "h" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -c:v hevc_videotoolbox -q:v 50 -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cvh"
+
+[[mgr.prepend_keymap]]
+on = [ "c", "v", "p" ]
+run = "shell \"zsh -lc 'for i in \"$@\"; do ext=\"${i:e:l}\"; out=\"${i:r}.1080p.hevc.${ext}\"; ffmpeg -hide_banner -y -i \"$i\" -vf \"scale=-2:1080\" -c:v libx265 -crf 24 -preset slow -tag:v hvc1 -c:a copy -movflags +faststart \"$out\" && exiftool -config ~/.config/exiftool/nikon_video.config -overwrite_original -TagsFromFile \"$i\" \"-Keys:Make<Nikon:Make\" \"-Keys:Model<Nikon:Model\" \"-Keys:Software<Nikon:Software\" \"-Keys:GPSCoordinates<\\${GPSLatitude#} \\${GPSLatitudeRef}, \\${GPSLongitude#} \\${GPSLongitudeRef}, \\${GPSAltitude#} \\${GPSAltitudeRef}\" \"-QuickTime:CreateDate<Nikon:DateTimeOriginal\" \"-XMP-tiff:Make<Nikon:Make\" \"-XMP-tiff:Model<Nikon:Model\" \"-XMP-exif:DateTimeOriginal<Nikon:DateTimeOriginal\" \"-XMP-exif:ExposureTime<Nikon:ExposureTime\" \"-XMP-exif:FNumber<Nikon:FNumber\" \"-XMP-exif:ISO<Nikon:ISO\" \"-XMP-exif:FocalLength<Nikon:FocalLength\" \"-XMP-exif:ExposureProgram<Nikon:ExposureProgram\" \"-XMP-exif:MeteringMode<Nikon:MeteringMode\" \"-XMP-exif:GPSAltitude<Nikon:GPSAltitude\" \"-XMP-exif:GPSAltitudeRef<Nikon:GPSAltitudeRef\" \"-XMP-exif:GPSMapDatum<GPS:GPSMapDatum\" \"-XMP-exif:GPSSatellites<GPS:GPSSatellites\" \"-XMP-exif:GPSDateTime<Composite:GPSDateTime\" \"-XMP-exif:GPSVersionID<GPS:GPSVersionID\" \"-XMP-exif:SubjectDistance<Nikon:FocusDistance\" \"-XMP-exifEX:LensModel<Nikon:LensModel\" \"-XMP-exifEX:LensMake<Nikon:LensMake\" \"-XMP-exifEX:LensSerialNumber<Nikon:LensSerialNumber\" \"-XMP-aux:Lens<Nikon:Lens\" \"-XMP-aux:SerialNumber<Nikon:SerialNumber\" \"-XMP-NikonVideo:ShutterCount<Nikon:ShutterCount\" \"-XMP-NikonVideo:WhiteBalance<Nikon:WhiteBalance\" \"-XMP-NikonVideo:VibrationReduction<Nikon:VibrationReduction\" \"-XMP-NikonVideo:VRMode<Nikon:VRMode\" \"-XMP-NikonVideo:FocusMode<Nikon:FocusMode\" \"-XMP-NikonVideo:AFAreaMode<Nikon:AFAreaMode\" \"-XMP-NikonVideo:AFDetectionMethod<Nikon:AFDetectionMethod\" \"-XMP-NikonVideo:FlashMode<Nikon:FlashMode\" \"-XMP-NikonVideo:PictureControl<Nikon:PictureControlName\" \"-XMP-NikonVideo:ActiveDLighting<Nikon:ActiveD-Lighting\" \"-XMP-NikonVideo:HighISONR<Nikon:HighISONoiseReduction\" \"-XMP-NikonVideo:ElectronicVR<Nikon:ElectronicVR\" \"-XMP-NikonVideo:CropHiSpeed<Nikon:CropHiSpeed\" \"-ThumbnailImage<ThumbnailImage\" \"$out\"; done'\" --confirm --block"
+desc = "Ranger shell macro cvp"
+
+[[mgr.prepend_keymap]]
+on = [ "y", "c" ]
+run = "shell \"rm -f tmp; touch tmp; for i in \"$@\"; do echo \"==> $i <==\"; echo \"\"; cat $i | nl; echo \"\"; echo \"\"; done >> tmp; nvim tmp; rm tmp\" --confirm --block"
+desc = "Ranger shell macro yc"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-f>" ]
+run  = "plugin fzf"
+desc = "Jump to a file using fzf"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-g>" ]
+run  = "shell 'file=\"$(rga --files-with-matches . | fzf)\"; [ -n \"$file\" ] && ya emit reveal \"$(pwd)/$file\"' --block --confirm"
+desc = "Search documents with rga and fzf"
+
+
+# Fixes for wrapping - use precise step arrows to prevent wrap
+[[mgr.prepend_keymap]]
+on   = "k"
+run  = "arrow -1"
+desc = "Move up without wrap"
+
+[[mgr.prepend_keymap]]
+on   = "j"
+run  = "arrow 1"
+desc = "Move down without wrap"
+
+[[mgr.prepend_keymap]]
+on   = "<Up>"
+run  = "arrow -1"
+desc = "Move up without wrap"
+
+[[mgr.prepend_keymap]]
+on   = "<Down>"
+run  = "arrow 1"
+desc = "Move down without wrap"
+
+# Shell access mappings
+[[mgr.prepend_keymap]]
+on   = "S"
+run  = 'shell "$SHELL" --block --confirm'
+desc = "Open a full shell"
+
+[[mgr.prepend_keymap]]
+on   = "s"
+run  = "plugin custom-shell -- auto --interactive"
+desc = "Run an interactive shell command"
+
+[[mgr.prepend_keymap]]
+on   = "!"
+run  = "plugin custom-shell -- auto --interactive --block"
+desc = "Run an interactive shell command (block)"
+
+[[mgr.prepend_keymap]]
+on   = ":"
+run  = "plugin custom-shell -- auto --interactive --block"
+desc = "Run an interactive shell command (block)"
+
+[[mgr.prepend_keymap]]
+on   = ";"
+run  = "plugin custom-shell -- auto --interactive"
+desc = "Run an interactive shell command"
+
+# Zoxide mapping replacing cj
+[[mgr.prepend_keymap]]
+on   = [ "c", "j" ]
+run  = "plugin zoxide"
+desc = "Jump using zoxide (replaces cj)"
+
+# Interactive CD mapping
+[[mgr.prepend_keymap]]
+on   = [ "c", "d" ]
+run  = "cd --interactive"
+desc = "Interactive cd"
+
+# Open with mapping
+[[mgr.prepend_keymap]]
+on   = "r"
+run  = "open --interactive"
+desc = "Open with..."
+
+# Search
+[[mgr.prepend_keymap]]
+on   = "f"
+run  = "search --via=fd"
+desc = "Search via fd"
+
+[[mgr.prepend_keymap]]
+on   = "/"
+run  = "search --via=rg"
+desc = "Search via rg"
+
+# Fix visual selection
+[[mgr.prepend_keymap]]
+on   = "v"
+run  = "toggle_all --state=on"
+desc = "Select all"
+
+[[mgr.prepend_keymap]]
+on   = [ "u", "v" ]
+run  = "toggle_all --state=off"
+desc = "Deselect all"
+
+[[mgr.prepend_keymap]]
+on   = "V"
+run  = "visual_mode"
+desc = "Enter visual mode"
+
+[[mgr.prepend_keymap]]
+on   = [ "u", "V" ]
+run  = "visual_mode --unset"
+desc = "Unset visual mode"
+
