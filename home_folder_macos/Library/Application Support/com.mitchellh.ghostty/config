@@ -75,6 +75,10 @@ keybind = cmd+shift+h=goto_split:left
 keybind = cmd+shift+l=goto_split:right
 keybind = cmd+shift+k=goto_split:up
 keybind = cmd+shift+j=goto_split:down
+keybind = cmd+shift+left=goto_split:left
+keybind = cmd+shift+right=goto_split:right
+keybind = cmd+shift+up=goto_split:up
+keybind = cmd+shift+down=goto_split:down
 
 # Equalize splits
 keybind = ctrl+space>equal=equalize_splits
@@ -135,12 +139,20 @@ keybind = cmd+i=text:\x01\x0b
 keybind = cmd+j=text:\x01\x08
 keybind = cmd+k=text:\x01\x0a
 keybind = cmd+l=text:\x01\x0c
+keybind = cmd+up=text:\x01\x0b
+keybind = cmd+left=text:\x01\x08
+keybind = cmd+down=text:\x01\x0a
+keybind = cmd+right=text:\x01\x0c
 
 # Tmux pane resize (cmd+opt+ijkl, same cluster as nav)
 keybind = cmd+opt+i=text:\x01\x4b
 keybind = cmd+opt+j=text:\x01\x48
 keybind = cmd+opt+k=text:\x01\x4a
 keybind = cmd+opt+l=text:\x01\x4c
+keybind = cmd+opt+up=text:\x01\x4b
+keybind = cmd+opt+left=text:\x01\x48
+keybind = cmd+opt+down=text:\x01\x4a
+keybind = cmd+opt+right=text:\x01\x4c
 
 # Tmux rotate layout (toggles split orientation for current pane)
 keybind = cmd+r=text:\x01\x20
