@@ -19,9 +19,19 @@ alias fabric='fabric-ai'
 alias rm='rm -f'
 alias pr='gh pr view --web'
 
-# Unified usage reporting: Claude Code (ccusage), OpenClaw (JSONL), OpenCode (SQLite)
+# Unified usage reporting: Claude Code (ccusage), OpenClaw (JSONL), OpenCode (SQLite), OpenWhispr
 function allusage() {
-  npx ccusage@latest "$@"
+  local sources=("openclaw" "oc" "claw" "opencode" "oe" "code" "openwhispr" "ow" "whispr" "whisper")
+  local skip_ccusage=false
+  for arg in "$@"; do
+    if (( ${sources[(Ie)${arg:l}]} )); then
+      skip_ccusage=true
+      break
+    fi
+  done
+  if ! $skip_ccusage; then
+    npx ccusage@latest "$@"
+  fi
   python3 ~/bin/allusage.py "$@"
 }
 
