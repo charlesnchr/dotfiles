@@ -22,8 +22,7 @@ alias pr='gh pr view --web'
 # Unified usage reporting: Claude Code (ccusage), OpenClaw (JSONL), OpenCode (SQLite)
 function allusage() {
   npx ccusage@latest "$@"
-  python3 ~/bin/openclaw-jsonl-usage.py "$@"
-  python3 ~/bin/opencode-sqlite-usage.py "$@"
+  python3 ~/bin/allusage.py "$@"
 }
 
 alias a='opencode' # Claude Code alias
