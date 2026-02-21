@@ -106,7 +106,7 @@ fi
 # ==============================================================================
 
 info "Installing find-session..."
-uv tool install --force "find-session @ git+https://github.com/charlesnchr/find-session"
+uv tool install --force find-session
 
 # ==============================================================================
 # Phase 5: Python setup
