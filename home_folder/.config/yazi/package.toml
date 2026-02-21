@@ -1,32 +1,22 @@
 [[plugin.deps]]
+use = "AnirudhG07/custom-shell"
+rev = "c4c2fea"
+hash = "c728f8c1c07fdc803e365071421e9083"
+
+[[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "6047ce4"
-hash = "270915fa8282a19908449530ff66f7e2"
+rev = "63f9650"
+hash = "bf6f074cd41ee33c3360341d168f9733"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "6047ce4"
-hash = "6fa6a05a81c98dd000fbca3cca6e9682"
-
-[[plugin.deps]]
-use = "yazi-rs/plugins:mount"
-rev = "6047ce4"
-hash = "91937a4a9b779eabc6983e258befdfe9"
+rev = "63f9650"
+hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
-rev = "6047ce4"
-hash = "c887903a63a2ff520081b6d90a4b3392"
-
-[[plugin.deps]]
-use = "AnirudhG07/custom-shell"
-rev = "3449686"
-hash = "8009873342496fdb042bba09e239eef3"
-
-[[plugin.deps]]
-use = "yazi-rs/plugins:fzf"
-rev = "6047ce4"
-hash = "99aa06d3014798d86001c324468d497f"
+rev = "63f9650"
+hash = "4d82cd9e7534d976f000edf9c0f68d8f"
 
 [flavor]
 deps = []
