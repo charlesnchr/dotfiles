@@ -19,12 +19,10 @@ alias fabric='fabric-ai'
 alias rm='rm -f'
 alias pr='gh pr view --web'
 
-# Unified Claude usage reporting: syncs OpenClaw data then runs ccusage over both
+# Unified usage reporting: Claude Code (ccusage), OpenClaw (JSONL), OpenCode (SQLite)
 function allusage() {
-  ~/.openclaw/bin/openclaw-ccusage-sync
-  CLAUDE_CONFIG_DIR="$HOME/.claude,$HOME/.openclaw/ccusage-compat" npx ccusage@latest "$@"
-  
-  # For OpenCode, use python script directly on sqlite DB as @ccusage/opencode misses migrated data
+  npx ccusage@latest "$@"
+  python3 ~/bin/openclaw-jsonl-usage.py "$@"
   python3 ~/bin/opencode-sqlite-usage.py "$@"
 }
 
