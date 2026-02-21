@@ -214,8 +214,6 @@ zsh-defer -c '_evalcache atuin init zsh'
 bindkey '^X^E' edit-command-line
 bindkey '^X^F' fzf-history-widget
 
-# Added by Antigravity
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # Zellij restart - run from outside zellij (fresh terminal)
 alias zjr='pkill -9 zellij 2>/dev/null; sleep 0.3; for s in $(zellij list-sessions -n 2>/dev/null); do zellij delete-session "$s" 2>/dev/null; done; rm -f ~/.cache/zellij-pending-session; zj'
