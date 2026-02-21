@@ -23,6 +23,9 @@ alias pr='gh pr view --web'
 function allusage() {
   ~/.openclaw/bin/openclaw-ccusage-sync
   CLAUDE_CONFIG_DIR="$HOME/.claude,$HOME/.openclaw/ccusage-compat" npx ccusage@latest "$@"
+  
+  # For OpenCode, use python script directly on sqlite DB as @ccusage/opencode misses migrated data
+  python3 ~/bin/opencode-sqlite-usage.py "$@"
 }
 
 alias a='opencode' # Claude Code alias
