@@ -102,6 +102,13 @@ if [ -x "$HOME/.claude/hooks/install-hooks.sh" ]; then
 fi
 
 # ==============================================================================
+# Phase 4b: find-session (unified session finder for Claude/Codex/OpenCode)
+# ==============================================================================
+
+info "Installing find-session..."
+uv tool install --force "find-session @ git+https://github.com/charlesnchr/find-session"
+
+# ==============================================================================
 # Phase 5: Python setup
 # ==============================================================================
 
