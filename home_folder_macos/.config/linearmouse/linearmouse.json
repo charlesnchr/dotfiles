@@ -1,6 +1,15 @@
 {
   "schemes" : [
     {
+      "if" : {
+        "device" : {
+          "productName" : "UGREEN Mouse",
+          "serialNumber" : "No.161-0043-2",
+          "productID" : "0x43",
+          "category" : "mouse",
+          "vendorID" : "0x2b89"
+        }
+      },
       "scrolling" : {
         "acceleration" : {
           "vertical" : 1
@@ -8,32 +17,40 @@
         "reverse" : true,
         "modifiers" : {
           "vertical" : {
-            "command" : {
-              "type" : "pinchZoom"
-            },
             "shift" : {
               "type" : "alterOrientation"
+            },
+            "command" : {
+              "type" : "pinchZoom"
             }
           }
         }
       },
-      "if" : {
-        "device" : {
-          "productName" : "UGREEN Mouse",
-          "category" : "mouse",
-          "vendorID" : "0x2b89",
-          "serialNumber" : "No.161-0043-2",
-          "productID" : "0x43"
-        }
-      },
       "pointer" : {
+        "disableAcceleration" : true,
         "acceleration" : 0.4,
-        "speed" : 0.0479,
-        "disableAcceleration" : true
+        "speed" : 0.0479
       }
     },
     {
+      "if" : {
+        "device" : {
+          "productID" : "0xb2",
+          "category" : "mouse",
+          "productName" : "Razer DeathAdder V3",
+          "vendorID" : "0x1532"
+        }
+      },
+      "buttons" : {
+        "universalBackForward" : true
+      },
       "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
+        },
         "modifiers" : {
           "vertical" : {
             "command" : {
@@ -43,66 +60,49 @@
               "type" : "alterOrientation"
             }
           }
-        },
-        "reverse" : {
-          "vertical" : true
-        },
-        "acceleration" : {
-          "vertical" : 1
         }
-      },
-      "if" : {
-        "device" : {
-          "category" : "mouse",
-          "vendorID" : "0x1532",
-          "productID" : "0xb2",
-          "productName" : "Razer DeathAdder V3"
-        }
-      },
-      "buttons" : {
-        "universalBackForward" : true
       },
       "pointer" : {
         "disableAcceleration" : true,
-        "acceleration" : 0.6598,
-        "speed" : 0.0298
+        "speed" : 0.0298,
+        "acceleration" : 0.6598
       }
     },
     {
-      "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        },
-        "acceleration" : {
-          "vertical" : 1
-        }
-      },
       "if" : {
         "device" : {
+          "vendorID" : "0x1532",
           "productID" : "0x16",
-          "category" : "mouse",
-          "vendorID" : "0x1532",
-          "productName" : "Razer DeathAdder"
+          "productName" : "Razer DeathAdder",
+          "category" : "mouse"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "reverse" : {
+          "vertical" : true
         }
       },
       "pointer" : {
-        "disableAcceleration" : true,
-        "acceleration" : 0.3
+        "acceleration" : 0.3,
+        "disableAcceleration" : true
       }
     },
     {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productName" : "MX Master 3",
+          "vendorID" : "0x46d",
+          "productID" : "0xb023",
+          "serialNumber" : "FBAAFE6005E27D8F"
+        }
+      },
       "scrolling" : {
         "reverse" : {
           "horizontal" : true
-        }
-      },
-      "if" : {
-        "device" : {
-          "productName" : "MX Master 3",
-          "category" : "mouse",
-          "productID" : "0xb023",
-          "serialNumber" : "FBAAFE6005E27D8F",
-          "vendorID" : "0x46d"
         }
       },
       "pointer" : {
@@ -110,71 +110,74 @@
       }
     },
     {
+      "if" : {
+        "device" : {
+          "serialNumber" : "54A474C7540A70D2",
+          "category" : "mouse",
+          "productName" : "MX Vertical",
+          "productID" : "0xb020",
+          "vendorID" : "0x46d"
+        }
+      },
       "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        },
         "acceleration" : {
           "vertical" : 1
-        },
-        "reverse" : {
-          "vertical" : true
-        }
-      },
-      "if" : {
-        "device" : {
-          "productID" : "0xb020",
-          "productName" : "MX Vertical",
-          "serialNumber" : "54A474C7540A70D2",
-          "vendorID" : "0x46d",
-          "category" : "mouse"
         }
       }
     },
     {
-      "scrolling" : {
-        "reverse" : {
-          "vertical" : true
-        }
-      },
       "if" : {
         "device" : {
-          "vendorID" : "0x16c0",
-          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
-          "productID" : "0x27da",
           "productName" : "Karabiner DriverKit VirtualHIDPointing 1.8.0",
-          "category" : "mouse"
+          "productID" : "0x27da",
+          "serialNumber" : "pqrs.org:Karabiner-DriverKit-VirtualHIDPointing",
+          "category" : "mouse",
+          "vendorID" : "0x16c0"
         }
-      }
-    },
-    {
+      },
       "scrolling" : {
         "reverse" : {
           "vertical" : true
         }
-      },
+      }
+    },
+    {
       "if" : {
         "device" : {
           "productName" : "V-Razer DeathAdder V3",
-          "vendorID" : "0x1532",
+          "productID" : "0xb2",
           "category" : "mouse",
-          "productID" : "0xb2"
+          "vendorID" : "0x1532"
+        }
+      },
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        },
+        "acceleration" : {
+          "vertical" : 1
         }
       }
     },
     {
+      "if" : {
+        "device" : {
+          "productID" : "0x265",
+          "category" : "trackpad",
+          "serialNumber" : "CC2125404G20W5WA5",
+          "vendorID" : "0x5ac",
+          "productName" : "Magic Trackpad"
+        }
+      },
       "scrolling" : {
         "acceleration" : {
           "vertical" : 1
         },
         "reverse" : {
           "vertical" : true
-        }
-      },
-      "if" : {
-        "device" : {
-          "vendorID" : "0x5ac",
-          "category" : "trackpad",
-          "productID" : "0x265",
-          "serialNumber" : "CC2125404G20W5WA5",
-          "productName" : "Magic Trackpad"
         }
       }
     }
