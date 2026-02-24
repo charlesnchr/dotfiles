@@ -6,6 +6,7 @@ alias v="nvim"
 alias vg="nvim -c Git -c only"
 alias vimdiff='nvim -d'
 alias ezsh="vi ~/.zshrc"
+alias elocal="vi ~/dotfiles/.zshrc_local"
 alias tdy="vi -c VimwikiMakeDiaryNote"
 alias ydy="vi -c VimwikiMakeYesterdayDiaryNote"
 alias tmrw="vi -c VimwikiMakeTomorrowDiaryNote"
