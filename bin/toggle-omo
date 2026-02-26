@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+CONFIG="$HOME/.config/opencode/opencode.json"
+PLUGIN="oh-my-opencode"
+
+if grep -q "\"$PLUGIN\"" "$CONFIG"; then
+  sed -i '' "s/,\?\s*\"$PLUGIN\"//g; s/\"$PLUGIN\",\?\s*//g" "$CONFIG"
+  echo "Disabled $PLUGIN"
+else
+  sed -i '' "s/\"opencode-antigravity-auth\"/\"opencode-antigravity-auth\",\n    \"$PLUGIN\"/" "$CONFIG"
+  echo "Enabled $PLUGIN"
+fi
