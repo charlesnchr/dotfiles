@@ -1,11 +1,38 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 CONFIG="$HOME/.config/opencode/opencode.json"
 PLUGIN="oh-my-opencode"
 
-if grep -q "\"$PLUGIN\"" "$CONFIG"; then
-  sed -i '' "s/,\?\s*\"$PLUGIN\"//g; s/\"$PLUGIN\",\?\s*//g" "$CONFIG"
-  echo "Disabled $PLUGIN"
-else
-  sed -i '' "s/\"opencode-antigravity-auth\"/\"opencode-antigravity-auth\",\n    \"$PLUGIN\"/" "$CONFIG"
-  echo "Enabled $PLUGIN"
-fi
+python3 - "$CONFIG" "$PLUGIN" <<'PY'
+import json
+import os
+import sys
+from pathlib import Path
+
+config_arg = Path(sys.argv[1]).expanduser()
+plugin = sys.argv[2]
+config_path = config_arg.resolve()
+
+with open(config_path, "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+plugins = data.get("plugin")
+if not isinstance(plugins, list):
+    plugins = []
+
+if plugin in plugins:
+    plugins = [p for p in plugins if p != plugin]
+    state = "Disabled"
+else:
+    plugins.append(plugin)
+    state = "Enabled"
+
+data["plugin"] = plugins
+
+with open(config_path, "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2)
+    f.write("\n")
+
+print(f"{state} {plugin}")
+PY

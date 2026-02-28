@@ -3207,130 +3207,130 @@
       ]
     },
     {
-        "description": "real f keys to designated features",
-        "manipulators": [
+      "description": "real f keys to designated features",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "f1"
+          },
+          "to": [
             {
-                "from": {
-                    "key_code": "f1"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "display_brightness_decrement"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f2"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "display_brightness_increment"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f3"
-                },
-                "to": [
-                    {
-                        "apple_vendor_keyboard_key_code": "mission_control"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f4"
-                },
-                "to": [
-                    {
-                        "apple_vendor_keyboard_key_code": "spotlight"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f5"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "dictation"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f7"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "rewind"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f8"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "play_or_pause"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f9"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "fast_forward"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f10"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "mute"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f11"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "volume_decrement"
-                    }
-                ],
-                "type": "basic"
-            },
-            {
-                "from": {
-                    "key_code": "f12"
-                },
-                "to": [
-                    {
-                        "consumer_key_code": "volume_increment"
-                    }
-                ],
-                "type": "basic"
+              "consumer_key_code": "display_brightness_decrement"
             }
-        ]
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f2"
+          },
+          "to": [
+            {
+              "consumer_key_code": "display_brightness_increment"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f3"
+          },
+          "to": [
+            {
+              "apple_vendor_keyboard_key_code": "mission_control"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f4"
+          },
+          "to": [
+            {
+              "apple_vendor_keyboard_key_code": "spotlight"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f5"
+          },
+          "to": [
+            {
+              "consumer_key_code": "dictation"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f7"
+          },
+          "to": [
+            {
+              "consumer_key_code": "rewind"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f8"
+          },
+          "to": [
+            {
+              "consumer_key_code": "play_or_pause"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f9"
+          },
+          "to": [
+            {
+              "consumer_key_code": "fast_forward"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f10"
+          },
+          "to": [
+            {
+              "consumer_key_code": "mute"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f11"
+          },
+          "to": [
+            {
+              "consumer_key_code": "volume_decrement"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "f12"
+          },
+          "to": [
+            {
+              "consumer_key_code": "volume_increment"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
     },
     {
       "description": "Fn to left control for gaming",
@@ -3348,6 +3348,30 @@
             {
               "key_code": "left_control",
               "modifiers": []
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Map fn to option F17",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "fn",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "f17",
+              "modifiers": [
+                "left_option"
+              ]
             }
           ],
           "type": "basic"

@@ -11,6 +11,7 @@ Layout ::
 Edit the PROFILES list below to say which rule *descriptions* each profile
 should import. Then run the script.
 """
+
 import json
 import sys
 from pathlib import Path
@@ -34,6 +35,7 @@ PARAMETERS = {
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def load_all_rules() -> Dict[str, dict]:
     try:
@@ -63,6 +65,7 @@ def devices() -> List[dict]:
         return []
     return json.loads(f.read_text())
 
+
 # ---------------------------------------------------------------------------
 # Profiles – adjust as needed
 # ---------------------------------------------------------------------------
@@ -86,6 +89,7 @@ PROFILES = [
             "Corne capslock",
             "Map fn + number keys to function keys",
             "real f keys to designated features",
+            "Map fn to option F17",
         ],
         "virtual_hid_keyboard": {"country_code": 0, "keyboard_type_v2": "ansi"},
     },
@@ -118,6 +122,7 @@ PROFILES = [
 # ---------------------------------------------------------------------------
 # Builder
 # ---------------------------------------------------------------------------
+
 
 def build():
     cfg = {"global": GLOBAL, "profiles": []}
@@ -152,4 +157,3 @@ def build():
 
 if __name__ == "__main__":
     build()
-
