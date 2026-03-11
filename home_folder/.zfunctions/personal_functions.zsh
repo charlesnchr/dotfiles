@@ -198,6 +198,30 @@ function ccv() {
   env "${env_vars[@]}" claude "${claude_args[@]}"
 }
 
+function hcv() {
+  local env_vars=(
+    "ENABLE_BACKGROUND_TASKS=true"
+    "FORCE_AUTO_BACKGROUND_TASKS=true"
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=true"
+    "CLAUDE_CODE_ENABLE_UNIFIED_READ_TOOL=true"
+  )
+
+  local happy_args=()
+
+  if [[ "$1" == "-y" ]]; then
+    happy_args+=("--dangerously-skip-permissions")
+  elif [[ "$1" == "-r" ]]; then
+    happy_args+=("--resume")
+  elif [[ "$1" == "-ry" || "$1" == "-yr" ]]; then
+    happy_args+=("--resume" "--dangerously-skip-permissions")
+  fi
+
+  # Fix for Claude Code 2.1.71's ToolSearch bug with Happy's MCP tool
+  happy_args+=("--append-system-prompt" "CRITICAL: The happy change title tool is named mcp__happy__change_title (with double underscores). If using ToolSearch, you MUST query for 'select:mcp__happy__change_title'. If it is not found, ignore it and continue helping the user.")
+
+  env "${env_vars[@]}" happy "${happy_args[@]}"
+}
+
 function ts() {
     local selected
 
