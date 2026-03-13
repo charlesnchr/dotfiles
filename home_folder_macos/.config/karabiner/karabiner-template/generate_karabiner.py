@@ -81,6 +81,8 @@ PROFILES = [
             "Yabai meta",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
+            "Hyper + P: Open Whispr (Alt+F17)",
+            "Hyper + ;: Alt+F18",
             "Fixing ae oe aa",
             "Option keys for home row",
             "Option keys for symbols",

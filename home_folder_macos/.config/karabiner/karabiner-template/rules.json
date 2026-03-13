@@ -1964,6 +1964,58 @@
       ]
     },
     {
+      "description": "Hyper + P: Open Whispr (Alt+F17)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "p",
+            "modifiers": {
+              "mandatory": [
+                "right_option",
+                "right_control",
+                "right_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "f17",
+              "modifiers": [
+                "left_option"
+              ]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper + ;: Alt+F18",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "semicolon",
+            "modifiers": {
+              "mandatory": [
+                "right_option",
+                "right_control",
+                "right_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "f18",
+              "modifiers": [
+                "left_option"
+              ]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
       "description": "Fixing ae oe aa",
       "manipulators": [
         {
