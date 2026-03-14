@@ -1990,11 +1990,11 @@
       ]
     },
     {
-      "description": "Hyper + ;: Alt+F18",
+      "description": "Hyper + R: Alt+F18",
       "manipulators": [
         {
           "from": {
-            "key_code": "semicolon",
+            "key_code": "r",
             "modifiers": {
               "mandatory": [
                 "right_option",
