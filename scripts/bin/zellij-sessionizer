@@ -3,9 +3,7 @@
 # Zellij Sessionizer - ported from tmux-sessionizer
 # Provides fzf-based project/session picker for zellij with MRU ordering
 
-# Shared caches
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
-branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
 MRU_FILE="$HOME/.cache/zellij-session-mru"
 
 update_mru() {
@@ -20,15 +18,6 @@ update_mru() {
     echo "$session $timestamp" >> "$MRU_FILE"
 }
 
-# Pre-load branch lookup cache into associative array
-declare -A branch_map
-if [[ -f $branch_lookup_cache ]]; then
-    while IFS='=' read -r session_name branch; do
-        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
-    done < "$branch_lookup_cache"
-fi
-
-# Load MRU timestamps
 declare -A mru_times
 if [[ -f "$MRU_FILE" ]]; then
     while read -r session timestamp; do
@@ -36,10 +25,8 @@ if [[ -f "$MRU_FILE" ]]; then
     done < "$MRU_FILE"
 fi
 
-# Get current session name from environment variable (set by zellij)
 current_session="$ZELLIJ_SESSION_NAME"
 
-# Get a list of running zellij sessions with MRU times
 declare -A active_sessions
 session_entries=()
 
@@ -49,27 +36,17 @@ while IFS= read -r line; do
         active_sessions["$session"]=1
         [[ "$session" == "$current_session" ]] && continue
 
-        # Get MRU time (default to 0 if not found)
         mru_time=${mru_times[$session]:-0}
-
-        # Look up branch from pre-loaded map - use cyan color for active sessions
-        if [[ -n ${branch_map[$session]} ]]; then
-            session_entries+=("$mru_time "$'\033[36m'"▶️ $session  ${branch_map[$session]}"$'\033[0m')
-        else
-            session_entries+=("$mru_time "$'\033[36m'"▶️ $session"$'\033[0m')
-        fi
+        session_entries+=("$mru_time "$'\033[36m'"▶️ $session"$'\033[0m')
     fi
 done < <(zellij list-sessions --no-formatting 2>/dev/null)
 
-# Sort sessions by MRU (descending) and strip the timestamp
 sorted_sessions=()
 while IFS= read -r line; do
-    # Remove leading timestamp
     entry=$(echo "$line" | sed 's/^[0-9]* //')
     sorted_sessions+=("$entry")
 done < <(printf '%s\n' "${session_entries[@]}" | sort -rn)
 
-# Load directories from cache, filtering out ones with active sessions
 selected_dirs=()
 if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
@@ -79,7 +56,6 @@ if [[ -f $all_dirs_cache ]]; then
     done < "$all_dirs_cache"
 fi
 
-# Use the filtered paths array and zellij sessions in fzf
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
@@ -91,7 +67,7 @@ else
         --with-nth=1,2 \
         --ansi \
         --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
-        --header='[name]  [branch/type]  (ctrl-r: refresh)' \
+        --header='[name]  [path/type]  (ctrl-r: refresh)' \
         --bind='ctrl-r:reload(~/bin/zellij-sessionizer-list)'
     )
 fi
@@ -100,7 +76,6 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-# Check if this is a session selection (starts with emoji)
 if [[ $selected == ▶️* ]]; then
     selected_name=$(echo "$selected" | awk '{print $2}')
     selected_path=""
@@ -115,12 +90,9 @@ else
     fi
 fi
 
-# Update MRU
 update_mru "$selected_name"
 
-# Check if zellij is running
 if [[ -z $ZELLIJ ]]; then
-    # Not inside zellij - start or attach
     if zellij list-sessions 2>/dev/null | grep -q "^$selected_name"; then
         zellij attach "$selected_name"
     else
@@ -131,7 +103,6 @@ if [[ -z $ZELLIJ ]]; then
         fi
     fi
 else
-    # Inside zellij - use zellij-switch plugin to switch sessions
     if [[ -n $selected_path && -d $selected_path ]]; then
         zellij pipe --plugin "file:$HOME/.config/zellij/plugins/zellij-switch.wasm" -- "--session $selected_name --cwd $selected_path"
     else

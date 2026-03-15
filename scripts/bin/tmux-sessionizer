@@ -12,15 +12,6 @@ tmux rename-window "sessionizer" 2>/dev/null
 
 # Load all directories from cache - no find commands!
 all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
-branch_lookup_cache="$HOME/.cache/tmux-sessionizer-branches"
-
-# Pre-load branch lookup cache into associative array
-declare -A branch_map
-if [[ -f $branch_lookup_cache ]]; then
-    while IFS='=' read -r session_name branch; do
-        [[ -n $session_name ]] && branch_map["$session_name"]="$branch"
-    done < "$branch_lookup_cache"
-fi
 
 # Get current session to exclude it
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
@@ -32,15 +23,8 @@ declare -A active_sessions
 while IFS= read -r session; do
     if [[ -n $session ]]; then
         active_sessions["$session"]=1
-        # Skip current session
         [[ "$session" == "$current_session" ]] && continue
-
-        # Look up branch from pre-loaded map
-        if [[ -n ${branch_map[$session]} ]]; then
-            tmux_sessions+=("▶️ $session  ${branch_map[$session]}")
-        else
-            tmux_sessions+=("▶️ $session")
-        fi
+        tmux_sessions+=("▶️ $session")
     fi
 done <<< "$tmux_sessions_raw"
 
@@ -48,11 +32,8 @@ done <<< "$tmux_sessions_raw"
 selected_dirs=()
 if [[ -f $all_dirs_cache ]]; then
     while IFS= read -r line; do
-        # Extract folder name and session name in one go
         folder=${line%% *}
         session_name=${folder//./_}
-
-        # Skip if session exists (O(1) lookup)
         [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
     done < "$all_dirs_cache"
 fi
@@ -70,7 +51,7 @@ else
         --with-nth=1,2 \
         --ansi \
         --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
-        --header='[name]  [branch/type]  (ctrl-r: refresh)' \
+        --header='[name]  [path/type]  (ctrl-r: refresh)' \
         --bind='ctrl-r:reload(~/bin/tmux-sessionizer-list)'
     )
 fi
@@ -79,16 +60,12 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-# Check if this is a session selection (starts with emoji)
 if [[ $selected == ▶️* ]]; then
-    # Extract session name (second field)
     selected_name=$(echo "$selected" | awk '{print $2}')
     selected_path=$selected_name
 else
-    # Extract the actual path (last field)
     selected_path=$(echo "$selected" | awk '{print $NF}')
 
-    # If it's not a directory, treat as session name
     if [[ ! -d $selected_path ]]; then
         selected_path=$selected
     fi
