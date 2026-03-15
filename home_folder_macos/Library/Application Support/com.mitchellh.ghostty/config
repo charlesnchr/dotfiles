@@ -45,7 +45,7 @@
 term = xterm-256color
 mouse-hide-while-typing = true
 macos-titlebar-style = hidden
-font-size = 12
+font-size = 13
 
 
 keybind = cmd+p=toggle_command_palette
