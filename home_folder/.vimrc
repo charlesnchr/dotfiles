@@ -1,8 +1,3 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" Plugin management now handled by lazy.nvim in init.lua
-
 set updatetime=100
 
 " for performance on start-up https://www.reddit.com/r/neovim/comments/r9acxp/neovim_is_slow_because_of_python_provider/

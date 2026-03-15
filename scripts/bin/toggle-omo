@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONFIG="$HOME/.config/opencode/opencode.json"
+PLUGIN="oh-my-opencode"
+
+python3 - "$CONFIG" "$PLUGIN" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+config_arg = Path(sys.argv[1]).expanduser()
+plugin = sys.argv[2]
+config_path = config_arg.resolve()
+
+def strip_trailing_commas(text: str) -> str:
+    result = []
+    in_string = False
+    escape = False
+    i = 0
+
+    while i < len(text):
+        char = text[i]
+
+        if in_string:
+            result.append(char)
+            if escape:
+                escape = False
+            elif char == "\\":
+                escape = True
+            elif char == '"':
+                in_string = False
+            i += 1
+            continue
+
+        if char == '"':
+            in_string = True
+            result.append(char)
+            i += 1
+            continue
+
+        if char == ",":
+            j = i + 1
+            while j < len(text) and text[j] in " \t\r\n":
+                j += 1
+            if j < len(text) and text[j] in "]}":
+                i += 1
+                continue
+
+        result.append(char)
+        i += 1
+
+    return "".join(result)
+
+
+with open(config_path, "r", encoding="utf-8") as f:
+    raw = f.read()
+
+data = json.loads(strip_trailing_commas(raw))
+
+plugins = data.get("plugin")
+if not isinstance(plugins, list):
+    plugins = []
+
+if plugin in plugins:
+    plugins = [p for p in plugins if p != plugin]
+    state = "Disabled"
+else:
+    plugins.append(plugin)
+    state = "Enabled"
+
+data["plugin"] = plugins
+
+with open(config_path, "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2)
+    f.write("\n")
+
+print(f"{state} {plugin}")
+PY
