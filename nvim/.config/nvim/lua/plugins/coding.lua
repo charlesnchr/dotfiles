@@ -158,7 +158,9 @@ return {
     config = function()
       vim.g.gutentags_trace = 0  -- Enable debugging
       vim.g.gutentags_define_advanced_commands = 1
-      vim.g.gutentags_cache_dir = vim.fn.expand("~/.cache/vim/ctags/")
+      local gutentags_cache_dir = vim.fn.stdpath("cache") .. "/ctags"
+      vim.fn.mkdir(gutentags_cache_dir, "p")
+      vim.g.gutentags_cache_dir = gutentags_cache_dir .. "/"
 
       -- Project root markers - include package.json for JS/TS projects
       vim.g.gutentags_project_root = { '.git', '.root', '.svn', '.hg', '.project', 'package.json', 'Cargo.toml', 'go.mod' }
