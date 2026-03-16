@@ -156,6 +156,20 @@ else
 fi
 
 # ==============================================================================
+# Phase 6b: macOS-only Raycast script command helpers
+# ==============================================================================
+
+if [[ "$OS" == "Darwin" ]]; then
+    mkdir -p "$HOME/raycast-scripts"
+    mkdir -p "$HOME/raycast-scripts/dotfiles"
+    mkdir -p "$HOME/raycast-scripts/dotfiles/images"
+    cp -f "$HOME/bin/raycast-scripts/message-woodhouse.sh" "$HOME/raycast-scripts/dotfiles/message-woodhouse.sh"
+    cp -f "$HOME/bin/raycast-scripts/images/woodhouse.png" "$HOME/raycast-scripts/dotfiles/images/woodhouse.png"
+    chmod +x "$HOME/raycast-scripts/dotfiles/message-woodhouse.sh"
+    info "Installed Raycast scripts into ~/raycast-scripts/dotfiles"
+fi
+
+# ==============================================================================
 # Phase 7: Zsh setup (zimfw)
 # ==============================================================================
 
