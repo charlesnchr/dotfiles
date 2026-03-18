@@ -174,17 +174,6 @@ zmodload -i zsh/complist
 
 source $HOME/dotfiles/.zshrc_local
 
-tailscale() {
-  local arg
-  for arg in "$@"; do
-    if [[ "$arg" == --socket || "$arg" == --socket=* ]]; then
-      command /opt/homebrew/bin/tailscale "$@"
-      return
-    fi
-  done
-  command /opt/homebrew/bin/tailscale --socket=/var/run/tailscaled.socket "$@"
-}
-
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
