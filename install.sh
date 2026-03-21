@@ -1,10 +1,9 @@
 #!/bin/bash
 #
-# Streamlined dotfiles installation for macOS and Linux
+# Idempotent dotfiles installation for macOS and Linux
 # Uses Homebrew as the common package manager substrate
+# Safe to re-run: each phase runs independently, failures don't block later phases
 #
-
-set -e
 
 # Colors for output
 RED='\033[0;31m'
@@ -16,6 +15,20 @@ info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
+# Phase tracking
+PHASE_RESULTS=()
+run_phase() {
+    local name="$1"
+    shift
+    info "=== $name ==="
+    if "$@"; then
+        PHASE_RESULTS+=("${GREEN}✓${NC} $name")
+    else
+        PHASE_RESULTS+=("${RED}✗${NC} $name")
+        warn "$name failed — continuing"
+    fi
+}
+
 # Detect OS
 OS="$(uname -s)"
 ARCH="$(uname -m)"
@@ -25,8 +38,8 @@ info "Detected: $OS ($ARCH)"
 # Phase 1: System packages (requires sudo on Linux)
 # ==============================================================================
 
-if [[ "$OS" == "Linux" ]]; then
-    info "Installing Linux system essentials via apt..."
+phase_system_packages() {
+    [[ "$OS" != "Linux" ]] && return 0
     sudo apt update
     sudo apt install -y \
         zsh tmux git curl wget \
@@ -34,181 +47,215 @@ if [[ "$OS" == "Linux" ]]; then
         libreadline-dev libsqlite3-dev libncursesw5-dev \
         xz-utils tk-dev libffi-dev liblzma-dev \
         sqlite3 jq stow ranger zip unzip
-fi
+}
 
 # ==============================================================================
 # Phase 2: Homebrew (common substrate for macOS and Linux)
 # ==============================================================================
 
-if ! command -v brew &> /dev/null; then
-    info "Installing Homebrew..."
+phase_homebrew() {
+    if command -v brew &> /dev/null; then
+        info "Homebrew already installed"
+        return 0
+    fi
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    # Add brew to PATH for this session
     if [[ "$OS" == "Linux" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     elif [[ "$OS" == "Darwin" ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
-else
-    info "Homebrew already installed"
-fi
+}
 
 # ==============================================================================
 # Phase 3: Core tools via Homebrew
 # ==============================================================================
 
-info "Installing core tools via Homebrew..."
-brew install \
-    neovim \
-    pyenv \
-    uv \
-    fnm \
-    fzf \
-    ripgrep \
-    fd \
-    bat \
-    zoxide \
-    direnv \
-    gh \
-    atuin \
-    zoxide \
-    tmuxinator \
-    stow \
-    universal-ctags
+phase_brew_packages() {
+    if ! command -v brew &> /dev/null; then
+        if [[ "$OS" == "Linux" ]]; then
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        elif [[ "$OS" == "Darwin" ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+    fi
 
-if [[ "$OS" == "Darwin" ]]; then
-    info "Installing macOS window manager tools..."
-    brew install --cask nikitabobko/tap/aerospace
-fi
+    brew install \
+        neovim \
+        pyenv \
+        uv \
+        fnm \
+        fzf \
+        ripgrep \
+        fd \
+        bat \
+        zoxide \
+        direnv \
+        gh \
+        atuin \
+        stow \
+        tmuxinator \
+        universal-ctags
 
-# Set up fnm with Node LTS
-info "Setting up Node via fnm..."
-eval "$(fnm env)"
-if ! fnm list | grep -q "v22"; then
-    fnm install 22
-fi
-fnm default 22
-
-# ==============================================================================
-# Phase 4: Claude Code (via official installer, not brew)
-# ==============================================================================
-
-if ! command -v claude &> /dev/null; then
-    info "Installing Claude Code..."
-    curl -fsSL https://claude.ai/install.sh | bash
-else
-    info "Claude Code already installed"
-fi
-
-# Install Claude Code hooks (tmux status emojis + notifications)
-if [ -x "$HOME/.claude/hooks/install-hooks.sh" ]; then
-    info "Installing Claude Code hooks..."
-    "$HOME/.claude/hooks/install-hooks.sh"
-fi
+    if [[ "$OS" == "Darwin" ]]; then
+        brew install --cask nikitabobko/tap/aerospace
+    fi
+}
 
 # ==============================================================================
-# Phase 4b: coding-agent-tools (session search & usage analytics)
+# Phase 4: Node via fnm
 # ==============================================================================
 
-info "Installing coding-agent-tools..."
-uv tool install --force coding-agent-tools
+phase_node() {
+    eval "$(fnm env)"
+    if ! fnm list | grep -q "v22"; then
+        fnm install 22
+    fi
+    fnm default 22
+}
 
 # ==============================================================================
-# Phase 5: Python setup
+# Phase 5: Claude Code
 # ==============================================================================
 
-info "Setting up Python via pyenv..."
-eval "$(pyenv init -)"
-if ! pyenv versions | grep -q "3.12"; then
-    pyenv install 3.12
-fi
-pyenv global 3.12
+phase_claude() {
+    if ! command -v claude &> /dev/null; then
+        curl -fsSL https://claude.ai/install.sh | bash
+    else
+        info "Claude Code already installed"
+    fi
 
-# Rehash to pick up the new Python
-eval "$(pyenv init -)"
-
-# Install pynvim for neovim Python support
-info "Installing pynvim..."
-pip install -U pynvim
+    if [ -x "$HOME/.claude/hooks/install-hooks.sh" ]; then
+        "$HOME/.claude/hooks/install-hooks.sh"
+    fi
+}
 
 # ==============================================================================
-# Phase 6: Dotfiles symlinks
+# Phase 6: coding-agent-tools
 # ==============================================================================
 
-DOTFILES_DIR="$HOME/dotfiles"
-cd "$DOTFILES_DIR"
-
-info "Setting up dotfiles symlinks..."
-mkdir -p ~/.config
-
-stow -v home_folder
-stow -v nvim
-mkdir -p ~/bin
-stow -v scripts
-if [[ "$OS" == "Darwin" ]]; then
-    stow -v home_folder_macos
-fi
+phase_coding_agent_tools() {
+    uv tool install --force coding-agent-tools
+}
 
 # ==============================================================================
-# Phase 6b: macOS-only Raycast script command helpers
+# Phase 7: Python setup
 # ==============================================================================
 
-if [[ "$OS" == "Darwin" ]]; then
-    mkdir -p "$HOME/raycast-scripts"
-    mkdir -p "$HOME/raycast-scripts/dotfiles"
+phase_python() {
+    eval "$(pyenv init -)"
+    if ! pyenv versions | grep -q "3.12"; then
+        pyenv install 3.12
+    fi
+    pyenv global 3.12
+    eval "$(pyenv init -)"
+    pip install -U pynvim
+}
+
+# ==============================================================================
+# Phase 8: Dotfiles symlinks
+# ==============================================================================
+
+phase_symlinks() {
+    local dotfiles_dir="$HOME/dotfiles"
+    cd "$dotfiles_dir"
+    mkdir -p ~/.config
+
+    stow -v --adopt home_folder
+    stow -v --adopt nvim
+    mkdir -p ~/bin
+    stow -v --adopt scripts
+    if [[ "$OS" == "Darwin" ]]; then
+        stow -v --adopt home_folder_macos
+    fi
+
+    # Restore dotfiles repo versions after --adopt pulled in local changes
+    cd "$dotfiles_dir"
+    git checkout .
+}
+
+# ==============================================================================
+# Phase 9: macOS Raycast scripts
+# ==============================================================================
+
+phase_raycast() {
+    [[ "$OS" != "Darwin" ]] && return 0
     mkdir -p "$HOME/raycast-scripts/dotfiles/images"
     cp -f "$HOME/bin/raycast-scripts/message-woodhouse.sh" "$HOME/raycast-scripts/dotfiles/message-woodhouse.sh"
     cp -f "$HOME/bin/raycast-scripts/images/woodhouse.png" "$HOME/raycast-scripts/dotfiles/images/woodhouse.png"
     chmod +x "$HOME/raycast-scripts/dotfiles/message-woodhouse.sh"
-    info "Installed Raycast scripts into ~/raycast-scripts/dotfiles"
-fi
+}
 
 # ==============================================================================
-# Phase 7: Zsh setup (zimfw)
+# Phase 10: Zsh (zimfw)
 # ==============================================================================
 
-if [[ ! -d "$HOME/.zim" ]]; then
-    info "Installing zimfw..."
-    curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
-else
-    info "zimfw already installed"
-fi
+phase_zsh() {
+    if [[ ! -d "$HOME/.zim" ]]; then
+        curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+    else
+        info "zimfw already installed"
+    fi
+}
 
 # ==============================================================================
-# Phase 8: Tmux plugins
+# Phase 11: Tmux plugins
 # ==============================================================================
 
-if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
-    info "Installing tmux plugin manager..."
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    info "Run 'prefix + I' in tmux to install plugins"
-else
-    info "tmux plugin manager already installed"
-fi
+phase_tmux() {
+    if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    else
+        info "tmux plugin manager already installed"
+    fi
+}
 
 # ==============================================================================
-# Phase 9: fzf key bindings
+# Phase 12: fzf key bindings
 # ==============================================================================
 
-if [[ ! -f "$HOME/.fzf.zsh" ]]; then
-    info "Setting up fzf key bindings..."
-    "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
-fi
+phase_fzf() {
+    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+        "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+    else
+        info "fzf key bindings already set up"
+    fi
+}
 
 # ==============================================================================
-# Phase 10: Neovim plugins
+# Phase 13: Neovim plugins
 # ==============================================================================
 
-info "Setting up Neovim plugins..."
-nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+phase_neovim() {
+    nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+}
 
 # ==============================================================================
-# Done
+# Run all phases
+# ==============================================================================
+
+run_phase "System packages"       phase_system_packages
+run_phase "Homebrew"              phase_homebrew
+run_phase "Brew packages"         phase_brew_packages
+run_phase "Node (fnm)"            phase_node
+run_phase "Claude Code"           phase_claude
+run_phase "coding-agent-tools"    phase_coding_agent_tools
+run_phase "Python (pyenv)"        phase_python
+run_phase "Dotfiles symlinks"     phase_symlinks
+run_phase "Raycast scripts"       phase_raycast
+run_phase "Zsh (zimfw)"           phase_zsh
+run_phase "Tmux plugins"          phase_tmux
+run_phase "fzf key bindings"      phase_fzf
+run_phase "Neovim plugins"        phase_neovim
+
+# ==============================================================================
+# Summary
 # ==============================================================================
 
 echo ""
-info "Installation complete!"
+info "=== Summary ==="
+for result in "${PHASE_RESULTS[@]}"; do
+    echo -e "  $result"
+done
 echo ""
 echo "Next steps:"
 echo "  1. Change default shell: chsh -s \$(which zsh)"
