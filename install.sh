@@ -76,6 +76,11 @@ brew install \
     tmuxinator \
     universal-ctags
 
+if [[ "$OS" == "Darwin" ]]; then
+    info "Installing macOS window manager tools..."
+    brew install --cask nikitabobko/tap/aerospace
+fi
+
 # Set up fnm with Node LTS
 info "Setting up Node via fnm..."
 eval "$(fnm env)"
@@ -136,23 +141,12 @@ cd "$DOTFILES_DIR"
 info "Setting up dotfiles symlinks..."
 mkdir -p ~/.config
 
-# Use stow if available, otherwise manual symlinks
-if command -v stow &> /dev/null; then
-    stow -v home_folder
-    stow -v nvim
-    mkdir -p ~/bin
-    stow -v scripts
-else
-    warn "stow not found, using manual symlinks..."
-    ln -sfn "$DOTFILES_DIR/home_folder/.zshrc" ~/.zshrc
-    ln -sfn "$DOTFILES_DIR/home_folder/.zshenv" ~/.zshenv
-    ln -sfn "$DOTFILES_DIR/home_folder/.zimrc" ~/.zimrc
-    ln -sfn "$DOTFILES_DIR/home_folder/.tmux.conf" ~/.tmux.conf
-    ln -sfn "$DOTFILES_DIR/home_folder/.vimrc" ~/.vimrc
-    ln -sfn "$DOTFILES_DIR/home_folder/.vim" ~/.vim
-    ln -sfn "$DOTFILES_DIR/home_folder/.config/ranger" ~/.config/ranger
-    ln -sfn "$DOTFILES_DIR/nvim/.config/nvim" ~/.config/nvim
-    ln -sfn "$DOTFILES_DIR/scripts/bin" ~/bin
+stow -v home_folder
+stow -v nvim
+mkdir -p ~/bin
+stow -v scripts
+if [[ "$OS" == "Darwin" ]]; then
+    stow -v home_folder_macos
 fi
 
 # ==============================================================================

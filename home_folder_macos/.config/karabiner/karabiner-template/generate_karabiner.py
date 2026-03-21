@@ -70,7 +70,7 @@ def devices() -> List[dict]:
 # Profiles – adjust as needed
 # ---------------------------------------------------------------------------
 # currently deactivated:
-# "Yabai meta", "Option keys for symbols", "Option keys for home row",
+# "Option keys for symbols", "Option keys for home row",
 
 PROFILES = [
     {
@@ -78,7 +78,7 @@ PROFILES = [
         "selected": True,
         "rules": [
             "Vi Mode [S as Trigger Key]",
-            "Yabai meta",
+            "Option shortcut layer (frees opt+key from special chars for use as shortcuts)",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Hyper + P: Open Whispr (Alt+F17)",

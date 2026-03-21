@@ -1,0 +1,189 @@
+start-at-login = true
+config-version = 2
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 24
+
+
+
+
+[exec]
+inherit-env-vars = true
+
+[exec.env-vars]
+PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:${PATH}'
+
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
+
+[key-mapping]
+preset = 'qwerty'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'ai.opencode.desktop'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'Mattermost.Desktop'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'notion.id'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.todoist.mac.Todoist'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'net.cozic.joplin-desktop'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.keepassxc.keepassxc'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.aone.keka'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.raycast.macos'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'cc.ffitch.shottr'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.colliderli.iina'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.window-title-regex-substring = 'picture-in-picture'
+run = 'layout floating'
+
+[mode.main.binding]
+alt-enter = 'exec-and-forget open -na "Ghostty.app"'
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-w = 'workspace-back-and-forth'
+alt-shift-space = 'layout floating tiling'
+
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+alt-b = 'balance-sizes'
+alt-m = 'macos-native-minimize'
+alt-r = 'mode resize'
+alt-semicolon = 'fullscreen'
+alt-n = 'workspace --wrap-around next'
+alt-p = 'workspace --wrap-around prev'
+alt-q = 'close'
+
+alt-ctrl-h = 'focus-monitor left'
+alt-ctrl-l = 'focus-monitor right'
+alt-ctrl-shift-h = 'move-node-to-monitor --wrap-around left'
+alt-ctrl-shift-l = 'move-node-to-monitor --wrap-around right'
+
+cmd-alt-ctrl-1 = 'workspace 1'
+cmd-alt-ctrl-2 = 'workspace 2'
+cmd-alt-ctrl-3 = 'workspace 3'
+cmd-alt-ctrl-4 = 'workspace 4'
+cmd-alt-ctrl-5 = 'workspace 5'
+cmd-alt-ctrl-6 = 'workspace 6'
+cmd-alt-ctrl-7 = 'workspace 7'
+cmd-alt-ctrl-8 = 'workspace 8'
+cmd-alt-ctrl-9 = 'workspace 9'
+
+cmd-alt-ctrl-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+cmd-alt-ctrl-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+cmd-alt-ctrl-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+cmd-alt-ctrl-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+cmd-alt-ctrl-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
+cmd-alt-ctrl-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
+cmd-alt-ctrl-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
+cmd-alt-ctrl-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
+cmd-alt-ctrl-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
+
+alt-shift-semicolon = 'mode service'
+
+[mode.resize.binding]
+h = 'resize width -80'
+j = 'resize height +80'
+k = 'resize height -80'
+l = 'resize width +80'
+
+minus = 'resize smart -50'
+equal = 'resize smart +50'
+
+enter = 'mode main'
+esc = 'mode main'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+b = ['balance-sizes', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+enter = 'mode main'
