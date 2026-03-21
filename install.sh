@@ -74,6 +74,7 @@ brew install \
     atuin \
     zoxide \
     tmuxinator \
+    stow \
     universal-ctags
 
 if [[ "$OS" == "Darwin" ]]; then
