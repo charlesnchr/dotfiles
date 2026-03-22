@@ -1,0 +1,10 @@
+#!/bin/bash
+osascript -e "
+tell application \"System Events\"
+    set frontApp to name of first application process whose frontmost is true
+end tell
+if frontApp is \"$1\" then
+    tell application \"System Events\" to set visible of process \"$1\" to false
+else
+    tell application \"$1\" to activate
+end if"
