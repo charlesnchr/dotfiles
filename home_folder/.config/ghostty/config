@@ -45,7 +45,6 @@
 term = xterm-256color
 mouse-hide-while-typing = true
 macos-titlebar-style = hidden
-macos-window-tabbing = manual
 window-save-state = never
 font-size = 13
 
