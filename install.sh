@@ -174,7 +174,31 @@ phase_symlinks() {
 }
 
 # ==============================================================================
-# Phase 9: macOS Raycast scripts
+# Phase 9: Compile Swift utilities (macOS only)
+# ==============================================================================
+
+phase_swift_utils() {
+    [[ "$OS" != "Darwin" ]] && return 0
+    local src="$HOME/dotfiles/scripts/bin"
+    local dst="$HOME/bin"
+    mkdir -p "$dst"
+
+    for swift_file in "$src"/*.swift; do
+        [ -f "$swift_file" ] || continue
+        local name
+        name="$(basename "${swift_file%.swift}")"
+        local bin="$dst/$name"
+        if [ "$swift_file" -nt "$bin" ] || [ ! -f "$bin" ]; then
+            info "Compiling $name"
+            swiftc -O -o "$bin" "$swift_file"
+        else
+            info "$name already up to date"
+        fi
+    done
+}
+
+# ==============================================================================
+# Phase 10: macOS Raycast scripts
 # ==============================================================================
 
 phase_raycast() {
@@ -186,7 +210,7 @@ phase_raycast() {
 }
 
 # ==============================================================================
-# Phase 10: Zsh (zimfw)
+# Phase 11: Zsh (zimfw)
 # ==============================================================================
 
 phase_zsh() {
@@ -198,7 +222,7 @@ phase_zsh() {
 }
 
 # ==============================================================================
-# Phase 11: Tmux plugins
+# Phase 12: Tmux plugins
 # ==============================================================================
 
 phase_tmux() {
@@ -210,7 +234,7 @@ phase_tmux() {
 }
 
 # ==============================================================================
-# Phase 12: fzf key bindings
+# Phase 13: fzf key bindings
 # ==============================================================================
 
 phase_fzf() {
@@ -222,7 +246,7 @@ phase_fzf() {
 }
 
 # ==============================================================================
-# Phase 13: Neovim plugins
+# Phase 14: Neovim plugins
 # ==============================================================================
 
 phase_neovim() {
@@ -241,6 +265,7 @@ run_phase "Claude Code"           phase_claude
 run_phase "coding-agent-tools"    phase_coding_agent_tools
 run_phase "Python (pyenv)"        phase_python
 run_phase "Dotfiles symlinks"     phase_symlinks
+run_phase "Swift utilities"       phase_swift_utils
 run_phase "Raycast scripts"       phase_raycast
 run_phase "Zsh (zimfw)"           phase_zsh
 run_phase "Tmux plugins"          phase_tmux
