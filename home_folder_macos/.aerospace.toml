@@ -12,7 +12,7 @@ accordion-padding = 24
 inherit-env-vars = true
 
 [exec.env-vars]
-PATH = '/Users/cc/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:${PATH}'
+PATH = '${HOME}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:${PATH}'
 
 [gaps]
 inner.horizontal = 10
