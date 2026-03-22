@@ -1,0 +1,16 @@
+#!/bin/bash
+URL="$1"
+[ -z "$URL" ] && exit 1
+
+W=580
+H=920
+POS=$(find-chat-pos $W $H)
+X=${POS%% *}
+Y=${POS##* }
+
+osascript -e "
+tell application \"Google Chrome\"
+    set newWin to make new window
+    set URL of active tab of newWin to \"$URL\"
+    set bounds of newWin to {$X, $Y, $((X + W)), $((Y + H))}
+end tell"

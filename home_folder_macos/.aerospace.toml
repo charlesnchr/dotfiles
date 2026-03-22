@@ -218,9 +218,9 @@ enter = 'mode main'
 esc = 'mode main'
 
 [mode.launch.binding]
-g = ['exec-and-forget /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window --window-size=900,700 "https://gemini.google.com" &', 'mode main']
-c = ['exec-and-forget /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window --window-size=900,700 "https://chat.com" &', 'mode main']
-a = ['exec-and-forget /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window --window-size=900,700 "https://claude.ai" &', 'mode main']
+g = ['exec-and-forget launch-chat "https://gemini.google.com"', 'mode main']
+c = ['exec-and-forget launch-chat "https://chat.com"', 'mode main']
+a = ['exec-and-forget launch-chat "https://claude.ai"', 'mode main']
 enter = 'mode main'
 esc = 'mode main'
 

@@ -19,7 +19,10 @@ if let app = running {
         app.activate()
     }
 } else {
-    let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: appName)
-        ?? URL(fileURLWithPath: "/Applications/\(appName).app")
-    NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
+    if !workspace.open(URL(fileURLWithPath: "/Applications/\(appName).app")) {
+        let task = Process()
+        task.launchPath = "/usr/bin/open"
+        task.arguments = ["-a", appName]
+        task.launch()
+    }
 }
