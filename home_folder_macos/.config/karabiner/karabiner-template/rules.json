@@ -870,6 +870,11 @@
           "from": { "key_code": "e", "modifiers": { "mandatory": ["option"], "optional": ["shift"] } },
           "to": [{ "key_code": "0", "modifiers": ["left_option", "left_command", "left_control"] }],
           "type": "basic"
+        },
+        {
+          "from": { "key_code": "w", "modifiers": { "mandatory": ["option"], "optional": ["shift"] } },
+          "to": [{ "key_code": "w", "modifiers": ["left_option", "left_command", "left_control"] }],
+          "type": "basic"
         }
       ]
     },
