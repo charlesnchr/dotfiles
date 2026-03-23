@@ -875,6 +875,11 @@
           "from": { "key_code": "w", "modifiers": { "mandatory": ["option"], "optional": ["shift"] } },
           "to": [{ "key_code": "w", "modifiers": ["left_option", "left_command", "left_control"] }],
           "type": "basic"
+        },
+        {
+          "from": { "key_code": "b", "modifiers": { "mandatory": ["option"], "optional": ["shift"] } },
+          "to": [{ "key_code": "b", "modifiers": ["left_option", "left_command", "left_control"] }],
+          "type": "basic"
         }
       ]
     },
