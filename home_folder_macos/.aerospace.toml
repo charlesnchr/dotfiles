@@ -25,9 +25,14 @@ outer.right = 10
 [key-mapping]
 preset = 'qwerty'
 
-# Workspaces 2-5 tile (default), the rest float
+# Workspaces 1-2 and 6-9 float, the rest tile (default)
 [[on-window-detected]]
 if.workspace = '1'
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.workspace = '2'
 check-further-callbacks = true
 run = 'layout floating'
 

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Today's total AI spend for tmux status bar.
+# Thin caching wrapper around agent-usage-tui --cost.
+
+CACHE="$HOME/.cache/tmux-ai-spend"
+CACHE_TTL=300  # 5 minutes
+
+# Serve from cache if fresh
+if [[ -f "$CACHE" ]]; then
+    age=$(( $(date +%s) - $(stat -f%m "$CACHE" 2>/dev/null || stat -c%Y "$CACHE" 2>/dev/null) ))
+    if (( age < CACHE_TTL )); then
+        cat "$CACHE"
+        exit 0
+    fi
+fi
+
+# Compute fresh value
+result=$(agent-usage-tui --cost 2>/dev/null) || result='$-.--'
+
+mkdir -p "$(dirname "$CACHE")"
+printf '%s' "$result" > "$CACHE"
+printf '%s\n' "$result"

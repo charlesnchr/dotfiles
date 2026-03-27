@@ -378,6 +378,17 @@ func (m model) viewDaily() string {
 // --- Main ---
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "--cost" {
+		pricing := NewPricingResolver()
+		data := CollectAll(pricing)
+		var total float64
+		for _, ad := range data {
+			total += ad.Total.Cost
+		}
+		fmt.Printf("$%.2f\n", total)
+		return
+	}
+
 	pricing := NewPricingResolver()
 
 	p := tea.NewProgram(
