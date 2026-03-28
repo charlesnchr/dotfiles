@@ -45,6 +45,7 @@
 term = xterm-256color
 mouse-hide-while-typing = true
 # macos-titlebar-style = hidden
+# macos-titlebar-style = native
 window-save-state = never
 font-size = 13
 
@@ -89,15 +90,26 @@ keybind = cmd+shift+o=resize_split:down,20
 keybind = cmd+shift+p=resize_split:right,20
 
 # Tmux window shortcuts - using digit_ syntax to override defaults
-keybind = cmd+digit_1=text:\x01\x31
-keybind = cmd+digit_2=text:\x01\x32
-keybind = cmd+digit_3=text:\x01\x33
-keybind = cmd+digit_4=text:\x01\x34
-keybind = cmd+digit_5=text:\x01\x35
-keybind = cmd+digit_6=text:\x01\x36
-keybind = cmd+digit_7=text:\x01\x37
-keybind = cmd+digit_8=text:\x01\x38
-keybind = cmd+digit_9=text:\x01\x39
+keybind = ctrl+digit_1=text:\x01\x31
+keybind = ctrl+digit_2=text:\x01\x32
+keybind = ctrl+digit_3=text:\x01\x33
+keybind = ctrl+digit_4=text:\x01\x34
+keybind = ctrl+digit_5=text:\x01\x35
+keybind = ctrl+digit_6=text:\x01\x36
+keybind = ctrl+digit_7=text:\x01\x37
+keybind = ctrl+digit_8=text:\x01\x38
+keybind = ctrl+digit_9=text:\x01\x39
+
+# Ghostty tab navigation
+keybind = cmd+digit_1=goto_tab:1
+keybind = cmd+digit_2=goto_tab:2
+keybind = cmd+digit_3=goto_tab:3
+keybind = cmd+digit_4=goto_tab:4
+keybind = cmd+digit_5=goto_tab:5
+keybind = cmd+digit_6=goto_tab:6
+keybind = cmd+digit_7=goto_tab:7
+keybind = cmd+digit_8=goto_tab:8
+keybind = cmd+digit_9=goto_tab:9
 
 # Tmux window navigation
 keybind = cmd+left_bracket=text:\x01\x70

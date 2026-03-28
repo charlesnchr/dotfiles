@@ -134,15 +134,14 @@ return {
     ft = { "markdown" },
   },
 
-  -- Pandoc support
   {
-    "vim-pandoc/vim-pandoc",
-    ft = { "markdown", "pandoc" },
-  },
-
-  {
-    "vim-pandoc/vim-pandoc-syntax",
-    ft = { "markdown", "pandoc" },
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "vimwiki" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {},
   },
 
   -- Tabular for alignment

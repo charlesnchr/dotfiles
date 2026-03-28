@@ -50,9 +50,10 @@ return {
     },
   },
 
-  -- Auto dark mode for macOS
+  -- Auto dark mode for macOS (temporarily disabled)
   {
     "charlesnchr/auto-dark-mode.nvim",
+    enabled = false,
     priority = 1000,
     cond = vim.fn.has("mac") == 1,
     config = function()

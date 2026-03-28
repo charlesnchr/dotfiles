@@ -14,14 +14,17 @@ _update_tmux_git() {
 add-zsh-hook precmd _update_tmux_git
 
 ssh() {
+    local host="${@: -1}"
+    host="${host##*@}"
+
     if [ -n "$TMUX_PANE" ]; then
-        local host="${@: -1}"
-        host="${host##*@}"
         tmux set-option -wq -t "$TMUX_PANE" @ssh_host "$host"
         command ssh "$@"
         tmux set-option -wqu -t "$TMUX_PANE" @ssh_host 2>/dev/null
     else
+        printf '\e]0;ssh → %s\a' "$host"
         command ssh "$@"
+        # termtitle precmd restores the directory title on return
     fi
 }
 
