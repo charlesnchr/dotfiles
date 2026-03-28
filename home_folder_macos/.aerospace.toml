@@ -151,7 +151,7 @@ cmd-alt-ctrl-4 = 'exec-and-forget toggle-app Spotify'
 cmd-alt-ctrl-5 = 'exec-and-forget toggle-app Slack'
 cmd-alt-ctrl-shift-5 = 'exec-and-forget toggle-app "Microsoft Teams"'
 cmd-alt-ctrl-9 = 'exec-and-forget toggle-app Notion'
-cmd-alt-ctrl-w = 'exec-and-forget toggle-app "WhatsApp Web"'
+cmd-alt-ctrl-w = 'workspace-back-and-forth'
 cmd-alt-ctrl-b = 'exec-and-forget toggle-app Firefox'
 
 alt-enter = 'exec-and-forget open -na "Ghostty.app"'
@@ -176,7 +176,6 @@ alt-ctrl-l = 'focus-monitor right'
 alt-ctrl-shift-h = 'move-node-to-monitor --wrap-around left'
 alt-ctrl-shift-l = 'move-node-to-monitor --wrap-around right'
 
-# alt-w = 'workspace-back-and-forth'
 # alt-n = 'workspace --wrap-around next'
 # alt-p = 'workspace --wrap-around prev'
 
@@ -200,15 +199,14 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-alt-tab = 'workspace-back-and-forth'
-
 # Layout / tiling (DISABLED while in floating-only mode)
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 alt-b = 'balance-sizes'
 alt-r = 'mode resize'
 
-cmd-alt-ctrl-0 = 'mode launch'
+cmd-alt-ctrl-0 = 'exec-and-forget toggle-app "WhatsApp Web"'
+alt-shift-period = 'mode launch'
 alt-shift-semicolon = 'mode service'
 
 [mode.resize.binding]
