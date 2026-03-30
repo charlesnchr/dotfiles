@@ -89,31 +89,31 @@ keybind = cmd+u=resize_split:left,20
 keybind = cmd+shift+o=resize_split:down,20
 keybind = cmd+shift+p=resize_split:right,20
 
-# Tmux window shortcuts - using digit_ syntax to override defaults
-keybind = ctrl+digit_1=text:\x01\x31
-keybind = ctrl+digit_2=text:\x01\x32
-keybind = ctrl+digit_3=text:\x01\x33
-keybind = ctrl+digit_4=text:\x01\x34
-keybind = ctrl+digit_5=text:\x01\x35
-keybind = ctrl+digit_6=text:\x01\x36
-keybind = ctrl+digit_7=text:\x01\x37
-keybind = ctrl+digit_8=text:\x01\x38
-keybind = ctrl+digit_9=text:\x01\x39
+# Tmux window shortcuts (cmd+N)
+keybind = cmd+digit_1=text:\x01\x31
+keybind = cmd+digit_2=text:\x01\x32
+keybind = cmd+digit_3=text:\x01\x33
+keybind = cmd+digit_4=text:\x01\x34
+keybind = cmd+digit_5=text:\x01\x35
+keybind = cmd+digit_6=text:\x01\x36
+keybind = cmd+digit_7=text:\x01\x37
+keybind = cmd+digit_8=text:\x01\x38
+keybind = cmd+digit_9=text:\x01\x39
 
-# Ghostty tab navigation
-keybind = cmd+digit_1=goto_tab:1
-keybind = cmd+digit_2=goto_tab:2
-keybind = cmd+digit_3=goto_tab:3
-keybind = cmd+digit_4=goto_tab:4
-keybind = cmd+digit_5=goto_tab:5
-keybind = cmd+digit_6=goto_tab:6
-keybind = cmd+digit_7=goto_tab:7
-keybind = cmd+digit_8=goto_tab:8
-keybind = cmd+digit_9=goto_tab:9
+# Ghostty tab navigation (ctrl+N)
+keybind = ctrl+digit_1=goto_tab:1
+keybind = ctrl+digit_2=goto_tab:2
+keybind = ctrl+digit_3=goto_tab:3
+keybind = ctrl+digit_4=goto_tab:4
+keybind = ctrl+digit_5=goto_tab:5
+keybind = ctrl+digit_6=goto_tab:6
+keybind = ctrl+digit_7=goto_tab:7
+keybind = ctrl+digit_8=goto_tab:8
+keybind = ctrl+digit_9=goto_tab:9
 
 # Tmux window navigation
-keybind = cmd+left_bracket=text:\x01\x70
-keybind = cmd+right_bracket=text:\x01\x6e
+keybind = cmd+[=text:\x01\x70
+keybind = cmd+]=text:\x01\x6e
 
 # Tmux sessionizer shortcut - send prefix+o
 keybind = cmd+o=text:\x01\x6f
@@ -171,8 +171,8 @@ keybind = cmd+r=text:\x01\x20
 keybind = cmd+shift+r=text:\x01\x3d
 
 # Tmux pane swapping (cmd+shift+[ / ] = swap pane backward/forward)
-keybind = cmd+shift+left_bracket=text:\x01\x7b
-keybind = cmd+shift+right_bracket=text:\x01\x7d
+keybind = cmd+shift+[=text:\x01\x7b
+keybind = cmd+shift+]=text:\x01\x7d
 
 # Explode panes into windows / implode back
 keybind = cmd+shift+e=text:\x01\x67
