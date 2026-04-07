@@ -143,7 +143,7 @@ run = 'layout floating'
 
 # App toggle (via Karabiner opt+letter → cmd-alt-ctrl-number proxy)
 # opt+a → 1, opt+s → 2, opt+d → 3, opt+f → 4, opt+g → 5, opt+y → 6
-# opt+u → 7, opt+i → 8, opt+o → 9, opt+e → 0, opt+w → w, opt+b → b
+# opt+u → 7, opt+i → 8, opt+o → 9, opt+e → 0, opt+w → WhatsApp Web, opt+b → b
 cmd-alt-ctrl-1 = 'exec-and-forget toggle-app Ghostty'
 cmd-alt-ctrl-2 = 'exec-and-forget toggle-app "Google Chrome"'
 cmd-alt-ctrl-3 = 'exec-and-forget toggle-app Mattermost'
@@ -151,7 +151,7 @@ cmd-alt-ctrl-4 = 'exec-and-forget toggle-app Spotify'
 cmd-alt-ctrl-5 = 'exec-and-forget toggle-app Slack'
 cmd-alt-ctrl-shift-5 = 'exec-and-forget toggle-app "Microsoft Teams"'
 cmd-alt-ctrl-9 = 'exec-and-forget toggle-app Notion'
-cmd-alt-ctrl-w = 'workspace-back-and-forth'
+cmd-alt-ctrl-w = 'exec-and-forget toggle-app "WhatsApp Web"'
 cmd-alt-ctrl-b = 'exec-and-forget toggle-app Firefox'
 
 alt-enter = 'exec-and-forget open -na "Ghostty.app"'
