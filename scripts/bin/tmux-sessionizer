@@ -10,39 +10,27 @@ fi
 # Name this window "sessionizer" for toggle functionality
 tmux rename-window "sessionizer" 2>/dev/null
 
-# Load all directories from cache - no find commands!
-all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
-
-# Get current session to exclude it
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
 
-# Get a list of running tmux sessions sorted by last activity
-tmux_sessions_raw=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
-tmux_sessions=()
+# Build active sessions set for filtering
 declare -A active_sessions
+tmux_sessions=()
 while IFS= read -r session; do
     if [[ -n $session ]]; then
         active_sessions["$session"]=1
-        [[ "$session" == "$current_session" ]] && continue
-        tmux_sessions+=("▶️ $session")
+        [[ "$session" != "$current_session" ]] && tmux_sessions+=("▶️ $session")
     fi
-done <<< "$tmux_sessions_raw"
+done < <(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
 
-# Load directories from cache, filtering out ones with active sessions
-selected_dirs=()
-if [[ -f $all_dirs_cache ]]; then
-    while IFS= read -r line; do
-        folder=${line%% *}
-        session_name=${folder//./_}
-        [[ -z ${active_sessions[$session_name]} ]] && selected_dirs+=("$line")
-    done < "$all_dirs_cache"
-fi
-
-# Use the filtered paths array and tmux sessions in fzf
+# fzf: enter = new tab, tab = new session, ctrl-r = refresh
 if [[ $# -eq 1 ]]; then
     selected=$1
+    key=""
 else
-    selected=$(printf "%s\n" "${tmux_sessions[@]}" "${selected_dirs[@]}" | fzf \
+    result=$( {
+        printf "%s\n" "${tmux_sessions[@]}"
+        zoxide query -l 2>/dev/null | awk -F/ '{print $NF "    " $0}'
+    } | fzf \
         --height=80% \
         --margin=5%,5% \
         --preview 'path=$(echo {} | awk "{print \$NF}"); tmux capture-pane -pt "$path" -S -500 2>/dev/null || /bin/ls -la "$path"' \
@@ -51,47 +39,47 @@ else
         --with-nth=1,2 \
         --ansi \
         --color='dark,bg+:#3a3a3a,fg+:#ffffff,hl:#5fd7ff,hl+:#5fd7ff' \
-        --header='[name]  [path/type]  (ctrl-r: refresh)' \
+        --header='enter: new tab | tab: new session | ctrl-r: refresh' \
+        --expect='tab' \
         --bind='ctrl-r:reload(~/bin/tmux-sessionizer-list)'
     )
+    key=$(head -1 <<< "$result")
+    selected=$(tail -n +2 <<< "$result")
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
+# Parse selection
 if [[ $selected == ▶️* ]]; then
     selected_name=$(echo "$selected" | awk '{print $2}')
     selected_path=$selected_name
 else
     selected_path=$(echo "$selected" | awk '{print $NF}')
-
-    if [[ ! -d $selected_path ]]; then
-        selected_path=$selected
-    fi
-
+    [[ ! -d $selected_path ]] && selected_path=$selected
     selected_name=$(basename "$selected_path" | tr . _)
 fi
 
-tmux_running=$(pgrep tmux)
-
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    if [[ -d $selected_path ]]; then
-        tmux new-session -s $selected_name -c $selected_path
-    else
-        tmux attach-session -t $selected_path
-    fi
+# Existing session: just switch to it
+if [[ $selected == ▶️* ]] || tmux has-session -t="$selected_name" 2>/dev/null; then
+    tmux switch-client -t "$selected_name"
     exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2>/dev/null; then
+# tab: create a new session
+if [[ $key == "tab" ]]; then
     if [[ -d $selected_path ]]; then
-        tmux new-session -ds $selected_name -c $selected_path
-        tmux switch-client -t $selected_name
+        tmux new-session -ds "$selected_name" -c "$selected_path"
     else
-        tmux new-session -ds $selected_name
-        tmux switch-client -t $selected_name
+        tmux new-session -ds "$selected_name"
     fi
+    tmux switch-client -t "$selected_name"
 else
-    tmux switch-client -t $selected_name
+    # enter: new window (tab) in current session
+    if [[ -d $selected_path ]]; then
+        tmux new-window -n "$selected_name" -c "$selected_path"
+    else
+        tmux new-window -n "$selected_name"
+    fi
 fi

@@ -1,27 +1,13 @@
 #!/opt/homebrew/bin/bash
 
-# This script outputs the full sessionizer list (for fzf reload)
-
-~/bin/update-sessionizer-cache >/dev/null 2>&1
-
-all_dirs_cache="$HOME/.cache/tmux-sessionizer-all-dirs"
+# Outputs the full sessionizer list (for fzf ctrl-r reload)
 
 current_session=$(tmux display-message -p '#{session_name}' 2>/dev/null)
 
-tmux_sessions_raw=$(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
-declare -A active_sessions
 while IFS= read -r session; do
-    if [[ -n $session ]]; then
-        active_sessions["$session"]=1
-        [[ "$session" == "$current_session" ]] && continue
+    if [[ -n $session && "$session" != "$current_session" ]]; then
         echo "▶️ $session"
     fi
-done <<< "$tmux_sessions_raw"
+done < <(tmux list-sessions -F "#{session_last_attached} #{session_name}" 2>/dev/null | sort -rn | awk '{print $2}')
 
-if [[ -f $all_dirs_cache ]]; then
-    while IFS= read -r line; do
-        folder=${line%% *}
-        session_name=${folder//./_}
-        [[ -z ${active_sessions[$session_name]} ]] && echo "$line"
-    done < "$all_dirs_cache"
-fi
+zoxide query -l 2>/dev/null | awk -F/ '{print $NF "    " $0}'
