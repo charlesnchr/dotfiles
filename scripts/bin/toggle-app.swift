@@ -12,17 +12,29 @@ let running = workspace.runningApplications.first {
     return clean == appName
 }
 
-if let app = running {
-    if app.isActive {
-        app.hide()
-    } else {
-        app.activate()
-    }
-} else {
+func openApp() {
     if !workspace.open(URL(fileURLWithPath: "/Applications/\(appName).app")) {
         let task = Process()
         task.launchPath = "/usr/bin/open"
         task.arguments = ["-a", appName]
         task.launch()
     }
+}
+
+if let app = running {
+    if app.isActive {
+        app.hide()
+    } else {
+        // Check if the app has any on-screen windows; if not, re-open it
+        // so it creates a new window instead of just activating an empty dock icon.
+        let appWindows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
+        let hasWindows = appWindows.contains { ($0[kCGWindowOwnerPID as String] as? Int32) == app.processIdentifier }
+        if hasWindows {
+            app.activate()
+        } else {
+            openApp()
+        }
+    }
+} else {
+    openApp()
 }

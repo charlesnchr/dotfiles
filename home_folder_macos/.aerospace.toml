@@ -153,6 +153,7 @@ cmd-alt-ctrl-shift-5 = 'exec-and-forget toggle-app "Microsoft Teams"'
 cmd-alt-ctrl-9 = 'exec-and-forget toggle-app Notion'
 cmd-alt-ctrl-w = 'exec-and-forget toggle-app "WhatsApp Web"'
 cmd-alt-ctrl-b = 'exec-and-forget toggle-app Firefox'
+cmd-alt-ctrl-c = 'exec-and-forget toggle-app Claude'
 
 alt-enter = 'exec-and-forget open -na "Ghostty.app"'
 alt-shift-enter = 'exec-and-forget open -na "Google Chrome.app"'

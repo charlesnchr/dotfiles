@@ -880,6 +880,11 @@
           "from": { "key_code": "b", "modifiers": { "mandatory": ["option"], "optional": ["shift"] } },
           "to": [{ "key_code": "b", "modifiers": ["left_option", "left_command", "left_control"] }],
           "type": "basic"
+        },
+        {
+          "from": { "key_code": "spacebar", "modifiers": { "mandatory": ["command"] } },
+          "to": [{ "key_code": "c", "modifiers": ["left_option", "left_command", "left_control"] }],
+          "type": "basic"
         }
       ]
     },
