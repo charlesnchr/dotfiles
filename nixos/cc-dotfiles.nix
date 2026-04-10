@@ -106,6 +106,7 @@
     dnsutils   # dig
     bun
     rclone
+    ffmpeg
 
     # Fallbacks (useful even if you keep fnm/pyenv)
     python312
