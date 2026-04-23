@@ -7,6 +7,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
       require("nvim-treesitter").setup({
@@ -21,6 +22,11 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter-context",
+    lazy = true,
+  },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = true,
   },
 
@@ -300,7 +306,6 @@ return {
   -- Minuet AI - Code completion from multiple LLM providers (disabled for now)
 {
   "milanglacier/minuet-ai.nvim",
-  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
