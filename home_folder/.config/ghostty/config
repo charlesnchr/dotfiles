@@ -55,7 +55,7 @@ keybind = ctrl+m=text:\r
 keybind = cmd+b=esc:b
 keybind = cmd+f=esc:f
 keybind = cmd+d=esc:d
-keybind = cmd+a=esc:a
+# keybind = cmd+a=esc:a
 keybind = cmd+e=esc:e
 keybind = global:opt+t=toggle_quick_terminal
 
@@ -114,6 +114,8 @@ keybind = ctrl+digit_9=goto_tab:9
 # Tmux window navigation
 keybind = cmd+[=text:\x01\x70
 keybind = cmd+]=text:\x01\x6e
+keybind = cmd+a=text:\x01\x70
+keybind = cmd+s=text:\x01\x6e
 
 # Tmux sessionizer shortcut - send prefix+o
 keybind = cmd+o=text:\x01\x6f
