@@ -50,16 +50,6 @@ cmp.setup({
 	}),
 })
 
-
--- doesn't seem to work
--- local python_lsp_home = vim.env.PYTHON_LSP_HOME
--- require('lspconfig').pyright.setup({
---     venvPath="/home/cc/anaconda3/envs/torch/bin",
---     on_attach = function(client, bufnr)
---         print('hello eslint')
---       end
--- })
-
 -- Define a global variable to keep track of the LSP document highlight state
 lsp_document_highlight_enabled = false
 -- Define a function to toggle the LSP document highlight
@@ -186,30 +176,28 @@ local function config(_config)
 end
 
 
-local python_lsp_home = vim.env.PYTHON_LSP_HOME
-if python_lsp_home == nil then
-	-- Use a default value or abort with a meaningful error message
-	-- Here we will use an empty string as a default, but adjust as needed.
-	python_lsp_home = ""
-end
+local pylsp_cmd = vim.fn.executable(vim.fn.stdpath("data") .. "/pylsp-venv/bin/pylsp") == 1
+	and { vim.fn.stdpath("data") .. "/pylsp-venv/bin/pylsp" }
+	or { "pylsp" }
 
 vim.lsp.config('pylsp', config({
-	cmd_env = {
-		PATH = python_lsp_home .. ":" .. vim.env.PATH,
-	},
+	cmd = pylsp_cmd,
 	filetypes = { "python" },
 	settings = {
 		pylsp = {
 			plugins = {
-				pylint = { enabled = true },
-				pyflakes = { enabled = true },
-				flake8 = { enabled = true },
+				autopep8 = { enabled = false },
+				yapf = { enabled = false },
+				pylint = { enabled = false },
+				pyflakes = { enabled = false },
+				flake8 = { enabled = false },
+				mccabe = { enabled = false },
 				pycodestyle = { enabled = false },
 				jedi_completion = { fuzzy = true },
-				pyls_isort = { enabled = true },
+				isort = { enabled = true },
 				pylsp_mypy = { enabled = true },
-                pylsp_black = { enabled = true },
-                pylsp_ruff = { enabled = true },
+				black = { enabled = true },
+				ruff = { enabled = true, formatEnabled = false },
 			},
 		},
 	},

@@ -29,6 +29,10 @@ return {
     "python-mode/python-mode",
     ft = "python",
     config = function()
+      local pymode_ruff = vim.fn.stdpath("data") .. "/pylsp-venv/bin/ruff"
+      if vim.fn.executable(pymode_ruff) == 1 then
+        vim.g.pymode_ruff_executable = pymode_ruff
+      end
       vim.g.pymode_lint_on_write = 0
     end,
   },

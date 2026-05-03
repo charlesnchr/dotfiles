@@ -148,7 +148,22 @@ phase_python() {
     fi
     pyenv global 3.12
     eval "$(pyenv init -)"
-    pip install -U pynvim
+
+    local nvim_host_dir="$HOME/.local/share/nvim/python3-host"
+    mkdir -p "$(dirname "$nvim_host_dir")"
+    python -m venv "$nvim_host_dir"
+    "$nvim_host_dir/bin/python" -m pip install -U pip pynvim
+
+    local pylsp_dir="$HOME/.local/share/nvim/pylsp-venv"
+    python -m venv "$pylsp_dir"
+    "$pylsp_dir/bin/python" -m pip install -U \
+        pip \
+        "python-lsp-server[all]" \
+        python-lsp-black \
+        python-lsp-isort \
+        python-lsp-ruff \
+        pylsp-mypy \
+        ruff
 }
 
 # ==============================================================================
