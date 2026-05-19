@@ -178,7 +178,5 @@ keybind = cmd+shift+]=text:\x01\x7d
 
 # Explode panes into windows / implode back
 keybind = cmd+shift+e=text:\x01\x67
-# Focus mode: auto-enlarge active pane
-keybind = cmd+shift+f=text:\x01\x66
 
 # Toggle bookmark: use prefix+B then 1-5 (no Ghostty binding needed)
