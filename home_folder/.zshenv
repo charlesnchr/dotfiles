@@ -58,6 +58,7 @@ if [[ -f "$HOME/.openclaw/.env" ]]; then
 fi
 
 export OPENCLAW_GIT_DIR=~/openclaw
-if [[ "$(hostname)" = "nixos" ]]; then
-    export PATH="$HOME/.nix-profile/bin:$PATH"
+# NixOS can start non-interactive shells with a sparse PATH; use the system binary explicitly.
+if [[ "$(/run/current-system/sw/bin/hostname 2>/dev/null || printf '')" = "nixos" ]]; then
+    export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
 fi
