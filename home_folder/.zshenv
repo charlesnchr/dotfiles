@@ -60,5 +60,5 @@ fi
 export OPENCLAW_GIT_DIR=~/openclaw
 # NixOS can start non-interactive shells with a sparse PATH; use the system binary explicitly.
 if [[ "$(/run/current-system/sw/bin/hostname 2>/dev/null || printf '')" = "nixos" ]]; then
-    export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
+    export PATH="/run/wrappers/bin:/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
 fi
