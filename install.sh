@@ -134,7 +134,13 @@ phase_claude() {
 # ==============================================================================
 
 phase_coding_agent_tools() {
-    uv tool install --force coding-agent-tools
+    local local_dir="$HOME/dotfiles/coding-agent-tools"
+    if [ -d "$local_dir" ]; then
+        info "Installing coding-agent-tools from local directory: $local_dir"
+        uv tool install --force "$local_dir"
+    else
+        uv tool install --force coding-agent-tools
+    fi
 }
 
 # ==============================================================================
@@ -185,7 +191,7 @@ phase_symlinks() {
 
     # Restore dotfiles repo versions after --adopt pulled in local changes
     cd "$dotfiles_dir"
-    git checkout .
+    git checkout home_folder nvim scripts home_folder_macos &> /dev/null || true
 }
 
 # ==============================================================================
