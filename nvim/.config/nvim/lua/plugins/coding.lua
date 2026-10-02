@@ -1,20 +1,41 @@
 -- Coding and language-specific plugins
 return {
-  -- Treesitter for syntax highlighting
+  -- Treesitter for syntax highlighting.
+  -- nvim 0.12+ uses the rewritten `main` branch: parsers are compiled with
+  -- tree-sitter-cli and highlighting is started per buffer. Older nvim stays
+  -- on `master` with the configs module.
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = vim.fn.has("nvim-0.12") == 1 and "main" or "master",
+    lazy = false,
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
     },
     config = function()
-      require("nvim-treesitter").setup({
-        ensure_installed = { "c", "lua", "rust", "python", "javascript", "typescript", "vim", "vimdoc", "query" },
-        sync_install = false,
-        auto_install = true,
-        ignore_install = {},
-        highlight = { enable = true },
+      local parsers = {
+        "bash", "c", "javascript", "json", "lua", "markdown", "markdown_inline",
+        "python", "query", "rust", "toml", "typescript", "vim", "vimdoc", "yaml",
+      }
+      local ok, configs = pcall(require, "nvim-treesitter.configs")
+      if ok then
+        configs.setup({
+          ensure_installed = parsers,
+          auto_install = true,
+          highlight = { enable = true },
+        })
+        return
+      end
+      local ts = require("nvim-treesitter")
+      ts.setup({})
+      if vim.fn.executable("tree-sitter") == 1 then
+        ts.install(parsers)
+      end
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterStart", { clear = true }),
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
       })
     end,
   },
