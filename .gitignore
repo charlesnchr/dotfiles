@@ -10,7 +10,7 @@
 *.pyc
 *.zwc
 .antigenrc.zwc
-.zshrc_local
+.zshrc_local*
 /.envrc
 dotfiles_private
 is_dark_mode
