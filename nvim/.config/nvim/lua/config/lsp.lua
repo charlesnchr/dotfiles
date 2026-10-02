@@ -109,28 +109,8 @@ vim.diagnostic.config({
 	float = { border = "rounded", scope = "line", source = "always" },
 })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-	underline = false,
-	border = "rounded",
-	float = { border = "rounded", scope = "line", source = "always" },
-})
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-	underline = false,
-	border = "rounded",
-})
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	underline = false,
-	signs = true,
-	update_in_insert = false,
-    signs = {
-      severity = { min = vim.diagnostic.severity.HINT },
-    },
-    virtual_text = {
-      severity = { min = vim.diagnostic.severity.ERROR },
-    },
-})
+-- Rounded borders for hover and signature help (vim.lsp.with is deprecated in 0.11+).
+-- Diagnostic display is configured by vim.diagnostic.config above.
 
 local function config(_config)
 	return vim.tbl_deep_extend("force", {
@@ -139,7 +119,7 @@ local function config(_config)
 		on_attach = function(client, bufnr)
 			local opts = { noremap = true, silent = true }
 			vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-			vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+			vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover({ border = 'rounded' })<CR>", opts)
 			vim.keymap.set("n", "<leader>vws", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 			vim.keymap.set("n", "<space>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 			vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
@@ -151,8 +131,8 @@ local function config(_config)
 			vim.keymap.set("n", "<Leader>la", '<cmd>lua require("user").diagnostic.publish_loclist(true)<CR>', opts)
 			vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 			vim.keymap.set("n", "<space>ld", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-			vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-			vim.keymap.set("n", "<space>lh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+			vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover({ border = 'rounded' })<CR>", opts)
+			vim.keymap.set("n", "<space>lh", "<cmd>lua vim.lsp.buf.signature_help({ border = 'rounded' })<CR>", opts)
 			vim.keymap.set("n", "<space>li", ":lua toggle_lsp_document_highlight()<CR>", opts)
 			vim.keymap.set("n", "<space>lw", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
 			vim.keymap.set("n", "<space>lq", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)

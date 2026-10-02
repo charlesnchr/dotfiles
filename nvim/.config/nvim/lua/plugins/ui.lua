@@ -311,13 +311,6 @@ return {
     end,
   },
 
-  -- Wilder for better command line
-  {
-    "gelguy/wilder.nvim",
-    build = ":UpdateRemotePlugins",
-    event = "CmdlineEnter",
-  },
-
   -- Which-key for keybinding help
   {
     "folke/which-key.nvim",
