@@ -93,31 +93,28 @@ return {
   -- Cool search highlighting
   "romainl/vim-cool",
 
-  -- OSC yank for remote sessions
+  -- Send every yank to the terminal's clipboard, including over SSH.
   {
     "ojroques/vim-oscyank",
+    lazy = false,
     keys = {
-      { "<leader>y", "<cmd>OSCYank<CR>", mode = "v", desc = "OSC Yank" },
+      { "<leader>y", "y", mode = "v", remap = false, desc = "OSC Yank" },
     },
     config = function()
-      -- Auto yank when copying to system clipboard
-      if vim.fn.has("mac") == 1 then
-        vim.api.nvim_create_autocmd("TextYankPost", {
-          callback = function()
-            if vim.v.event.operator == "y" and vim.v.event.regname == "+" then
-              vim.cmd("OSCYankRegister +")
-            end
-          end,
-        })
-      elseif vim.fn.has("unix") == 1 then
-        vim.api.nvim_create_autocmd("TextYankPost", {
-          callback = function()
-            if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-              vim.cmd('OSCYankRegister "')
-            end
-          end,
-        })
-      end
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        group = vim.api.nvim_create_augroup("OSCYankOnYank", { clear = true }),
+        callback = function()
+          local event = vim.v.event
+          if event.operator ~= "y" or event.regname == "_" then
+            return
+          end
+          local text = table.concat(event.regcontents, "\n")
+          if event.regtype == "V" then
+            text = text .. "\n"
+          end
+          vim.fn.OSCYank(text)
+        end,
+      })
     end,
   },
 

@@ -230,11 +230,13 @@ function! Marks()
     execute "normal! '" . s:mark
 endfunction
 
-" OSC yank for remote sessions
-if has('mac')
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
-elseif has('unix')
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
+" Neovim configures OSC yank in lua/plugins/editor.lua.
+if !has('nvim')
+    if has('mac')
+        autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+    elseif has('unix')
+        autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif
+    endif
 endif
 
 " Highlight word under cursor
