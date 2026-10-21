@@ -17,3 +17,4 @@ is_dark_mode
 package/
 tags
 home_folder/.zshrc.bak-*
+**/bento/sync-token

@@ -1,0 +1,198 @@
+{
+  "clipboard": {
+    "captureFiles": true,
+    "captureImages": true,
+    "captureRichText": true,
+    "captureText": true,
+    "ignoredApps": [
+      "com.1password.1password",
+      "com.agilebits.onepassword7",
+      "com.agilebits.onepassword-osx",
+      "com.bitwarden.desktop",
+      "com.apple.keychainaccess",
+      "com.apple.Passwords",
+      "com.lastpass.LastPass",
+      "com.dashlane.dashlanephonefinal",
+      "org.keepassxc.keepassxc",
+      "com.kpassx.KeePassXC",
+      "me.proton.pass.electron",
+      "com.enpass.Enpass"
+    ],
+    "maxImageMB": 50,
+    "maxItems": 2000,
+    "maxStorageMB": 1024,
+    "pastePlainTextByDefault": false,
+    "recognizeTextInImages": true,
+    "retentionDays": 30,
+    "returnAction": "paste"
+  },
+  "editor": {
+    "closeAfterSave": false,
+    "defaultColor": "#FFDC2C",
+    "defaultTool": "select",
+    "escAction": "copy",
+    "historyRetentionDays": 30
+  },
+  "general": {
+    "enabledModules": {
+      "tiling": true,
+      "windows": true
+    },
+    "showMenuBarIcon": true
+  },
+  "launcher": {
+    "entries": [
+      {
+        "behavior": "toggle",
+        "key": "10154097",
+        "kind": "app",
+        "name": "Google Chrome",
+        "shortcut": "ctrl+opt+cmd+2",
+        "target": "com.google.Chrome"
+      },
+      {
+        "behavior": "toggle",
+        "key": "e2e00d5c",
+        "kind": "app",
+        "name": "Ghostty",
+        "shortcut": "ctrl+opt+cmd+1",
+        "target": "com.mitchellh.ghostty"
+      },
+      {
+        "behavior": "toggle",
+        "key": "9835d00f",
+        "kind": "app",
+        "name": "Slack",
+        "shortcut": "ctrl+opt+cmd+5",
+        "target": "com.tinyspeck.slackmacgap"
+      },
+      {
+        "behavior": "toggle",
+        "key": "9cd2dbaf",
+        "kind": "app",
+        "name": "T3 Code (Beta)",
+        "shortcut": "opt+2",
+        "target": "com.t3tools.t3code"
+      },
+      {
+        "behavior": "toggle",
+        "key": "57228961",
+        "kind": "app",
+        "name": "Hermes",
+        "shortcut": "ctrl+opt+cmd+0",
+        "target": "com.nousresearch.hermes"
+      }
+    ]
+  },
+  "notes": {
+    "accentColor": "raycast",
+    "autoResize": false,
+    "confirmDelete": true,
+    "escapeKey": "close",
+    "floatOnTop": true,
+    "fontFamily": "system",
+    "hideWhileScreenSharing": false,
+    "showFormatBar": false,
+    "showMenuBarButton": false,
+    "statusText": "words",
+    "sync": {
+      "enabled": true,
+      "server": "https://bento.radian.dk",
+      "tokenFile": "~/.config/bento/sync-token"
+    },
+    "textSize": "medium"
+  },
+  "shortcuts": {},
+  "shot": {
+    "adjustSelectionBeforeCapture": false,
+    "afterCapture": "editor",
+    "colorFormat": "hex",
+    "delaySeconds": 3,
+    "delayedTarget": "area",
+    "downscaleRetina": false,
+    "filenamePattern": "Screenshot {yyyy-MM-dd} at {HH.mm.ss}",
+    "format": "png",
+    "fullscreenAllDisplays": false,
+    "includeCursor": false,
+    "jpegQuality": 0.9,
+    "ocrKeepLineBreaks": true,
+    "ocrLanguage": "",
+    "playSound": true,
+    "saveFolder": "~/Desktop",
+    "scrollMaxHeight": 20000,
+    "scrollMode": "auto",
+    "scrollReverse": false,
+    "scrollSpeed": "normal",
+    "showMagnifier": true,
+    "windowBackground": "transparent",
+    "windowBackgroundColor": "#FFFFFF",
+    "windowPadding": 0,
+    "windowShadow": true
+  },
+  "tiling": {
+    "defaultLayout": "tiles",
+    "floatingApps": [
+      "com.apple.systempreferences",
+      "com.apple.calculator",
+      "com.charles.bento",
+      "com.apple.SecurityAgent",
+      "com.apple.CoreServicesUIAgent",
+      "com.apple.archiveutility",
+      "com.apple.print.PrinterProxy",
+      "com.apple.ScreenContinuity",
+      "com.apple.PhotoBooth"
+    ],
+    "innerGap": 8,
+    "managerOn": false,
+    "masterRatio": 0.55,
+    "mouseSupport": true,
+    "newWindowPlacement": "afterFocused",
+    "onlyApps": [],
+    "outerGap": 8,
+    "resizeStep": 0.05
+  },
+  "windows": {
+    "almostMaximizeHeight": 0.9,
+    "almostMaximizeWidth": 0.9,
+    "cycleOnRepeat": true,
+    "cycleSizes": [
+      "1/2",
+      "2/3",
+      "1/3"
+    ],
+    "dragFocusesWindow": true,
+    "dragHover": true,
+    "dragMove": true,
+    "dragMoveModifiers": [
+      "opt",
+      "cmd"
+    ],
+    "dragResize": true,
+    "dragResizeModifiers": [
+      "opt",
+      "shift",
+      "cmd"
+    ],
+    "dragResizeStyle": "classic",
+    "dragSnaps": true,
+    "gapsOnMaximize": true,
+    "importedFromRectangle": true,
+    "launchRules": [],
+    "layouts": [],
+    "moveToAdjacentDisplayOnRepeat": false,
+    "restoreSizeOnUnsnap": true,
+    "screenMargin": 0,
+    "showHUD": false,
+    "sizeStep": 30,
+    "snapBottomThirds": true,
+    "snapCorners": true,
+    "snapSideCornerHalves": true,
+    "snapSides": true,
+    "snapSixths": false,
+    "snapTopMaximizes": true,
+    "snapping": true,
+    "stashRevealOnHover": true,
+    "stashSliver": 12,
+    "windowGap": 0
+  }
+}
