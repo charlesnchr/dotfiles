@@ -46,6 +46,9 @@ fi
 # Ensure rustup shims win even after `brew shellenv` prepends Homebrew's bin dirs.
 path=( /opt/homebrew/opt/rustup/bin(N) $path )
 
+# Keep ~/.local/bin ahead of Homebrew so personal wrappers (e.g. ts) win.
+path=( $HOME/.local/bin(N) $path )
+
 # Optional: rustup adds this; avoid hard-failing on machines without it.
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 

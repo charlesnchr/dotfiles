@@ -225,7 +225,8 @@ function hcv() {
   env "${env_vars[@]}" happy "${happy_args[@]}"
 }
 
-function ts() {
+# Renamed from ts: the name is now the Tailscale wrapper in ~/.local/bin/ts.
+function tmux-session() {
     local selected
 
     if [[ $# -eq 0 ]]; then
