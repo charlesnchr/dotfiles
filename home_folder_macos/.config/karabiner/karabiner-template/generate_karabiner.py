@@ -77,12 +77,14 @@ PROFILES = [
         "name": "Default profile",
         "selected": True,
         "rules": [
+            "Corne macro pad: Jot dictation and Hermes",
             "Vi Mode [S as Trigger Key]",
             "Option shortcut layer (frees opt+key from special chars for use as shortcuts)",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Hyper + P: Open Whispr (Alt+F17)",
             "Hyper + R: Alt+F18",
+            "Hyper + Space: Toggle Jot Assistant (Shift+Alt+F18)",
             "Fixing ae oe aa",
             "Option keys for home row",
             "Option keys for symbols",
@@ -98,6 +100,7 @@ PROFILES = [
     {
         "name": "Gaming",
         "rules": [
+            "Corne macro pad: Jot dictation and Hermes",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Fixing ae oe aa",
@@ -111,6 +114,7 @@ PROFILES = [
     {
         "name": "Simple",
         "rules": [
+            "Corne macro pad: Jot dictation and Hermes",
             "CapsLock to Hyper/Escape",
             "Hyper Navigation",
             "Fixing ae oe aa",

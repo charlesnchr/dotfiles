@@ -2,6 +2,91 @@
   "title": "Charles general",
   "rules": [
     {
+      "description": "Corne macro pad: Jot dictation and Hermes",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f17"
+          },
+          "to": [
+            {
+              "key_code": "f17",
+              "modifiers": [
+                "left_option"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "vendor_id": 18003,
+                  "product_id": 1,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f18"
+          },
+          "to": [
+            {
+              "key_code": "f18",
+              "modifiers": [
+                "left_option"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "vendor_id": 18003,
+                  "product_id": 1,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "f19"
+          },
+          "to": [
+            {
+              "key_code": "f18",
+              "modifiers": [
+                "left_shift",
+                "left_option"
+              ],
+              "repeat": false
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "vendor_id": 18003,
+                  "product_id": 1,
+                  "is_keyboard": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "Vi Mode [S as Trigger Key]",
       "manipulators": [
         {
@@ -1722,6 +1807,34 @@
       ]
     },
     {
+      "description": "Hyper + Space: Toggle Jot Assistant (Shift+Alt+F18)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "spacebar",
+            "modifiers": {
+              "mandatory": [
+                "right_option",
+                "right_control",
+                "right_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "f18",
+              "modifiers": [
+                "left_shift",
+                "left_option"
+              ],
+              "repeat": false
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
       "description": "Hyper + R: Alt+F18",
       "manipulators": [
         {
@@ -3021,7 +3134,10 @@
           },
           "to": [
             {
-              "apple_vendor_keyboard_key_code": "mission_control"
+              "key_code": "f17",
+              "modifiers": [
+                "left_option"
+              ]
             }
           ],
           "type": "basic"
@@ -3032,18 +3148,30 @@
           },
           "to": [
             {
-              "apple_vendor_keyboard_key_code": "spotlight"
+              "key_code": "f18",
+              "modifiers": [
+                "left_shift",
+                "left_option"
+              ]
             }
           ],
           "type": "basic"
         },
         {
           "from": {
-            "key_code": "f5"
+            "key_code": "f5",
+            "modifiers": {
+              "optional": [
+                "shift"
+              ]
+            }
           },
           "to": [
             {
-              "consumer_key_code": "dictation"
+              "key_code": "f18",
+              "modifiers": [
+                "left_option"
+              ]
             }
           ],
           "type": "basic"
