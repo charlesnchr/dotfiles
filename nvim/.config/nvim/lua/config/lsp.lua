@@ -86,6 +86,7 @@ end
 -- global config for diagnostic
 vim.diagnostic.config({
 	underline = false,
+	update_in_insert = false,
 	virtual_text = {
 		severity = { min = vim.diagnostic.severity.ERROR },
 		source = "if_many",
@@ -103,7 +104,8 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.WARN] = "!",
 			[vim.diagnostic.severity.INFO] = "",
 			[vim.diagnostic.severity.HINT] = "~",
-		}
+		},
+		severity = { min = vim.diagnostic.severity.HINT },
 	},
 	severity_sort = true,
 	float = { border = "rounded", scope = "line", source = "always" },
