@@ -103,7 +103,7 @@
   "notes": {
     "accentColor": "raycast",
     "autoResize": false,
-    "confirmDelete": true,
+    "confirmDelete": false,
     "escapeKey": "close",
     "floatOnTop": true,
     "fontFamily": "system",
