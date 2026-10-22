@@ -81,6 +81,22 @@
         "name": "Hermes",
         "shortcut": "ctrl+opt+cmd+0",
         "target": "com.nousresearch.hermes"
+      },
+      {
+        "behavior": "toggle",
+        "key": "a0e9b7dd",
+        "kind": "app",
+        "name": "AIMLCompanion",
+        "shortcut": "opt+r",
+        "target": "local.aiml.companion"
+      },
+      {
+        "behavior": "toggle",
+        "key": "035bfa30",
+        "kind": "app",
+        "name": "Firefox",
+        "shortcut": "ctrl+opt+cmd+b",
+        "target": "org.mozilla.firefox"
       }
     ]
   },
@@ -102,7 +118,10 @@
     },
     "textSize": "medium"
   },
-  "shortcuts": {},
+  "shortcuts": {
+    "notes.toggle": "opt+equal",
+    "tiling.balance": ""
+  },
   "shot": {
     "adjustSelectionBeforeCapture": false,
     "afterCapture": "editor",
@@ -150,6 +169,17 @@
     "onlyApps": [],
     "outerGap": 8,
     "resizeStep": 0.05
+  },
+  "todo": {
+    "escapeKey": "close",
+    "floatOnTop": false,
+    "homeView": "today",
+    "quickAddReturn": "close",
+    "sync": {
+      "enabled": true,
+      "server": "https://bento.radian.dk",
+      "tokenFile": "~/.config/bento/sync-token"
+    }
   },
   "windows": {
     "almostMaximizeHeight": 0.9,
