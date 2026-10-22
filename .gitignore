@@ -18,3 +18,5 @@ package/
 tags
 home_folder/.zshrc.bak-*
 **/bento/sync-token
+home_folder_macos/.config/jot-vertex/*
+!home_folder_macos/.config/jot-vertex/config.json

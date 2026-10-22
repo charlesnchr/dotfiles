@@ -1,0 +1,509 @@
+{
+  "audioRetentionDays" : 0,
+  "cleanupModelOverride" : "gemini-3.8-flash",
+  "customInstructions" : "If I start a sentence with something that sounds like lowercase, it is actually an instruction, and I would like you to then transform the rest of the sentence with the logic below, these rules. If the sentence of the transcription does not start with this lowercase keyword, then you can ignore this instruction:\n\nWrite ordinary prose in lowercase, including sentence beginnings, the pronoun I, personal names, and ordinary acronyms. Preserve meaningful capitalization in code, case-sensitive identifiers, file names and paths, URLs, email addresses, command-line flags, and established mixed-case technical names such as NixOS, ChatGPT, and LiteLLM. Do not change the wording or meaning merely to apply this style.",
+  "customInstructionsEnabled" : false,
+  "dictionary" : [
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "A611B33D-D772-4248-B867-CADBFEFF2AA9",
+      "starred" : false,
+      "term" : "Bifrost"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "93BC2E66-AC48-42B0-8156-E2C9676984C0",
+      "starred" : false,
+      "term" : "Honcho"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "C9F5A033-8342-43BE-9978-36FB8FE919CB",
+      "starred" : false,
+      "term" : "Hermes"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "BE4E37ED-7C39-4442-A5CF-5B0E70A53F7C",
+      "starred" : false,
+      "term" : "Woodhouse"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "28ADE3B4-6D51-4C77-A672-5228A6912CE7",
+      "starred" : false,
+      "term" : "Hifin"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "F4C60155-B4F3-4DDD-8587-1435C5EC4AA2",
+      "starred" : false,
+      "term" : "Glaxo"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "220A0E84-668A-4FCB-9796-90F06F0501BB",
+      "starred" : false,
+      "term" : "Cogito"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "22289E35-D6F3-48F9-BD14-632978160965",
+      "starred" : false,
+      "term" : "Lectio"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "E9F28463-787F-4635-A8B5-2E44A6AF1844",
+      "starred" : false,
+      "term" : "Falcon"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "6516EFCE-2AD4-4538-AE13-9D67DB6CF17F",
+      "starred" : false,
+      "term" : "Jules"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "7F790918-2934-480C-8429-E0E88B5B07A9",
+      "starred" : false,
+      "term" : "Jules-1"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "F5A574A9-4F3F-4AFD-9C37-4C1F3D73956C",
+      "starred" : false,
+      "term" : "Jules-2"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "90E607D6-FBBD-410E-9B1F-A964D7B7BC5E",
+      "starred" : false,
+      "term" : "Vertex"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "4CB0C384-757E-4078-9538-AFED457F8D1F",
+      "starred" : false,
+      "term" : "Gemini"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "39536CF1-B25E-48D6-A2A2-84B1AD76513A",
+      "starred" : false,
+      "term" : "Anthropic"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "7A9A9AC2-B33B-47BE-9CEF-BC61C8170254",
+      "starred" : false,
+      "term" : "Claude"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3E9DB29A-28BB-4E8C-850F-0F11EA45D2A2",
+      "starred" : false,
+      "term" : "Codex"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3CFE5F22-C051-4275-83B6-B56043B409C7",
+      "starred" : false,
+      "term" : "ChatGPT"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "679DFB5D-2139-4292-B1CE-1BBBA4E775EA",
+      "starred" : false,
+      "term" : "OpenAI"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "A30C1EE1-E8B3-4A0F-B9CC-7FC1A3FEF0F9",
+      "starred" : false,
+      "term" : "OpenRouter"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "37A073B3-0443-44E5-AAAF-F368C6094A2E",
+      "starred" : false,
+      "term" : "LiteLLM"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "B43DB6B8-7E29-4B59-9468-1D9F44BAB4D9",
+      "starred" : false,
+      "term" : "Azure Foundry"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "9B5A71F0-E846-46DA-BD08-2CBE26883196",
+      "starred" : false,
+      "term" : "NixOS"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "6A40852B-996F-4262-8604-BA9C55DB1F13",
+      "starred" : false,
+      "term" : "Homebrew"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "FDA661EE-A728-4866-9BBC-23BED40FB57D",
+      "starred" : false,
+      "term" : "Mattermost"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "B895AF81-61AE-467B-AA75-FE1DEE41E9B2",
+      "starred" : false,
+      "term" : "Telegram"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "16D9A688-8EB4-4834-9806-25F3CB04B15F",
+      "starred" : false,
+      "term" : "Slack"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "590BAF49-3B07-4822-8A83-88F06DCAD90C",
+      "starred" : false,
+      "term" : "Confluence"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "F1A2E39F-4AE1-45AE-993F-65CCD063ACF0",
+      "starred" : false,
+      "term" : "Jira"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "0355142F-861C-4A06-ADCB-A8F210DE23A0",
+      "starred" : false,
+      "term" : "GSK"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3A5C987D-F86A-4830-9FCA-6218450A3DD4",
+      "starred" : false,
+      "term" : "AIML"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "65B0590D-307E-472F-9905-8796B2377403",
+      "starred" : false,
+      "term" : "OAuth"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "ED3A328C-B32C-4265-BCE6-6FAE6EEE3D5C",
+      "starred" : false,
+      "term" : "IAM"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "614D8CE9-BCFE-427C-946E-C15DC0B3EA98",
+      "starred" : false,
+      "term" : "SQLite"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "CB53C380-858D-4C12-93FA-6BEBE59E40EC",
+      "starred" : false,
+      "term" : "pgvector"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "05823231-AF69-4D09-98BC-8904A9C6AD4E",
+      "starred" : false,
+      "term" : "dotfiles"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "8C9BDE15-8E4E-4146-8054-E359A4A209EF",
+      "starred" : false,
+      "term" : "Zscaler"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "1ED2AC15-7D0B-422A-BEA0-34096E36597B",
+      "starred" : false,
+      "term" : "Jamf"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "82BFC47F-E1E1-4AA1-9E83-4E56F9597A39",
+      "starred" : false,
+      "term" : "GitHub"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "6987C56E-C8AB-4705-9DB8-D9FB8106A226",
+      "starred" : false,
+      "term" : "gcloud"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3F6AB5C0-7EAF-4D2A-84F9-4EC8B9FC431E",
+      "starred" : false,
+      "term" : "ThinkPad"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "4D44A795-E0A8-40F1-9104-C26E58B2B402",
+      "starred" : false,
+      "term" : "macOS"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "C881E3F9-521D-4D8C-B0F9-E747FAA164F7",
+      "starred" : false,
+      "term" : "Python"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "669C8C2C-7E1C-4765-91A4-682DA3ED2187",
+      "starred" : false,
+      "term" : "Linux"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3DA88A6D-8B34-43EB-BD99-973EADCA25F7",
+      "starred" : false,
+      "term" : "GPU"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "E0E2298B-171D-4E30-9A04-E14B6D6B9DC1",
+      "starred" : false,
+      "term" : "CPU"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "EB3A352C-8E7D-4924-99C5-E4D9E4A1D621",
+      "starred" : false,
+      "term" : "API"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "B26C0F28-53D4-47A8-AB39-8C4383E50850",
+      "starred" : false,
+      "term" : "GPT"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "E95E28BA-F839-430F-89CC-85442260745C",
+      "starred" : false,
+      "term" : "AWS"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "8280E01F-88A1-4352-A4D4-3ADBE39BA30C",
+      "starred" : false,
+      "term" : "VPN"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "16AD5D50-1BC2-4DF5-A217-5833FAF8FF28",
+      "starred" : false,
+      "term" : "React"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "82E2D0BC-32B3-42CD-A1BF-870C381B93AE",
+      "starred" : false,
+      "term" : "WhatsApp"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "8977921C-B7FC-44B3-9D80-8273F96D3960",
+      "starred" : false,
+      "term" : "open-seneca"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "B599662A-2584-4D06-A8B3-7A2F67D30E2F",
+      "starred" : false,
+      "term" : "Wizion"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "75BE5A75-EB97-4C01-B205-A46452700962",
+      "starred" : false,
+      "term" : "ONI"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "46863F0D-F9D0-4CA3-A024-FF752721B3B7",
+      "starred" : false,
+      "term" : "CEB"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "531066C5-05DE-4486-B843-3FFE5B7F7B8F",
+      "starred" : false,
+      "term" : "SensorCDT"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "07C4EDBB-9FBC-4ABA-8C21-338C6C296B10",
+      "starred" : false,
+      "term" : "imageheal"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3195D5EE-9C61-490E-BA11-5AAF842E3EDE",
+      "starred" : false,
+      "term" : "PhD"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "BA3E53CB-D96A-428F-A638-668186D596B1",
+      "starred" : false,
+      "term" : "postdoc"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "5D46E03F-0CEF-4FC1-8D42-DB5C7210603E",
+      "starred" : false,
+      "term" : "microscopy"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "79C62840-68B5-4BB7-BBFC-1A2E6304EB1B",
+      "starred" : false,
+      "term" : "imaging"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "3F29E216-8E66-45DF-BA84-BEC113D141B0",
+      "starred" : false,
+      "term" : "manuscript"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "CB7B8571-3DE8-45A4-950E-52EC5B026A67",
+      "starred" : false,
+      "term" : "thesis"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "16A4371F-302A-4F90-AB23-7BE007562CF2",
+      "starred" : false,
+      "term" : "quantum"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "9DEB07B0-4885-43C0-AB48-40B11EC9CF76",
+      "starred" : false,
+      "term" : "reinforcement learning"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "DD5D9865-86E6-4ABF-B8DC-51CADE6B41F2",
+      "starred" : false,
+      "term" : "machine learning"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "0DEC8775-C305-459D-8321-07BA53318898",
+      "starred" : false,
+      "term" : "subagents"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "7E381A54-B0E9-4323-BE8D-B0510B4CD32D",
+      "starred" : false,
+      "term" : "Cambridge"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "D6FDE497-81B2-40AB-9BF3-3C9DAB7A65C2",
+      "starred" : false,
+      "term" : "Oxford"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "26311BBD-6920-42F9-9E1B-904B0DE073E4",
+      "starred" : false,
+      "term" : "London"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "9AEDBE3B-690B-40E5-9103-938241FB3E02",
+      "starred" : false,
+      "term" : "Denmark"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "26F1B343-8165-42AB-81E9-E74A6D8E9060",
+      "starred" : false,
+      "term" : "Danmark"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "941A83E2-3B3B-447D-B164-DE023CDAEC9C",
+      "starred" : false,
+      "term" : "Copenhagen"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "218F49AF-B917-4849-90E7-F6642A8BA398",
+      "starred" : false,
+      "term" : "Hampstead"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "C68B8547-66B5-4201-9651-7D1F23F9E4FF",
+      "starred" : false,
+      "term" : "Stansted"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "4F798DDA-5441-428A-A7B4-8D24483DB116",
+      "starred" : false,
+      "term" : "Revolut"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "2F84174A-0AA4-4234-990C-B8C074FB742F",
+      "starred" : false,
+      "term" : "Ethereum"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "045B88BB-C0D2-49A9-A5B8-B80D4B6D8C83",
+      "starred" : false,
+      "term" : "Bitcoin"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "7D288469-A1A5-4E10-85C6-2023EEE50CD0",
+      "starred" : false,
+      "term" : "Tesco"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "85611813-CF4F-4039-BF73-00AB5876CE65",
+      "starred" : false,
+      "term" : "Charles"
+    },
+    {
+      "createdAt" : "2026-09-06T11:59:21.129Z",
+      "id" : "9D6EDD5D-8701-40A7-A36E-E6C3F84E7C6E",
+      "starred" : false,
+      "term" : "Christensen"
+    }
+  ],
+  "doubleTapLock" : true,
+  "experimentalNoiseHandling" : true,
+  "gptTranscription" : false,
+  "hotkeyKey" : "optionF17",
+  "liveTranscription" : true,
+  "showIdleIndicator" : true,
+  "smartCleanupPass" : true,
+  "smartTranscription" : true,
+  "useDictationComposer" : false
+}
