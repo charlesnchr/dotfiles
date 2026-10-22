@@ -65,3 +65,9 @@ export OPENCLAW_GIT_DIR=~/openclaw
 if [[ "$(/run/current-system/sw/bin/hostname 2>/dev/null || printf '')" = "nixos" ]]; then
     export PATH="/run/wrappers/bin:/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
 fi
+
+# Prefer transparent user CLI shims over package-manager binaries.
+path=( "$HOME/.local/bin" $path )
+
+# The shared dotenv environment block lives in .bashrc (also used by agent Bash tools).
+[[ -r "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
